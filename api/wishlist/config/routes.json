@@ -1,0 +1,51 @@
+{
+    "routes": [{
+            "method": "GET",
+            "path": "/wishlists",
+            "handler": "wishlist.find",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/wishlists/count",
+            "handler": "wishlist.count",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/wishlists/:id",
+            "handler": "wishlist.findOne",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/wishlists",
+            "handler": "wishlist.create",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "PUT",
+            "path": "/wishlists/:id",
+            "handler": "wishlist.update",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/wishlists/add-or-remove",
+            "handler": "wishlist.addOrRemove",
+            "config": {
+                "policies": []
+            }
+        }
+    ]
+}
