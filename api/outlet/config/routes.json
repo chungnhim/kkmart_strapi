@@ -1,0 +1,67 @@
+{
+    "routes": [{
+            "method": "GET",
+            "path": "/outlets",
+            "handler": "outlet.find",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/outlets/count",
+            "handler": "outlet.count",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/outlets/:id",
+            "handler": "outlet.findOne",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/outlets",
+            "handler": "outlet.create",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "PUT",
+            "path": "/outlets/:id",
+            "handler": "outlet.update",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "DELETE",
+            "path": "/outlets/:id",
+            "handler": "outlet.delete",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/outlets/getnearme",
+            "handler": "outlet.getnearme",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/outlets/getbystate",
+            "handler": "outlet.getbystate",
+            "config": {
+                "policies": []
+            }
+        }
+    ]
+}

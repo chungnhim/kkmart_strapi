@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "brands",
+  "info": {
+    "name": "brand"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "brandname": {
+      "type": "string"
+    },
+    "shortname": {
+      "type": "string"
+    },
+    "brandicon": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "brandurl": {
+      "type": "string"
+    },
+    "isactive": {
+      "type": "boolean"
+    }
+  }
+}

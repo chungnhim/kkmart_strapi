@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "systemparams",
+  "info": {
+    "name": "systemparams"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "paramname": {
+      "type": "string",
+      "required": true
+    },
+    "paramvalue": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string"
+    }
+  }
+}

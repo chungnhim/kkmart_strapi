@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/dailypromotiondetailnewlaunches",
+      "handler": "dailypromotiondetailnewlaunch.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/dailypromotiondetailnewlaunches/count",
+      "handler": "dailypromotiondetailnewlaunch.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/dailypromotiondetailnewlaunches/:id",
+      "handler": "dailypromotiondetailnewlaunch.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/dailypromotiondetailnewlaunches",
+      "handler": "dailypromotiondetailnewlaunch.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/dailypromotiondetailnewlaunches/:id",
+      "handler": "dailypromotiondetailnewlaunch.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/dailypromotiondetailnewlaunches/:id",
+      "handler": "dailypromotiondetailnewlaunch.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

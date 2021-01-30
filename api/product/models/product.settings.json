@@ -1,0 +1,79 @@
+{
+  "kind": "collectionType",
+  "collectionName": "products",
+  "info": {
+    "name": "product"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "supplierid": {
+      "type": "integer"
+    },
+    "productkeyword": {
+      "type": "string"
+    },
+    "categoryid": {
+      "type": "integer"
+    },
+    "shortdescription": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "price": {
+      "type": "float"
+    },
+    "currencycode": {
+      "type": "integer"
+    },
+    "currencycodeiso": {
+      "type": "string"
+    },
+    "retailprice": {
+      "type": "float"
+    },
+    "status": {
+      "type": "integer"
+    },
+    "productimages": {
+      "collection": "productimage"
+    },
+    "sku": {
+      "type": "string"
+    },
+    "brand": {
+      "model": "brand"
+    },
+    "stock": {
+      "type": "integer"
+    },
+    "soldqtty": {
+      "type": "integer"
+    },
+    "minimumorderqtty": {
+      "type": "integer"
+    },
+    "maximumorderqtty": {
+      "type": "integer"
+    },
+    "weight": {
+      "type": "integer"
+    },
+    "rating_point": {
+      "type": "float"
+    },
+    "barcode": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    }
+  }
+}

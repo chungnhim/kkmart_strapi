@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/exchangerates",
+      "handler": "exchangerate.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/exchangerates/count",
+      "handler": "exchangerate.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/exchangerates/:id",
+      "handler": "exchangerate.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/exchangerates",
+      "handler": "exchangerate.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/exchangerates/:id",
+      "handler": "exchangerate.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/exchangerates/:id",
+      "handler": "exchangerate.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

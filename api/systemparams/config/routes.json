@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/systemparams",
+      "handler": "systemparams.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/systemparams/count",
+      "handler": "systemparams.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/systemparams/:id",
+      "handler": "systemparams.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/systemparams",
+      "handler": "systemparams.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/systemparams/:id",
+      "handler": "systemparams.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/systemparams/:id",
+      "handler": "systemparams.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

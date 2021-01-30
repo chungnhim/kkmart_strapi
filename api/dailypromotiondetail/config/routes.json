@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/dailypromotiondetails",
+      "handler": "dailypromotiondetail.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/dailypromotiondetails/count",
+      "handler": "dailypromotiondetail.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/dailypromotiondetails/:id",
+      "handler": "dailypromotiondetail.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/dailypromotiondetails",
+      "handler": "dailypromotiondetail.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/dailypromotiondetails/:id",
+      "handler": "dailypromotiondetail.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/dailypromotiondetails/:id",
+      "handler": "dailypromotiondetail.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

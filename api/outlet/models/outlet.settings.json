@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "outlets",
+  "info": {
+    "name": "Outlet"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "user": {
+      "via": "outlets",
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "name": {
+      "type": "string"
+    },
+    "street1": {
+      "type": "string"
+    },
+    "street2": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "longitude": {
+      "type": "float"
+    },
+    "latitude": {
+      "type": "float"
+    },
+    "country": {
+      "model": "country"
+    },
+    "state": {
+      "model": "state"
+    },
+    "telephone": {
+      "type": "string"
+    },
+    "digi": {
+      "type": "string"
+    }
+  }
+}

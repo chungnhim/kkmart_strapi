@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/employmentstatus",
+      "handler": "employmentstatu.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/employmentstatus/count",
+      "handler": "employmentstatu.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/employmentstatus/:id",
+      "handler": "employmentstatu.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/employmentstatus",
+      "handler": "employmentstatu.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/employmentstatus/:id",
+      "handler": "employmentstatu.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/employmentstatus/:id",
+      "handler": "employmentstatu.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

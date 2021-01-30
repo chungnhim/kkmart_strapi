@@ -1,0 +1,174 @@
+{
+  "kind": "collectionType",
+  "collectionName": "users-permissions_user",
+  "info": {
+    "name": "user",
+    "description": ""
+  },
+  "options": {
+    "timestamps": true
+  },
+  "attributes": {
+    "username": {
+      "type": "string",
+      "minLength": 3,
+      "unique": true,
+      "configurable": false,
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "minLength": 6,
+      "configurable": false,
+      "required": true
+    },
+    "provider": {
+      "type": "string",
+      "configurable": false
+    },
+    "password": {
+      "type": "password",
+      "minLength": 6,
+      "configurable": false,
+      "private": true
+    },
+    "resetPasswordToken": {
+      "type": "string",
+      "configurable": false,
+      "private": true
+    },
+    "confirmed": {
+      "type": "boolean",
+      "default": false,
+      "configurable": false
+    },
+    "blocked": {
+      "type": "boolean",
+      "default": false,
+      "configurable": false
+    },
+    "role": {
+      "model": "role",
+      "via": "users",
+      "plugin": "users-permissions",
+      "configurable": false
+    },
+    "phone": {
+      "type": "string"
+    },
+    "dateofbirth": {
+      "type": "date"
+    },
+    "gender": {
+      "model": "gender"
+    },
+    "kcoin": {
+      "type": "decimal"
+    },
+    "maritalstatus": {
+      "model": "maritalstatu"
+    },
+    "referralcode": {
+      "type": "string"
+    },
+    "companyname": {
+      "type": "string"
+    },
+    "promotionrewardpoint": {
+      "type": "decimal"
+    },
+    "nonpromotionalrewardpoint": {
+      "type": "decimal"
+    },
+    "membershiptype": {
+      "model": "membershiptype"
+    },
+    "address1": {
+      "type": "string"
+    },
+    "address2": {
+      "type": "string"
+    },
+    "country": {
+      "model": "country"
+    },
+    "state": {
+      "model": "state"
+    },
+    "city": {
+      "type": "string"
+    },
+    "postcode": {
+      "type": "string"
+    },
+    "ethnicgroup": {
+      "model": "ethnicgroup"
+    },
+    "personalinterests": {
+      "collection": "personalinterest",
+      "via": "users",
+      "dominant": true
+    },
+    "deviceinfos": {
+      "via": "user",
+      "collection": "deviceinfo"
+    },
+    "firstname": {
+      "type": "string"
+    },
+    "lastname": {
+      "type": "string"
+    },
+    "employmentstatus": {
+      "collection": "employmentstatu",
+      "via": "user"
+    },
+    "socialmediaactivestatus": {
+      "collection": "socialmediaactivestatu",
+      "via": "user"
+    },
+    "qrcode": {
+      "type": "uid"
+    },
+    "outlets": {
+      "collection": "outlet",
+      "via": "user"
+    },
+    "transaction_histories": {
+      "collection": "transaction-history",
+      "via": "user"
+    },
+    "maritalstatuother": {
+      "type": "string"
+    },
+    "personalinterestother": {
+      "type": "string"
+    },
+    "employmentstatuother": {
+      "type": "string"
+    },
+    "socialmediaactivestatuother": {
+      "type": "string"
+    },
+    "iscompleteinformation": {
+      "type": "boolean"
+    },
+    "photo": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "preferredname": {
+      "type": "string"
+    },
+    "friendcode": {
+      "type": "string"
+    }
+  }
+}

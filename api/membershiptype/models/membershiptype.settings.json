@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "membershiptypes",
+  "info": {
+    "name": "membershiptype"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "nametype": {
+      "type": "string"
+    },
+    "discountvalue": {
+      "type": "integer"
+    },
+    "discountunit": {
+      "type": "integer"
+    },
+    "isfreeshippingactive": {
+      "type": "boolean"
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "dailypromotionimages",
+  "info": {
+    "name": "Dailypromotionimage"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "dailypromotionid": {
+      "type": "integer"
+    },
+    "createddate": {
+      "type": "datetime"
+    },
+    "createdbyuserid": {
+      "type": "integer"
+    },
+    "createdby": {
+      "type": "string"
+    },
+    "image": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    }
+  }
+}

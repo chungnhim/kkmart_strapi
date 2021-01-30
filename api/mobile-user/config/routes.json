@@ -1,0 +1,123 @@
+{
+    "routes": [{
+            "method": "GET",
+            "path": "/mobile-user",
+            "handler": "mobile-user.test",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/mobile-user/get-near-me/:id",
+            "handler": "mobile-user.getnearme",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/mobile-user/check-phone-no",
+            "handler": "mobile-user.checkPhoneNo",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/mobile-user/check-email-address",
+            "handler": "mobile-user.checkEmailAdrress",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/mobile-user/add-phone-no-block",
+            "handler": "mobile-user.addPhoneNoBlock",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/mobile-user/register",
+            "handler": "mobile-user.register",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/mobile-user/login",
+            "handler": "mobile-user.login",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/mobile-user/forgot-password",
+            "handler": "mobile-user.forgotPassword",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/mobile-user/reset-password",
+            "handler": "mobile-user.resetPassword",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/mobile-user/change-information",
+            "handler": "mobile-user.changeInformation",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/mobile-user/my-information",
+            "handler": "mobile-user.myInformation",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/mobile-user/update-new-password",
+            "handler": "mobile-user.updatenewpassword",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/mobile-user/change-my-password",
+            "handler": "mobile-user.changemypassword",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/mobile-user/referral-code",
+            "handler": "mobile-user.getreferralcode",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/mobile-user/verify-password",
+            "handler": "mobile-user.verifypassword",
+            "config": {
+                "policies": []
+            }
+        }
+    ]
+}

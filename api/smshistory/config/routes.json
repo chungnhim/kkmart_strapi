@@ -1,0 +1,83 @@
+{
+    "routes": [{
+            "method": "GET",
+            "path": "/smshistories",
+            "handler": "smshistory.find",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/smshistories/count",
+            "handler": "smshistory.count",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/smshistories/:id",
+            "handler": "smshistory.findOne",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/smshistories",
+            "handler": "smshistory.create",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "PUT",
+            "path": "/smshistories/:id",
+            "handler": "smshistory.update",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "DELETE",
+            "path": "/smshistories/:id",
+            "handler": "smshistory.delete",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/smshistories/sendsmscodereg",
+            "handler": "smshistory.sendsmscodereg",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/smshistories/checksmscodereg",
+            "handler": "smshistory.checksmscodereg",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/smshistories/sendsmscodeforgotpassword",
+            "handler": "smshistory.sendsmscodeforgotpassword",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/smshistories/checksmscodeforgotpassword",
+            "handler": "smshistory.checksmscodeforgotpassword",
+            "config": {
+                "policies": []
+            }
+        }
+    ]
+}

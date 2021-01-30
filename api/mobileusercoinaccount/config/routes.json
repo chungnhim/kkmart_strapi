@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/mobileusercoinaccounts",
+      "handler": "mobileusercoinaccount.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/mobileusercoinaccounts/count",
+      "handler": "mobileusercoinaccount.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/mobileusercoinaccounts/:id",
+      "handler": "mobileusercoinaccount.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/mobileusercoinaccounts",
+      "handler": "mobileusercoinaccount.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/mobileusercoinaccounts/:id",
+      "handler": "mobileusercoinaccount.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/mobileusercoinaccounts/:id",
+      "handler": "mobileusercoinaccount.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/systemstatus",
+      "handler": "systemstatu.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/systemstatus/count",
+      "handler": "systemstatu.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/systemstatus/:id",
+      "handler": "systemstatu.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/systemstatus",
+      "handler": "systemstatu.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/systemstatus/:id",
+      "handler": "systemstatu.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/systemstatus/:id",
+      "handler": "systemstatu.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

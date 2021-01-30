@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/phone-blocks",
+      "handler": "phone-block.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/phone-blocks/count",
+      "handler": "phone-block.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/phone-blocks/:id",
+      "handler": "phone-block.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/phone-blocks",
+      "handler": "phone-block.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/phone-blocks/:id",
+      "handler": "phone-block.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/phone-blocks/:id",
+      "handler": "phone-block.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

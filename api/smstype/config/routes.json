@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/smstypes",
+      "handler": "smstype.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/smstypes/count",
+      "handler": "smstype.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/smstypes/:id",
+      "handler": "smstype.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/smstypes",
+      "handler": "smstype.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/smstypes/:id",
+      "handler": "smstype.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/smstypes/:id",
+      "handler": "smstype.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

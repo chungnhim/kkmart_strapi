@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "outletfeedbacks",
+  "info": {
+    "name": "outletfeedback"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "additionfeedback": {
+      "type": "text"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "outlet": {
+      "model": "outlet"
+    },
+    "overallsatisfaction": {
+      "type": "integer"
+    },
+    "overallservice": {
+      "type": "integer"
+    },
+    "environment": {
+      "type": "integer"
+    },
+    "productavail": {
+      "type": "integer"
+    },
+    "queuetime": {
+      "type": "integer"
+    }
+  }
+}

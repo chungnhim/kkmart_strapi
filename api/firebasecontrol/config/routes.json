@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/firebasecontrols",
+      "handler": "firebasecontrol.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/firebasecontrols/count",
+      "handler": "firebasecontrol.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/firebasecontrols/:id",
+      "handler": "firebasecontrol.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/firebasecontrols",
+      "handler": "firebasecontrol.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/firebasecontrols/:id",
+      "handler": "firebasecontrol.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/firebasecontrols/:id",
+      "handler": "firebasecontrol.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "transaction_configs",
+  "info": {
+    "name": "transaction-config"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "trxconfigid": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "maxLength": 3
+    },
+    "trxdescription": {
+      "type": "string"
+    },
+    "creditordebit": {
+      "type": "string",
+      "required": true
+    },
+    "unittype": {
+      "type": "string",
+      "required": true
+    },
+    "amount": {
+      "type": "decimal"
+    },
+    "dayeffective": {
+      "type": "integer"
+    },
+    "isexpired": {
+      "type": "boolean"
+    },
+    "amountpercent": {
+      "type": "float"
+    },
+    "dayexpired": {
+      "type": "integer"
+    },
+    "monthexpired": {
+      "type": "integer"
+    }
+  }
+}

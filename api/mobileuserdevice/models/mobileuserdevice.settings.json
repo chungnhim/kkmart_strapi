@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "mobileuserdevices",
+  "info": {
+    "name": "mobileuserdevice"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "mobileuserid": {
+      "type": "integer"
+    },
+    "devicename": {
+      "type": "string"
+    },
+    "osname": {
+      "type": "string"
+    },
+    "deviceidreg": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "CreatedDate": {
+      "type": "datetime"
+    },
+    "longitude": {
+      "type": "float"
+    },
+    "latitude": {
+      "type": "float"
+    },
+    "isweb": {
+      "type": "boolean"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ethnicgroups",
+  "info": {
+    "name": "ethnicgroup"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    }
+  }
+}

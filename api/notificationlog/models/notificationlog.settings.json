@@ -1,0 +1,58 @@
+{
+  "kind": "collectionType",
+  "collectionName": "notificationlogs",
+  "info": {
+    "name": "notificationlog"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "noticetypeid": {
+      "type": "integer"
+    },
+    "noticetypename": {
+      "type": "string"
+    },
+    "noticeicon": {
+      "type": "string"
+    },
+    "noticetitle": {
+      "type": "string"
+    },
+    "noticecontent": {
+      "type": "text"
+    },
+    "noticeurl": {
+      "type": "string"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "status": {
+      "type": "string"
+    },
+    "pushstatus": {
+      "type": "string"
+    },
+    "image": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "notificationcode": {
+      "type": "string"
+    },
+    "noticedata": {
+      "type": "string"
+    }
+  }
+}

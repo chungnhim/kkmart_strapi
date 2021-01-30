@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "phone_blocks",
+  "info": {
+    "name": "PhoneBlock"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "phone": {
+      "type": "string"
+    },
+    "starttime": {
+      "type": "datetime"
+    },
+    "endtime": {
+      "type": "datetime"
+    }
+  }
+}

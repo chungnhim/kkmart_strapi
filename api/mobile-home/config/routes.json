@@ -1,0 +1,44 @@
+{
+  "routes": [
+    {
+      "method": "POST",
+      "path": "/mobile-home",
+      "handler": "mobile-home.home",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/mobile-home/new-promotion-list",
+      "handler": "mobile-home.promotionList",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/mobile-home/new-member-exclusive-list",
+      "handler": "mobile-home.newMemberExclusiveList",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/mobile-home/new-launch-product-list",
+      "handler": "mobile-home.newLaunchProductList",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/mobile-home/new-outlet-list",
+      "handler": "mobile-home.newOutletList",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "shopping_carts",
+  "info": {
+    "name": "ShoppingCart"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "cartdate": {
+      "type": "datetime"
+    },
+    "cartid": {
+      "type": "biginteger"
+    },
+    "userid": {
+      "type": "biginteger"
+    },
+    "useremail": {
+      "type": "string"
+    }
+  }
+}

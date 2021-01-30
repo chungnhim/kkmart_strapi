@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "systemdocuments",
+  "info": {
+    "name": "systemdocument"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "content": {
+      "type": "richtext"
+    },
+    "systemdocumenttype": {
+      "model": "systemdocumenttype"
+    },
+    "order": {
+      "type": "integer"
+    },
+    "images": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    }
+  }
+}

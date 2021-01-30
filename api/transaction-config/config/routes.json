@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/transaction-configs",
+      "handler": "transaction-config.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/transaction-configs/count",
+      "handler": "transaction-config.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/transaction-configs/:id",
+      "handler": "transaction-config.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/transaction-configs",
+      "handler": "transaction-config.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/transaction-configs/:id",
+      "handler": "transaction-config.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/transaction-configs/:id",
+      "handler": "transaction-config.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

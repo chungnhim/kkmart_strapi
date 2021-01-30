@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/notificationlogs",
+      "handler": "notificationlog.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/notificationlogs/count",
+      "handler": "notificationlog.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/notificationlogs/:id",
+      "handler": "notificationlog.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/notificationlogs",
+      "handler": "notificationlog.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/notificationlogs/:id",
+      "handler": "notificationlog.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/notificationlogs/:id",
+      "handler": "notificationlog.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

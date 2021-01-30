@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "dailycoinschedules",
+  "info": {
+    "name": "dailycoinschedule"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "datenumber": {
+      "type": "integer"
+    },
+    "amountreceive": {
+      "type": "float"
+    },
+    "status": {
+      "type": "integer"
+    },
+    "createddate": {
+      "type": "datetime"
+    },
+    "trxconfigid": {
+      "type": "string"
+    }
+  }
+}

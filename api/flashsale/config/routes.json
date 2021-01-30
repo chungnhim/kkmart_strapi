@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/flashsales",
+      "handler": "flashsale.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/flashsales/count",
+      "handler": "flashsale.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/flashsales/:id",
+      "handler": "flashsale.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/flashsales",
+      "handler": "flashsale.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/flashsales/:id",
+      "handler": "flashsale.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/flashsales/:id",
+      "handler": "flashsale.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

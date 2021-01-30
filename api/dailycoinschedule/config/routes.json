@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/dailycoinschedules",
+      "handler": "dailycoinschedule.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/dailycoinschedules/count",
+      "handler": "dailycoinschedule.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/dailycoinschedules/:id",
+      "handler": "dailycoinschedule.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/dailycoinschedules",
+      "handler": "dailycoinschedule.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/dailycoinschedules/:id",
+      "handler": "dailycoinschedule.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/dailycoinschedules/:id",
+      "handler": "dailycoinschedule.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

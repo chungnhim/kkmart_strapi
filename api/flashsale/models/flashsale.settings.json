@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "flashsales",
+  "info": {
+    "name": "flashsale"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "activedate": {
+      "type": "date"
+    },
+    "starttime": {
+      "type": "time"
+    },
+    "endtime": {
+      "type": "time"
+    },
+    "status": {
+      "type": "string"
+    }
+  }
+}

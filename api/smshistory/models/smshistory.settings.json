@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "smshistories",
+  "info": {
+    "name": "smshistory"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "remark": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "code": {
+      "type": "string"
+    },
+    "smstype": {
+      "model": "smstype"
+    },
+    "mtid": {
+      "type": "string"
+    },
+    "serverdataresult": {
+      "type": "string"
+    }
+  }
+}

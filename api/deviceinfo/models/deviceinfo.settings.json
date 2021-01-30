@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "deviceinfos",
+  "info": {
+    "name": "deviceinfo"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "devicename": {
+      "type": "string"
+    },
+    "serial": {
+      "type": "string"
+    },
+    "deviceid": {
+      "type": "string"
+    },
+    "devicereg": {
+      "type": "string"
+    },
+    "imei": {
+      "type": "string"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "deviceinfos"
+    },
+    "platform": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "dailypromotions",
+  "info": {
+    "name": "dailypromotion"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "introduction": {
+      "type": "string"
+    },
+    "starttime": {
+      "type": "datetime"
+    },
+    "endtime": {
+      "type": "datetime"
+    },
+    "dailypromotiontype": {
+      "model": "dailypromotiontype"
+    },
+    "status": {
+      "model": "systemstatu"
+    },
+    "Remark": {
+      "type": "string"
+    },
+    "dailypromotiondetails": {
+      "collection": "dailypromotiondetail",
+      "via": "dailypromotion"
+    }
+  }
+}

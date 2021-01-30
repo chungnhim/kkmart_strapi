@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "personalinterests",
+  "info": {
+    "name": "personalinterest"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "icon": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "users": {
+      "via": "personalinterests",
+      "plugin": "users-permissions",
+      "collection": "user"
+    },
+    "order": {
+      "type": "integer"
+    }
+  }
+}

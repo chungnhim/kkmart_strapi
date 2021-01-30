@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "countries",
+  "info": {
+    "name": "country"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "codeiso2": {
+      "type": "string"
+    },
+    "codeiso3": {
+      "type": "string"
+    }
+  }
+}

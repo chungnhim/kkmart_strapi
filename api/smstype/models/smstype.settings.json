@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "smstypes",
+  "info": {
+    "name": "smstype"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "template": {
+      "type": "richtext"
+    },
+    "minuteexpire": {
+      "type": "integer"
+    }
+  }
+}

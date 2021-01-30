@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/socialmediaactivestatus",
+      "handler": "socialmediaactivestatu.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/socialmediaactivestatus/count",
+      "handler": "socialmediaactivestatu.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/socialmediaactivestatus/:id",
+      "handler": "socialmediaactivestatu.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/socialmediaactivestatus",
+      "handler": "socialmediaactivestatu.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/socialmediaactivestatus/:id",
+      "handler": "socialmediaactivestatu.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/socialmediaactivestatus/:id",
+      "handler": "socialmediaactivestatu.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

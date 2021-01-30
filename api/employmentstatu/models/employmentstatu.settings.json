@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "employmentstatus",
+  "info": {
+    "name": "employmentstatu"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "icon": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "user": {
+      "via": "employmentstatus",
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "order": {
+      "type": "integer"
+    }
+  }
+}

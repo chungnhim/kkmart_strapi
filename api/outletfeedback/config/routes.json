@@ -1,0 +1,59 @@
+{
+    "routes": [{
+            "method": "GET",
+            "path": "/outletfeedbacks",
+            "handler": "outletfeedback.find",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/outletfeedbacks/count",
+            "handler": "outletfeedback.count",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/outletfeedbacks/:id",
+            "handler": "outletfeedback.findOne",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/outletfeedbacks",
+            "handler": "outletfeedback.create",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "PUT",
+            "path": "/outletfeedbacks/:id",
+            "handler": "outletfeedback.update",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "DELETE",
+            "path": "/outletfeedbacks/:id",
+            "handler": "outletfeedback.delete",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/outletfeedbacks/add-feed-back",
+            "handler": "outletfeedback.addoutletfeedback",
+            "config": {
+                "policies": []
+            }
+        }
+    ]
+}

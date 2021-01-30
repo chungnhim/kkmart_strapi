@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/outletsecrets",
+      "handler": "outletsecret.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/outletsecrets/count",
+      "handler": "outletsecret.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/outletsecrets/:id",
+      "handler": "outletsecret.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/outletsecrets",
+      "handler": "outletsecret.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/outletsecrets/:id",
+      "handler": "outletsecret.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/outletsecrets/:id",
+      "handler": "outletsecret.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

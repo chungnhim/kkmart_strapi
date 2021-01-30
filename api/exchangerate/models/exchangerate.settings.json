@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "exchangerates",
+  "info": {
+    "name": "exchangerate"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "currencycode": {
+      "type": "string"
+    },
+    "countryiso3": {
+      "type": "string"
+    },
+    "basecurrencycode": {
+      "type": "string"
+    },
+    "rate": {
+      "type": "float"
+    },
+    "isenable": {
+      "type": "boolean"
+    },
+    "currencysymbol": {
+      "type": "string"
+    },
+    "modifieddate": {
+      "type": "datetime"
+    }
+  }
+}

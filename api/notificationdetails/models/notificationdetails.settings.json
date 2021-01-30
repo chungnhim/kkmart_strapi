@@ -1,0 +1,54 @@
+{
+  "kind": "collectionType",
+  "collectionName": "notificationdetails",
+  "info": {
+    "name": "notificationdetails"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "noticetitle": {
+      "type": "string"
+    },
+    "noticecontent": {
+      "type": "text"
+    },
+    "noticeicon": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "noticeurl": {
+      "type": "string"
+    },
+    "noticestatus": {
+      "type": "string"
+    },
+    "notificationtype": {
+      "model": "notificationtypes"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "image": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    }
+  }
+}

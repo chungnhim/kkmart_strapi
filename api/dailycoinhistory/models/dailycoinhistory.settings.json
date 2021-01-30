@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "dailycoinhistories",
+  "info": {
+    "name": "Dailycoinhistory"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "datenumber": {
+      "type": "integer"
+    },
+    "mobileuserid": {
+      "type": "biginteger"
+    },
+    "createddate": {
+      "type": "date"
+    },
+    "amountrecieve": {
+      "type": "float"
+    },
+    "createddatedfull": {
+      "type": "datetime"
+    }
+  }
+}

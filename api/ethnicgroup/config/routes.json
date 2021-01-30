@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/ethnicgroups",
+      "handler": "ethnicgroup.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/ethnicgroups/count",
+      "handler": "ethnicgroup.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/ethnicgroups/:id",
+      "handler": "ethnicgroup.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/ethnicgroups",
+      "handler": "ethnicgroup.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/ethnicgroups/:id",
+      "handler": "ethnicgroup.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/ethnicgroups/:id",
+      "handler": "ethnicgroup.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

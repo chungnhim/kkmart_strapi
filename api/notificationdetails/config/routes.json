@@ -1,0 +1,91 @@
+{
+    "routes": [{
+            "method": "GET",
+            "path": "/notificationdetails",
+            "handler": "notificationdetails.find",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/notificationdetails/count",
+            "handler": "notificationdetails.count",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/notificationdetails/:id",
+            "handler": "notificationdetails.findOne",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/notificationdetails",
+            "handler": "notificationdetails.create",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "PUT",
+            "path": "/notificationdetails/:id",
+            "handler": "notificationdetails.update",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "DELETE",
+            "path": "/notificationdetails/:id",
+            "handler": "notificationdetails.delete",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/notificationdetails/notification-type",
+            "handler": "notificationdetails.getnotificationtype",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/notificationdetails/notification-by-user",
+            "handler": "notificationdetails.getnotificationbyuser",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/notificationdetails/notification-by-type",
+            "handler": "notificationdetails.getnotificationbytype",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/notificationdetails/delete-notification-by-user",
+            "handler": "notificationdetails.deletenotificationbyuser",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/notificationdetails/push-notification-test",
+            "handler": "notificationdetails.pushnotificationtest",
+            "config": {
+                "policies": []
+            }
+        }
+    ]
+}

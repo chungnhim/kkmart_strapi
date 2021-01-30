@@ -1,0 +1,73 @@
+{
+  "kind": "collectionType",
+  "collectionName": "transaction_histories",
+  "info": {
+    "name": "TransactionHistory"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "createddate": {
+      "type": "datetime"
+    },
+    "expireddate": {
+      "type": "datetime"
+    },
+    "creditamount": {
+      "type": "decimal"
+    },
+    "debitamount": {
+      "type": "decimal"
+    },
+    "user": {
+      "via": "transaction_histories",
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "complete",
+        "pending",
+        "error",
+        "rollback"
+      ]
+    },
+    "transactionamount": {
+      "type": "decimal"
+    },
+    "taxno": {
+      "type": "string"
+    },
+    "transactionno": {
+      "type": "string"
+    },
+    "outletid": {
+      "type": "biginteger"
+    },
+    "availabledate": {
+      "type": "datetime"
+    },
+    "mobileuserid": {
+      "type": "biginteger"
+    },
+    "invoiceno": {
+      "type": "string"
+    },
+    "remark": {
+      "type": "string"
+    },
+    "trxconfigid": {
+      "type": "string"
+    },
+    "outlet": {
+      "model": "outlet"
+    },
+    "isprocessed": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

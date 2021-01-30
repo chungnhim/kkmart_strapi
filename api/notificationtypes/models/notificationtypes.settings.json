@@ -1,0 +1,59 @@
+{
+  "kind": "collectionType",
+  "collectionName": "notificationtypes",
+  "info": {
+    "name": "notificationtypes"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "typename": {
+      "type": "string"
+    },
+    "typeicon": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "ispush": {
+      "type": "boolean",
+      "default": false,
+      "private": true
+    },
+    "ispublic": {
+      "type": "enumeration",
+      "enum": [
+        "public",
+        "private",
+        "group"
+      ],
+      "private": true
+    },
+    "systemstatu": {
+      "model": "systemstatu"
+    },
+    "description": {
+      "type": "string"
+    },
+    "notificationcode": {
+      "type": "string"
+    },
+    "template": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "templatedata": {
+      "type": "string"
+    }
+  }
+}

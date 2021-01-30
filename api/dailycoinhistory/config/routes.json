@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/dailycoinhistories",
+      "handler": "dailycoinhistory.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/dailycoinhistories/count",
+      "handler": "dailycoinhistory.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/dailycoinhistories/:id",
+      "handler": "dailycoinhistory.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/dailycoinhistories",
+      "handler": "dailycoinhistory.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/dailycoinhistories/:id",
+      "handler": "dailycoinhistory.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/dailycoinhistories/:id",
+      "handler": "dailycoinhistory.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

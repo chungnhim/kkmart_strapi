@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "mobileusercoinaccounts",
+  "info": {
+    "name": "Mobileusercoinaccount"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "mobileuserid": {
+      "type": "biginteger"
+    },
+    "balance": {
+      "type": "decimal"
+    },
+    "modifieddate": {
+      "type": "datetime"
+    },
+    "totalcredit": {
+      "type": "float"
+    },
+    "totaldebit": {
+      "type": "float"
+    },
+    "totalexpried": {
+      "type": "float"
+    },
+    "nextexpriedamount": {
+      "type": "float"
+    },
+    "nextexprieddate": {
+      "type": "date"
+    },
+    "tempbalance": {
+      "type": "decimal"
+    }
+  }
+}

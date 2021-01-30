@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "outletratings",
+  "info": {
+    "name": "outletrating"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "ratingtype": {
+      "type": "enumeration",
+      "enum": [
+        "satisfaction",
+        "overallservice",
+        "environment",
+        "productavail",
+        "queuetime"
+      ]
+    },
+    "noonestar": {
+      "type": "integer"
+    },
+    "notwostars": {
+      "type": "integer"
+    },
+    "nothreestars": {
+      "type": "integer"
+    },
+    "nofourstars": {
+      "type": "integer"
+    },
+    "nofivestars": {
+      "type": "integer"
+    },
+    "outlet": {
+      "model": "outlet"
+    }
+  }
+}

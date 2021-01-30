@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/maritalstatus",
+      "handler": "maritalstatu.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/maritalstatus/count",
+      "handler": "maritalstatu.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/maritalstatus/:id",
+      "handler": "maritalstatu.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/maritalstatus",
+      "handler": "maritalstatu.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/maritalstatus/:id",
+      "handler": "maritalstatu.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/maritalstatus/:id",
+      "handler": "maritalstatu.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

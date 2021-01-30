@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/dailypromotionimages",
+      "handler": "dailypromotionimage.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/dailypromotionimages/count",
+      "handler": "dailypromotionimage.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/dailypromotionimages/:id",
+      "handler": "dailypromotionimage.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/dailypromotionimages",
+      "handler": "dailypromotionimage.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/dailypromotionimages/:id",
+      "handler": "dailypromotionimage.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/dailypromotionimages/:id",
+      "handler": "dailypromotionimage.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

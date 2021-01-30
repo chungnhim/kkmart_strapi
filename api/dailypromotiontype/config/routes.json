@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/dailypromotiontypes",
+      "handler": "dailypromotiontype.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/dailypromotiontypes/count",
+      "handler": "dailypromotiontype.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/dailypromotiontypes/:id",
+      "handler": "dailypromotiontype.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/dailypromotiontypes",
+      "handler": "dailypromotiontype.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/dailypromotiontypes/:id",
+      "handler": "dailypromotiontype.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/dailypromotiontypes/:id",
+      "handler": "dailypromotiontype.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

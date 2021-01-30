@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/membershiptypes",
+      "handler": "membershiptype.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/membershiptypes/count",
+      "handler": "membershiptype.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/membershiptypes/:id",
+      "handler": "membershiptype.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/membershiptypes",
+      "handler": "membershiptype.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/membershiptypes/:id",
+      "handler": "membershiptype.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/membershiptypes/:id",
+      "handler": "membershiptype.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

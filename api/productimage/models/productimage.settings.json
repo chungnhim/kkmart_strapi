@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "productimages",
+  "info": {
+    "name": "Productimage"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "productid": {
+      "type": "integer"
+    },
+    "status": {
+      "type": "integer"
+    },
+    "createddate": {
+      "type": "datetime"
+    },
+    "image": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    }
+  }
+}

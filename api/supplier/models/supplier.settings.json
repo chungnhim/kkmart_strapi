@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "suppliers",
+  "info": {
+    "name": "Supplier"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "companyname": {
+      "type": "string"
+    },
+    "address1": {
+      "type": "string"
+    },
+    "address2": {
+      "type": "string"
+    },
+    "country": {
+      "model": "country"
+    },
+    "state": {
+      "model": "state"
+    },
+    "city": {
+      "type": "string"
+    },
+    "postcode": {
+      "type": "string"
+    },
+    "contactname": {
+      "type": "string"
+    },
+    "contactphone": {
+      "type": "string"
+    },
+    "contactemail": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/deviceinfos",
+      "handler": "deviceinfo.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/deviceinfos/count",
+      "handler": "deviceinfo.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/deviceinfos/:id",
+      "handler": "deviceinfo.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/deviceinfos",
+      "handler": "deviceinfo.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/deviceinfos/:id",
+      "handler": "deviceinfo.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/deviceinfos/:id",
+      "handler": "deviceinfo.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

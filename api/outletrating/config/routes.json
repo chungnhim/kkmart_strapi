@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/outletratings",
+      "handler": "outletrating.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/outletratings/count",
+      "handler": "outletrating.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/outletratings/:id",
+      "handler": "outletrating.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/outletratings",
+      "handler": "outletrating.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/outletratings/:id",
+      "handler": "outletrating.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/outletratings/:id",
+      "handler": "outletrating.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

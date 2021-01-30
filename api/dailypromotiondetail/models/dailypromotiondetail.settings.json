@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "dailypromotiondetails",
+  "info": {
+    "name": "dailypromotiondetail"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "image": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "couponcode": {
+      "type": "string"
+    },
+    "discountpercent": {
+      "type": "float"
+    },
+    "orginprice": {
+      "type": "float"
+    },
+    "discountprice": {
+      "type": "float"
+    },
+    "description": {
+      "type": "string"
+    },
+    "caption": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "dailypromotion": {
+      "via": "dailypromotiondetails",
+      "model": "dailypromotion"
+    }
+  }
+}

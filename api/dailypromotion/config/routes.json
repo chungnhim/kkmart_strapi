@@ -1,0 +1,123 @@
+{
+    "routes": [{
+            "method": "GET",
+            "path": "/dailypromotions",
+            "handler": "dailypromotion.find",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/dailypromotions/count",
+            "handler": "dailypromotion.count",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/dailypromotions/:id",
+            "handler": "dailypromotion.findOne",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/dailypromotions",
+            "handler": "dailypromotion.create",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "PUT",
+            "path": "/dailypromotions/:id",
+            "handler": "dailypromotion.update",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "DELETE",
+            "path": "/dailypromotions/:id",
+            "handler": "dailypromotion.delete",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/dailypromotions/coupon-code-text",
+            "handler": "dailypromotion.getcouponcodetext",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/dailypromotions/coupon-code-image",
+            "handler": "dailypromotion.getcouponcodeimage",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/dailypromotions/e-catalogue",
+            "handler": "dailypromotion.getecatalogue",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/dailypromotions/popup",
+            "handler": "dailypromotion.getpopup",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/dailypromotions/production-list",
+            "handler": "dailypromotion.getproductionlist",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/dailypromotions/production-category",
+            "handler": "dailypromotion.getproductioncategory",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/dailypromotions/new-outlet",
+            "handler": "dailypromotion.getnewoutlet",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/dailypromotions/campaign",
+            "handler": "dailypromotion.getcampaign",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/dailypromotions/member-exclusive",
+            "handler": "dailypromotion.getmemberexclusive",
+            "config": {
+                "policies": []
+            }
+        }
+    ]
+}

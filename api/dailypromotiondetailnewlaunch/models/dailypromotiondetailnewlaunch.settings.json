@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "dailypromotiondetailnewlaunches",
+  "info": {
+    "name": "Dailypromotiondetailnewlaunch"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "dailypromotionid": {
+      "type": "integer"
+    },
+    "promotionimage": {
+      "type": "string"
+    },
+    "productid": {
+      "type": "integer"
+    },
+    "starttime": {
+      "type": "datetime"
+    },
+    "endtime": {
+      "type": "datetime"
+    },
+    "discountpercent": {
+      "type": "float"
+    },
+    "originprice": {
+      "type": "float"
+    },
+    "discountprice": {
+      "type": "float"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "promotiontypeid": {
+      "type": "integer"
+    },
+    "isdefaultpreset": {
+      "type": "boolean"
+    }
+  }
+}
