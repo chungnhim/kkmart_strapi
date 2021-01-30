@@ -21,32 +21,6 @@ const removeAuthorFields = (entity) => {
     return sanitizedValue;
 };
 
-const prepareProductModel = (product, userId) => {
-    let API_ENPOINT = "";
-    if (!_.isNil(process.env.API_ENPOINT.trim())) {
-        API_ENPOINT = process.env.API_ENPOINT.trim();
-    }
-
-    _.forEach(product.productimages, (value, key) => {
-        if (!_.isNil(value.image) && !_.isNil(value.image.formats)) {
-            if (!_.isNil(value.image.formats.small)) {
-                value.image.formats.small.url = `${API_ENPOINT}${value.image.formats.small.url}`
-            }
-
-            if (!_.isNil(value.image.formats.medium)) {
-                value.image.formats.medium.url = `${API_ENPOINT}${value.image.formats.medium.url}`
-            }
-
-            if (!_.isNil(value.image.formats.thumbnail)) {
-                value.image.formats.thumbnail.url = `${API_ENPOINT}${value.image.formats.thumbnail.url}`
-            }
-        }
-    });
-
-
-
-    return product;
-}
 
 module.exports = {
     searchproducts: async(ctx) => {
@@ -69,7 +43,6 @@ module.exports = {
         //checkUser
         //check jwt token
         var userId = 0;
-        console.log(userId);
         if (ctx.request && ctx.request.header && ctx.request.header.authorization) {
             try {
                 const { id, isAdmin = false } = await strapi.plugins['users-permissions'].services.jwt.getToken(ctx);
@@ -97,7 +70,7 @@ module.exports = {
             productModel = productModels[0];
         }
 
-        productModel = prepareProductModel(productModel, userId);
+        productModel = await strapi.services.common.addFullUrl(productModel);
         productModel.is_wish_list = await strapi.services.wishlist.checkWishlist(userId, product.id);
         let data = removeAuthorFields(productModel);
         ctx.send(data);
