@@ -21,7 +21,7 @@ const removeAuthorFields = (entity) => {
     return sanitizedValue;
 };
 
-const prepareProductModel = (product) => {
+const prepareProductModel = (product, userId) => {
     let API_ENPOINT = "";
     if (!_.isNil(process.env.API_ENPOINT.trim())) {
         API_ENPOINT = process.env.API_ENPOINT.trim();
@@ -43,12 +43,13 @@ const prepareProductModel = (product) => {
         }
     });
 
-    product.is_wish_list = false;
+
+
     return product;
 }
 
 module.exports = {
-    searchproducts: async (ctx) => {
+    searchproducts: async(ctx) => {
         const params = _.assign({}, ctx.request.body, ctx.params);
 
         let name = params.name;
@@ -64,7 +65,20 @@ module.exports = {
         let data = Object.values(removeAuthorFields(dataresult));
         ctx.send(data);
     },
-    getDetails: async (ctx) => {
+    getDetails: async(ctx) => {
+        //checkUser
+        //check jwt token
+        var userId = 0;
+        console.log(userId);
+        if (ctx.request && ctx.request.header && ctx.request.header.authorization) {
+            try {
+                const { id, isAdmin = false } = await strapi.plugins['users-permissions'].services.jwt.getToken(ctx);
+                userId = id;
+            } catch (err) {
+                //return handleErrors(ctx, err, 'unauthorized');
+            }
+        }
+        //
         const params = _.assign({}, ctx.request.params, ctx.params);
 
         let productId = params.productId;
@@ -83,7 +97,9 @@ module.exports = {
             productModel = productModels[0];
         }
 
-        productModel = prepareProductModel(productModel);
-        ctx.send(productModel);
+        productModel = prepareProductModel(productModel, userId);
+        productModel.is_wish_list = await strapi.services.wishlist.checkWishlist(userId, product.id);
+        let data = removeAuthorFields(productModel);
+        ctx.send(data);
     },
 };

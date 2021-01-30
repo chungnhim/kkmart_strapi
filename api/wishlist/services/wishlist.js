@@ -7,7 +7,11 @@
 
 module.exports = {
     checkWishlist: async(userId, productId) => {
+        var dataQuery = {
+            user: userId,
+            product: productId
+        }
         var dataresult = await strapi.query('wishlist').find();
-        if (dataresult != null) { return true; } else { return false; }
+        if (dataresult != null && dataresult.length > 0) { return true; } else { return false; }
     }
 };
