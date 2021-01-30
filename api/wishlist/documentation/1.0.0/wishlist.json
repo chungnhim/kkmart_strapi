@@ -769,6 +769,12 @@
               "slug": {
                 "type": "string"
               },
+              "product_variants": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "created_by": {
                 "type": "string"
               },

@@ -74,6 +74,10 @@
     },
     "slug": {
       "type": "string"
+    },
+    "product_variants": {
+      "via": "product_id",
+      "collection": "product-variant"
     }
   }
 }

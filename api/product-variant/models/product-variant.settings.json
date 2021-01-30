@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "product_variants",
+  "info": {
+    "name": "ProductVariant"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "sku": {
+      "type": "string"
+    },
+    "barcode": {
+      "type": "string"
+    },
+    "price": {
+      "type": "float"
+    },
+    "selling_price": {
+      "type": "float"
+    },
+    "name": {
+      "type": "string"
+    },
+    "product_variant_images": {
+      "collection": "productimage",
+      "via": "product_variant_id"
+    },
+    "product_id": {
+      "model": "product",
+      "via": "product_variants"
+    }
+  }
+}
