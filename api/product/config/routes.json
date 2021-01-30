@@ -49,24 +49,16 @@
       }
     },
     {
-      "method": "POST",
-      "path": "/products/search-products",
-      "handler": "product.searchproducts",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "POST",
-      "path": "/products/search-products",
-      "handler": "product.searchproducts",
+      "method": "GET",
+      "path": "/products/search-products/:page_index/:page_size",
+      "handler": "product.searchProducts",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/products/get-details/:productId",
+      "path": "/products/get-details/:product_id",
       "handler": "product.getDetails",
       "config": {
         "policies": []

@@ -14,7 +14,8 @@ const removeAuthorFields = (entity) => {
         if (_.isArray(value)) {
             sanitizedValue[key] = value.map(removeAuthorFields);
         } else if (_.isObject(value)) {
-            sanitizedValue[key] = removeAuthorFields(value);
+            let item = removeAuthorFields(value);
+            sanitizedValue[key] = prepareProductModel(item);
         }
     });
 
@@ -49,23 +50,33 @@ const prepareProductModel = (product, userId) => {
 }
 
 module.exports = {
-    searchproducts: async(ctx) => {
-        const params = _.assign({}, ctx.request.body, ctx.params);
+    searchProducts: async (ctx) => {
+        const queryString = _.assign({}, ctx.request.query, ctx.params);
+        const params = _.assign({}, ctx.request.params, ctx.params);
 
-        let name = params.name;
+        let name = queryString.name;
+        let pageIndex = 1, pageSize = 10;
+
+        if (!_.isNil(params.page_index) && !_.isNil(params.page_size)) {
+            pageIndex = parseInt(params.page_index);
+            pageSize = parseInt(params.page_size);
+        }
+
         var dataQuery = {
-            name_contains: name,
-            _start: 0,
-            _limit: 10,
+            _start: (pageIndex - 1) * pageSize,
+            _limit: pageSize,
             _sort: "name:desc",
         };
 
-        console.log(dataQuery);
-        var dataresult = await strapi.query("product").find(dataQuery);
-        let data = Object.values(removeAuthorFields(dataresult));
-        ctx.send(data);
+        if (!_.isNil(name)) {
+            dataQuery.name_contains = name;
+        }
+
+        var entity = await strapi.query("product").find(dataQuery);
+        let productModels = Object.values(removeAuthorFields(entity));
+        ctx.send(productModels);
     },
-    getDetails: async(ctx) => {
+    getDetails: async (ctx) => {
         //checkUser
         //check jwt token
         var userId = 0;
@@ -81,7 +92,7 @@ module.exports = {
         //
         const params = _.assign({}, ctx.request.params, ctx.params);
 
-        let productId = params.productId;
+        let productId = params.product_id;
         var product = await strapi.query("product").findOne({
             id: productId,
         });
