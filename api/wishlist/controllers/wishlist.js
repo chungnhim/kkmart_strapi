@@ -73,6 +73,37 @@ module.exports = {
             });
         }
 
+    },
+    async getOfUser(ctx) {
+
+        const { userId } = ctx.params;
+        let dataQuery = {
+            user: userId
+        }
+        var dataResult = await strapi.query("wishlist").find(dataQuery);
+        if (dataResult.length > 0) {
+            var dataProductResult = [];
+
+            for (const item of dataResult) {
+                console.log(item.product.id);
+                var getProductResult = await strapi.query("product").findOne({ id: item.product.id });
+                dataProductResult.push(getProductResult);
+            }
+
+            let data = Object.values(removeAuthorFields(dataProductResult));
+            let productModel = await strapi.services.common.addFullUrl(data);
+            ctx.send(Object.values(productModel));
+        } else {
+            ctx.send({
+                statusCode: 0,
+                error: 'none',
+                message: formatError({
+                    id: 'success',
+                    message: 'have not wish list',
+                }),
+            });
+        }
+
     }
 
 };

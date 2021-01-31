@@ -9,6 +9,13 @@
         },
         {
             "method": "GET",
+            "path": "/wishlists/get-of-user",
+            "handler": "wishlist.getOfUser",
+            "config": {
+                "policies": []
+            }
+        }, {
+            "method": "GET",
             "path": "/wishlists/count",
             "handler": "wishlist.count",
             "config": {

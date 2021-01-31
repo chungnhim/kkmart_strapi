@@ -23,7 +23,9 @@ const removeAuthorFields = (entity) => {
         }
 
         if (key == 'url') {
-            sanitizedValue[key] = `${API_ENPOINT}${value}`;
+            if (value[0] == '/') {
+                sanitizedValue[key] = `${API_ENPOINT}${value}`;
+            }
         }
     });
     return sanitizedValue;
@@ -31,9 +33,6 @@ const removeAuthorFields = (entity) => {
 
 module.exports = {
     addFullUrl: async(entity) => {
-        let API_ENPOINT = "";
-
         return removeAuthorFields(entity);
-
     }
 };
