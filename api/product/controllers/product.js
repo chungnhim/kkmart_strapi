@@ -9,7 +9,12 @@ const _ = require("lodash");
 const axios = require("axios");
 
 const removeAuthorFields = (entity) => {
-    const sanitizedValue = _.omit(entity, ['created_by', 'updated_by', 'created_at', 'updated_at']);
+    const sanitizedValue = _.omit(entity, [
+        "created_by",
+        "updated_by",
+        "created_at",
+        "updated_at",
+    ]);
     _.forEach(sanitizedValue, (value, key) => {
         if (_.isArray(value)) {
             sanitizedValue[key] = value.map(removeAuthorFields);
@@ -21,40 +26,59 @@ const removeAuthorFields = (entity) => {
     return sanitizedValue;
 };
 
-
 module.exports = {
-    searchproducts: async(ctx) => {
-        const params = _.assign({}, ctx.request.body, ctx.params);
+    searchProducts: async (ctx) => {
+        const queryString = _.assign({}, ctx.request.query, ctx.params);
+        const params = _.assign({}, ctx.request.params, ctx.params);
 
-        let name = params.name;
+        let name = queryString.name;
+        let pageIndex = 1,
+            pageSize = 10;
+
+        if (!_.isNil(params.page_index) && !_.isNil(params.page_size)) {
+            pageIndex = parseInt(params.page_index);
+            pageSize = parseInt(params.page_size);
+        }
+
         var dataQuery = {
-            name_contains: name,
-            _start: 0,
-            _limit: 10,
+            _start: (pageIndex - 1) * pageSize,
+            _limit: pageSize,
             _sort: "name:desc",
         };
 
-        console.log(dataQuery);
-        var dataresult = await strapi.query("product").find(dataQuery);
-        let data = Object.values(removeAuthorFields(dataresult));
-        ctx.send(data);
+        if (!_.isNil(name)) {
+            dataQuery.name_contains = name;
+        }
+
+        var totalRows = await strapi.query('product').count(dataQuery);
+        var entities = await strapi.query("product").find(dataQuery);
+        let productModels = await strapi.services.common.normalizationResponse(
+            entities
+        );
+
+        var res = {
+            totalRows,
+            source: _.values(productModels)
+        };
+
+        ctx.send(res);
     },
-    getDetails: async(ctx) => {
-        //checkUser
-        //check jwt token
+    getDetails: async (ctx) => {
+        console.log(`process.env.API_ENPOINT`, process.env.API_ENPOINT);
         var userId = 0;
         if (ctx.request && ctx.request.header && ctx.request.header.authorization) {
             try {
-                const { id, isAdmin = false } = await strapi.plugins['users-permissions'].services.jwt.getToken(ctx);
+                const { id, isAdmin = false } = await strapi.plugins[
+                    "users-permissions"
+                ].services.jwt.getToken(ctx);
                 userId = id;
             } catch (err) {
                 //return handleErrors(ctx, err, 'unauthorized');
             }
         }
-        //
-        const params = _.assign({}, ctx.request.params, ctx.params);
 
-        let productId = params.productId;
+        const params = _.assign({}, ctx.request.params, ctx.params);
+        let productId = params.product_id;
         var product = await strapi.query("product").findOne({
             id: productId,
         });
@@ -64,15 +88,12 @@ module.exports = {
             return;
         }
 
-        let productModels = Object.values(removeAuthorFields([product]));
-        let productModel = null;
-        if (productModels.length > 0) {
-            productModel = productModels[0];
-        }
+        let productModel = await strapi.services.common.normalizationResponse(product);
+        productModel.is_wish_list = await strapi.services.wishlist.checkWishlist(
+            userId,
+            productId
+        );
 
-        productModel = await strapi.services.common.addFullUrl(productModel);
-        productModel.is_wish_list = await strapi.services.wishlist.checkWishlist(userId, product.id);
-        let data = removeAuthorFields(productModel);
-        ctx.send(data);
+        ctx.send(productModel);
     },
 };

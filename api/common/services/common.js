@@ -8,13 +8,19 @@ const { sanitizeEntity } = require("strapi-utils");
 const _ = require("lodash");
 const axios = require("axios");
 
-
 const removeAuthorFields = (entity) => {
     let API_ENPOINT = "";
     if (!_.isNil(process.env.API_ENPOINT)) {
         API_ENPOINT = process.env.API_ENPOINT.trim();
     }
-    const sanitizedValue = _.omit(entity, ['created_by', 'updated_by', 'user', 'formats', ]);
+
+    const sanitizedValue = _.omit(entity, [
+        "created_by",
+        "updated_by",
+        "user",
+        "formats",
+    ]);
+
     _.forEach(sanitizedValue, (value, key) => {
         if (_.isArray(value)) {
             sanitizedValue[key] = value.map(removeAuthorFields);
@@ -22,17 +28,18 @@ const removeAuthorFields = (entity) => {
             sanitizedValue[key] = removeAuthorFields(value);
         }
 
-        if (key == 'url') {
-            if (value[0] == '/') {
+        if (key == "url") {
+            if (value[0] == "/") {
                 sanitizedValue[key] = `${API_ENPOINT}${value}`;
             }
         }
     });
+
     return sanitizedValue;
 };
 
 module.exports = {
-    addFullUrl: async(entity) => {
+    normalizationResponse: async (entity) => {
         return removeAuthorFields(entity);
-    }
+    },
 };
