@@ -9,7 +9,7 @@ const _ = require("lodash");
 const axios = require("axios");
 
 const removeAuthorFields = (entity) => {
-    let API_ENPOINT = "";
+    let API_ENPOINT = "http://128.199.86.59:1337";
     if (!_.isNil(process.env.API_ENPOINT)) {
         API_ENPOINT = process.env.API_ENPOINT.trim();
     }
@@ -28,8 +28,8 @@ const removeAuthorFields = (entity) => {
             sanitizedValue[key] = removeAuthorFields(value);
         }
 
-        if (key == "url") {
-            if (value[0] == "/") {
+        if (key == 'url') {
+            if (value[0] == '/') {
                 sanitizedValue[key] = `${API_ENPOINT}${value}`;
             }
         }
@@ -39,7 +39,7 @@ const removeAuthorFields = (entity) => {
 };
 
 module.exports = {
-    normalizationResponse: async (entity) => {
+    normalizationResponse: async(entity) => {
         return removeAuthorFields(entity);
     },
 };

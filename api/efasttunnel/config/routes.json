@@ -1,0 +1,59 @@
+{
+    "routes": [{
+            "method": "GET",
+            "path": "/efasttunnels",
+            "handler": "efasttunnel.find",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/efasttunnels/get-efast-tunnel",
+            "handler": "efasttunnel.getEFastTunnel",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/efasttunnels/count",
+            "handler": "efasttunnel.count",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/efasttunnels/:id",
+            "handler": "efasttunnel.findOne",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/efasttunnels",
+            "handler": "efasttunnel.create",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "PUT",
+            "path": "/efasttunnels/:id",
+            "handler": "efasttunnel.update",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "DELETE",
+            "path": "/efasttunnels/:id",
+            "handler": "efasttunnel.delete",
+            "config": {
+                "policies": []
+            }
+        }
+    ]
+}
