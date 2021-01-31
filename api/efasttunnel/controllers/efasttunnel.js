@@ -20,8 +20,8 @@ const removeAuthorFields = (entity) => {
 
 module.exports = {
 
-    getbrand: async ctx => {
-        var dataresult = await strapi.query('brand').find({ isactive_eq: true });
+    getEFastTunnel: async ctx => {
+        var dataresult = await strapi.query('efasttunnel').find({ isactive_eq: true });
         var dataArrayUrl = Object.values(removeAuthorFields(dataresult))
         var dataArrayUrl = await strapi.services.common.normalizationResponse(
             dataArrayUrl

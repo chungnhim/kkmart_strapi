@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "efasttunnels",
+  "info": {
+    "name": "Efasttunnel"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "tunnelname": {
+      "type": "string"
+    },
+    "tunneldesc": {
+      "type": "string"
+    },
+    "tunnelicon": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "tunnelurl": {
+      "type": "string"
+    },
+    "isactive": {
+      "type": "boolean"
+    }
+  }
+}
