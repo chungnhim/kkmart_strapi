@@ -744,6 +744,12 @@
               "friendcode": {
                 "type": "string"
               },
+              "product_ratings": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "created_by": {
                 "type": "string"
               },
@@ -827,6 +833,12 @@
                 "type": "string"
               },
               "product_variants": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "product_ratings": {
                 "type": "array",
                 "items": {
                   "type": "string"

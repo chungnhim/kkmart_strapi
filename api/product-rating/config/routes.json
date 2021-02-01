@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/product-ratings",
+      "handler": "product-rating.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/product-ratings/count",
+      "handler": "product-rating.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/product-ratings/:id",
+      "handler": "product-rating.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/product-ratings",
+      "handler": "product-rating.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/product-ratings/:id",
+      "handler": "product-rating.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/product-ratings/:id",
+      "handler": "product-rating.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

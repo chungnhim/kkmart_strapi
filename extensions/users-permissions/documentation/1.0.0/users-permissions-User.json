@@ -1792,6 +1792,40 @@
           "friendcode": {
             "type": "string"
           },
+          "product_ratings": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "product": {
+                  "type": "string"
+                },
+                "rating_point": {
+                  "type": "number"
+                },
+                "comment": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "integer"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -2033,6 +2067,12 @@
           },
           "friendcode": {
             "type": "string"
+          },
+          "product_ratings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "created_by": {
             "type": "string"

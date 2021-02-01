@@ -169,6 +169,10 @@
     },
     "friendcode": {
       "type": "string"
+    },
+    "product_ratings": {
+      "via": "user",
+      "collection": "product-rating"
     }
   }
 }

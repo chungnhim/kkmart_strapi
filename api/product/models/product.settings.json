@@ -78,6 +78,10 @@
     "product_variants": {
       "via": "product_id",
       "collection": "product-variant"
+    },
+    "product_ratings": {
+      "via": "product",
+      "collection": "product-rating"
     }
   }
 }

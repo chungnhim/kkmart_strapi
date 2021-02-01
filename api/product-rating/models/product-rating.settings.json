@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "product_ratings",
+  "info": {
+    "name": "ProductRating"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "product": {
+      "model": "product",
+      "via": "product_ratings"
+    },
+    "rating_point": {
+      "type": "float"
+    },
+    "comment": {
+      "type": "text"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "product_ratings"
+    },
+    "status": {
+      "type": "integer"
+    }
+  }
+}
