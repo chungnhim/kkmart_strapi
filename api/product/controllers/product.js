@@ -13,7 +13,6 @@ module.exports = {
         const queryString = _.assign({}, ctx.request.query, ctx.params);
         const params = _.assign({}, ctx.request.params, ctx.params);
 
-        let name = queryString.name;
         let pageIndex = 1,
             pageSize = 10;
 
@@ -28,8 +27,24 @@ module.exports = {
             _sort: "name:desc",
         };
 
-        if (!_.isNil(name)) {
-            dataQuery.name_contains = name;
+        if (!_.isNil(queryString.name)) {
+            dataQuery.name_contains = queryString.name;
+        }
+
+        if (!_.isNil(queryString.category_ids)) {
+            dataQuery.categoryid_in = queryString.category_ids.split(",");
+        }
+
+        if (!_.isNil(queryString.min_price)) {
+            dataQuery.price_gte = parseFloat(queryString.min_price);
+        }
+
+        if (!_.isNil(queryString.max_price)) {
+            dataQuery.price_lte = parseFloat(queryString.max_price);
+        }
+
+        if (!_.isNil(queryString.rating_point)) {
+            dataQuery.rating_point_gte = parseFloat(queryString.rating_point);
         }
 
         var totalRows = await strapi.query('product').count(dataQuery);
