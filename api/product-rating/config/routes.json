@@ -47,6 +47,14 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "PUT",
+      "path": "/v1/product-ratings",
+      "handler": "product-rating.productRating",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }

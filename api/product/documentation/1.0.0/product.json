@@ -511,7 +511,7 @@
         ]
       }
     },
-    "/products/search-products/{page_index}/{page_size}": {
+    "/v1/products/search-products/{page_index}/{page_size}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -589,7 +589,7 @@
         ]
       }
     },
-    "/products/get-details/{product_id}": {
+    "/v1/products/get-details/{product_id}": {
       "get": {
         "deprecated": false,
         "description": "",

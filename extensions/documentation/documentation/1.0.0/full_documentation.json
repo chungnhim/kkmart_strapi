@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "02/01/2021 1:28:38 PM"
+    "x-generation-date": "02/02/2021 12:21:56 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -21404,6 +21404,78 @@
         ]
       }
     },
+    "/v1/product-ratings": {
+      "put": {
+        "deprecated": false,
+        "description": "Update a record",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Product-rating"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "foo": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": []
+      }
+    },
     "/product-variants": {
       "get": {
         "deprecated": false,
@@ -22439,7 +22511,7 @@
         ]
       }
     },
-    "/products/search-products/{page_index}/{page_size}": {
+    "/v1/products/search-products/{page_index}/{page_size}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -22517,7 +22589,7 @@
         ]
       }
     },
-    "/products/get-details/{product_id}": {
+    "/v1/products/get-details/{product_id}": {
       "get": {
         "deprecated": false,
         "description": "",

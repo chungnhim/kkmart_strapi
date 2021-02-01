@@ -50,7 +50,7 @@
     },
     {
       "method": "GET",
-      "path": "/products/search-products/:page_index/:page_size",
+      "path": "/v1/products/search-products/:page_index/:page_size",
       "handler": "product.searchProducts",
       "config": {
         "policies": []
@@ -58,7 +58,7 @@
     },
     {
       "method": "GET",
-      "path": "/products/get-details/:product_id",
+      "path": "/v1/products/get-details/:product_id",
       "handler": "product.getDetails",
       "config": {
         "policies": []
