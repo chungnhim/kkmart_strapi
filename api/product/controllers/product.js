@@ -8,26 +8,8 @@ const { sanitizeEntity } = require("strapi-utils");
 const _ = require("lodash");
 const axios = require("axios");
 
-const removeAuthorFields = (entity) => {
-    const sanitizedValue = _.omit(entity, [
-        "created_by",
-        "updated_by",
-        "created_at",
-        "updated_at",
-    ]);
-    _.forEach(sanitizedValue, (value, key) => {
-        if (_.isArray(value)) {
-            sanitizedValue[key] = value.map(removeAuthorFields);
-        } else if (_.isObject(value)) {
-            sanitizedValue[key] = removeAuthorFields(value);
-        }
-    });
-
-    return sanitizedValue;
-};
-
 module.exports = {
-    searchProducts: async (ctx) => {
+    searchProducts: async(ctx) => {
         const queryString = _.assign({}, ctx.request.query, ctx.params);
         const params = _.assign({}, ctx.request.params, ctx.params);
 
@@ -63,7 +45,7 @@ module.exports = {
 
         ctx.send(res);
     },
-    getDetails: async (ctx) => {
+    getDetails: async(ctx) => {
         console.log(`process.env.API_ENPOINT`, process.env.API_ENPOINT);
         var userId = 0;
         if (ctx.request && ctx.request.header && ctx.request.header.authorization) {
