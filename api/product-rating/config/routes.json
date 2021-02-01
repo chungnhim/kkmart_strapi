@@ -55,6 +55,14 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/product-ratings/:page_index/:page_size",
+      "handler": "product-rating.getRatingsByProductId",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }

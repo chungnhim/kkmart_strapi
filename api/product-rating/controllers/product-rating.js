@@ -61,5 +61,45 @@ module.exports = {
             message: "Rating has been saved",
             success: true
         });
+    },
+    getRatingsByProductId: async (ctx) => {
+        const queryString = _.assign({}, ctx.request.query, ctx.params);
+        const params = _.assign({}, ctx.request.params, ctx.params);
+
+        let pageIndex = 1,
+            pageSize = 10;
+
+        if (!_.isNil(params.page_index) && !_.isNil(params.page_size)) {
+            pageIndex = parseInt(params.page_index);
+            pageSize = parseInt(params.page_size);
+        }
+
+        var productId = queryString.product_id;
+        if (_.isNil(productId)) {
+            var res = {
+                totalRows: 0,
+                source: []
+            };
+        }
+
+        var dataQuery = {
+            product: productId,
+            _start: (pageIndex - 1) * pageSize,
+            _limit: pageSize,
+            _sort: "created_at:desc",
+        };
+
+        var totalRows = await strapi.query('product-rating').count(dataQuery);
+        var entities = await strapi.query("product-rating").find(dataQuery);
+        let models = await strapi.services.common.normalizationResponse(
+            entities, ["product"]
+        );
+
+        var res = {
+            totalRows,
+            source: _.values(models)
+        };
+
+        ctx.send(res);
     }
 };
