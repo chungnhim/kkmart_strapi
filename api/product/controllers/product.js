@@ -46,7 +46,6 @@ module.exports = {
         ctx.send(res);
     },
     getDetails: async(ctx) => {
-        console.log(`process.env.API_ENPOINT`, process.env.API_ENPOINT);
         var userId = 0;
         if (ctx.request && ctx.request.header && ctx.request.header.authorization) {
             try {
