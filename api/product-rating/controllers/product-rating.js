@@ -27,7 +27,6 @@ module.exports = {
         }
 
         const body = _.assign({}, ctx.request.body, ctx.params);
-
         var entity = {
             rating_point: parseFloat(body.rating_point),
             comment: body.comment,
@@ -52,7 +51,6 @@ module.exports = {
 
         var totalRating = _.sumBy(productRatings, "rating_point")
         var avgRating = Number(parseFloat(totalRating / productRatings.length).toFixed(1));
-        console.log(`totalRating`, avgRating);
 
         await strapi.query('product').update(
             { id: parseFloat(body.product_id) },
