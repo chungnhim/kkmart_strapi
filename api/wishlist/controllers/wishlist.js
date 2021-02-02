@@ -91,7 +91,7 @@ module.exports = {
             }
 
             let data = Object.values(removeAuthorFields(dataProductResult));
-            let productModel = await strapi.services.common.addFullUrl(data);
+            let productModel = await strapi.services.common.normalizationResponse(data);
             ctx.send(Object.values(productModel));
         } else {
             ctx.send({
