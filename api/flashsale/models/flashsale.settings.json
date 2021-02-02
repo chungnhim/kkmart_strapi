@@ -20,6 +20,9 @@
     },
     "status": {
       "type": "string"
+    },
+    "name": {
+      "type": "string"
     }
   }
 }

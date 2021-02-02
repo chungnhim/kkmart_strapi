@@ -90,4 +90,14 @@ module.exports = {
 
         ctx.send(productModel);
     },
+    getProductsFlashSale: async (ctx) => {
+        var currentDate = moment();
+        var dataQuery = {
+            activedate: currentDate.format("YYYY-MM-DD")
+        };
+
+        var flashSales = await strapi.query("flashsale").find({
+            id: productId,
+        });
+    }
 };
