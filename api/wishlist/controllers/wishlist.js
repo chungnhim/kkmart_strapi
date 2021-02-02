@@ -50,8 +50,8 @@ module.exports = {
             user: userId,
             product: productId
         }
-        var dataresult = await strapi.query('wishlist').find();
-        if (dataresult != null) {
+        var dataresult = await strapi.query('wishlist').find(dataQuery);
+        if (dataresult != null && dataresult.length > 0) {
             await strapi.query('wishlist').delete({ id: dataresult[0].id });
             ctx.send({
                 statusCode: 0,
