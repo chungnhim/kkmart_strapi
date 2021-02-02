@@ -38,13 +38,27 @@ module.exports = {
 
     addOrRemove: async ctx => {
 
+        var userId = 0;
+        if (ctx.request && ctx.request.header && ctx.request.header.authorization) {
+            try {
+                const { id, isAdmin = false } = await strapi.plugins[
+                    "users-permissions"
+                ].services.jwt.getToken(ctx);
+                userId = id;
+
+            } catch (err) {}
+        }
+
+        if (userId == 0) {
+            ctx.unauthorized(`You're not logged in!`);
+
+            return;
+        }
 
         //get in table type
         //
         //console.log(ctx.query);
         const params = _.assign({}, ctx.request.body, ctx.params);
-
-        let userId = params.userId;
         let productId = params.productId;
         let dataQuery = {
             user: userId,

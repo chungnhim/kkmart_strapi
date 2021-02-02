@@ -9,6 +9,14 @@
         },
         {
             "method": "GET",
+            "path": "/states/getbycountry",
+            "handler": "state.getbycountry",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
             "path": "/states/count",
             "handler": "state.count",
             "config": {
@@ -43,14 +51,6 @@
             "method": "DELETE",
             "path": "/states/:id",
             "handler": "state.delete",
-            "config": {
-                "policies": []
-            }
-        },
-        {
-            "method": "POST",
-            "path": "/states/getbycountry",
-            "handler": "state.getbycountry",
             "config": {
                 "policies": []
             }

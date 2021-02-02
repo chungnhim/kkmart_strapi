@@ -6,7 +6,7 @@ const _ = require('lodash');
  * to customize this controller
  */
 const removeAuthorFields = (entity) => {
-    const sanitizedValue = _.omit(entity, ['created_by', 'updated_by', 'created_at', 'updated_at', 'formats', 'country']);
+    const sanitizedValue = _.omit(entity, ['created_by', 'updated_by', 'created_at', 'updated_at', 'formats', 'users', 'country']);
     _.forEach(sanitizedValue, (value, key) => {
         if (_.isArray(value)) {
             sanitizedValue[key] = value.map(removeAuthorFields);
@@ -19,7 +19,16 @@ const removeAuthorFields = (entity) => {
 };
 
 module.exports = {
-
+    async find(ctx) {
+        const entity = await strapi.services.state.find();
+        const sanitizedEntity = sanitizeEntity(entity, { model: strapi.models.state });
+        var dataArrayUrl = removeAuthorFields(sanitizedEntity);
+        dataArrayUrl = await strapi.services.common.normalizationResponse(
+            dataArrayUrl
+        );
+        dataArrayUrl = Object.values(removeAuthorFields(dataArrayUrl))
+        ctx.send(dataArrayUrl);
+    },
     //===Get state by countryid
     getbycountry: async ctx => {
         var countryid = parseFloat(ctx.request.body.countryid);
