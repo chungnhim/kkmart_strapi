@@ -22,7 +22,12 @@ const removeAuthorFields = (entity) => {
 module.exports = {
     findcategories: async ctx => {
         var dataresult = await strapi.query('category').find({ level_eq: 1, isenable_eq: true });
-        ctx.send(Object.values(removeAuthorFields(dataresult)));
+        var dataArrayUrl = Object.values(removeAuthorFields(dataresult))
+        var dataArrayUrl = await strapi.services.common.normalizationResponse(
+            dataArrayUrl
+        );
+        dataArrayUrl = Object.values(removeAuthorFields(dataArrayUrl))
+        ctx.send(dataArrayUrl);
     },
 
     findsubcategories: async ctx => {
@@ -39,7 +44,12 @@ module.exports = {
             );
         } else {
             var dataresult = await strapi.query('category').find({ parentid_eq: parentid, isenable_eq: true });
-            ctx.send(Object.values(removeAuthorFields(dataresult)));
+            var dataArrayUrl = Object.values(removeAuthorFields(dataresult))
+            var dataArrayUrl = await strapi.services.common.normalizationResponse(
+                dataArrayUrl
+            );
+            dataArrayUrl = Object.values(removeAuthorFields(dataArrayUrl))
+            ctx.send(dataArrayUrl);
         }
     },
 };
