@@ -1,18 +1,18 @@
 {
   "paths": {
-    "/brands": {
+    "/flashsaleproducts": {
       "get": {
         "deprecated": false,
-        "description": "",
+        "description": "Find all the flashsaleproducts's records",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve flashsaleproducts document(s)",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Brand"
+                    "$ref": "#/components/schemas/Flashsaleproducts"
                   }
                 }
               }
@@ -51,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Brand"
+          "Flashsaleproducts"
         ],
         "parameters": [
           {
@@ -194,14 +194,14 @@
       },
       "post": {
         "deprecated": false,
-        "description": "Create a new record",
+        "description": "Create a new flashsaleproducts record",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve flashsaleproducts document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Brand"
+                  "$ref": "#/components/schemas/Flashsaleproducts"
                 }
               }
             }
@@ -239,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "Brand"
+          "Flashsaleproducts"
         ],
         "requestBody": {
           "description": "",
@@ -247,77 +247,20 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewBrand"
+                "$ref": "#/components/schemas/NewFlashsaleproducts"
               }
             }
           }
         }
       }
     },
-    "/brands/getbrand": {
+    "/flashsaleproducts/count": {
       "get": {
         "deprecated": false,
-        "description": "",
+        "description": "Retrieve the numver of flashsaleproducts documents",
         "responses": {
           "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Brand"
-        ],
-        "parameters": []
-      }
-    },
-    "/brands/count": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
+            "description": "Retrieve flashsaleproducts document(s)",
             "content": {
               "application/json": {
                 "schema": {
@@ -363,22 +306,22 @@
         },
         "summary": "",
         "tags": [
-          "Brand"
+          "Flashsaleproducts"
         ],
         "parameters": []
       }
     },
-    "/brands/{id}": {
+    "/flashsaleproducts/{id}": {
       "get": {
         "deprecated": false,
-        "description": "",
+        "description": "Find one flashsaleproducts record",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve flashsaleproducts document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Brand"
+                  "$ref": "#/components/schemas/Flashsaleproducts"
                 }
               }
             }
@@ -416,7 +359,7 @@
         },
         "summary": "",
         "tags": [
-          "Brand"
+          "Flashsaleproducts"
         ],
         "parameters": [
           {
@@ -433,14 +376,14 @@
       },
       "put": {
         "deprecated": false,
-        "description": "Update a record",
+        "description": "Update a single flashsaleproducts record",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve flashsaleproducts document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Brand"
+                  "$ref": "#/components/schemas/Flashsaleproducts"
                 }
               }
             }
@@ -478,7 +421,7 @@
         },
         "summary": "",
         "tags": [
-          "Brand"
+          "Flashsaleproducts"
         ],
         "requestBody": {
           "description": "",
@@ -486,7 +429,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewBrand"
+                "$ref": "#/components/schemas/NewFlashsaleproducts"
               }
             }
           }
@@ -506,10 +449,10 @@
       },
       "delete": {
         "deprecated": false,
-        "description": "Delete a record",
+        "description": "Delete a single flashsaleproducts record",
         "responses": {
           "200": {
-            "description": "deletes a single record based on the ID supplied",
+            "description": "deletes a single flashsaleproducts based on the ID supplied",
             "content": {
               "application/json": {
                 "schema": {
@@ -552,7 +495,7 @@
         },
         "summary": "",
         "tags": [
-          "Brand"
+          "Flashsaleproducts"
         ],
         "parameters": [
           {
@@ -571,7 +514,7 @@
   },
   "components": {
     "schemas": {
-      "Brand": {
+      "Flashsaleproducts": {
         "required": [
           "id"
         ],
@@ -579,69 +522,24 @@
           "id": {
             "type": "string"
           },
-          "brandname": {
-            "type": "string"
-          },
-          "shortname": {
-            "type": "string"
-          },
-          "brandicon": {
+          "flashsale": {
             "required": [
-              "id",
-              "name",
-              "hash",
-              "mime",
-              "size",
-              "url",
-              "provider"
+              "id"
             ],
             "properties": {
               "id": {
                 "type": "string"
               },
-              "name": {
+              "activedate": {
                 "type": "string"
               },
-              "alternativeText": {
-                "type": "string"
+              "starttime": {
+                "type": "time"
               },
-              "caption": {
-                "type": "string"
+              "endtime": {
+                "type": "time"
               },
-              "width": {
-                "type": "integer"
-              },
-              "height": {
-                "type": "integer"
-              },
-              "formats": {
-                "type": "object"
-              },
-              "hash": {
-                "type": "string"
-              },
-              "ext": {
-                "type": "string"
-              },
-              "mime": {
-                "type": "string"
-              },
-              "size": {
-                "type": "number"
-              },
-              "url": {
-                "type": "string"
-              },
-              "previewUrl": {
-                "type": "string"
-              },
-              "provider": {
-                "type": "string"
-              },
-              "provider_metadata": {
-                "type": "object"
-              },
-              "related": {
+              "status": {
                 "type": "string"
               },
               "created_by": {
@@ -652,11 +550,111 @@
               }
             }
           },
-          "brandurl": {
-            "type": "string"
+          "product": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "supplierid": {
+                "type": "integer"
+              },
+              "productkeyword": {
+                "type": "string"
+              },
+              "categoryid": {
+                "type": "integer"
+              },
+              "shortdescription": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "price": {
+                "type": "number"
+              },
+              "currencycode": {
+                "type": "integer"
+              },
+              "currencycodeiso": {
+                "type": "string"
+              },
+              "retailprice": {
+                "type": "number"
+              },
+              "status": {
+                "type": "integer"
+              },
+              "productimages": {
+                "type": "string"
+              },
+              "sku": {
+                "type": "string"
+              },
+              "brand": {
+                "type": "string"
+              },
+              "stock": {
+                "type": "integer"
+              },
+              "soldqtty": {
+                "type": "integer"
+              },
+              "minimumorderqtty": {
+                "type": "integer"
+              },
+              "maximumorderqtty": {
+                "type": "integer"
+              },
+              "weight": {
+                "type": "integer"
+              },
+              "rating_point": {
+                "type": "number"
+              },
+              "barcode": {
+                "type": "string"
+              },
+              "slug": {
+                "type": "string"
+              },
+              "product_variants": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           },
-          "isactive": {
-            "type": "boolean"
+          "flashprice": {
+            "type": "number"
+          },
+          "discountrate": {
+            "type": "number"
+          },
+          "discountamt": {
+            "type": "number"
+          },
+          "flashqtty": {
+            "type": "number"
+          },
+          "flashsoldqtty": {
+            "type": "number"
+          },
+          "remark": {
+            "type": "string"
           },
           "created_by": {
             "required": [
@@ -748,19 +746,31 @@
           }
         }
       },
-      "NewBrand": {
+      "NewFlashsaleproducts": {
         "properties": {
-          "brandname": {
+          "flashsale": {
             "type": "string"
           },
-          "shortname": {
+          "product": {
             "type": "string"
           },
-          "brandurl": {
-            "type": "string"
+          "flashprice": {
+            "type": "number"
           },
-          "isactive": {
-            "type": "boolean"
+          "discountrate": {
+            "type": "number"
+          },
+          "discountamt": {
+            "type": "number"
+          },
+          "flashqtty": {
+            "type": "number"
+          },
+          "flashsoldqtty": {
+            "type": "number"
+          },
+          "remark": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
@@ -774,7 +784,7 @@
   },
   "tags": [
     {
-      "name": "Brand"
+      "name": "Flashsaleproducts"
     }
   ]
 }

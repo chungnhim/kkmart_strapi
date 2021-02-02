@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/flashsaleproducts",
+      "handler": "flashsaleproducts.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/flashsaleproducts/count",
+      "handler": "flashsaleproducts.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/flashsaleproducts/:id",
+      "handler": "flashsaleproducts.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/flashsaleproducts",
+      "handler": "flashsaleproducts.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/flashsaleproducts/:id",
+      "handler": "flashsaleproducts.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/flashsaleproducts/:id",
+      "handler": "flashsaleproducts.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

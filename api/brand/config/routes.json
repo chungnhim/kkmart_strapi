@@ -9,6 +9,14 @@
         },
         {
             "method": "GET",
+            "path": "/brands/getbrand",
+            "handler": "brand.getbrand",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
             "path": "/brands/count",
             "handler": "brand.count",
             "config": {
@@ -43,14 +51,6 @@
             "method": "DELETE",
             "path": "/brands/:id",
             "handler": "brand.delete",
-            "config": {
-                "policies": []
-            }
-        },
-        {
-            "method": "POST",
-            "path": "/brands/getbrand",
-            "handler": "brand.getbrand",
             "config": {
                 "policies": []
             }

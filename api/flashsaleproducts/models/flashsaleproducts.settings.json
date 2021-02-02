@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "flashsaleproducts",
+  "info": {
+    "name": "Flashsaleproducts"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "flashsale": {
+      "model": "flashsale"
+    },
+    "product": {
+      "model": "product"
+    },
+    "flashprice": {
+      "type": "decimal"
+    },
+    "discountrate": {
+      "type": "float"
+    },
+    "discountamt": {
+      "type": "decimal"
+    },
+    "flashqtty": {
+      "type": "decimal"
+    },
+    "flashsoldqtty": {
+      "type": "decimal"
+    },
+    "remark": {
+      "type": "string"
+    }
+  }
+}
