@@ -9,21 +9,16 @@
     "timestamps": true
   },
   "attributes": {
-    "cartdate": {
-      "type": "datetime"
-    },
     "cartid": {
       "type": "biginteger"
     },
-    "userid": {
-      "type": "biginteger"
-    },
-    "useremail": {
-      "type": "string"
-    },
     "shopping_cart_products": {
-      "via": "shopping_cart",
-      "collection": "shopping-cart-product"
+      "collection": "shopping-cart-product",
+      "via": "shopping_cart"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
     }
   }
 }

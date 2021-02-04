@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "02/04/2021 11:06:05 PM"
+    "x-generation-date": "02/04/2021 11:21:18 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -43032,23 +43032,17 @@
               "id": {
                 "type": "string"
               },
-              "cartdate": {
-                "type": "datetime"
-              },
               "cartid": {
                 "type": "integer"
-              },
-              "userid": {
-                "type": "integer"
-              },
-              "useremail": {
-                "type": "string"
               },
               "shopping_cart_products": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
+              },
+              "user": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -43290,17 +43284,8 @@
           "id": {
             "type": "string"
           },
-          "cartdate": {
-            "type": "datetime"
-          },
           "cartid": {
             "type": "integer"
-          },
-          "userid": {
-            "type": "integer"
-          },
-          "useremail": {
-            "type": "string"
           },
           "shopping_cart_products": {
             "type": "array",
@@ -43333,6 +43318,177 @@
                 "updated_by": {
                   "type": "string"
                 }
+              }
+            }
+          },
+          "user": {
+            "required": [
+              "id",
+              "username",
+              "email"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "username": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "provider": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "resetPasswordToken": {
+                "type": "string"
+              },
+              "confirmed": {
+                "type": "boolean"
+              },
+              "blocked": {
+                "type": "boolean"
+              },
+              "role": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "dateofbirth": {
+                "type": "string"
+              },
+              "gender": {
+                "type": "string"
+              },
+              "kcoin": {
+                "type": "number"
+              },
+              "maritalstatus": {
+                "type": "string"
+              },
+              "referralcode": {
+                "type": "string"
+              },
+              "companyname": {
+                "type": "string"
+              },
+              "promotionrewardpoint": {
+                "type": "number"
+              },
+              "nonpromotionalrewardpoint": {
+                "type": "number"
+              },
+              "membershiptype": {
+                "type": "string"
+              },
+              "address1": {
+                "type": "string"
+              },
+              "address2": {
+                "type": "string"
+              },
+              "country": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "postcode": {
+                "type": "string"
+              },
+              "ethnicgroup": {
+                "type": "string"
+              },
+              "personalinterests": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "deviceinfos": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "firstname": {
+                "type": "string"
+              },
+              "lastname": {
+                "type": "string"
+              },
+              "employmentstatus": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "socialmediaactivestatus": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "qrcode": {
+                "type": "uid"
+              },
+              "outlets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "transaction_histories": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "maritalstatuother": {
+                "type": "string"
+              },
+              "personalinterestother": {
+                "type": "string"
+              },
+              "employmentstatuother": {
+                "type": "string"
+              },
+              "socialmediaactivestatuother": {
+                "type": "string"
+              },
+              "iscompleteinformation": {
+                "type": "boolean"
+              },
+              "photo": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "preferredname": {
+                "type": "string"
+              },
+              "friendcode": {
+                "type": "string"
+              },
+              "product_ratings": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
               }
             }
           },
@@ -43428,23 +43584,17 @@
       },
       "NewShopping-cart": {
         "properties": {
-          "cartdate": {
-            "type": "datetime"
-          },
           "cartid": {
             "type": "integer"
-          },
-          "userid": {
-            "type": "integer"
-          },
-          "useremail": {
-            "type": "string"
           },
           "shopping_cart_products": {
             "type": "array",
             "items": {
               "type": "string"
             }
+          },
+          "user": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

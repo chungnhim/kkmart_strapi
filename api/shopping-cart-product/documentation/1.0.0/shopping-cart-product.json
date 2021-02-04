@@ -543,23 +543,17 @@
               "id": {
                 "type": "string"
               },
-              "cartdate": {
-                "type": "datetime"
-              },
               "cartid": {
                 "type": "integer"
-              },
-              "userid": {
-                "type": "integer"
-              },
-              "useremail": {
-                "type": "string"
               },
               "shopping_cart_products": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
+              },
+              "user": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
