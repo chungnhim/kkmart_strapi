@@ -82,6 +82,10 @@
     "product_ratings": {
       "via": "product",
       "collection": "product-rating"
+    },
+    "shopping_cart_products": {
+      "via": "product",
+      "collection": "shopping-cart-product"
     }
   }
 }

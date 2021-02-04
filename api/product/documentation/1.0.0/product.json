@@ -870,6 +870,40 @@
               }
             }
           },
+          "shopping_cart_products": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "shopping_cart": {
+                  "type": "string"
+                },
+                "product": {
+                  "type": "string"
+                },
+                "qtty": {
+                  "type": "integer"
+                },
+                "origin_price": {
+                  "type": "number"
+                },
+                "selling_price": {
+                  "type": "number"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -1035,6 +1069,12 @@
             }
           },
           "product_ratings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "shopping_cart_products": {
             "type": "array",
             "items": {
               "type": "string"

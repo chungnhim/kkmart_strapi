@@ -844,6 +844,12 @@
                   "type": "string"
                 }
               },
+              "shopping_cart_products": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "created_by": {
                 "type": "string"
               },

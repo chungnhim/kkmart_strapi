@@ -542,9 +542,6 @@
               "status": {
                 "type": "string"
               },
-              "name": {
-                "type": "string"
-              },
               "created_by": {
                 "type": "string"
               },
@@ -634,6 +631,12 @@
                 }
               },
               "product_ratings": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "shopping_cart_products": {
                 "type": "array",
                 "items": {
                   "type": "string"

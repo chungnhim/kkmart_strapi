@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "shopping_cart_products",
+  "info": {
+    "name": "ShoppingCartProduct"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "shopping_cart": {
+      "model": "shopping-cart",
+      "via": "shopping_cart_products"
+    },
+    "product": {
+      "model": "product",
+      "via": "shopping_cart_products"
+    },
+    "qtty": {
+      "type": "integer"
+    },
+    "origin_price": {
+      "type": "decimal"
+    },
+    "selling_price": {
+      "type": "decimal"
+    }
+  }
+}

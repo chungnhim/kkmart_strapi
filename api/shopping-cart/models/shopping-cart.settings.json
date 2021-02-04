@@ -20,6 +20,10 @@
     },
     "useremail": {
       "type": "string"
+    },
+    "shopping_cart_products": {
+      "via": "shopping_cart",
+      "collection": "shopping-cart-product"
     }
   }
 }
