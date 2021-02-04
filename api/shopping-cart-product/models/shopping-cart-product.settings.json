@@ -25,6 +25,10 @@
     },
     "selling_price": {
       "type": "decimal"
+    },
+    "product_variant": {
+      "model": "product-variant",
+      "via": "shopping_cart_products"
     }
   }
 }

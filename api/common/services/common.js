@@ -49,8 +49,27 @@ const removeAuthorFields = (entity, fields) => {
     return sanitizedValue;
 };
 
+const getLoggedUserId = async (ctx) => {
+    var userId = 0;
+    if (ctx.request && ctx.request.header && ctx.request.header.authorization) {
+        try {
+            const { id, isAdmin = false } = await strapi.plugins[
+                "users-permissions"
+            ].services.jwt.getToken(ctx);
+            userId = id;
+        } catch (err) {
+            //return handleErrors(ctx, err, 'unauthorized');
+        }
+    }
+
+    return userId;
+}
+
 module.exports = {
     normalizationResponse: async (entity, fields) => {
         return removeAuthorFields(entity, fields);
     },
+    getLoggedUserId: async (ctx) => {
+        return await getLoggedUserId(ctx);
+    }
 };

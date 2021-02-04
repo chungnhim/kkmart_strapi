@@ -47,6 +47,14 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/shopping-carts/add-to-cart",
+      "handler": "shopping-cart.addProductToCart",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }

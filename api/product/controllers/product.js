@@ -6,6 +6,14 @@
  */
 const _ = require("lodash");
 
+const getProductById = async (productId) => {
+    var product = await strapi.query("product").findOne({
+        id: productId,
+    });
+
+    return product;
+}
+
 module.exports = {
     searchProducts: async (ctx) => {
         const queryString = _.assign({}, ctx.request.query, ctx.params);
@@ -73,9 +81,7 @@ module.exports = {
 
         const params = _.assign({}, ctx.request.params, ctx.params);
         let productId = params.product_id;
-        var product = await strapi.query("product").findOne({
-            id: productId,
-        });
+        var product = await getProductById(productId);
 
         if (!product) {
             ctx.send({});
@@ -90,4 +96,7 @@ module.exports = {
 
         ctx.send(productModel);
     },
+    getProductById: async (productId) => {
+        return await getProductById(productId);
+    }
 };

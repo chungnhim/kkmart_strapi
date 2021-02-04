@@ -827,6 +827,12 @@
                 "product_id": {
                   "type": "string"
                 },
+                "shopping_cart_products": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -894,6 +900,9 @@
                 },
                 "selling_price": {
                   "type": "number"
+                },
+                "product_variant": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
