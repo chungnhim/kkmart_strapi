@@ -8,14 +8,14 @@
 const _ = require("lodash");
 
 module.exports = {
-    addProductToCart: async (ctx) => {
+    addProductToCart: async(ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
 
         const params = _.assign({}, ctx.request.body, ctx.params);
         let productId = params.product_id;
         let productVariantId = params.product_variant_id;
         let qtty = params.product_id;
-        let shoppingCartId = params.shopping_cart_id ?? 0;
+        let shoppingCartId = params.shopping_cart_id == null ? 0 : params.shopping_cart_id;
 
         var shoppingCart = await strapi.query("shopping-cart").findOne({
             id: shoppingCartId,
