@@ -55,6 +55,22 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/shopping-carts/:shopping_cart_id",
+      "handler": "shopping-cart.getCart",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/v1/shopping-carts/:shopping_cart_id/:cart_product_id",
+      "handler": "shopping-cart.removeCartItem",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }
