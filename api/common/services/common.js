@@ -18,9 +18,7 @@ const removeAuthorFields = (entity, fields) => {
         "created_by",
         "updated_by",
         "user",
-        "formats",
-        "created_at",
-        "updated_at"
+        "formats"
     ];
 
     if (!_.isNil(fields)) {
@@ -36,11 +34,19 @@ const removeAuthorFields = (entity, fields) => {
         if (_.isArray(value)) {
             sanitizedValue[key] = value.map(removeAuthorFields);
         } else if (_.isObject(value)) {
-            sanitizedValue[key] = removeAuthorFields(value, fields);
+            if (key == 'created_at' || key == 'updated_at') {
+                if (new Date(value) !== "Invalid Date" && !isNaN(new Date(value))) {
+                    if (value == new Date(value).toISOString()) {
+                        sanitizedValue[key] = value;
+                    }
+                }
+            } else {
+                sanitizedValue[key] = removeAuthorFields(value, fields);
+            }
         }
 
         if (key == 'url') {
-            if (value[0] == '/') {
+            if (value != null && value[0] == '/') {
                 sanitizedValue[key] = `${API_ENPOINT}${value}`;
             }
         }
@@ -49,7 +55,7 @@ const removeAuthorFields = (entity, fields) => {
     return sanitizedValue;
 };
 
-const getLoggedUserId = async (ctx) => {
+const getLoggedUserId = async(ctx) => {
     var userId = 0;
     if (ctx.request && ctx.request.header && ctx.request.header.authorization) {
         try {
@@ -66,10 +72,10 @@ const getLoggedUserId = async (ctx) => {
 }
 
 module.exports = {
-    normalizationResponse: async (entity, fields) => {
+    normalizationResponse: async(entity, fields) => {
         return removeAuthorFields(entity, fields);
     },
-    getLoggedUserId: async (ctx) => {
+    getLoggedUserId: async(ctx) => {
         return await getLoggedUserId(ctx);
     }
 };
