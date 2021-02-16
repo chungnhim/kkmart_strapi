@@ -8,7 +8,28 @@
 const _ = require("lodash");
 
 module.exports = {
-    addProductToCart: async (ctx) => {
+    find: async(ctx) => {
+        let userId = await strapi.services.common.getLoggedUserId(ctx);
+        if (userId == 0) {
+            return ctx.badRequest(
+                null,
+                formatError({
+                    id: 'Invalidate Token',
+                    message: 'Invalidate Token',
+                })
+            );
+        }
+        var shoppingCart = await strapi.query("shopping-cart").find({
+            user: userId,
+        });
+
+        let cartModel = await strapi.services.common.normalizationResponse(shoppingCart);
+        ctx.send({
+            success: true,
+            cart: Object.values(cartModel)
+        });
+    },
+    addProductToCart: async(ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
 
         const params = _.assign({}, ctx.request.body, ctx.params);
@@ -29,6 +50,12 @@ module.exports = {
             }
 
             shoppingCart = await strapi.query("shopping-cart").create(cartEntity);
+        } else {
+            if (userId != 0) {
+                shoppingCart.user = userId;
+            }
+
+            shoppingCart = await strapi.query("shopping-cart").update({ id: shoppingCart.id }, shoppingCart);
         }
 
         if (_.isNil(shoppingCart)) {
@@ -75,14 +102,12 @@ module.exports = {
                 origin_price: variant.price,
                 selling_price: variant.selling_price
             });
-        }
-        else {
+        } else {
             // Case update qtty of an existing item
             console.log('Case update qtty of an existing item');
 
             existsProduct.qtty += qtty;
-            shoppingCartProduct = await strapi.query("shopping-cart-product").update(
-                { id: existsProduct.id },
+            shoppingCartProduct = await strapi.query("shopping-cart-product").update({ id: existsProduct.id },
                 existsProduct
             );
         }
@@ -102,7 +127,7 @@ module.exports = {
             cart_id: shoppingCart.id
         });
     },
-    getCart: async (ctx) => {
+    getCart: async(ctx) => {
         const params = _.assign({}, ctx.request.params, ctx.params);
 
         var shoppingCartId = params.shopping_cart_id;
@@ -116,7 +141,7 @@ module.exports = {
             cart: cartModel
         });
     },
-    removeCartItem: async (ctx) => {
+    removeCartItem: async(ctx) => {
         const params = _.assign({}, ctx.request.params, ctx.params);
         let cartProductId = params.cart_product_id;
         var shoppingCartId = params.shopping_cart_id;
