@@ -9,6 +9,14 @@
         },
         {
             "method": "GET",
+            "path": "/dailypromotions/promotion-banner",
+            "handler": "dailypromotion.getPromotionBanner",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
             "path": "/dailypromotions/count",
             "handler": "dailypromotion.count",
             "config": {

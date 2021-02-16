@@ -103,5 +103,12 @@ module.exports = {
             dataresult
         );
         ctx.send(Object.values(removeAuthorFields(dailypromotionModels)));
+    },
+    getPromotionBanner: async ctx => {
+        var dataresult = await strapi.query('dailypromotion').find({ status_eq: 3, dailypromotiontype_eq: 10 });
+        var dailypromotionModels = await strapi.services.common.normalizationResponse(
+            dataresult
+        );
+        ctx.send(Object.values(removeAuthorFields(dailypromotionModels)));
     }
 };
