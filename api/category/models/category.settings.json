@@ -33,6 +33,24 @@
     },
     "parentid": {
       "model": "category"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "thumbnail": {
+      "type": "string"
+    },
+    "metadescription": {
+      "type": "string"
+    },
+    "metakeyword": {
+      "type": "string"
+    },
+    "metatitle": {
+      "type": "string"
+    },
+    "displayorder": {
+      "type": "integer"
     }
   }
 }

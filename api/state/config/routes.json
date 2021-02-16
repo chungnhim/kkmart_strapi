@@ -54,6 +54,14 @@
             "config": {
                 "policies": []
             }
+        },
+        {
+            "method": "POST",
+            "path": "/states/getbycountry",
+            "handler": "state.getbycountrypost",
+            "config": {
+                "policies": []
+            }
         }
     ]
 }

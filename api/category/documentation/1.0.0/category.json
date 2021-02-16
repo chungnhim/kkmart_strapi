@@ -770,6 +770,24 @@
               "parentid": {
                 "type": "string"
               },
+              "slug": {
+                "type": "string"
+              },
+              "thumbnail": {
+                "type": "string"
+              },
+              "metadescription": {
+                "type": "string"
+              },
+              "metakeyword": {
+                "type": "string"
+              },
+              "metatitle": {
+                "type": "string"
+              },
+              "displayorder": {
+                "type": "integer"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -777,6 +795,24 @@
                 "type": "string"
               }
             }
+          },
+          "slug": {
+            "type": "string"
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "metadescription": {
+            "type": "string"
+          },
+          "metakeyword": {
+            "type": "string"
+          },
+          "metatitle": {
+            "type": "string"
+          },
+          "displayorder": {
+            "type": "integer"
           },
           "created_by": {
             "required": [
@@ -882,6 +918,24 @@
           },
           "parentid": {
             "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "metadescription": {
+            "type": "string"
+          },
+          "metakeyword": {
+            "type": "string"
+          },
+          "metatitle": {
+            "type": "string"
+          },
+          "displayorder": {
+            "type": "integer"
           },
           "created_by": {
             "type": "string"

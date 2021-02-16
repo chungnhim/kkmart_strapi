@@ -33,8 +33,13 @@ module.exports = {
     getbycountry: async ctx => {
         const queryString = _.assign({}, ctx.request.query, ctx.params);
         const params = _.assign({}, ctx.request.params, ctx.params);
-        console.log(queryString.countryid);
         var countryid = parseFloat(queryString.countryid);
+        var dataresult = await strapi.query('state').find({ country_eq: countryid });
+        ctx.send(removeAuthorFields(dataresult));
+    },
+    getbycountrypost: async ctx => {
+        const params = _.assign({}, ctx.request.body, ctx.params);
+        let countryid = params.countryid;
         var dataresult = await strapi.query('state').find({ country_eq: countryid });
         ctx.send(removeAuthorFields(dataresult));
     },

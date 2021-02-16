@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "02/10/2021 11:37:40 PM"
+    "x-generation-date": "02/16/2021 10:30:27 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -27131,6 +27131,75 @@
           "State"
         ],
         "parameters": []
+      },
+      "post": {
+        "deprecated": false,
+        "description": "Create a new record",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "State"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "foo": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/states/count": {
@@ -34565,6 +34634,24 @@
               "parentid": {
                 "type": "string"
               },
+              "slug": {
+                "type": "string"
+              },
+              "thumbnail": {
+                "type": "string"
+              },
+              "metadescription": {
+                "type": "string"
+              },
+              "metakeyword": {
+                "type": "string"
+              },
+              "metatitle": {
+                "type": "string"
+              },
+              "displayorder": {
+                "type": "integer"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -34572,6 +34659,24 @@
                 "type": "string"
               }
             }
+          },
+          "slug": {
+            "type": "string"
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "metadescription": {
+            "type": "string"
+          },
+          "metakeyword": {
+            "type": "string"
+          },
+          "metatitle": {
+            "type": "string"
+          },
+          "displayorder": {
+            "type": "integer"
           },
           "created_by": {
             "required": [
@@ -34677,6 +34782,24 @@
           },
           "parentid": {
             "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "metadescription": {
+            "type": "string"
+          },
+          "metakeyword": {
+            "type": "string"
+          },
+          "metatitle": {
+            "type": "string"
+          },
+          "displayorder": {
+            "type": "integer"
           },
           "created_by": {
             "type": "string"
@@ -44832,6 +44955,24 @@
               },
               "parentid": {
                 "type": "string"
+              },
+              "slug": {
+                "type": "string"
+              },
+              "thumbnail": {
+                "type": "string"
+              },
+              "metadescription": {
+                "type": "string"
+              },
+              "metakeyword": {
+                "type": "string"
+              },
+              "metatitle": {
+                "type": "string"
+              },
+              "displayorder": {
+                "type": "integer"
               },
               "created_by": {
                 "type": "string"
