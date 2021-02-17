@@ -35,6 +35,11 @@
     },
     "note": {
       "type": "richtext"
+    },
+    "product_variants": {
+      "collection": "product-variant",
+      "via": "order_products",
+      "dominant": true
     }
   }
 }
