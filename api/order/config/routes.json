@@ -47,6 +47,14 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "POST",
+      "path": "/orders/pre-checkout",
+      "handler": "order.preCheckOut",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }

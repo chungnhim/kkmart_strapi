@@ -713,6 +713,12 @@
                   "type": "string"
                 }
               },
+              "order_products": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "created_by": {
                 "type": "string"
               },
