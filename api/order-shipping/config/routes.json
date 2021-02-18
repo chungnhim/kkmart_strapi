@@ -2,56 +2,48 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/orders",
-      "handler": "order.find",
+      "path": "/order-shippings",
+      "handler": "order-shipping.find",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/orders/count",
-      "handler": "order.count",
+      "path": "/order-shippings/count",
+      "handler": "order-shipping.count",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/orders/:id",
-      "handler": "order.findOne",
+      "path": "/order-shippings/:id",
+      "handler": "order-shipping.findOne",
       "config": {
         "policies": []
       }
     },
     {
       "method": "POST",
-      "path": "/orders",
-      "handler": "order.create",
+      "path": "/order-shippings",
+      "handler": "order-shipping.create",
       "config": {
         "policies": []
       }
     },
     {
       "method": "PUT",
-      "path": "/orders/:id",
-      "handler": "order.update",
+      "path": "/order-shippings/:id",
+      "handler": "order-shipping.update",
       "config": {
         "policies": []
       }
     },
     {
       "method": "DELETE",
-      "path": "/orders/:id",
-      "handler": "order.delete",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "POST",
-      "path": "/orders/checkout",
-      "handler": "order.checkOut",
+      "path": "/order-shippings/:id",
+      "handler": "order-shipping.delete",
       "config": {
         "policies": []
       }

@@ -19,7 +19,7 @@ const generateOrderCode = (length = 6) => {
 }
 
 module.exports = {
-    preCheckOut: async (ctx) => {
+    checkOut: async (ctx) => {
         const params = _.assign({}, ctx.request.body, ctx.params);
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
@@ -66,9 +66,8 @@ module.exports = {
                 return;
             }
 
-            totalAmount += variant.selling_price * variant.qtty;
+            totalAmount += variant.selling_price * cartItem.qtty;
             orderProductEntities.push({
-                order: 0,
                 products: product.id,
                 product_variants: variant.id,
                 qtty: cartItem.qtty,
@@ -91,7 +90,7 @@ module.exports = {
 
         let orderEntity = {
             order_code: generateOrderCode(5),
-            order_via: "Web",
+            order_via: params.order_via,
             order_status: 1,
             payment_status: 1,
             shipping_status: 1,
@@ -106,45 +105,44 @@ module.exports = {
         if (_.isNil(order)) {
             ctx.send({
                 success: false,
-                message: "Checkout failed"
+                message: "Pre checkout failed"
             });
 
             return;
         }
 
-        orderProductEntities.forEach(item => {
-            item.order = order.id;
-        });
+        for (let i = 0; i < orderProductEntities.length; i++) {
+            const product = orderProductEntities[i];
+            product.order = order.id;
 
-        console.log(`orderProductEntities`, orderProductEntities);
-
-        var orderProducts = await strapi.query("order-product").create(orderProductEntities);
-        console.log(`orderProducts`, orderProducts);
-
-        var existsProduct = shoppingCart.shopping_cart_products.find(s => s.id == cartProductId);
-        if (_.isNil(existsProduct)) {
-            ctx.send({
-                success: false,
-                message: "Product does not exists"
-            });
-
-            return;
+            await strapi.query("order-product").create(product);
         }
 
-        var res = await strapi.query("shopping-cart-product").delete({
-            id: cartProductId,
-        });
+        // Add shipping information
+        var shipping = {
+            full_name: params.shipping.full_name,
+            phone_number: params.shipping.phone_number,
+            province_id: params.shipping.province_id,
+            district_id: params.shipping.district_id,
+            ward_id: params.shipping.ward_id,
+            address: params.shipping.address,
+            note: params.shipping.note,
+            status: 1,
+            deliver_date: null,
+            actual_deliver_date: null,
+            deliver_note: null,
+            shipping_provider: null
+        };
 
-        if (!_.isNil(res) && res.id == cartProductId) {
-            ctx.send({
-                success: true,
-                message: "Cart item has been remove successfully"
-            });
-        }
+        await strapi.query("order-shipping").create(shipping);
 
         ctx.send({
-            success: false,
-            message: "Product does not exists"
+            success: true,
+            message: "Pre checkout has been successfully",
+            order_id: order.id,
+            total_amount: totalAmount,
+            discount_amount: discountAmount,
+            order_code: orderEntity.order_code
         });
     }
 };

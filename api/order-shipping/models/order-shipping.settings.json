@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "order_shippings",
+  "info": {
+    "name": "OrderShipping"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "order": {
+      "model": "order"
+    },
+    "full_name": {
+      "type": "string"
+    },
+    "phone_number": {
+      "type": "string"
+    },
+    "province_id": {
+      "type": "integer"
+    },
+    "district_id": {
+      "type": "integer"
+    },
+    "ward_id": {
+      "type": "integer"
+    },
+    "address": {
+      "type": "text"
+    },
+    "note": {
+      "type": "richtext"
+    },
+    "status": {
+      "type": "integer"
+    },
+    "deliver_date": {
+      "type": "datetime"
+    },
+    "actual_deliver_date": {
+      "type": "datetime"
+    },
+    "deliver_note": {
+      "type": "text"
+    },
+    "shipping_provider": {
+      "type": "string"
+    }
+  }
+}
