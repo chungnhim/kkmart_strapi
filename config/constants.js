@@ -1,5 +1,5 @@
-{
+module.exports = ({ env }) => ({
   ORDER_STATUS: {
-    "New" = 1
+    "New": 1
   }
-}
+});
