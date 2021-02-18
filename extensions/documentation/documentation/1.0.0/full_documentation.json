@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "02/18/2021 10:39:17 PM"
+    "x-generation-date": "02/18/2021 10:46:59 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -19840,7 +19840,7 @@
         ]
       }
     },
-    "/v1/orders/get-by-user": {
+    "/v1/orders/get-by-user/{page_index}/{page_size}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -19894,7 +19894,28 @@
         "tags": [
           "Order"
         ],
-        "parameters": []
+        "parameters": [
+          {
+            "name": "page_index",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
       }
     },
     "/outlets": {

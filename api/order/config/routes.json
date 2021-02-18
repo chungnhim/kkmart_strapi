@@ -66,7 +66,7 @@
     },
     {
       "method": "GET",
-      "path": "/v1/orders/get-by-user",
+      "path": "/v1/orders/get-by-user/:page_index/:page_size",
       "handler": "order.getOrdersByUserId",
       "config": {
         "policies": []

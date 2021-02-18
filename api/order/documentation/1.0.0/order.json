@@ -650,7 +650,7 @@
         ]
       }
     },
-    "/v1/orders/get-by-user": {
+    "/v1/orders/get-by-user/{page_index}/{page_size}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -704,7 +704,28 @@
         "tags": [
           "Order"
         ],
-        "parameters": []
+        "parameters": [
+          {
+            "name": "page_index",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
       }
     }
   },
