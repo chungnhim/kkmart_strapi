@@ -26,6 +26,22 @@ const getByOrderCode = async (orderCode) => {
     return order;
 }
 
+const getByOrdersUserId = async (pageIndex, pageSize, userId) => {
+    var dataQuery = {
+        _start: (pageIndex - 1) * pageSize,
+        _limit: pageSize,
+        _sort: "created_at:desc",
+    };
+
+    var totalRows = await strapi.query('order').count(dataQuery);
+    var entities = await strapi.query("order").find(dataQuery);
+
+    return {
+        totalRows,
+        entities
+    };
+}
+
 module.exports = {
     checkOut: async (ctx) => {
         const params = _.assign({}, ctx.request.body, ctx.params);
@@ -177,8 +193,6 @@ module.exports = {
             return;
         }
 
-        console.log(`res`, res);
-
         var res = await strapi.services.common.normalizationResponse(
             order
         );
@@ -187,6 +201,45 @@ module.exports = {
             success: true,
             order: res
         });
+    },
+    getOrdersByUserId: async (ctx) => {
+        let userId = await strapi.services.common.getLoggedUserId(ctx);
+        if (_.isNil(userId) || userId == 0) {
+            ctx.send({
+                success: false,
+                message: "Please login to your account"
+            });
 
+            return;
+        }
+
+        const params = _.assign({}, ctx.request.params, ctx.params);
+        let pageIndex = 1,
+            pageSize = 10;
+
+        if (!_.isNil(params.page_index) && !_.isNil(params.page_size)) {
+            pageIndex = parseInt(params.page_index);
+            pageSize = parseInt(params.page_size);
+        }
+
+        var res = await getByOrdersUserId(pageIndex, pageSize, userId);
+        if (_.isNil(res)) {
+            ctx.send({
+                success: false,
+                message: "No data found"
+            });
+
+            return;
+        }
+
+        let models = await strapi.services.common.normalizationResponse(
+            res.entities
+        );
+
+        ctx.send({
+            success: true,
+            totalRows: res.totalRows,
+            orders: _.values(models)
+        });
     }
 };
