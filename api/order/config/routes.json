@@ -50,7 +50,7 @@
     },
     {
       "method": "POST",
-      "path": "/orders/checkout",
+      "path": "/v1/orders/checkout",
       "handler": "order.checkOut",
       "config": {
         "policies": []
@@ -58,7 +58,7 @@
     },
     {
       "method": "GET",
-      "path": "/orders/get-by-order-code",
+      "path": "/v1/orders/get-by-order-code/:orderCode",
       "handler": "order.getByOrderCode",
       "config": {
         "policies": []

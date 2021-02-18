@@ -18,6 +18,14 @@ const generateOrderCode = (length = 6) => {
     return moment.utc(new Date).format("YYYYMMDD") + text;
 }
 
+const getByOrderCode = async (orderCode) => {
+    var order = await strapi.query("order").findOne({
+        order_code: orderCode,
+    });
+
+    return order;
+}
+
 module.exports = {
     checkOut: async (ctx) => {
         const params = _.assign({}, ctx.request.body, ctx.params);
@@ -120,6 +128,7 @@ module.exports = {
 
         // Add shipping information
         var shipping = {
+            order: order.id,
             full_name: params.shipping.full_name,
             phone_number: params.shipping.phone_number,
             province_id: params.shipping.province_id,
@@ -146,15 +155,38 @@ module.exports = {
         });
     },
     getByOrderCode: async (ctx) => {
-        const params = _.assign({}, ctx.request.body, ctx.params);
-        let userId = await strapi.services.common.getLoggedUserId(ctx);
-        if (_.isNil(userId) || userId == 0) {
+        const params = _.assign({}, ctx.request.params, ctx.params);
+        var orderCode = params.orderCode;
+
+        if (_.isNil(orderCode)) {
             ctx.send({
                 success: false,
-                message: "To complete this payment, please login to your account"
+                message: "Please input order code"
             });
 
             return;
         }
+
+        var order = await getByOrderCode(orderCode);
+        if (_.isNil(order)) {
+            ctx.send({
+                success: false,
+                message: "Order not found"
+            });
+
+            return;
+        }
+
+        console.log(`res`, res);
+
+        var res = await strapi.services.common.normalizationResponse(
+            order
+        );
+
+        ctx.send({
+            success: true,
+            order: res
+        });
+
     }
 };

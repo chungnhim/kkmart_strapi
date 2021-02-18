@@ -10,7 +10,8 @@
   },
   "attributes": {
     "order": {
-      "model": "order"
+      "model": "order",
+      "via": "order_shipping"
     },
     "full_name": {
       "type": "string"

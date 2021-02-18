@@ -511,7 +511,7 @@
         ]
       }
     },
-    "/orders/checkout": {
+    "/v1/orders/checkout": {
       "post": {
         "deprecated": false,
         "description": "Create a new record",
@@ -582,7 +582,7 @@
         }
       }
     },
-    "/orders/get-by-order-code": {
+    "/v1/orders/get-by-order-code/{orderCode}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -636,7 +636,18 @@
         "tags": [
           "Order"
         ],
-        "parameters": []
+        "parameters": [
+          {
+            "name": "orderCode",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
       }
     }
   },
@@ -906,6 +917,61 @@
               }
             }
           },
+          "order_shipping": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "order": {
+                "type": "string"
+              },
+              "full_name": {
+                "type": "string"
+              },
+              "phone_number": {
+                "type": "string"
+              },
+              "province_id": {
+                "type": "integer"
+              },
+              "district_id": {
+                "type": "integer"
+              },
+              "ward_id": {
+                "type": "integer"
+              },
+              "address": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              },
+              "status": {
+                "type": "integer"
+              },
+              "deliver_date": {
+                "type": "datetime"
+              },
+              "actual_deliver_date": {
+                "type": "datetime"
+              },
+              "deliver_note": {
+                "type": "string"
+              },
+              "shipping_provider": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -1033,6 +1099,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "order_shipping": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
