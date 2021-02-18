@@ -144,5 +144,17 @@ module.exports = {
             discount_amount: discountAmount,
             order_code: orderEntity.order_code
         });
+    },
+    getByOrderCode: async (ctx) => {
+        const params = _.assign({}, ctx.request.body, ctx.params);
+        let userId = await strapi.services.common.getLoggedUserId(ctx);
+        if (_.isNil(userId) || userId == 0) {
+            ctx.send({
+                success: false,
+                message: "To complete this payment, please login to your account"
+            });
+
+            return;
+        }
     }
 };

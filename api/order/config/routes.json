@@ -55,6 +55,14 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "GET",
+      "path": "/orders/get-by-order-code",
+      "handler": "order.getByOrderCode",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }
