@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/outlets": {
+    "/districts": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -12,7 +12,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Outlet"
+                    "$ref": "#/components/schemas/District"
                   }
                 }
               }
@@ -51,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Outlet"
+          "District"
         ],
         "parameters": [
           {
@@ -201,7 +201,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Outlet"
+                  "$ref": "#/components/schemas/District"
                 }
               }
             }
@@ -239,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "Outlet"
+          "District"
         ],
         "requestBody": {
           "description": "",
@@ -247,14 +247,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewOutlet"
+                "$ref": "#/components/schemas/NewDistrict"
               }
             }
           }
         }
       }
     },
-    "/outlets/count": {
+    "/districts/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -306,12 +306,12 @@
         },
         "summary": "",
         "tags": [
-          "Outlet"
+          "District"
         ],
         "parameters": []
       }
     },
-    "/outlets/{id}": {
+    "/districts/{id}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -321,7 +321,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Outlet"
+                  "$ref": "#/components/schemas/District"
                 }
               }
             }
@@ -359,7 +359,7 @@
         },
         "summary": "",
         "tags": [
-          "Outlet"
+          "District"
         ],
         "parameters": [
           {
@@ -383,7 +383,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Outlet"
+                  "$ref": "#/components/schemas/District"
                 }
               }
             }
@@ -421,7 +421,7 @@
         },
         "summary": "",
         "tags": [
-          "Outlet"
+          "District"
         ],
         "requestBody": {
           "description": "",
@@ -429,7 +429,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewOutlet"
+                "$ref": "#/components/schemas/NewDistrict"
               }
             }
           }
@@ -495,7 +495,7 @@
         },
         "summary": "",
         "tags": [
-          "Outlet"
+          "District"
         ],
         "parameters": [
           {
@@ -510,153 +510,11 @@
           }
         ]
       }
-    },
-    "/outlets/getnearme": {
-      "post": {
-        "deprecated": false,
-        "description": "Create a new record",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Outlet"
-        ],
-        "requestBody": {
-          "description": "",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "foo": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/outlets/getbystate": {
-      "post": {
-        "deprecated": false,
-        "description": "Create a new record",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Outlet"
-        ],
-        "requestBody": {
-          "description": "",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "foo": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
   "components": {
     "schemas": {
-      "Outlet": {
+      "District": {
         "required": [
           "id"
         ],
@@ -664,170 +522,24 @@
           "id": {
             "type": "string"
           },
-          "user": {
+          "province": {
             "required": [
-              "id",
-              "username",
-              "email"
+              "id"
             ],
             "properties": {
               "id": {
                 "type": "string"
               },
-              "username": {
+              "name": {
                 "type": "string"
               },
-              "email": {
-                "type": "string"
-              },
-              "provider": {
-                "type": "string"
-              },
-              "password": {
-                "type": "string"
-              },
-              "resetPasswordToken": {
-                "type": "string"
-              },
-              "confirmed": {
-                "type": "boolean"
-              },
-              "blocked": {
-                "type": "boolean"
-              },
-              "role": {
-                "type": "string"
-              },
-              "phone": {
-                "type": "string"
-              },
-              "dateofbirth": {
-                "type": "string"
-              },
-              "gender": {
-                "type": "string"
-              },
-              "kcoin": {
-                "type": "number"
-              },
-              "maritalstatus": {
-                "type": "string"
-              },
-              "referralcode": {
-                "type": "string"
-              },
-              "companyname": {
-                "type": "string"
-              },
-              "promotionrewardpoint": {
-                "type": "number"
-              },
-              "nonpromotionalrewardpoint": {
-                "type": "number"
-              },
-              "membershiptype": {
-                "type": "string"
-              },
-              "address1": {
-                "type": "string"
-              },
-              "address2": {
+              "code": {
                 "type": "string"
               },
               "country": {
                 "type": "string"
               },
-              "state": {
-                "type": "string"
-              },
-              "city": {
-                "type": "string"
-              },
-              "postcode": {
-                "type": "string"
-              },
-              "ethnicgroup": {
-                "type": "string"
-              },
-              "personalinterests": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "deviceinfos": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "firstname": {
-                "type": "string"
-              },
-              "lastname": {
-                "type": "string"
-              },
-              "employmentstatus": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "socialmediaactivestatus": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "qrcode": {
-                "type": "uid"
-              },
-              "outlets": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "transaction_histories": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "maritalstatuother": {
-                "type": "string"
-              },
-              "personalinterestother": {
-                "type": "string"
-              },
-              "employmentstatuother": {
-                "type": "string"
-              },
-              "socialmediaactivestatuother": {
-                "type": "string"
-              },
-              "iscompleteinformation": {
-                "type": "boolean"
-              },
-              "photo": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "preferredname": {
-                "type": "string"
-              },
-              "friendcode": {
-                "type": "string"
-              },
-              "product_ratings": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "orders": {
+              "districts": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -844,78 +556,7 @@
           "name": {
             "type": "string"
           },
-          "street1": {
-            "type": "string"
-          },
-          "street2": {
-            "type": "string"
-          },
-          "address": {
-            "type": "string"
-          },
-          "longitude": {
-            "type": "number"
-          },
-          "latitude": {
-            "type": "number"
-          },
-          "country": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "codeiso2": {
-                "type": "string"
-              },
-              "codeiso3": {
-                "type": "string"
-              },
-              "provinces": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "state": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "country": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "telephone": {
-            "type": "string"
-          },
-          "digi": {
+          "code": {
             "type": "string"
           },
           "created_by": {
@@ -1008,39 +649,15 @@
           }
         }
       },
-      "NewOutlet": {
+      "NewDistrict": {
         "properties": {
-          "user": {
+          "province": {
             "type": "string"
           },
           "name": {
             "type": "string"
           },
-          "street1": {
-            "type": "string"
-          },
-          "street2": {
-            "type": "string"
-          },
-          "address": {
-            "type": "string"
-          },
-          "longitude": {
-            "type": "number"
-          },
-          "latitude": {
-            "type": "number"
-          },
-          "country": {
-            "type": "string"
-          },
-          "state": {
-            "type": "string"
-          },
-          "telephone": {
-            "type": "string"
-          },
-          "digi": {
+          "code": {
             "type": "string"
           },
           "created_by": {
@@ -1055,7 +672,7 @@
   },
   "tags": [
     {
-      "name": "Outlet"
+      "name": "District"
     }
   ]
 }

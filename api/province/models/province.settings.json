@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "countries",
+  "collectionName": "provinces",
   "info": {
-    "name": "country"
+    "name": "province"
   },
   "options": {
     "increments": true,
@@ -12,15 +12,16 @@
     "name": {
       "type": "string"
     },
-    "codeiso2": {
+    "code": {
       "type": "string"
     },
-    "codeiso3": {
-      "type": "string"
+    "country": {
+      "model": "country",
+      "via": "provinces"
     },
-    "provinces": {
-      "via": "country",
-      "collection": "province"
+    "districts": {
+      "via": "province",
+      "collection": "district"
     }
   }
 }
