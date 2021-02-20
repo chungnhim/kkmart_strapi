@@ -78,14 +78,14 @@ module.exports = {
             return;
         }
 
-        // if (shoppingCart.status != strapi.config.constants.shopping_cart_status.new) {
-        //     ctx.send({
-        //         success: false,
-        //         message: "Shopping cart has been paid or cancelled"
-        //     });
+        if (shoppingCart.status != strapi.config.constants.shopping_cart_status.new) {
+            ctx.send({
+                success: false,
+                message: "Shopping cart has been paid or cancelled"
+            });
 
-        //     return;
-        // }
+            return;
+        }
 
         let totalAmount = 0;
         let discountAmount = 0;
