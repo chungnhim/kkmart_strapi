@@ -666,6 +666,9 @@
                 "email_address": {
                   "type": "string"
                 },
+                "is_default": {
+                  "type": "boolean"
+                },
                 "created_by": {
                   "type": "string"
                 },
