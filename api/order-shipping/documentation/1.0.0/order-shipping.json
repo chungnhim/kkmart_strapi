@@ -591,13 +591,13 @@
                   "type": "string"
                 }
               },
-              "order_billings": {
+              "user_addresses": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
               },
-              "user_addresses": {
+              "order_billings": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -640,13 +640,13 @@
                   "type": "string"
                 }
               },
-              "order_billings": {
+              "user_addresses": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
               },
-              "user_addresses": {
+              "order_billings": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -683,13 +683,13 @@
                   "type": "string"
                 }
               },
-              "order_billings": {
+              "user_addresses": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
               },
-              "user_addresses": {
+              "order_billings": {
                 "type": "array",
                 "items": {
                   "type": "string"

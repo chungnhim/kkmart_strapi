@@ -26,13 +26,13 @@
       "via": "country",
       "collection": "order-shipping"
     },
-    "order_billings": {
-      "via": "country",
-      "collection": "order-billing"
-    },
     "user_addresses": {
       "via": "country",
       "collection": "user-address"
+    },
+    "order_billings": {
+      "via": "country",
+      "collection": "order-billing"
     }
   }
 }

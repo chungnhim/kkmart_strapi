@@ -1027,6 +1027,9 @@
               "billing_date": {
                 "type": "datetime"
               },
+              "order": {
+                "type": "string"
+              },
               "country": {
                 "type": "string"
               },
@@ -1034,9 +1037,6 @@
                 "type": "string"
               },
               "district": {
-                "type": "string"
-              },
-              "order": {
                 "type": "string"
               },
               "created_by": {
