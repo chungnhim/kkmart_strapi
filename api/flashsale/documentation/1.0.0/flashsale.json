@@ -534,6 +534,9 @@
           "status": {
             "type": "string"
           },
+          "runeveryday": {
+            "type": "boolean"
+          },
           "created_by": {
             "required": [
               "id",
@@ -637,6 +640,9 @@
           },
           "status": {
             "type": "string"
+          },
+          "runeveryday": {
+            "type": "boolean"
           },
           "created_by": {
             "type": "string"

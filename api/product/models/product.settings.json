@@ -90,6 +90,10 @@
     "order_products": {
       "via": "products",
       "collection": "order-product"
+    },
+    "flashsaleproducts": {
+      "via": "products",
+      "collection": "flashsaleproducts"
     }
   }
 }

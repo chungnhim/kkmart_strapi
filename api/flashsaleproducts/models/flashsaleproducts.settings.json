@@ -12,8 +12,10 @@
     "flashsale": {
       "model": "flashsale"
     },
-    "product": {
-      "model": "product"
+    "products": {
+      "collection": "product",
+      "via": "flashsaleproducts",
+      "dominant": true
     },
     "flashprice": {
       "type": "decimal"
