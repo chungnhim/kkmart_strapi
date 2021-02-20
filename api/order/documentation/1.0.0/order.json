@@ -1012,15 +1012,6 @@
               "phone_number": {
                 "type": "string"
               },
-              "province_id": {
-                "type": "integer"
-              },
-              "district_id": {
-                "type": "integer"
-              },
-              "ward_id": {
-                "type": "integer"
-              },
               "address": {
                 "type": "string"
               },
@@ -1040,6 +1031,15 @@
                 "type": "string"
               },
               "shipping_provider": {
+                "type": "string"
+              },
+              "country": {
+                "type": "string"
+              },
+              "province": {
+                "type": "string"
+              },
+              "district": {
                 "type": "string"
               },
               "created_by": {

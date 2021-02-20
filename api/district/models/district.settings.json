@@ -18,6 +18,10 @@
     },
     "code": {
       "type": "string"
+    },
+    "order_shippings": {
+      "via": "district",
+      "collection": "order-shipping"
     }
   }
 }

@@ -21,6 +21,10 @@
     "provinces": {
       "via": "country",
       "collection": "province"
+    },
+    "order_shippings": {
+      "via": "country",
+      "collection": "order-shipping"
     }
   }
 }

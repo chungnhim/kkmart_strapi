@@ -22,6 +22,10 @@
     "districts": {
       "via": "province",
       "collection": "district"
+    },
+    "order_shippings": {
+      "via": "province",
+      "collection": "order-shipping"
     }
   }
 }
