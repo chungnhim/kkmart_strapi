@@ -9,9 +9,6 @@
     "timestamps": true
   },
   "attributes": {
-    "order": {
-      "model": "order"
-    },
     "full_name": {
       "type": "string"
     },

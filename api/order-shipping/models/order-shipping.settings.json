@@ -9,10 +9,6 @@
     "timestamps": true
   },
   "attributes": {
-    "order": {
-      "model": "order",
-      "via": "order_shipping"
-    },
     "full_name": {
       "type": "string"
     },
@@ -51,6 +47,9 @@
     "district": {
       "model": "district",
       "via": "order_shippings"
+    },
+    "order": {
+      "model": "order"
     }
   }
 }

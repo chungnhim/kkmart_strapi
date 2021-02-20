@@ -552,6 +552,9 @@
               "user": {
                 "type": "string"
               },
+              "status": {
+                "type": "integer"
+              },
               "created_by": {
                 "type": "string"
               },

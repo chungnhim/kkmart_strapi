@@ -10,8 +10,8 @@
   },
   "attributes": {
     "order": {
-      "model": "order",
-      "via": "order_products"
+      "via": "order_products",
+      "model": "order"
     },
     "products": {
       "collection": "product",

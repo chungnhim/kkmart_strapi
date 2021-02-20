@@ -1896,9 +1896,6 @@
                     "type": "string"
                   }
                 },
-                "order_shipping": {
-                  "type": "string"
-                },
                 "created_by": {
                   "type": "string"
                 },

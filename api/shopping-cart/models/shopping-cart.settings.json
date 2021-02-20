@@ -16,6 +16,9 @@
     "user": {
       "plugin": "users-permissions",
       "model": "user"
+    },
+    "status": {
+      "type": "integer"
     }
   }
 }

@@ -633,9 +633,6 @@
                 "id": {
                   "type": "string"
                 },
-                "order": {
-                  "type": "string"
-                },
                 "full_name": {
                   "type": "string"
                 },
@@ -672,6 +669,9 @@
                 "district": {
                   "type": "string"
                 },
+                "order": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -689,9 +689,6 @@
               ],
               "properties": {
                 "id": {
-                  "type": "string"
-                },
-                "order": {
                   "type": "string"
                 },
                 "full_name": {

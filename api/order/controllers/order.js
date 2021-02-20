@@ -69,6 +69,24 @@ module.exports = {
             return;
         }
 
+        if (_.isNil(shoppingCart.shopping_cart_products)) {
+            ctx.send({
+                success: false,
+                message: "Shopping cart is empty"
+            });
+
+            return;
+        }
+
+        if (shoppingCart.status != strapi.config.constants.shopping_cart_status.new) {
+            ctx.send({
+                success: false,
+                message: "Shopping cart has been paid or cancelled"
+            });
+
+            return;
+        }
+
         let totalAmount = 0;
         let discountAmount = 0;
         let hasError = false;
@@ -135,6 +153,16 @@ module.exports = {
             return;
         }
 
+        await strapi.query("shopping-cart").update(
+            {
+                id: shoppingCart.id
+            },
+            {
+                status: strapi.config.constants.shopping_cart_status.paid,
+                user: shoppingCart.user?.id
+            }
+        );
+
         for (let i = 0; i < orderProductEntities.length; i++) {
             const product = orderProductEntities[i];
             product.order = order.id;
@@ -179,7 +207,7 @@ module.exports = {
 
         ctx.send({
             success: true,
-            message: "Pre checkout has been successfully",
+            message: "Checkout has been successfully",
             order_id: order.id,
             total_amount: totalAmount,
             discount_amount: discountAmount,
@@ -208,6 +236,8 @@ module.exports = {
 
             return;
         }
+
+        console.log(`order`, order);
 
         var res = await strapi.services.common.normalizationResponse(
             order

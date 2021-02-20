@@ -1001,61 +1001,6 @@
               }
             }
           },
-          "order_shipping": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "order": {
-                "type": "string"
-              },
-              "full_name": {
-                "type": "string"
-              },
-              "phone_number": {
-                "type": "string"
-              },
-              "address": {
-                "type": "string"
-              },
-              "note": {
-                "type": "string"
-              },
-              "status": {
-                "type": "integer"
-              },
-              "deliver_date": {
-                "type": "datetime"
-              },
-              "actual_deliver_date": {
-                "type": "datetime"
-              },
-              "deliver_note": {
-                "type": "string"
-              },
-              "shipping_provider": {
-                "type": "string"
-              },
-              "country": {
-                "type": "string"
-              },
-              "province": {
-                "type": "string"
-              },
-              "district": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
           "created_by": {
             "required": [
               "id",
@@ -1183,9 +1128,6 @@
             "items": {
               "type": "string"
             }
-          },
-          "order_shipping": {
-            "type": "string"
           },
           "created_by": {
             "type": "string"
