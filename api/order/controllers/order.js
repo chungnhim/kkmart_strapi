@@ -147,9 +147,9 @@ module.exports = {
             order: order.id,
             full_name: params.shipping.full_name,
             phone_number: params.shipping.phone_number,
-            province_id: params.shipping.province_id,
-            district_id: params.shipping.district_id,
-            ward_id: params.shipping.ward_id,
+            country: params.shipping.country_id,
+            province: params.shipping.province_id,
+            district: params.shipping.district_id,
             address: params.shipping.address,
             note: params.shipping.note,
             status: 1,
@@ -160,6 +160,22 @@ module.exports = {
         };
 
         await strapi.query("order-shipping").create(shipping);
+
+        // Add billing address
+        var billingAddress = {
+            order: order.id,
+            full_name: params.billing.full_name,
+            phone_number: params.billing.phone_number,
+            country: params.shipping.country_id,
+            province: params.billing.province_id,
+            district: params.billing.district_id,
+            address: params.billing.address,
+            note: params.billing.note,
+            status: 1,
+            billing_date: null
+        };
+
+        await strapi.query("order-billing").create(billingAddress);
 
         ctx.send({
             success: true,
