@@ -646,6 +646,12 @@
                   "type": "string"
                 }
               },
+              "order_billings": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "created_by": {
                 "type": "string"
               },
@@ -683,6 +689,12 @@
                   "type": "string"
                 }
               },
+              "order_billings": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "created_by": {
                 "type": "string"
               },
@@ -709,6 +721,12 @@
                 "type": "string"
               },
               "order_shippings": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "order_billings": {
                 "type": "array",
                 "items": {
                   "type": "string"

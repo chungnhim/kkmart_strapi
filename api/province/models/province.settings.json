@@ -26,6 +26,10 @@
     "order_shippings": {
       "via": "province",
       "collection": "order-shipping"
+    },
+    "order_billings": {
+      "via": "province",
+      "collection": "order-billing"
     }
   }
 }

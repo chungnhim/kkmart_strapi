@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "order_billings",
+  "info": {
+    "name": "OrderBilling"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "order": {
+      "model": "order"
+    },
+    "full_name": {
+      "type": "string"
+    },
+    "phone_number": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "note": {
+      "type": "text"
+    },
+    "status": {
+      "type": "integer"
+    },
+    "billing_date": {
+      "type": "datetime"
+    },
+    "country": {
+      "model": "country",
+      "via": "order_billings"
+    },
+    "province": {
+      "model": "province",
+      "via": "order_billings"
+    },
+    "district": {
+      "model": "district",
+      "via": "order_billings"
+    }
+  }
+}

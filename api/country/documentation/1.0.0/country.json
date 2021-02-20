@@ -562,6 +562,12 @@
                     "type": "string"
                   }
                 },
+                "order_billings": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -610,6 +616,55 @@
                 },
                 "shipping_provider": {
                   "type": "string"
+                },
+                "country": {
+                  "type": "string"
+                },
+                "province": {
+                  "type": "string"
+                },
+                "district": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "order_billings": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "order": {
+                  "type": "string"
+                },
+                "full_name": {
+                  "type": "string"
+                },
+                "phone_number": {
+                  "type": "string"
+                },
+                "address": {
+                  "type": "string"
+                },
+                "note": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "integer"
+                },
+                "billing_date": {
+                  "type": "datetime"
                 },
                 "country": {
                   "type": "string"
@@ -737,6 +792,12 @@
             }
           },
           "order_shippings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "order_billings": {
             "type": "array",
             "items": {
               "type": "string"

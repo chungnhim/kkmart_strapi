@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/provinces": {
+    "/order-billings": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -10,9 +10,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Province"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
                   }
                 }
               }
@@ -51,7 +52,7 @@
         },
         "summary": "",
         "tags": [
-          "Province"
+          "Order-billing"
         ],
         "parameters": [
           {
@@ -201,72 +202,9 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Province"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Province"
-        ],
-        "requestBody": {
-          "description": "",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewProvince"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/provinces/count": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
                   "properties": {
-                    "count": {
-                      "type": "integer"
+                    "foo": {
+                      "type": "string"
                     }
                   }
                 }
@@ -306,12 +244,22 @@
         },
         "summary": "",
         "tags": [
-          "Province"
+          "Order-billing"
         ],
-        "parameters": []
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewOrder-billing"
+              }
+            }
+          }
+        }
       }
     },
-    "/provinces/{id}": {
+    "/order-billings/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -321,7 +269,11 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Province"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -359,7 +311,64 @@
         },
         "summary": "",
         "tags": [
-          "Province"
+          "Order-billing"
+        ],
+        "parameters": []
+      }
+    },
+    "/order-billings/{id}": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Order-billing"
         ],
         "parameters": [
           {
@@ -383,7 +392,11 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Province"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -421,7 +434,7 @@
         },
         "summary": "",
         "tags": [
-          "Province"
+          "Order-billing"
         ],
         "requestBody": {
           "description": "",
@@ -429,7 +442,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewProvince"
+                "$ref": "#/components/schemas/NewOrder-billing"
               }
             }
           }
@@ -495,7 +508,7 @@
         },
         "summary": "",
         "tags": [
-          "Province"
+          "Order-billing"
         ],
         "parameters": [
           {
@@ -514,7 +527,7 @@
   },
   "components": {
     "schemas": {
-      "Province": {
+      "Order-billing": {
         "required": [
           "id"
         ],
@@ -522,11 +535,78 @@
           "id": {
             "type": "string"
           },
-          "name": {
+          "order": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "order_code": {
+                "type": "string"
+              },
+              "order_via": {
+                "type": "string"
+              },
+              "order_status": {
+                "type": "integer"
+              },
+              "payment_status": {
+                "type": "integer"
+              },
+              "shipping_status": {
+                "type": "integer"
+              },
+              "total_amount": {
+                "type": "number"
+              },
+              "currency": {
+                "type": "string"
+              },
+              "discount_amount": {
+                "type": "number"
+              },
+              "order_note": {
+                "type": "string"
+              },
+              "user": {
+                "type": "string"
+              },
+              "order_products": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "order_shipping": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "full_name": {
             "type": "string"
           },
-          "code": {
+          "phone_number": {
             "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer"
+          },
+          "billing_date": {
+            "type": "datetime"
           },
           "country": {
             "required": [
@@ -571,150 +651,83 @@
               }
             }
           },
-          "districts": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "province": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "code": {
-                  "type": "string"
-                },
-                "order_shippings": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "order_billings": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
+          "province": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string"
+              },
+              "country": {
+                "type": "string"
+              },
+              "districts": {
+                "type": "array",
+                "items": {
                   "type": "string"
                 }
+              },
+              "order_shippings": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "order_billings": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
               }
             }
           },
-          "order_shippings": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "order": {
-                  "type": "string"
-                },
-                "full_name": {
-                  "type": "string"
-                },
-                "phone_number": {
-                  "type": "string"
-                },
-                "address": {
-                  "type": "string"
-                },
-                "note": {
-                  "type": "string"
-                },
-                "status": {
-                  "type": "integer"
-                },
-                "deliver_date": {
-                  "type": "datetime"
-                },
-                "actual_deliver_date": {
-                  "type": "datetime"
-                },
-                "deliver_note": {
-                  "type": "string"
-                },
-                "shipping_provider": {
-                  "type": "string"
-                },
-                "country": {
-                  "type": "string"
-                },
-                "province": {
-                  "type": "string"
-                },
-                "district": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
+          "district": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "province": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string"
+              },
+              "order_shippings": {
+                "type": "array",
+                "items": {
                   "type": "string"
                 }
-              }
-            }
-          },
-          "order_billings": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "order": {
-                  "type": "string"
-                },
-                "full_name": {
-                  "type": "string"
-                },
-                "phone_number": {
-                  "type": "string"
-                },
-                "address": {
-                  "type": "string"
-                },
-                "note": {
-                  "type": "string"
-                },
-                "status": {
-                  "type": "integer"
-                },
-                "billing_date": {
-                  "type": "datetime"
-                },
-                "country": {
-                  "type": "string"
-                },
-                "province": {
-                  "type": "string"
-                },
-                "district": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
+              },
+              "order_billings": {
+                "type": "array",
+                "items": {
                   "type": "string"
                 }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
               }
             }
           },
@@ -808,34 +821,37 @@
           }
         }
       },
-      "NewProvince": {
+      "NewOrder-billing": {
         "properties": {
-          "name": {
+          "order": {
             "type": "string"
           },
-          "code": {
+          "full_name": {
             "type": "string"
+          },
+          "phone_number": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer"
+          },
+          "billing_date": {
+            "type": "datetime"
           },
           "country": {
             "type": "string"
           },
-          "districts": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+          "province": {
+            "type": "string"
           },
-          "order_shippings": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "order_billings": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+          "district": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
@@ -847,9 +863,5 @@
       }
     }
   },
-  "tags": [
-    {
-      "name": "Province"
-    }
-  ]
+  "tags": []
 }
