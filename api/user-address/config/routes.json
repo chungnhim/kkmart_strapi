@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/user-addresses",
+      "handler": "user-address.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/user-addresses/count",
+      "handler": "user-address.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/user-addresses/:id",
+      "handler": "user-address.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/user-addresses",
+      "handler": "user-address.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/user-addresses/:id",
+      "handler": "user-address.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/user-addresses/:id",
+      "handler": "user-address.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

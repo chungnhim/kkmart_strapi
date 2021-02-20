@@ -30,6 +30,10 @@
     "order_billings": {
       "via": "province",
       "collection": "order-billing"
+    },
+    "user_addresses": {
+      "via": "province",
+      "collection": "user-address"
     }
   }
 }

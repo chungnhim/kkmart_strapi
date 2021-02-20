@@ -177,6 +177,10 @@
     "orders": {
       "via": "user",
       "collection": "order"
+    },
+    "user_addresses": {
+      "via": "user",
+      "collection": "user-address"
     }
   }
 }

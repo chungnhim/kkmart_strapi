@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_addresses",
+  "info": {
+    "name": "UserAddress"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "user_addresses"
+    },
+    "country": {
+      "model": "country",
+      "via": "user_addresses"
+    },
+    "province": {
+      "model": "province",
+      "via": "user_addresses"
+    },
+    "district": {
+      "model": "district",
+      "via": "user_addresses"
+    },
+    "address": {
+      "type": "text"
+    },
+    "phone_number": {
+      "type": "string"
+    },
+    "email_address": {
+      "type": "string"
+    }
+  }
+}

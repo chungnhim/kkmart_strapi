@@ -833,6 +833,12 @@
                   "type": "string"
                 }
               },
+              "user_addresses": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "created_by": {
                 "type": "string"
               },
@@ -889,6 +895,12 @@
                 }
               },
               "order_billings": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "user_addresses": {
                 "type": "array",
                 "items": {
                   "type": "string"

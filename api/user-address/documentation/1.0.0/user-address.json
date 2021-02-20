@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/orders": {
+    "/user-addresses": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -10,9 +10,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Order"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
                   }
                 }
               }
@@ -51,7 +52,7 @@
         },
         "summary": "",
         "tags": [
-          "Order"
+          "User-address"
         ],
         "parameters": [
           {
@@ -201,72 +202,9 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Order"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Order"
-        ],
-        "requestBody": {
-          "description": "",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewOrder"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/orders/count": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
                   "properties": {
-                    "count": {
-                      "type": "integer"
+                    "foo": {
+                      "type": "string"
                     }
                   }
                 }
@@ -306,12 +244,22 @@
         },
         "summary": "",
         "tags": [
-          "Order"
+          "User-address"
         ],
-        "parameters": []
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewUser-address"
+              }
+            }
+          }
+        }
       }
     },
-    "/orders/{id}": {
+    "/user-addresses/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -321,7 +269,11 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Order"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -359,7 +311,64 @@
         },
         "summary": "",
         "tags": [
-          "Order"
+          "User-address"
+        ],
+        "parameters": []
+      }
+    },
+    "/user-addresses/{id}": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "User-address"
         ],
         "parameters": [
           {
@@ -383,7 +392,11 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Order"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -421,7 +434,7 @@
         },
         "summary": "",
         "tags": [
-          "Order"
+          "User-address"
         ],
         "requestBody": {
           "description": "",
@@ -429,7 +442,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewOrder"
+                "$ref": "#/components/schemas/NewUser-address"
               }
             }
           }
@@ -495,7 +508,7 @@
         },
         "summary": "",
         "tags": [
-          "Order"
+          "User-address"
         ],
         "parameters": [
           {
@@ -510,260 +523,16 @@
           }
         ]
       }
-    },
-    "/v1/orders/checkout": {
-      "post": {
-        "deprecated": false,
-        "description": "Create a new record",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Order"
-        ],
-        "requestBody": {
-          "description": "",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "foo": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v1/orders/get-by-order-code/{orderCode}": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Order"
-        ],
-        "parameters": [
-          {
-            "name": "orderCode",
-            "in": "path",
-            "description": "",
-            "deprecated": false,
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/v1/orders/get-by-user/{page_index}/{page_size}": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Order"
-        ],
-        "parameters": [
-          {
-            "name": "page_index",
-            "in": "path",
-            "description": "",
-            "deprecated": false,
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page_size",
-            "in": "path",
-            "description": "",
-            "deprecated": false,
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
     }
   },
   "components": {
     "schemas": {
-      "Order": {
+      "User-address": {
         "required": [
           "id"
         ],
         "properties": {
           "id": {
-            "type": "string"
-          },
-          "order_code": {
-            "type": "string"
-          },
-          "order_via": {
-            "type": "string"
-          },
-          "order_status": {
-            "type": "integer"
-          },
-          "payment_status": {
-            "type": "integer"
-          },
-          "shipping_status": {
-            "type": "integer"
-          },
-          "total_amount": {
-            "type": "number"
-          },
-          "currency": {
-            "type": "string"
-          },
-          "discount_amount": {
-            "type": "number"
-          },
-          "order_note": {
             "type": "string"
           },
           "user": {
@@ -949,59 +718,7 @@
               }
             }
           },
-          "order_products": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "order": {
-                  "type": "string"
-                },
-                "products": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "qtty": {
-                  "type": "integer"
-                },
-                "origin_price": {
-                  "type": "number"
-                },
-                "selling_price": {
-                  "type": "number"
-                },
-                "currency": {
-                  "type": "string"
-                },
-                "discount_amount": {
-                  "type": "number"
-                },
-                "note": {
-                  "type": "string"
-                },
-                "product_variants": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "order_shipping": {
+          "country": {
             "required": [
               "id"
             ],
@@ -1009,44 +726,38 @@
               "id": {
                 "type": "string"
               },
-              "order": {
+              "name": {
                 "type": "string"
               },
-              "full_name": {
+              "codeiso2": {
                 "type": "string"
               },
-              "phone_number": {
+              "codeiso3": {
                 "type": "string"
               },
-              "address": {
-                "type": "string"
+              "provinces": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
-              "note": {
-                "type": "string"
+              "order_shippings": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
-              "status": {
-                "type": "integer"
+              "order_billings": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
-              "deliver_date": {
-                "type": "datetime"
-              },
-              "actual_deliver_date": {
-                "type": "datetime"
-              },
-              "deliver_note": {
-                "type": "string"
-              },
-              "shipping_provider": {
-                "type": "string"
-              },
-              "country": {
-                "type": "string"
-              },
-              "province": {
-                "type": "string"
-              },
-              "district": {
-                "type": "string"
+              "user_addresses": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "created_by": {
                 "type": "string"
@@ -1055,6 +766,107 @@
                 "type": "string"
               }
             }
+          },
+          "province": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string"
+              },
+              "country": {
+                "type": "string"
+              },
+              "districts": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "order_shippings": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "order_billings": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "user_addresses": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "district": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "province": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string"
+              },
+              "order_shippings": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "order_billings": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "user_addresses": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "address": {
+            "type": "string"
+          },
+          "phone_number": {
+            "type": "string"
+          },
+          "email_address": {
+            "type": "string"
           },
           "created_by": {
             "required": [
@@ -1146,45 +958,27 @@
           }
         }
       },
-      "NewOrder": {
+      "NewUser-address": {
         "properties": {
-          "order_code": {
-            "type": "string"
-          },
-          "order_via": {
-            "type": "string"
-          },
-          "order_status": {
-            "type": "integer"
-          },
-          "payment_status": {
-            "type": "integer"
-          },
-          "shipping_status": {
-            "type": "integer"
-          },
-          "total_amount": {
-            "type": "number"
-          },
-          "currency": {
-            "type": "string"
-          },
-          "discount_amount": {
-            "type": "number"
-          },
-          "order_note": {
-            "type": "string"
-          },
           "user": {
             "type": "string"
           },
-          "order_products": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+          "country": {
+            "type": "string"
           },
-          "order_shipping": {
+          "province": {
+            "type": "string"
+          },
+          "district": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "phone_number": {
+            "type": "string"
+          },
+          "email_address": {
             "type": "string"
           },
           "created_by": {
@@ -1197,9 +991,5 @@
       }
     }
   },
-  "tags": [
-    {
-      "name": "Order"
-    }
-  ]
+  "tags": []
 }
