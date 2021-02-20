@@ -159,7 +159,7 @@ module.exports = {
             },
             {
                 status: strapi.config.constants.shopping_cart_status.paid,
-                user: shoppingCart.user?.id
+                user: !_.isNil(shoppingCart.user) ? shoppingCart.user.id : null
             }
         );
 

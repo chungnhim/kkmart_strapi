@@ -44,6 +44,14 @@
     "order_products": {
       "collection": "order-product",
       "via": "order"
+    },
+    "order_billing": {
+      "via": "order",
+      "model": "order-billing"
+    },
+    "order_shipping": {
+      "via": "order",
+      "model": "order-shipping"
     }
   }
 }

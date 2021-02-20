@@ -718,6 +718,9 @@
                 "district": {
                   "type": "string"
                 },
+                "order": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },

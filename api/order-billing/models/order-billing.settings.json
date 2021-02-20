@@ -38,6 +38,10 @@
     "district": {
       "model": "district",
       "via": "order_billings"
+    },
+    "order": {
+      "model": "order",
+      "via": "order_billing"
     }
   }
 }
