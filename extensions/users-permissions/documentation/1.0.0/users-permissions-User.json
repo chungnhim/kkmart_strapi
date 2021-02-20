@@ -1826,6 +1826,64 @@
               }
             }
           },
+          "orders": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "order_code": {
+                  "type": "string"
+                },
+                "order_via": {
+                  "type": "string"
+                },
+                "order_status": {
+                  "type": "integer"
+                },
+                "payment_status": {
+                  "type": "integer"
+                },
+                "shipping_status": {
+                  "type": "integer"
+                },
+                "total_amount": {
+                  "type": "number"
+                },
+                "currency": {
+                  "type": "string"
+                },
+                "discount_amount": {
+                  "type": "number"
+                },
+                "order_note": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "order_products": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "order_shipping": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -2069,6 +2127,12 @@
             "type": "string"
           },
           "product_ratings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "orders": {
             "type": "array",
             "items": {
               "type": "string"

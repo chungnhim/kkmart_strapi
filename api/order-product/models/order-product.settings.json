@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "order_products",
+  "info": {
+    "name": "OrderProduct"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "order": {
+      "model": "order",
+      "via": "order_products"
+    },
+    "products": {
+      "collection": "product",
+      "via": "order_products",
+      "dominant": true
+    },
+    "qtty": {
+      "type": "integer"
+    },
+    "origin_price": {
+      "type": "decimal"
+    },
+    "selling_price": {
+      "type": "decimal"
+    },
+    "currency": {
+      "type": "string"
+    },
+    "discount_amount": {
+      "type": "decimal"
+    },
+    "note": {
+      "type": "richtext"
+    },
+    "product_variants": {
+      "collection": "product-variant",
+      "via": "order_products",
+      "dominant": true
+    }
+  }
+}

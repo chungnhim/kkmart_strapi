@@ -1,0 +1,53 @@
+{
+  "kind": "collectionType",
+  "collectionName": "orders",
+  "info": {
+    "name": "order"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "order_code": {
+      "type": "string"
+    },
+    "order_via": {
+      "type": "string"
+    },
+    "order_status": {
+      "type": "integer"
+    },
+    "payment_status": {
+      "type": "integer"
+    },
+    "shipping_status": {
+      "type": "integer"
+    },
+    "total_amount": {
+      "type": "decimal"
+    },
+    "currency": {
+      "type": "string"
+    },
+    "discount_amount": {
+      "type": "decimal"
+    },
+    "order_note": {
+      "type": "richtext"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "orders"
+    },
+    "order_products": {
+      "via": "order",
+      "collection": "order-product"
+    },
+    "order_shipping": {
+      "via": "order",
+      "model": "order-shipping"
+    }
+  }
+}

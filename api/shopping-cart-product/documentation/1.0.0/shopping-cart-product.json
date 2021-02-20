@@ -652,6 +652,12 @@
                   "type": "string"
                 }
               },
+              "order_products": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "created_by": {
                 "type": "string"
               },
@@ -702,6 +708,12 @@
                 "type": "string"
               },
               "shopping_cart_products": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "order_products": {
                 "type": "array",
                 "items": {
                   "type": "string"

@@ -86,6 +86,10 @@
     "shopping_cart_products": {
       "via": "product",
       "collection": "shopping-cart-product"
+    },
+    "order_products": {
+      "via": "products",
+      "collection": "order-product"
     }
   }
 }

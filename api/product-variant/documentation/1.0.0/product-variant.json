@@ -679,6 +679,12 @@
                   "type": "string"
                 }
               },
+              "order_products": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "created_by": {
                 "type": "string"
               },
@@ -714,6 +720,58 @@
                 },
                 "product_variant": {
                   "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "order_products": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "order": {
+                  "type": "string"
+                },
+                "products": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "qtty": {
+                  "type": "integer"
+                },
+                "origin_price": {
+                  "type": "number"
+                },
+                "selling_price": {
+                  "type": "number"
+                },
+                "currency": {
+                  "type": "string"
+                },
+                "discount_amount": {
+                  "type": "number"
+                },
+                "note": {
+                  "type": "string"
+                },
+                "product_variants": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "created_by": {
                   "type": "string"
@@ -841,6 +899,12 @@
             "type": "string"
           },
           "shopping_cart_products": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "order_products": {
             "type": "array",
             "items": {
               "type": "string"

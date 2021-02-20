@@ -173,6 +173,10 @@
     "product_ratings": {
       "via": "user",
       "collection": "product-rating"
+    },
+    "orders": {
+      "via": "user",
+      "collection": "order"
     }
   }
 }

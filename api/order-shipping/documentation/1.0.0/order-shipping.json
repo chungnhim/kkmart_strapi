@@ -1,18 +1,19 @@
 {
   "paths": {
-    "/flashsaleproducts": {
+    "/order-shippings": {
       "get": {
         "deprecated": false,
-        "description": "Find all the flashsaleproducts's records",
+        "description": "",
         "responses": {
           "200": {
-            "description": "Retrieve flashsaleproducts document(s)",
+            "description": "response",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Flashsaleproducts"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
                   }
                 }
               }
@@ -51,7 +52,7 @@
         },
         "summary": "",
         "tags": [
-          "Flashsaleproducts"
+          "Order-shipping"
         ],
         "parameters": [
           {
@@ -194,79 +195,16 @@
       },
       "post": {
         "deprecated": false,
-        "description": "Create a new flashsaleproducts record",
+        "description": "Create a new record",
         "responses": {
           "200": {
-            "description": "Retrieve flashsaleproducts document(s)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Flashsaleproducts"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Flashsaleproducts"
-        ],
-        "requestBody": {
-          "description": "",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewFlashsaleproducts"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/flashsaleproducts/count": {
-      "get": {
-        "deprecated": false,
-        "description": "Retrieve the numver of flashsaleproducts documents",
-        "responses": {
-          "200": {
-            "description": "Retrieve flashsaleproducts document(s)",
+            "description": "response",
             "content": {
               "application/json": {
                 "schema": {
                   "properties": {
-                    "count": {
-                      "type": "integer"
+                    "foo": {
+                      "type": "string"
                     }
                   }
                 }
@@ -306,22 +244,36 @@
         },
         "summary": "",
         "tags": [
-          "Flashsaleproducts"
+          "Order-shipping"
         ],
-        "parameters": []
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewOrder-shipping"
+              }
+            }
+          }
+        }
       }
     },
-    "/flashsaleproducts/{id}": {
+    "/order-shippings/count": {
       "get": {
         "deprecated": false,
-        "description": "Find one flashsaleproducts record",
+        "description": "",
         "responses": {
           "200": {
-            "description": "Retrieve flashsaleproducts document(s)",
+            "description": "response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Flashsaleproducts"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -359,7 +311,64 @@
         },
         "summary": "",
         "tags": [
-          "Flashsaleproducts"
+          "Order-shipping"
+        ],
+        "parameters": []
+      }
+    },
+    "/order-shippings/{id}": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Order-shipping"
         ],
         "parameters": [
           {
@@ -376,14 +385,18 @@
       },
       "put": {
         "deprecated": false,
-        "description": "Update a single flashsaleproducts record",
+        "description": "Update a record",
         "responses": {
           "200": {
-            "description": "Retrieve flashsaleproducts document(s)",
+            "description": "response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Flashsaleproducts"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -421,7 +434,7 @@
         },
         "summary": "",
         "tags": [
-          "Flashsaleproducts"
+          "Order-shipping"
         ],
         "requestBody": {
           "description": "",
@@ -429,7 +442,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewFlashsaleproducts"
+                "$ref": "#/components/schemas/NewOrder-shipping"
               }
             }
           }
@@ -449,10 +462,10 @@
       },
       "delete": {
         "deprecated": false,
-        "description": "Delete a single flashsaleproducts record",
+        "description": "Delete a record",
         "responses": {
           "200": {
-            "description": "deletes a single flashsaleproducts based on the ID supplied",
+            "description": "deletes a single record based on the ID supplied",
             "content": {
               "application/json": {
                 "schema": {
@@ -495,7 +508,7 @@
         },
         "summary": "",
         "tags": [
-          "Flashsaleproducts"
+          "Order-shipping"
         ],
         "parameters": [
           {
@@ -514,7 +527,7 @@
   },
   "components": {
     "schemas": {
-      "Flashsaleproducts": {
+      "Order-shipping": {
         "required": [
           "id"
         ],
@@ -522,7 +535,7 @@
           "id": {
             "type": "string"
           },
-          "flashsale": {
+          "order": {
             "required": [
               "id"
             ],
@@ -530,117 +543,35 @@
               "id": {
                 "type": "string"
               },
-              "activedate": {
+              "order_code": {
                 "type": "string"
               },
-              "starttime": {
-                "type": "time"
-              },
-              "endtime": {
-                "type": "time"
-              },
-              "status": {
+              "order_via": {
                 "type": "string"
               },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "product": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "supplierid": {
+              "order_status": {
                 "type": "integer"
               },
-              "productkeyword": {
-                "type": "string"
-              },
-              "categoryid": {
+              "payment_status": {
                 "type": "integer"
               },
-              "shortdescription": {
-                "type": "string"
+              "shipping_status": {
+                "type": "integer"
               },
-              "description": {
-                "type": "string"
-              },
-              "price": {
+              "total_amount": {
                 "type": "number"
               },
-              "currencycode": {
-                "type": "integer"
-              },
-              "currencycodeiso": {
+              "currency": {
                 "type": "string"
               },
-              "retailprice": {
+              "discount_amount": {
                 "type": "number"
               },
-              "status": {
-                "type": "integer"
-              },
-              "productimages": {
+              "order_note": {
                 "type": "string"
               },
-              "sku": {
+              "user": {
                 "type": "string"
-              },
-              "brand": {
-                "type": "string"
-              },
-              "stock": {
-                "type": "integer"
-              },
-              "soldqtty": {
-                "type": "integer"
-              },
-              "minimumorderqtty": {
-                "type": "integer"
-              },
-              "maximumorderqtty": {
-                "type": "integer"
-              },
-              "weight": {
-                "type": "integer"
-              },
-              "rating_point": {
-                "type": "number"
-              },
-              "barcode": {
-                "type": "string"
-              },
-              "slug": {
-                "type": "string"
-              },
-              "product_variants": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "product_ratings": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "shopping_cart_products": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
               },
               "order_products": {
                 "type": "array",
@@ -648,6 +579,9 @@
                   "type": "string"
                 }
               },
+              "order_shipping": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -656,22 +590,40 @@
               }
             }
           },
-          "flashprice": {
-            "type": "number"
+          "full_name": {
+            "type": "string"
           },
-          "discountrate": {
-            "type": "number"
+          "phone_number": {
+            "type": "string"
           },
-          "discountamt": {
-            "type": "number"
+          "province_id": {
+            "type": "integer"
           },
-          "flashqtty": {
-            "type": "number"
+          "district_id": {
+            "type": "integer"
           },
-          "flashsoldqtty": {
-            "type": "number"
+          "ward_id": {
+            "type": "integer"
           },
-          "remark": {
+          "address": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer"
+          },
+          "deliver_date": {
+            "type": "datetime"
+          },
+          "actual_deliver_date": {
+            "type": "datetime"
+          },
+          "deliver_note": {
+            "type": "string"
+          },
+          "shipping_provider": {
             "type": "string"
           },
           "created_by": {
@@ -764,30 +716,45 @@
           }
         }
       },
-      "NewFlashsaleproducts": {
+      "NewOrder-shipping": {
         "properties": {
-          "flashsale": {
+          "order": {
             "type": "string"
           },
-          "product": {
+          "full_name": {
             "type": "string"
           },
-          "flashprice": {
-            "type": "number"
+          "phone_number": {
+            "type": "string"
           },
-          "discountrate": {
-            "type": "number"
+          "province_id": {
+            "type": "integer"
           },
-          "discountamt": {
-            "type": "number"
+          "district_id": {
+            "type": "integer"
           },
-          "flashqtty": {
-            "type": "number"
+          "ward_id": {
+            "type": "integer"
           },
-          "flashsoldqtty": {
-            "type": "number"
+          "address": {
+            "type": "string"
           },
-          "remark": {
+          "note": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer"
+          },
+          "deliver_date": {
+            "type": "datetime"
+          },
+          "actual_deliver_date": {
+            "type": "datetime"
+          },
+          "deliver_note": {
+            "type": "string"
+          },
+          "shipping_provider": {
             "type": "string"
           },
           "created_by": {
@@ -800,9 +767,5 @@
       }
     }
   },
-  "tags": [
-    {
-      "name": "Flashsaleproducts"
-    }
-  ]
+  "tags": []
 }

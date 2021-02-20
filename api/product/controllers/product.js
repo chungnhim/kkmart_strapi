@@ -55,8 +55,15 @@ module.exports = {
 
         var totalRows = await strapi.query('product').count(dataQuery);
         var entities = await strapi.query("product").find(dataQuery);
+
+        var removeFields = [
+            "shopping_cart_products",
+            "order_products"
+        ];
+
         let productModels = await strapi.services.common.normalizationResponse(
-            entities
+            entities,
+            removeFields
         );
 
         var res = {
@@ -67,18 +74,7 @@ module.exports = {
         ctx.send(res);
     },
     getDetails: async (ctx) => {
-        var userId = 0;
-        if (ctx.request && ctx.request.header && ctx.request.header.authorization) {
-            try {
-                const { id, isAdmin = false } = await strapi.plugins[
-                    "users-permissions"
-                ].services.jwt.getToken(ctx);
-                userId = id;
-            } catch (err) {
-                //return handleErrors(ctx, err, 'unauthorized');
-            }
-        }
-
+        let userId = await strapi.services.common.getLoggedUserId(ctx);
         const params = _.assign({}, ctx.request.params, ctx.params);
         let productId = params.product_id;
         var product = await getProductById(productId);
@@ -88,7 +84,15 @@ module.exports = {
             return;
         }
 
-        let productModel = await strapi.services.common.normalizationResponse(product);
+        var removeFields = [
+            "shopping_cart_products",
+            "order_products"
+        ];
+
+        let productModel = await strapi.services.common.normalizationResponse(
+            product,
+            removeFields
+        );
         productModel.is_wish_list = await strapi.services.wishlist.checkWishlist(
             userId,
             productId
