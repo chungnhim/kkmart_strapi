@@ -23,13 +23,13 @@
       "via": "district",
       "collection": "order-shipping"
     },
-    "order_billings": {
-      "via": "district",
-      "collection": "order-billing"
-    },
     "user_addresses": {
       "via": "district",
       "collection": "user-address"
+    },
+    "order_billings": {
+      "via": "district",
+      "collection": "order-billing"
     }
   }
 }

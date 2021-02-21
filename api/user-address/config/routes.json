@@ -47,6 +47,30 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/user-addresses",
+      "handler": "user-address.addUserAddress",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/user-addresses/:page_index/:page_size",
+      "handler": "user-address.getUserAddress",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/user-addresses/set-default",
+      "handler": "user-address.setDefaultUserAddress",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }

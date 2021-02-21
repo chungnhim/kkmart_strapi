@@ -27,6 +27,10 @@
     "billing_date": {
       "type": "datetime"
     },
+    "order": {
+      "model": "order",
+      "via": "order_billing"
+    },
     "country": {
       "model": "country",
       "via": "order_billings"
@@ -38,10 +42,6 @@
     "district": {
       "model": "district",
       "via": "order_billings"
-    },
-    "order": {
-      "model": "order",
-      "via": "order_billing"
     }
   }
 }
