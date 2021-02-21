@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/order-products": {
+    "/promotionproducts": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -10,10 +10,9 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Promotionproduct"
                   }
                 }
               }
@@ -52,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Order-product"
+          "Promotionproduct"
         ],
         "parameters": [
           {
@@ -202,11 +201,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Promotionproduct"
                 }
               }
             }
@@ -244,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "Order-product"
+          "Promotionproduct"
         ],
         "requestBody": {
           "description": "",
@@ -252,14 +247,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewOrder-product"
+                "$ref": "#/components/schemas/NewPromotionproduct"
               }
             }
           }
         }
       }
     },
-    "/order-products/count": {
+    "/promotionproducts/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -270,8 +265,8 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "foo": {
-                      "type": "string"
+                    "count": {
+                      "type": "integer"
                     }
                   }
                 }
@@ -311,12 +306,12 @@
         },
         "summary": "",
         "tags": [
-          "Order-product"
+          "Promotionproduct"
         ],
         "parameters": []
       }
     },
-    "/order-products/{id}": {
+    "/promotionproducts/{id}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -326,11 +321,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Promotionproduct"
                 }
               }
             }
@@ -368,7 +359,7 @@
         },
         "summary": "",
         "tags": [
-          "Order-product"
+          "Promotionproduct"
         ],
         "parameters": [
           {
@@ -392,11 +383,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Promotionproduct"
                 }
               }
             }
@@ -434,7 +421,7 @@
         },
         "summary": "",
         "tags": [
-          "Order-product"
+          "Promotionproduct"
         ],
         "requestBody": {
           "description": "",
@@ -442,7 +429,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewOrder-product"
+                "$ref": "#/components/schemas/NewPromotionproduct"
               }
             }
           }
@@ -508,7 +495,7 @@
         },
         "summary": "",
         "tags": [
-          "Order-product"
+          "Promotionproduct"
         ],
         "parameters": [
           {
@@ -527,7 +514,7 @@
   },
   "components": {
     "schemas": {
-      "Order-product": {
+      "Promotionproduct": {
         "required": [
           "id"
         ],
@@ -535,63 +522,29 @@
           "id": {
             "type": "string"
           },
-          "order": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "order_code": {
-                "type": "string"
-              },
-              "order_via": {
-                "type": "string"
-              },
-              "order_status": {
-                "type": "integer"
-              },
-              "payment_status": {
-                "type": "integer"
-              },
-              "shipping_status": {
-                "type": "integer"
-              },
-              "total_amount": {
-                "type": "number"
-              },
-              "currency": {
-                "type": "string"
-              },
-              "discount_amount": {
-                "type": "number"
-              },
-              "order_note": {
-                "type": "string"
-              },
-              "user": {
-                "type": "string"
-              },
-              "order_products": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "order_billing": {
-                "type": "string"
-              },
-              "order_shipping": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
+          "name": {
+            "type": "string"
+          },
+          "promotiontype": {
+            "type": "integer"
+          },
+          "reduction": {
+            "type": "number"
+          },
+          "promotionapplytype": {
+            "type": "integer"
+          },
+          "promotionapplyfor": {
+            "type": "integer"
+          },
+          "activedate": {
+            "type": "datetime"
+          },
+          "enddate": {
+            "type": "datetime"
+          },
+          "isenddate": {
+            "type": "boolean"
           },
           "products": {
             "type": "array",
@@ -711,79 +664,6 @@
               }
             }
           },
-          "qtty": {
-            "type": "integer"
-          },
-          "origin_price": {
-            "type": "number"
-          },
-          "selling_price": {
-            "type": "number"
-          },
-          "currency": {
-            "type": "string"
-          },
-          "discount_amount": {
-            "type": "number"
-          },
-          "note": {
-            "type": "string"
-          },
-          "product_variants": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "sku": {
-                  "type": "string"
-                },
-                "barcode": {
-                  "type": "string"
-                },
-                "price": {
-                  "type": "number"
-                },
-                "selling_price": {
-                  "type": "number"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "product_variant_images": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "product_id": {
-                  "type": "string"
-                },
-                "shopping_cart_products": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "order_products": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
-          },
           "created_by": {
             "required": [
               "id",
@@ -874,36 +754,33 @@
           }
         }
       },
-      "NewOrder-product": {
+      "NewPromotionproduct": {
         "properties": {
-          "order": {
+          "name": {
             "type": "string"
           },
-          "products": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "qtty": {
+          "promotiontype": {
             "type": "integer"
           },
-          "origin_price": {
+          "reduction": {
             "type": "number"
           },
-          "selling_price": {
-            "type": "number"
+          "promotionapplytype": {
+            "type": "integer"
           },
-          "currency": {
-            "type": "string"
+          "promotionapplyfor": {
+            "type": "integer"
           },
-          "discount_amount": {
-            "type": "number"
+          "activedate": {
+            "type": "datetime"
           },
-          "note": {
-            "type": "string"
+          "enddate": {
+            "type": "datetime"
           },
-          "product_variants": {
+          "isenddate": {
+            "type": "boolean"
+          },
+          "products": {
             "type": "array",
             "items": {
               "type": "string"
@@ -919,5 +796,9 @@
       }
     }
   },
-  "tags": []
+  "tags": [
+    {
+      "name": "Promotionproduct"
+    }
+  ]
 }

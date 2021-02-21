@@ -874,6 +874,9 @@
                   "type": "string"
                 }
               },
+              "promotionproduct": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
