@@ -1457,7 +1457,7 @@ module.exports = {
             expiredDate = expiredDate.endOf('month');
             //credit amount KCoin
             const creditamount = amountrecieve;
-            var isprocessed = false;
+            var isprocessed = true;
             //expiredDate from transaction-config
             var newlog = await strapi.query('transaction-history').create({
                 createddate: startDateUTC.format(),
