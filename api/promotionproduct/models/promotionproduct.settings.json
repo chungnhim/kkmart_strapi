@@ -36,6 +36,13 @@
     "products": {
       "collection": "product",
       "via": "promotionproduct"
+    },
+    "numberapply": {
+      "type": "float"
+    },
+    "isfreeship": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

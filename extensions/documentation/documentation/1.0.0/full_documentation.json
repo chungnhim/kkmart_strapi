@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "02/21/2021 12:31:39 PM"
+    "x-generation-date": "02/22/2021 4:54:59 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -26865,6 +26865,63 @@
         }
       }
     },
+    "/v1/promotionproducts": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Promotionproduct"
+        ],
+        "parameters": []
+      }
+    },
     "/promotionproducts/count": {
       "get": {
         "deprecated": false,
@@ -50190,6 +50247,12 @@
                   "type": "string"
                 }
               },
+              "numberapply": {
+                "type": "number"
+              },
+              "isfreeship": {
+                "type": "boolean"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -50801,6 +50864,13 @@
               }
             }
           },
+          "numberapply": {
+            "type": "number"
+          },
+          "isfreeship": {
+            "type": "boolean",
+            "default": false
+          },
           "created_by": {
             "required": [
               "id",
@@ -50922,6 +50992,13 @@
             "items": {
               "type": "string"
             }
+          },
+          "numberapply": {
+            "type": "number"
+          },
+          "isfreeship": {
+            "type": "boolean",
+            "default": false
           },
           "created_by": {
             "type": "string"
