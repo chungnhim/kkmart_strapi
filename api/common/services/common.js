@@ -55,7 +55,7 @@ const removeAuthorFields = (entity, fields) => {
     return sanitizedValue;
 };
 
-const getLoggedUserId = async (ctx) => {
+const getLoggedUserId = async(ctx) => {
     var userId = 0;
     if (ctx.request && ctx.request.header && ctx.request.header.authorization) {
         try {
@@ -72,11 +72,11 @@ const getLoggedUserId = async (ctx) => {
 }
 
 module.exports = {
-    normalizationResponse: async (entity, fields) => {
-        console.log(`fields`, fields);
+    normalizationResponse: async(entity, fields) => {
+        //console.log(`fields`, fields);
         return removeAuthorFields(entity, fields);
     },
-    getLoggedUserId: async (ctx) => {
+    getLoggedUserId: async(ctx) => {
         return await getLoggedUserId(ctx);
     }
 };

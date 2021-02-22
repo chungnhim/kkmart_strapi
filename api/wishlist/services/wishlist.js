@@ -11,7 +11,7 @@ module.exports = {
             user: userId,
             product: productId
         }
-        var dataresult = await strapi.query('wishlist').find();
+        var dataresult = await strapi.query('wishlist').find(dataQuery);
         if (dataresult != null && dataresult.length > 0) { return true; } else { return false; }
     }
 };
