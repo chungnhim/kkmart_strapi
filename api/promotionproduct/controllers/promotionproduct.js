@@ -53,5 +53,8 @@ module.exports = {
             dataresult
         );
         ctx.send(Object.values(removeAuthorFields(dataresult)));
+    },
+    searchProducts: async ctx => {
+        ctx.send('OK');
     }
 };
