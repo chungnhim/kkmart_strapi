@@ -868,13 +868,10 @@
                   "type": "string"
                 }
               },
-              "flashsaleproducts": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "promotionproduct": {
+                "type": "string"
+              },
+              "flashsaleproduct": {
                 "type": "string"
               },
               "created_by": {

@@ -14,8 +14,8 @@
       "model": "order"
     },
     "products": {
-      "collection": "product",
       "via": "order_products",
+      "collection": "product",
       "dominant": true
     },
     "qtty": {

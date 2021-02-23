@@ -553,6 +553,24 @@
               }
             }
           },
+          "flashprice": {
+            "type": "number"
+          },
+          "discountrate": {
+            "type": "number"
+          },
+          "discountamt": {
+            "type": "number"
+          },
+          "flashqtty": {
+            "type": "number"
+          },
+          "flashsoldqtty": {
+            "type": "number"
+          },
+          "remark": {
+            "type": "string"
+          },
           "products": {
             "type": "array",
             "items": {
@@ -653,13 +671,10 @@
                     "type": "string"
                   }
                 },
-                "flashsaleproducts": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
                 "promotionproduct": {
+                  "type": "string"
+                },
+                "flashsaleproduct": {
                   "type": "string"
                 },
                 "created_by": {
@@ -670,24 +685,6 @@
                 }
               }
             }
-          },
-          "flashprice": {
-            "type": "number"
-          },
-          "discountrate": {
-            "type": "number"
-          },
-          "discountamt": {
-            "type": "number"
-          },
-          "flashqtty": {
-            "type": "number"
-          },
-          "flashsoldqtty": {
-            "type": "number"
-          },
-          "remark": {
-            "type": "string"
           },
           "created_by": {
             "required": [
@@ -784,12 +781,6 @@
           "flashsale": {
             "type": "string"
           },
-          "products": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
           "flashprice": {
             "type": "number"
           },
@@ -807,6 +798,12 @@
           },
           "remark": {
             "type": "string"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "created_by": {
             "type": "string"

@@ -6,16 +6,28 @@
  */
 const _ = require("lodash");
 
-const getProductById = async (productId) => {
+var removeFields = [
+    "shopping_cart_products",
+    "order_products",
+    "product_ratings",
+    "promotionproduct",
+    "flashsaleproducts"
+];
+
+const getProductById = async(productId) => {
     var product = await strapi.query("product").findOne({
         id: productId,
     });
 
-    return product;
+    let productModels = await strapi.services.common.normalizationResponse(
+        product,
+        removeFields
+    );
+    return productModels;
 }
 
 module.exports = {
-    searchProducts: async (ctx) => {
+    searchProducts: async(ctx) => {
         const queryString = _.assign({}, ctx.request.query, ctx.params);
         const params = _.assign({}, ctx.request.params, ctx.params);
 
@@ -56,10 +68,6 @@ module.exports = {
         var totalRows = await strapi.query('product').count(dataQuery);
         var entities = await strapi.query("product").find(dataQuery);
 
-        var removeFields = [
-            "shopping_cart_products",
-            "order_products"
-        ];
 
         let productModels = await strapi.services.common.normalizationResponse(
             entities,
@@ -73,7 +81,7 @@ module.exports = {
 
         ctx.send(res);
     },
-    getDetails: async (ctx) => {
+    getDetails: async(ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         const params = _.assign({}, ctx.request.params, ctx.params);
         let productId = params.product_id;
@@ -83,11 +91,6 @@ module.exports = {
             ctx.send({});
             return;
         }
-
-        var removeFields = [
-            "shopping_cart_products",
-            "order_products"
-        ];
 
         let productModel = await strapi.services.common.normalizationResponse(
             product,
@@ -100,7 +103,7 @@ module.exports = {
 
         ctx.send(productModel);
     },
-    getProductById: async (productId) => {
+    getProductById: async(productId) => {
         return await getProductById(productId);
     }
 };

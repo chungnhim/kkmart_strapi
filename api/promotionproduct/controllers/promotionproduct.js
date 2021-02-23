@@ -39,15 +39,13 @@ const formatError = error => [
 
 module.exports = {
     getListPromotionActives: async ctx => {
+        var arrayIdActive = await strapi.services.promotionproduct.getPromotionActiveId();
+        console.log(arrayIdActive);
         var dateTimeUtcNow = new Date(new Date().toUTCString());
         var dataQuery = {
-            activedate_lte: dateTimeUtcNow,
-            _or: [
-                [{ isenddate: true }],
-                [{ isenddate: false }, { enddate_gte: dateTimeUtcNow }]
-            ],
-            _sort: "id:asc",
-        };
+            id_in: arrayIdActive,
+            _sort: "id:asc"
+        }
         var dataresult = await strapi.query('promotionproduct').find(dataQuery);
         dataresult = await strapi.services.common.normalizationResponse(
             dataresult

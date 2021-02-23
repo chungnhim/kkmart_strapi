@@ -76,28 +76,28 @@
       "type": "string"
     },
     "product_variants": {
-      "via": "product_id",
-      "collection": "product-variant"
+      "collection": "product-variant",
+      "via": "product_id"
     },
     "product_ratings": {
-      "via": "product",
-      "collection": "product-rating"
+      "collection": "product-rating",
+      "via": "product"
     },
     "shopping_cart_products": {
-      "via": "product",
-      "collection": "shopping-cart-product"
+      "collection": "shopping-cart-product",
+      "via": "product"
     },
     "order_products": {
-      "via": "products",
-      "collection": "order-product"
-    },
-    "flashsaleproducts": {
-      "via": "products",
-      "collection": "flashsaleproducts"
+      "collection": "order-product",
+      "via": "products"
     },
     "promotionproduct": {
-      "via": "products",
-      "model": "promotionproduct"
+      "model": "promotionproduct",
+      "via": "products"
+    },
+    "flashsaleproduct": {
+      "model": "flashsaleproducts",
+      "via": "products"
     }
   }
 }

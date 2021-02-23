@@ -971,52 +971,6 @@
               }
             }
           },
-          "flashsaleproducts": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "flashsale": {
-                  "type": "string"
-                },
-                "products": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "flashprice": {
-                  "type": "number"
-                },
-                "discountrate": {
-                  "type": "number"
-                },
-                "discountamt": {
-                  "type": "number"
-                },
-                "flashqtty": {
-                  "type": "number"
-                },
-                "flashsoldqtty": {
-                  "type": "number"
-                },
-                "remark": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
-          },
           "promotionproduct": {
             "required": [
               "id"
@@ -1060,6 +1014,49 @@
               },
               "isfreeship": {
                 "type": "boolean"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "flashsaleproduct": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "flashsale": {
+                "type": "string"
+              },
+              "flashprice": {
+                "type": "number"
+              },
+              "discountrate": {
+                "type": "number"
+              },
+              "discountamt": {
+                "type": "number"
+              },
+              "flashqtty": {
+                "type": "number"
+              },
+              "flashsoldqtty": {
+                "type": "number"
+              },
+              "remark": {
+                "type": "string"
+              },
+              "products": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "created_by": {
                 "type": "string"
@@ -1251,13 +1248,10 @@
               "type": "string"
             }
           },
-          "flashsaleproducts": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
           "promotionproduct": {
+            "type": "string"
+          },
+          "flashsaleproduct": {
             "type": "string"
           },
           "created_by": {
