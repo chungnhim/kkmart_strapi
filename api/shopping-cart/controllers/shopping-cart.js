@@ -8,7 +8,7 @@
 const _ = require("lodash");
 
 module.exports = {
-    find: async (ctx) => {
+    find: async(ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (userId == 0) {
             return ctx.badRequest(
@@ -21,6 +21,7 @@ module.exports = {
         }
         var shoppingCart = await strapi.query("shopping-cart").find({
             user: userId,
+            status: strapi.config.constants.shopping_cart_status.new
         });
 
         let cartModel = await strapi.services.common.normalizationResponse(shoppingCart);
@@ -29,7 +30,7 @@ module.exports = {
             cart: Object.values(cartModel)
         });
     },
-    addProductToCart: async (ctx) => {
+    addProductToCart: async(ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
 
         const params = _.assign({}, ctx.request.body, ctx.params);
@@ -129,7 +130,7 @@ module.exports = {
             cart_id: shoppingCart.id
         });
     },
-    getCart: async (ctx) => {
+    getCart: async(ctx) => {
         const params = _.assign({}, ctx.request.params, ctx.params);
 
         var shoppingCartId = params.shopping_cart_id;
@@ -143,7 +144,7 @@ module.exports = {
             cart: cartModel
         });
     },
-    removeCartItem: async (ctx) => {
+    removeCartItem: async(ctx) => {
         const params = _.assign({}, ctx.request.params, ctx.params);
         let cartProductId = params.cart_product_id;
         var shoppingCartId = params.shopping_cart_id;
