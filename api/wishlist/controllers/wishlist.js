@@ -10,7 +10,7 @@ const axios = require('axios');
 
 const removeAuthorFields = (entity) => {
     const sanitizedValue = _.omit(entity, ['created_by', 'updated_by', 'user', 'formats', 'shopping_cart_products',
-        'product_ratings', 'order_products', 'flashsaleproducts', 'promotionproduct'
+        'product_ratings', 'order_products'
     ]);
     _.forEach(sanitizedValue, (value, key) => {
         if (_.isArray(value)) {
@@ -103,6 +103,7 @@ module.exports = {
             for (const item of dataResult) {
                 console.log(item.product.id);
                 var getProductResult = await strapi.query("product").findOne({ id: item.product.id });
+                getProductResult = await strapi.services.promotionproduct.priceRecalculationOfProduct(getProductResult);
                 getProductResult.is_wish_list = await strapi.services.wishlist.checkWishlist(
                     userId,
                     getProductResult.id
