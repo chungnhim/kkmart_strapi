@@ -33,7 +33,6 @@ module.exports = {
         var ishave_discount_flashsale = false;
 
         var arrayPromotionActive = await strapi.services.promotionproduct.getPromotionActiveId();
-        console.log(arrayPromotionActive);
         var arrayFlashSaleActive = [];
         if (product.flashsaleproduct) {
             var flashsaelData = product.flashsaleproduct;
@@ -47,8 +46,6 @@ module.exports = {
 
             var promotionData = product.promotionproduct;
             //then use promotion
-            console.log(promotionData.id);
-            console.log(arrayPromotionActive.includes(promotionData.id));
             if (arrayPromotionActive && arrayPromotionActive.length > 0 && arrayPromotionActive.includes(promotionData.id)) {
                 ishave_discount_promotion = true;
                 //

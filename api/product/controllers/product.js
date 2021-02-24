@@ -46,28 +46,32 @@ module.exports = {
             _sort: "name:desc",
         };
 
-        if (!_.isNil(queryString.name)) {
+        if (!_.isNil(queryString.name) && !_.isEmpty(queryString.name)) {
             dataQuery.name_contains = queryString.name;
         }
 
-        if (!_.isNil(queryString.category_ids)) {
+        if (!_.isNil(queryString.category_ids) && !_.isEmpty(queryString.category_ids)) {
             dataQuery.categoryid_in = queryString.category_ids.split(",");
         }
 
-        if (!_.isNil(queryString.min_price)) {
+        if (!_.isNil(queryString.min_price) && !_.isEmpty(queryString.min_price)) {
             dataQuery.price_gte = parseFloat(queryString.min_price);
         }
 
-        if (!_.isNil(queryString.max_price)) {
+        if (!_.isNil(queryString.max_price) && !_.isEmpty(queryString.max_price)) {
             dataQuery.price_lte = parseFloat(queryString.max_price);
         }
 
-        if (!_.isNil(queryString.rating_point)) {
+        if (!_.isNil(queryString.rating_point) && !_.isEmpty(queryString.rating_point)) {
             dataQuery.rating_point_gte = parseFloat(queryString.rating_point);
         }
 
-        if (!_.isNil(queryString.promotion_ids)) {
+        if (!_.isNil(queryString.promotion_ids) && !_.isEmpty(queryString.promotion_ids)) {
             dataQuery.promotionproduct_in = queryString.promotion_ids.split(",");
+        }
+
+        if (!_.isNil(queryString.brand_ids) && !_.isEmpty(queryString.brand_ids)) {
+            dataQuery.brand_in = queryString.brand_ids.split(",");
         }
 
         var totalRows = await strapi.query('product').count(dataQuery);
