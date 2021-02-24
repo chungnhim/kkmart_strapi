@@ -10,17 +10,18 @@ var removeFields = [
     "shopping_cart_products",
     "order_products",
     "product_ratings",
-    "promotionproduct",
-    "flashsaleproducts"
+    "brand",
+    //"promotionproduct",
+    //"flashsaleproduct"
 ];
 
 const getProductById = async(productId) => {
-    var product = await strapi.query("product").findOne({
+    var productResult = await strapi.query("product").findOne({
         id: productId,
     });
-
-    let productModels = await strapi.services.common.normalizationResponse(
-        product,
+    let productModels = await strapi.services.promotionproduct.priceRecalculationOfProduct(productResult);
+    productModels = await strapi.services.common.normalizationResponse(
+        productModels,
         removeFields
     );
     return productModels;
@@ -65,9 +66,16 @@ module.exports = {
             dataQuery.rating_point_gte = parseFloat(queryString.rating_point);
         }
 
+        if (!_.isNil(queryString.promotion_ids)) {
+            dataQuery.promotionproduct_in = queryString.promotion_ids.split(",");
+        }
+
         var totalRows = await strapi.query('product').count(dataQuery);
         var entities = await strapi.query("product").find(dataQuery);
-
+        //Check promotion and flashsale --- get price selling
+        for (let index = 0; index < entities.length; index++) {
+            entities[index] = await strapi.services.promotionproduct.priceRecalculationOfProduct(entities[index]);
+        }
 
         let productModels = await strapi.services.common.normalizationResponse(
             entities,
