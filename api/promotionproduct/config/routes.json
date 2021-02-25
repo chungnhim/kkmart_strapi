@@ -17,6 +17,14 @@
         },
         {
             "method": "GET",
+            "path": "/v1/flashflash-products-active",
+            "handler": "promotionproduct.getListFlashSaleActives",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
             "path": "/v1/promotionproducts/search-products/:page_index/:page_size",
             "handler": "promotionproduct.searchProducts",
             "config": {

@@ -537,6 +537,9 @@
           "runeveryday": {
             "type": "boolean"
           },
+          "name": {
+            "type": "string"
+          },
           "created_by": {
             "required": [
               "id",
@@ -643,6 +646,9 @@
           },
           "runeveryday": {
             "type": "boolean"
+          },
+          "name": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

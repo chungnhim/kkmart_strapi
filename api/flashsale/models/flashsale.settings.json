@@ -23,6 +23,9 @@
     },
     "runeveryday": {
       "type": "boolean"
+    },
+    "name": {
+      "type": "string"
     }
   }
 }

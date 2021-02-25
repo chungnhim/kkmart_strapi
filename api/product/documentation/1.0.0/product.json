@@ -1015,6 +1015,15 @@
               "isfreeship": {
                 "type": "boolean"
               },
+              "minimumorderqtty": {
+                "type": "integer"
+              },
+              "promotionsoldqtty": {
+                "type": "integer"
+              },
+              "maximumorderqtty": {
+                "type": "integer"
+              },
               "created_by": {
                 "type": "string"
               },

@@ -34,8 +34,8 @@
       "type": "boolean"
     },
     "products": {
-      "via": "promotionproduct",
-      "collection": "product"
+      "collection": "product",
+      "via": "promotionproduct"
     },
     "numberapply": {
       "type": "float"
@@ -43,6 +43,15 @@
     "isfreeship": {
       "type": "boolean",
       "default": false
+    },
+    "minimumorderqtty": {
+      "type": "integer"
+    },
+    "promotionsoldqtty": {
+      "type": "integer"
+    },
+    "maximumorderqtty": {
+      "type": "integer"
     }
   }
 }

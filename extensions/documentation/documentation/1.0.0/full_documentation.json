@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "02/24/2021 11:09:38 AM"
+    "x-generation-date": "02/26/2021 1:04:17 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -27050,6 +27050,63 @@
         "parameters": []
       }
     },
+    "/v1/flashflash-products-active": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Promotionproduct"
+        ],
+        "parameters": []
+      }
+    },
     "/v1/promotionproducts/search-products/{page_index}/{page_size}": {
       "get": {
         "deprecated": false,
@@ -43587,6 +43644,9 @@
           "runeveryday": {
             "type": "boolean"
           },
+          "name": {
+            "type": "string"
+          },
           "created_by": {
             "required": [
               "id",
@@ -43694,6 +43754,9 @@
           "runeveryday": {
             "type": "boolean"
           },
+          "name": {
+            "type": "string"
+          },
           "created_by": {
             "type": "string"
           },
@@ -43732,6 +43795,9 @@
               },
               "runeveryday": {
                 "type": "boolean"
+              },
+              "name": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -50401,6 +50467,15 @@
               "isfreeship": {
                 "type": "boolean"
               },
+              "minimumorderqtty": {
+                "type": "integer"
+              },
+              "promotionsoldqtty": {
+                "type": "integer"
+              },
+              "maximumorderqtty": {
+                "type": "integer"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -51056,6 +51131,15 @@
             "type": "boolean",
             "default": false
           },
+          "minimumorderqtty": {
+            "type": "integer"
+          },
+          "promotionsoldqtty": {
+            "type": "integer"
+          },
+          "maximumorderqtty": {
+            "type": "integer"
+          },
           "created_by": {
             "required": [
               "id",
@@ -51184,6 +51268,15 @@
           "isfreeship": {
             "type": "boolean",
             "default": false
+          },
+          "minimumorderqtty": {
+            "type": "integer"
+          },
+          "promotionsoldqtty": {
+            "type": "integer"
+          },
+          "maximumorderqtty": {
+            "type": "integer"
           },
           "created_by": {
             "type": "string"

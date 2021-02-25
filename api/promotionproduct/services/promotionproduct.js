@@ -8,6 +8,39 @@ const product = require("../../product/controllers/product");
  */
 
 module.exports = {
+    getListFlashSaleActivesId: async(listFlashsaleIds) => {
+        var arrayId = [];
+        var dataQuery = {
+            flashsale_in: listFlashsaleIds
+        }
+        var dataFlashsaleProducts = await strapi.query('flashsaleproducts').find(dataQuery);
+        for (let index = 0; index < dataFlashsaleProducts.length; index++) {
+            arrayId.push(dataFlashsaleProducts[index].id);
+        }
+        return arrayId;
+    },
+    getListFlashSaleActivesId: async() => {
+        var arrayId = [];
+        var dateTimeUtcNow = new Date(new Date().toUTCString());
+        var dateValue = new Date(dateTimeUtcNow.getFullYear(), dateTimeUtcNow.getMonth(), dateTimeUtcNow.getDate());
+        var dateTimeValue = dateTimeUtcNow.getTime();
+        console.log(dateValue);
+        console.log(dateTimeValue);
+        // [{ runeveryday: true }, { starttime_gte: dateValue }, { endtime_lte: dateValue }],
+        // [{ runeveryday: false }, { activedate: dateValue }, { starttime_gte: dateValue }, { endtime_lte: dateTimeValue }]
+        var dataQuery = {
+            _or: [
+                [{ runeveryday: true }],
+                [{ runeveryday: false }, { activedate: dateValue }]
+            ],
+            _sort: "id:asc",
+        };
+        var dataresult = await strapi.query('flashsale').find(dataQuery);
+        for (let index = 0; index < dataresult.length; index++) {
+            arrayId.push(dataresult[index].id);
+        }
+        return arrayId;
+    },
     getPromotionActiveId: async() => {
         var arrayId = [];
         var dateTimeUtcNow = new Date(new Date().toUTCString());

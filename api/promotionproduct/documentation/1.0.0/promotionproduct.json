@@ -311,6 +311,63 @@
         "parameters": []
       }
     },
+    "/v1/flashflash-products-active": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Promotionproduct"
+        ],
+        "parameters": []
+      }
+    },
     "/v1/promotionproducts/search-products/{page_index}/{page_size}": {
       "get": {
         "deprecated": false,
@@ -803,6 +860,15 @@
             "type": "boolean",
             "default": false
           },
+          "minimumorderqtty": {
+            "type": "integer"
+          },
+          "promotionsoldqtty": {
+            "type": "integer"
+          },
+          "maximumorderqtty": {
+            "type": "integer"
+          },
           "created_by": {
             "required": [
               "id",
@@ -931,6 +997,15 @@
           "isfreeship": {
             "type": "boolean",
             "default": false
+          },
+          "minimumorderqtty": {
+            "type": "integer"
+          },
+          "promotionsoldqtty": {
+            "type": "integer"
+          },
+          "maximumorderqtty": {
+            "type": "integer"
           },
           "created_by": {
             "type": "string"

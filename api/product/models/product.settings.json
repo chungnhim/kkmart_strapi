@@ -92,8 +92,8 @@
       "via": "products"
     },
     "promotionproduct": {
-      "model": "promotionproduct",
-      "via": "products"
+      "via": "products",
+      "model": "promotionproduct"
     },
     "flashsaleproduct": {
       "model": "flashsaleproducts",
