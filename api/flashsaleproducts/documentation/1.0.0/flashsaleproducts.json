@@ -311,6 +311,84 @@
         "parameters": []
       }
     },
+    "/v1/flashsaleproducts/search-products/{page_index}/{page_size}": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Flashsaleproducts"
+        ],
+        "parameters": [
+          {
+            "name": "page_index",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
     "/flashsaleproducts/{id}": {
       "get": {
         "deprecated": false,
@@ -556,18 +634,6 @@
               }
             }
           },
-          "flashprice": {
-            "type": "number"
-          },
-          "discountrate": {
-            "type": "number"
-          },
-          "discountamt": {
-            "type": "number"
-          },
-          "flashqtty": {
-            "type": "number"
-          },
           "flashsoldqtty": {
             "type": "number"
           },
@@ -689,6 +755,27 @@
               }
             }
           },
+          "flashsaletype": {
+            "type": "integer"
+          },
+          "reduction": {
+            "type": "number"
+          },
+          "flashsaleapplytype": {
+            "type": "integer"
+          },
+          "flashsaleapplyfor": {
+            "type": "integer"
+          },
+          "minimumorderqtty": {
+            "type": "integer"
+          },
+          "maximumorderqtty": {
+            "type": "integer"
+          },
+          "numberapply": {
+            "type": "integer"
+          },
           "created_by": {
             "required": [
               "id",
@@ -784,18 +871,6 @@
           "flashsale": {
             "type": "string"
           },
-          "flashprice": {
-            "type": "number"
-          },
-          "discountrate": {
-            "type": "number"
-          },
-          "discountamt": {
-            "type": "number"
-          },
-          "flashqtty": {
-            "type": "number"
-          },
           "flashsoldqtty": {
             "type": "number"
           },
@@ -807,6 +882,27 @@
             "items": {
               "type": "string"
             }
+          },
+          "flashsaletype": {
+            "type": "integer"
+          },
+          "reduction": {
+            "type": "number"
+          },
+          "flashsaleapplytype": {
+            "type": "integer"
+          },
+          "flashsaleapplyfor": {
+            "type": "integer"
+          },
+          "minimumorderqtty": {
+            "type": "integer"
+          },
+          "maximumorderqtty": {
+            "type": "integer"
+          },
+          "numberapply": {
+            "type": "integer"
           },
           "created_by": {
             "type": "string"

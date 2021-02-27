@@ -20,5 +20,19 @@ module.exports = ({ env }) => ({
     promotion_apply_for_status: {
         total_products: 1,
         total_money: 2,
+    },
+    flashsale_types_status: {
+        discount_money: 1,
+        discount_percent: 2,
+        fix_money: 3
+    },
+    flashsale_apply_types_status: {
+        group_products: 1,
+        products: 2,
+        variants: 3
+    },
+    flashsale_apply_for_status: {
+        total_products: 1,
+        total_money: 2,
     }
 });

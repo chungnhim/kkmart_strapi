@@ -12,18 +12,6 @@
     "flashsale": {
       "model": "flashsale"
     },
-    "flashprice": {
-      "type": "decimal"
-    },
-    "discountrate": {
-      "type": "float"
-    },
-    "discountamt": {
-      "type": "decimal"
-    },
-    "flashqtty": {
-      "type": "decimal"
-    },
     "flashsoldqtty": {
       "type": "decimal"
     },
@@ -31,8 +19,29 @@
       "type": "string"
     },
     "products": {
-      "via": "flashsaleproduct",
-      "collection": "product"
+      "collection": "product",
+      "via": "flashsaleproduct"
+    },
+    "flashsaletype": {
+      "type": "integer"
+    },
+    "reduction": {
+      "type": "float"
+    },
+    "flashsaleapplytype": {
+      "type": "integer"
+    },
+    "flashsaleapplyfor": {
+      "type": "integer"
+    },
+    "minimumorderqtty": {
+      "type": "integer"
+    },
+    "maximumorderqtty": {
+      "type": "integer"
+    },
+    "numberapply": {
+      "type": "integer"
     }
   }
 }

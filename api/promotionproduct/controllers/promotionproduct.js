@@ -54,19 +54,23 @@ module.exports = {
             _sort: "id:asc"
         }
         var dataresult = await strapi.query('flashsale').find(dataQuery);
-        //var dataresult = await strapi.query('flashsale').find();
-        var flashsaleRremoveFields = [
+        var removeflashsaleFields = [
             "starttime",
             "endtime",
             "status",
             "runeveryday"
         ];
         dataresult = await strapi.services.common.normalizationResponse(
-            dataresult, flashsaleRremoveFields
+            dataresult, removeflashsaleFields
         );
         ctx.send(Object.values(removeAuthorFields(dataresult)));
     },
     getListPromotionActives: async ctx => {
+        var removeProtmotionProductFields = [
+            "minimumorderqtty",
+            "promotionsoldqtty",
+            "maximumorderqtty"
+        ];
         var arrayIdActive = await strapi.services.promotionproduct.getPromotionActiveId();
         var dataQuery = {
             id_in: arrayIdActive,
@@ -74,7 +78,7 @@ module.exports = {
         }
         var dataresult = await strapi.query('promotionproduct').find(dataQuery);
         dataresult = await strapi.services.common.normalizationResponse(
-            dataresult
+            dataresult, removeProtmotionProductFields
         );
         ctx.send(Object.values(removeAuthorFields(dataresult)));
     },

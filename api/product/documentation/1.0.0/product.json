@@ -1043,18 +1043,6 @@
               "flashsale": {
                 "type": "string"
               },
-              "flashprice": {
-                "type": "number"
-              },
-              "discountrate": {
-                "type": "number"
-              },
-              "discountamt": {
-                "type": "number"
-              },
-              "flashqtty": {
-                "type": "number"
-              },
               "flashsoldqtty": {
                 "type": "number"
               },
@@ -1066,6 +1054,27 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "flashsaletype": {
+                "type": "integer"
+              },
+              "reduction": {
+                "type": "number"
+              },
+              "flashsaleapplytype": {
+                "type": "integer"
+              },
+              "flashsaleapplyfor": {
+                "type": "integer"
+              },
+              "minimumorderqtty": {
+                "type": "integer"
+              },
+              "maximumorderqtty": {
+                "type": "integer"
+              },
+              "numberapply": {
+                "type": "integer"
               },
               "created_by": {
                 "type": "string"

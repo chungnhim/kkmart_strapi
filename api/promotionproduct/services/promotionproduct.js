@@ -8,7 +8,7 @@ const product = require("../../product/controllers/product");
  */
 
 module.exports = {
-    getListFlashSaleActivesId: async(listFlashsaleIds) => {
+    getListFlashSaleProductsActivesId: async(listFlashsaleIds) => {
         var arrayId = [];
         var dataQuery = {
             flashsale_in: listFlashsaleIds
@@ -24,8 +24,8 @@ module.exports = {
         var dateTimeUtcNow = new Date(new Date().toUTCString());
         var dateValue = new Date(dateTimeUtcNow.getFullYear(), dateTimeUtcNow.getMonth(), dateTimeUtcNow.getDate());
         var dateTimeValue = dateTimeUtcNow.getTime();
-        console.log(dateValue);
-        console.log(dateTimeValue);
+        //console.log(dateValue);
+        //console.log(dateTimeValue);
         // [{ runeveryday: true }, { starttime_gte: dateValue }, { endtime_lte: dateValue }],
         // [{ runeveryday: false }, { activedate: dateValue }, { starttime_gte: dateValue }, { endtime_lte: dateTimeValue }]
         var dataQuery = {
@@ -33,7 +33,7 @@ module.exports = {
                 [{ runeveryday: true }],
                 [{ runeveryday: false }, { activedate: dateValue }]
             ],
-            _sort: "id:asc",
+            _sort: "id:desc",
         };
         var dataresult = await strapi.query('flashsale').find(dataQuery);
         for (let index = 0; index < dataresult.length; index++) {
@@ -50,7 +50,7 @@ module.exports = {
                 [{ isenddate: true }],
                 [{ isenddate: false }, { enddate_gte: dateTimeUtcNow }]
             ],
-            _sort: "id:asc",
+            _sort: "id:desc",
         };
         var dataresult = await strapi.query('promotionproduct').find(dataQuery);
         for (let index = 0; index < dataresult.length; index++) {
@@ -66,12 +66,61 @@ module.exports = {
         var ishave_discount_flashsale = false;
 
         var arrayPromotionActive = await strapi.services.promotionproduct.getPromotionActiveId();
-        var arrayFlashSaleActive = [];
+        var arrayFlashSaleActive = await strapi.services.promotionproduct.getListFlashSaleActivesId();
         if (product.flashsaleproduct) {
-            var flashsaelData = product.flashsaleproduct;
+            var flashsaleData = product.flashsaleproduct;
             //if have flash sale will use it
-            if (arrayFlashSaleActive && arrayFlashSaleActive.length > 0 && arrayFlashSaleActive.includes(flashsaelData.id)) {
+            if (arrayFlashSaleActive && arrayFlashSaleActive.length > 0 && arrayFlashSaleActive.includes(flashsaleData.flashsale)) {
                 ishave_discount_flashsale = true;
+                //calculation flash sales
+                //get full info flash sale for get name  
+                var flashsaleInfo = await strapi.query('flashsale').findOne({ id: flashsaleData.flashsale });
+                product.flashsaleproduct.name = flashsaleInfo.name;
+
+                switch (flashsaleData.flashsaletype) {
+                    case strapi.config.constants.flashsale_types_status.discount_money:
+                        product.flashsale_price = product.price - flashsaleData.reduction;
+                        product.flashsale_percent = (product.flashsale_price * 100) / product.price;
+                        //Check variants
+                        if (product.product_variants && product.product_variants.length > 0) {
+                            product.product_variants.forEach(function(variantItem) {
+                                variantItem.flashsale_price = variantItem.price - flashsaleData.reduction;
+                                variantItem.flashsale_percent = (variantItem.flashsale_price * 100) / variantItem.price;
+                            });
+                        }
+                        break;
+                    case strapi.config.constants.flashsale_types_status.discount_percent:
+                        let priceDiscountNumber = ((product.price * flashsaleData.reduction) / 100).toFixed(2);
+                        product.flashsale_price = product.price - priceDiscountNumber;
+                        product.flashsale_percent = flashsaleData.reduction;
+                        //Check variants
+                        if (product.product_variants && product.product_variants.length > 0) {
+                            product.product_variants.forEach(function(variantItem) {
+                                variantItem.flashsale_price = variantItem.price - priceDiscountNumber;
+                                variantItem.flashsale_percent = flashsaleData.reduction;
+                            });
+                        }
+                        break;
+                    case strapi.config.constants.flashsale_types_status.fix_money:
+                        product.flashsale_price = flashsaleData.reduction;
+                        product.flashsale_percent = (product.flashsale_price * 100) / product.price;
+                        //Check variants
+                        if (product.product_variants && product.product_variants.length > 0) {
+                            product.product_variants.forEach(function(variantItem) {
+                                variantItem.flashsale_price = flashsaleData.reduction;
+                                variantItem.flashsale_percent = (variantItem.flashsale_price * 100) / variantItem.price;
+                            });
+                        }
+                        break;
+                    default:
+                        product.flashsale_price = product.price;
+                        product.flashsale_percent = 0;
+                        break;
+                }
+
+            } else {
+                //if have not need reset to null
+                product.flashsaleproduct = null;
             }
         }
 

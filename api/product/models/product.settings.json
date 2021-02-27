@@ -96,8 +96,8 @@
       "model": "promotionproduct"
     },
     "flashsaleproduct": {
-      "model": "flashsaleproducts",
-      "via": "products"
+      "via": "products",
+      "model": "flashsaleproducts"
     }
   }
 }
