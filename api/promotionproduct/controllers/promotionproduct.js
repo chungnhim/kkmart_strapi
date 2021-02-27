@@ -55,8 +55,8 @@ module.exports = {
         }
         var dataresult = await strapi.query('flashsale').find(dataQuery);
         var removeflashsaleFields = [
-            "starttime",
-            "endtime",
+            //"starttime",
+            //"endtime",
             "status",
             "runeveryday"
         ];
