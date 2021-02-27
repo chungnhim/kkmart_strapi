@@ -131,6 +131,18 @@ module.exports = {
             dataQuery.promotionproduct_in = arrayPromotionActive;
         }
 
+        if (!_.isNil(queryString.price_order) && !_.isEmpty(queryString.price_order)) {
+            //low to high
+            if (queryString.price_order == '1') {
+                dataQuery._sort = 'price:asc';
+            }
+            //high to low
+            if (queryString.price_order == '2') {
+                dataQuery._sort = 'price:desc';
+            }
+
+        }
+
         var totalRows = await strapi.query('product').count(dataQuery);
         var entities = await strapi.query("product").find(dataQuery);
         //Check promotion and flashsale --- get price selling

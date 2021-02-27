@@ -106,6 +106,18 @@ module.exports = {
             entities[index] = await strapi.services.promotionproduct.priceRecalculationOfProduct(entities[index]);
         }
 
+        if (!_.isNil(queryString.price_order) && !_.isEmpty(queryString.price_order)) {
+            //low to high
+            if (queryString.price_order == '1') {
+                dataQuery._sort = 'price:asc';
+            }
+            //high to low
+            if (queryString.price_order == '2') {
+                dataQuery._sort = 'price:desc';
+            }
+
+        }
+
         let productModels = await strapi.services.common.normalizationResponse(
             entities,
             removeFields
