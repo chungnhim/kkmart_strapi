@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "voucherproducts",
+  "info": {
+    "name": "voucherproduct"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "vouchercode": {
+      "type": "string"
+    },
+    "vouchertype": {
+      "type": "integer"
+    },
+    "reduction": {
+      "type": "float"
+    },
+    "voucherapplytype": {
+      "type": "integer"
+    },
+    "voucherapplyfor": {
+      "type": "integer"
+    },
+    "activedate": {
+      "type": "datetime"
+    },
+    "enddate": {
+      "type": "datetime"
+    },
+    "isenddate": {
+      "type": "boolean"
+    },
+    "numberapply": {
+      "type": "integer"
+    },
+    "numberusevoucher": {
+      "type": "integer"
+    },
+    "islimitnumberusevoucher": {
+      "type": "boolean"
+    },
+    "isusewithpromotion": {
+      "type": "boolean"
+    }
+  }
+}
