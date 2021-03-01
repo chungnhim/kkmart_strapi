@@ -42,6 +42,49 @@ const malaysiaServiceTypes = [
 	}
 ];
 
+const countiesCode = [
+	{
+		"code": "BR",
+		"locale_keys": "pt_BR"
+	},
+	{
+		"code": "HK",
+		"locale_keys": "zh_HK"
+	},
+	{
+		"code": "ID",
+		"locale_keys": "id_ID"
+	},
+	{
+		"code": "MY",
+		"locale_keys": "ms_MY"
+	},
+	{
+		"code": "MX",
+		"locale_keys": "es_MX"
+	},
+	{
+		"code": "PH",
+		"locale_keys": "en_PH"
+	},
+	{
+		"code": "SG",
+		"locale_keys": "en_SG"
+	},
+	{
+		"code": "TW",
+		"locale_keys": "zh_TW"
+	},
+	{
+		"code": "TH",
+		"locale_keys": "en_TH"
+	},
+	{
+		"code": "VN",
+		"locale_keys": "vi_VN"
+	}
+]
+
 const generateSignature = async (rawBody, method, path) => {
 	try {
 		const LALAMOVE_API = process.env.LALAMOVE_API || 'https://sandbox-rest.lalamove.com';
@@ -78,10 +121,40 @@ const getHttpHeader = (apiKey, timestamp, signature) => {
 	};
 }
 module.exports = {
-	getServiceType: () => {
-		return malaysiaServiceTypes;
+	getConfiguration: () => {
+		return {
+			"malaysia_service_types": malaysiaServiceTypes,
+			"countries": countiesCode
+		};
 	},
 	getQuotations: async (body) => {
+		// {
+		// 	"deliver_location": {
+		// 		"address": "",
+		// 		"country_code": "",
+		// 		"lat": 0,
+		// 		"lng": 0
+		// 	},
+		// 	"pickup_location": {
+		// 		"address": "",
+		// 		"country_code": "",
+		// 		"lat": 0,
+		// 		"lng": 0
+		// 	},
+		// 	"receiver": {
+		// 		"name": "",
+		// 		"phone_number": ""
+		// 	},
+		// 	"schedule_at": "",
+		// 	"sender": {
+		// 		"name": "",
+		// 		"phone_number": "",
+		// 		"remarks": ""
+		// 	},
+		// 	"service_type": "",
+		// 	"toStop": 1
+		// }
+
 		let serviceType = malaysiaServiceTypes.find(s => s.key == body.serviceType);
 		if (_.isNil(serviceType)) {
 			return {
@@ -90,6 +163,8 @@ module.exports = {
 			}
 		}
 
+		let pickUpCountry = countiesCode.find(s => s.code == pickup_location.country_code).locale_keys;
+		let deliverCountry = countiesCode.find(s => s.code == deliver_location.country_code).locale_keys;
 		var req = {
 			"scheduleAt": body.scheduleAt, // in UTC timezone
 			"serviceType": body.serviceType,
@@ -100,9 +175,9 @@ module.exports = {
 						"lng": body.pickUpLocation.lng
 					},
 					"addresses": {
-						"en_MY": {
+						pickUpCountry: {
 							"displayString": body.pickUpLocation.address,
-							"country": "MY"
+							"country": pickup_location.country_code
 						}
 					}
 				},
@@ -112,9 +187,9 @@ module.exports = {
 						"lng": body.deliverLocation.lng
 					},
 					"addresses": {
-						"en_MY": {
+						deliverCountry: {
 							"displayString": body.deliverLocation.address,
-							"country": "MY"
+							"country": deliver_location.country_code
 						}
 					}
 				}
@@ -131,7 +206,7 @@ module.exports = {
 				"name": body.receiver.name,
 				"phone": body.receiver.phone_number
 			},
-			"specialRequests": ["COD"]
+			"specialRequests": special_requests
 		}
 
 		const path = "/v2/quotations";

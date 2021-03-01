@@ -50,8 +50,8 @@
     },
     {
       "method": "GET",
-      "path": "/lalamove/get-service-types",
-      "handler": "lalamoveShipping.getServiceType",
+      "path": "/lalamove/get-configuration",
+      "handler": "lalamoveShipping.getConfiguration",
       "config": {
         "policies": []
       }
