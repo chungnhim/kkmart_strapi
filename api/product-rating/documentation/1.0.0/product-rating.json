@@ -726,9 +726,6 @@
               "status": {
                 "type": "integer"
               },
-              "productimages": {
-                "type": "string"
-              },
               "sku": {
                 "type": "string"
               },
@@ -788,6 +785,12 @@
               },
               "flashsaleproduct": {
                 "type": "string"
+              },
+              "productimgs": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "created_by": {
                 "type": "string"

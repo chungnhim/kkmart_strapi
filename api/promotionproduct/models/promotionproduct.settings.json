@@ -34,8 +34,8 @@
       "type": "boolean"
     },
     "products": {
-      "collection": "product",
-      "via": "promotionproduct"
+      "via": "promotionproduct",
+      "collection": "product"
     },
     "numberapply": {
       "type": "float"

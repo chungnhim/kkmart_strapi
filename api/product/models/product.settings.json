@@ -42,9 +42,6 @@
     "status": {
       "type": "integer"
     },
-    "productimages": {
-      "collection": "productimage"
-    },
     "sku": {
       "type": "string"
     },
@@ -92,12 +89,23 @@
       "via": "products"
     },
     "promotionproduct": {
-      "via": "products",
-      "model": "promotionproduct"
+      "model": "promotionproduct",
+      "via": "products"
     },
     "flashsaleproduct": {
-      "via": "products",
-      "model": "flashsaleproducts"
+      "model": "flashsaleproducts",
+      "via": "products"
+    },
+    "productimgs": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
     }
   }
 }
