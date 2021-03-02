@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/lalamove/get-service-types": {
+    "/lalamove/get-configuration": {
       "get": {
         "deprecated": false,
         "description": "",

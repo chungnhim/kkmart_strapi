@@ -8,8 +8,8 @@
 const _ = require('lodash');
 
 module.exports = {
-  async getServiceType(ctx) {
-    var res = await strapi.services.lalamoveshippingservice.getServiceType();
+  async getConfiguration(ctx) {
+    var res = await strapi.services.lalamoveshippingservice.getConfiguration();
     ctx.send(res);
   },
   async getQuotations(ctx) {
