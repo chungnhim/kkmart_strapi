@@ -18,7 +18,7 @@ const generateOrderCode = (length = 6) => {
     return moment.utc(new Date).format("YYYYMMDD") + text;
 }
 
-const getByOrderCode = async (orderCode) => {
+const getByOrderCode = async(orderCode) => {
     var order = await strapi.query("order").findOne({
         order_code: orderCode,
     });
@@ -26,7 +26,7 @@ const getByOrderCode = async (orderCode) => {
     return order;
 }
 
-const getByOrdersUserId = async (pageIndex, pageSize, userId) => {
+const getByOrdersUserId = async(pageIndex, pageSize, userId) => {
     var dataQuery = {
         _start: (pageIndex - 1) * pageSize,
         _limit: pageSize,
@@ -43,7 +43,7 @@ const getByOrdersUserId = async (pageIndex, pageSize, userId) => {
 }
 
 module.exports = {
-    checkOut: async (ctx) => {
+    checkOut: async(ctx) => {
         const params = _.assign({}, ctx.request.body, ctx.params);
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
@@ -94,7 +94,7 @@ module.exports = {
 
         for (let index = 0; index < shoppingCart.shopping_cart_products.length; index++) {
             const cartItem = shoppingCart.shopping_cart_products[index];
-            let product = await strapi.controllers.product.getProductById(cartItem.product);
+            let product = await strapi.services.product.getProductById(cartItem.product);
             if (_.isNil(product)) {
                 hasError = true;
 
@@ -153,15 +153,12 @@ module.exports = {
             return;
         }
 
-        await strapi.query("shopping-cart").update(
-            {
-                id: shoppingCart.id
-            },
-            {
-                status: strapi.config.constants.shopping_cart_status.paid,
-                user: !_.isNil(shoppingCart.user) ? shoppingCart.user.id : null
-            }
-        );
+        await strapi.query("shopping-cart").update({
+            id: shoppingCart.id
+        }, {
+            status: strapi.config.constants.shopping_cart_status.paid,
+            user: !_.isNil(shoppingCart.user) ? shoppingCart.user.id : null
+        });
 
         for (let i = 0; i < orderProductEntities.length; i++) {
             const product = orderProductEntities[i];
@@ -214,7 +211,7 @@ module.exports = {
             order_code: orderEntity.order_code
         });
     },
-    getByOrderCode: async (ctx) => {
+    getByOrderCode: async(ctx) => {
         const params = _.assign({}, ctx.request.params, ctx.params);
         var orderCode = params.orderCode;
 
@@ -248,7 +245,7 @@ module.exports = {
             order: res
         });
     },
-    getOrdersByUserId: async (ctx) => {
+    getOrdersByUserId: async(ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
             ctx.send({

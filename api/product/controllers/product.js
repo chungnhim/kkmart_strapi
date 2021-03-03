@@ -108,7 +108,7 @@ module.exports = {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         const params = _.assign({}, ctx.request.params, ctx.params);
         let productId = params.product_id;
-        var product = await getProductById(productId);
+        var product = await strapi.services.product.getProductById(productId);
 
         if (!product) {
             ctx.send({});
@@ -127,6 +127,6 @@ module.exports = {
         ctx.send(productModel);
     },
     getProductById: async(productId) => {
-        return await getProductById(productId);
+        return await strapi.services.product.getProductById(productId);
     }
 };

@@ -23,6 +23,9 @@ module.exports = {
             user: userId,
             status: strapi.config.constants.shopping_cart_status.new
         });
+        //
+
+        shoppingCart = await strapi.services.product.getProductOfShoppingCart(shoppingCart);
 
         let cartModel = await strapi.services.common.normalizationResponse(shoppingCart);
         ctx.send({
@@ -70,7 +73,7 @@ module.exports = {
             return;
         }
 
-        let product = await strapi.controllers.product.getProductById(productId);
+        let product = await strapi.services.product.getProductById(productId);
         if (_.isNil(product)) {
             ctx.send({
                 success: false,
@@ -138,6 +141,7 @@ module.exports = {
             id: shoppingCartId,
         });
 
+        shoppingCart = await strapi.services.product.getProductOfShoppingCartOne(shoppingCart);
         let cartModel = await strapi.services.common.normalizationResponse(shoppingCart);
         ctx.send({
             success: true,
