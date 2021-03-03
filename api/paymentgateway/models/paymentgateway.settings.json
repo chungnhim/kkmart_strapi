@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "paymentgateways",
+  "info": {
+    "name": "paymentgateway"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "gwcode": {
+      "type": "string"
+    },
+    "gwname": {
+      "type": "string"
+    },
+    "merchantid": {
+      "type": "string"
+    },
+    "merchantkey": {
+      "type": "string"
+    },
+    "gwurl": {
+      "type": "string"
+    },
+    "isactive": {
+      "type": "boolean"
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "paymenttransacts",
+  "info": {
+    "name": "Paymenttransact"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "transactionid": {
+      "type": "string"
+    },
+    "referenceno": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "decimal"
+    },
+    "currency": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "maxLength": 1
+    },
+    "customername": {
+      "type": "string"
+    },
+    "customeremail": {
+      "type": "string"
+    },
+    "paymentmethod": {
+      "type": "string"
+    }
+  }
+}

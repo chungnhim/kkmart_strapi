@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "paymenttypes",
+  "info": {
+    "name": "Paymenttype"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "typename": {
+      "type": "string"
+    },
+    "typecode": {
+      "type": "string"
+    },
+    "typeicon": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "isactive": {
+      "type": "boolean"
+    }
+  }
+}
