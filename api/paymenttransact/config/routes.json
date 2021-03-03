@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/paymenttransacts",
+      "handler": "paymenttransact.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/paymenttransacts/count",
+      "handler": "paymenttransact.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/paymenttransacts/:id",
+      "handler": "paymenttransact.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/paymenttransacts",
+      "handler": "paymenttransact.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/paymenttransacts/:id",
+      "handler": "paymenttransact.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/paymenttransacts/:id",
+      "handler": "paymenttransact.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
