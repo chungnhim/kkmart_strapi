@@ -11,7 +11,7 @@ var removeFields = [
     "order_products",
     "product_ratings",
     "brand",
-    "categories"
+
     //"promotionproduct",
     //"flashsaleproduct"
 ];
