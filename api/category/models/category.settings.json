@@ -51,6 +51,10 @@
     },
     "displayorder": {
       "type": "integer"
+    },
+    "products": {
+      "via": "categories",
+      "collection": "product"
     }
   }
 }

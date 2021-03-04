@@ -11,6 +11,7 @@ var removeFields = [
     "order_products",
     "product_ratings",
     "brand",
+    "categories"
     //"promotionproduct",
     //"flashsaleproduct"
 ];
@@ -51,7 +52,7 @@ module.exports = {
         }
 
         if (!_.isNil(queryString.category_ids) && !_.isEmpty(queryString.category_ids)) {
-            dataQuery.categoryid_in = queryString.category_ids.split(",");
+            dataQuery.categories_in = queryString.category_ids.split(",");
         }
 
         if (!_.isNil(queryString.min_price) && !_.isEmpty(queryString.min_price)) {
