@@ -182,6 +182,19 @@ module.exports = {
         }
         product.ishave_discount_promotion = ishave_discount_promotion;
         product.ishave_discount_flashsale = ishave_discount_flashsale;
+
+        var arrayCategoriesId = '';
+        if (product.categories) {
+            for (let index = 0; index < product.categories.length; index++) {
+                const categoryData = product.categories[index];
+                arrayCategoriesId = arrayCategoriesId + categoryData.id + ',';
+            }
+        }
+
+        if (arrayCategoriesId.length > 0) {
+            product.categoryid = arrayCategoriesId.substring(0, arrayCategoriesId.length - 1);
+        }
+
         return product;
     }
 };
