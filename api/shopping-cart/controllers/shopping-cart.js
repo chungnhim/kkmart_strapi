@@ -168,8 +168,8 @@ module.exports = {
 
             return;
         }
+        var existsProduct = shoppingCart.shopping_cart_products.find(s => s.product == cartProductId); 
 
-        var existsProduct = shoppingCart.shopping_cart_products.find(s => s.id == cartProductId);
         if (_.isNil(existsProduct)) {
             ctx.send({
                 success: false,
@@ -179,11 +179,17 @@ module.exports = {
             return;
         }
 
+        var dataShoppingCart = await strapi.query("shopping-cart-product").findOne();
+
+        //console.log(dataShoppingCart);
+
         var res = await strapi.query("shopping-cart-product").delete({
-            id: cartProductId,
+            product: cartProductId,
+            shopping_cart: shoppingCartId
         });
 
-        if (!_.isNil(res) && res.id == cartProductId) {
+        console.log(res);
+        if (!_.isNil(res) && res.id !== 0) {
             ctx.send({
                 success: true,
                 message: "Cart item has been remove successfully"
