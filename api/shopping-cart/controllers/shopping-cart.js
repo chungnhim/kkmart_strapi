@@ -19,18 +19,19 @@ module.exports = {
                 })
             );
         }
-        var shoppingCart = await strapi.query("shopping-cart").find({
+        var shoppingCart = await strapi.query("shopping-cart").findOne({
             user: userId,
-            status: strapi.config.constants.shopping_cart_status.new
+            status: strapi.config.constants.shopping_cart_status.new,
+            _sort: "id:desc"
         });
         //
 
-        shoppingCart = await strapi.services.product.getProductOfShoppingCart(shoppingCart);
+        shoppingCart = await strapi.services.product.getProductOfShoppingCartOne(shoppingCart);
 
         let cartModel = await strapi.services.common.normalizationResponse(shoppingCart);
         ctx.send({
             success: true,
-            cart: Object.values(cartModel)
+            cart: cartModel
         });
     },
     addProductToCart: async(ctx) => {
