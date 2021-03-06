@@ -133,7 +133,8 @@ module.exports = {
             // Case update qtty of an existing item
             console.log('Case update qtty of an existing item');
 
-            existsProduct.qtty += qtty;
+            //existsProduct.qtty += qtty;
+            existsProduct.qtty = qtty;
             shoppingCartProduct = await strapi.query("shopping-cart-product").update({ id: existsProduct.id },
                 existsProduct
             );
@@ -208,7 +209,7 @@ module.exports = {
             return;
         }
 
-        var dataShoppingCart = await strapi.query("shopping-cart-product").findOne();
+        //var dataShoppingCart = await strapi.query("shopping-cart-product").findOne();
 
         //console.log(dataShoppingCart);
 
@@ -217,17 +218,21 @@ module.exports = {
             shopping_cart: shoppingCartId
         });
 
-        console.log(res);
-        if (!_.isNil(res) && res.id !== 0) {
+        // console.log(1);
+        // console.log(res);
+        //console.log(res[0].product.id);
+        //console.log(res.length);
+
+        if (res.length > 0) {
             ctx.send({
                 success: true,
                 message: "Cart item has been remove successfully"
             });
+        } else {
+            ctx.send({
+                success: false,
+                message: "Product does not exists. Please check it!"
+            });
         }
-
-        ctx.send({
-            success: false,
-            message: "Product does not exists"
-        });
     }
 };
