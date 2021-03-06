@@ -37,15 +37,35 @@ module.exports = {
     addProductToCart: async(ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
 
+        if (userId == 0) {
+            return ctx.badRequest(
+                null,
+                formatError({
+                    id: 'Invalidate Token',
+                    message: 'Invalidate Token',
+                })
+            );
+        }
+
         const params = _.assign({}, ctx.request.body, ctx.params);
         let productId = params.product_id;
         let productVariantId = params.product_variant_id;
         let qtty = params.qtty;
         let shoppingCartId = params.shopping_cart_id == null ? 0 : params.shopping_cart_id;
 
+
         var shoppingCart = await strapi.query("shopping-cart").findOne({
             id: shoppingCartId,
         });
+
+        //Get cart newest of user
+        if (_.isNil(shoppingCart)) {
+            shoppingCart = await strapi.query("shopping-cart").findOne({
+                user: userId,
+                status: strapi.config.constants.shopping_cart_status.new,
+                _sort: "id:desc"
+            });
+        }
 
         if (_.isNil(shoppingCart)) {
             var cartEntity = {
@@ -154,7 +174,16 @@ module.exports = {
         let cartProductId = params.cart_product_id;
         var shoppingCartId = params.shopping_cart_id;
 
-        console.log(params);
+        let userId = await strapi.services.common.getLoggedUserId(ctx);
+        if (userId == 0) {
+            return ctx.badRequest(
+                null,
+                formatError({
+                    id: 'Invalidate Token',
+                    message: 'Invalidate Token',
+                })
+            );
+        }
 
         var shoppingCart = await strapi.query("shopping-cart").findOne({
             id: shoppingCartId,
@@ -168,7 +197,7 @@ module.exports = {
 
             return;
         }
-        var existsProduct = shoppingCart.shopping_cart_products.find(s => s.product == cartProductId); 
+        var existsProduct = shoppingCart.shopping_cart_products.find(s => s.product == cartProductId);
 
         if (_.isNil(existsProduct)) {
             ctx.send({
