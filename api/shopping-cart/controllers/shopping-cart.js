@@ -104,41 +104,70 @@ module.exports = {
             return;
         }
 
-        var variant = product.product_variants.find(s => s.id == productVariantId);
-        if (_.isNil(variant)) {
-            ctx.send({
-                success: false,
-                message: "Product does not exists"
-            });
-
-            return;
-        }
-
-        var existsProduct = shoppingCart.shopping_cart_products.find(s => s.product == productId && s.product_variant == productVariantId);
         var shoppingCartProduct = null;
 
-        if (_.isNil(existsProduct)) {
-            // Case add new item to cart            
-            console.log('Case add new item to cart');
+        var variant = product.product_variants.find(s => s.id == productVariantId);
+        if (_.isNil(variant)) {
+            // ctx.send({
+            //     success: false,
+            //     message: "variant does not exists"
+            // });
 
-            shoppingCartProduct = await strapi.query("shopping-cart-product").create({
-                shopping_cart: shoppingCart.id,
-                product: productId,
-                product_variant: productVariantId,
-                qtty: qtty,
-                origin_price: variant.price,
-                selling_price: variant.selling_price
-            });
+            // return;
+
+            var existsProduct = shoppingCart.shopping_cart_products.find(s => s.product == productId);
+            if (_.isNil(existsProduct)) {
+                // Case add new item to cart            
+                console.log('Case add new item to cart');
+
+
+                shoppingCartProduct = await strapi.query("shopping-cart-product").create({
+                    shopping_cart: shoppingCart.id,
+                    product: productId,
+                    product_variant: null,
+                    qtty: qtty,
+                    origin_price: product.retailprice,
+                    selling_price: product.price
+                });
+            } else {
+                // Case update qtty of an existing item
+                console.log('Case update qtty of an existing item');
+
+                //existsProduct.qtty += qtty;
+                existsProduct.qtty = qtty;
+                shoppingCartProduct = await strapi.query("shopping-cart-product").update({ id: existsProduct.id },
+                    existsProduct
+                );
+            }
+
         } else {
-            // Case update qtty of an existing item
-            console.log('Case update qtty of an existing item');
 
-            //existsProduct.qtty += qtty;
-            existsProduct.qtty = qtty;
-            shoppingCartProduct = await strapi.query("shopping-cart-product").update({ id: existsProduct.id },
-                existsProduct
-            );
+            var existsProduct = shoppingCart.shopping_cart_products.find(s => s.product == productId && s.product_variant == productVariantId);
+            if (_.isNil(existsProduct)) {
+                // Case add new item to cart            
+                console.log('Case add new item to cart');
+
+                shoppingCartProduct = await strapi.query("shopping-cart-product").create({
+                    shopping_cart: shoppingCart.id,
+                    product: productId,
+                    product_variant: productVariantId,
+                    qtty: qtty,
+                    origin_price: variant.price,
+                    selling_price: variant.selling_price
+                });
+            } else {
+                // Case update qtty of an existing item
+                console.log('Case update qtty of an existing item');
+
+                //existsProduct.qtty += qtty;
+                existsProduct.qtty = qtty;
+                shoppingCartProduct = await strapi.query("shopping-cart-product").update({ id: existsProduct.id },
+                    existsProduct
+                );
+            }
+
         }
+
 
         if (_.isNil(shoppingCartProduct)) {
             ctx.send({
