@@ -24,7 +24,6 @@ module.exports = {
             status: strapi.config.constants.shopping_cart_status.new,
             _sort: "id:desc"
         });
-        //
 
         shoppingCart = await strapi.services.product.getProductOfShoppingCartOne(shoppingCart);
 
@@ -52,7 +51,6 @@ module.exports = {
         let productVariantId = params.product_variant_id;
         let qtty = params.qtty;
         let shoppingCartId = params.shopping_cart_id == null ? 0 : params.shopping_cart_id;
-
 
         var shoppingCart = await strapi.query("shopping-cart").findOne({
             id: shoppingCartId,
@@ -119,8 +117,6 @@ module.exports = {
 
         if (_.isNil(existsProduct)) {
             // Case add new item to cart            
-            console.log('Case add new item to cart');
-
             shoppingCartProduct = await strapi.query("shopping-cart-product").create({
                 shopping_cart: shoppingCart.id,
                 product: productId,
@@ -131,9 +127,7 @@ module.exports = {
             });
         } else {
             // Case update qtty of an existing item
-            console.log('Case update qtty of an existing item');
-
-            existsProduct.qtty += qtty;
+            existsProduct.qtty = qtty;
             shoppingCartProduct = await strapi.query("shopping-cart-product").update({ id: existsProduct.id },
                 existsProduct
             );
@@ -197,8 +191,8 @@ module.exports = {
 
             return;
         }
-        var existsProduct = shoppingCart.shopping_cart_products.find(s => s.product == cartProductId);
 
+        var existsProduct = shoppingCart.shopping_cart_products.find(s => s.product == cartProductId);
         if (_.isNil(existsProduct)) {
             ctx.send({
                 success: false,
@@ -207,10 +201,6 @@ module.exports = {
 
             return;
         }
-
-        var dataShoppingCart = await strapi.query("shopping-cart-product").findOne();
-
-        //console.log(dataShoppingCart);
 
         var res = await strapi.query("shopping-cart-product").delete({
             product: cartProductId,
