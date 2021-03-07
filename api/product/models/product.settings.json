@@ -77,8 +77,8 @@
       "via": "product_id"
     },
     "product_ratings": {
-      "collection": "product-rating",
-      "via": "product"
+      "via": "product",
+      "collection": "product-rating"
     },
     "shopping_cart_products": {
       "collection": "shopping-cart-product",

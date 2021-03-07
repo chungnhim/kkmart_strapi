@@ -10,8 +10,8 @@
   },
   "attributes": {
     "product": {
-      "via": "product_ratings",
-      "model": "product"
+      "model": "product",
+      "via": "product_ratings"
     },
     "rating_point": {
       "type": "float"
@@ -26,6 +26,17 @@
     },
     "status": {
       "type": "integer"
+    },
+    "images": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
     }
   }
 }
