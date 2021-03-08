@@ -24,7 +24,7 @@ module.exports = {
         const sanitizedEntity = sanitizeEntity(entity, { model: strapi.models.state });
         var dataArrayUrl = removeAuthorFields(sanitizedEntity);
         dataArrayUrl = await strapi.services.common.normalizationResponse(
-            dataArrayUrl
+            dataArrayUrl, ["user"]
         );
         dataArrayUrl = Object.values(removeAuthorFields(dataArrayUrl))
         ctx.send(dataArrayUrl);

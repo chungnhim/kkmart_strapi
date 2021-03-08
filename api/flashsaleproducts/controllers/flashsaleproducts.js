@@ -41,8 +41,7 @@ var removeFields = [
     "shopping_cart_products",
     "order_products",
     "product_ratings",
-    "brand",
-
+    "brand", "user"
     //"promotionproduct",
     //"flashsaleproduct"
 ];

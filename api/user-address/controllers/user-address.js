@@ -8,7 +8,7 @@
 const _ = require("lodash");
 
 module.exports = {
-    addUserAddress: async (ctx) => {
+    addUserAddress: async(ctx) => {
         const params = _.assign({}, ctx.request.body, ctx.params);
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
@@ -38,7 +38,7 @@ module.exports = {
             user_address_id: userAddress.id
         });
     },
-    getUserAddress: async (ctx) => {
+    getUserAddress: async(ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
             ctx.send({
@@ -68,7 +68,7 @@ module.exports = {
         var entities = await strapi.query("user-address").find(dataQuery);
 
         let models = await strapi.services.common.normalizationResponse(
-            entities
+            entities, ["user"]
         );
 
         ctx.send({
@@ -77,7 +77,7 @@ module.exports = {
             address: _.values(models)
         });
     },
-    setDefaultUserAddress: async (ctx) => {
+    setDefaultUserAddress: async(ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
             ctx.send({
@@ -111,16 +111,10 @@ module.exports = {
 
         for (let index = 0; index < oldDefaults.length; index++) {
             const add = oldDefaults[index];
-            await strapi.query("user-address").update(
-                { id: add.id },
-                { is_default: false }
-            );
+            await strapi.query("user-address").update({ id: add.id }, { is_default: false });
         }
 
-        var res = await strapi.query("user-address").update(
-            { id: params.address_id },
-            { is_default: true }
-        );
+        var res = await strapi.query("user-address").update({ id: params.address_id }, { is_default: true });
 
         ctx.send({
             success: true,

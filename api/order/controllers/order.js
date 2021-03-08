@@ -237,7 +237,7 @@ module.exports = {
         console.log(`order`, order);
 
         var res = await strapi.services.common.normalizationResponse(
-            order
+            order, ["user"]
         );
 
         ctx.send({
@@ -276,7 +276,7 @@ module.exports = {
         }
 
         let models = await strapi.services.common.normalizationResponse(
-            res.entities
+            res.entities, ["user"]
         );
 
         ctx.send({

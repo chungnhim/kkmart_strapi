@@ -27,7 +27,7 @@ module.exports = {
 
         shoppingCart = await strapi.services.product.getProductOfShoppingCartOne(shoppingCart);
 
-        let cartModel = await strapi.services.common.normalizationResponse(shoppingCart);
+        let cartModel = await strapi.services.common.normalizationResponse(shoppingCart, ["user"]);
         ctx.send({
             success: true,
             cart: cartModel
@@ -191,7 +191,7 @@ module.exports = {
         });
 
         shoppingCart = await strapi.services.product.getProductOfShoppingCartOne(shoppingCart);
-        let cartModel = await strapi.services.common.normalizationResponse(shoppingCart);
+        let cartModel = await strapi.services.common.normalizationResponse(shoppingCart, ["user"]);
         ctx.send({
             success: true,
             cart: cartModel

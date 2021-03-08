@@ -41,8 +41,7 @@ var removeFields = [
     "shopping_cart_products",
     "order_products",
     "product_ratings",
-    "brand",
-
+    "brand", "user"
     //"promotionproduct",
     //"flashsaleproduct"
 ];
@@ -59,7 +58,7 @@ module.exports = {
             //"starttime",
             //"endtime",
             "status",
-            "runeveryday"
+            "runeveryday", "user"
         ];
         dataresult = await strapi.services.common.normalizationResponse(
             dataresult, removeflashsaleFields
@@ -70,7 +69,7 @@ module.exports = {
         var removeProtmotionProductFields = [
             "minimumorderqtty",
             "promotionsoldqtty",
-            "maximumorderqtty"
+            "maximumorderqtty", "user"
         ];
         var arrayIdActive = await strapi.services.promotionproduct.getPromotionActiveId();
         var dataQuery = {

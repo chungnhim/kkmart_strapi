@@ -126,7 +126,7 @@ module.exports = {
             }
 
             let data = Object.values(removeAuthorFields(dataProductResult));
-            let productModel = await strapi.services.common.normalizationResponse(data);
+            let productModel = await strapi.services.common.normalizationResponse(data, ["user"]);
             ctx.send(Object.values(productModel));
         } else {
             ctx.send({

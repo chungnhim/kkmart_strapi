@@ -17,7 +17,7 @@ const removeAuthorFields = (entity, fields) => {
     var defaultFields = [
         "created_by",
         "updated_by",
-        "user",
+        //"user",
         "formats"
     ];
 

@@ -44,70 +44,70 @@ module.exports = {
     getcouponcodetext: async ctx => {
         var dataresult = await strapi.query('dailypromotion').find({ status_eq: 3, dailypromotiontype_eq: 1 });
         var dailypromotionModels = await strapi.services.common.normalizationResponse(
-            dataresult
+            dataresult, ["user"]
         );
         ctx.send(Object.values(removeAuthorFields(dailypromotionModels)));
     },
     getcouponcodeimage: async ctx => {
         var dataresult = await strapi.query('dailypromotion').find({ status_eq: 3, dailypromotiontype_eq: 2 });
         var dailypromotionModels = await strapi.services.common.normalizationResponse(
-            dataresult
+            dataresult, ["user"]
         );
         ctx.send(Object.values(removeAuthorFields(dailypromotionModels)));
     },
     getecatalogue: async ctx => {
         var dataresult = await strapi.query('dailypromotion').find({ status_eq: 3, dailypromotiontype_eq: 3 });
         var dailypromotionModels = await strapi.services.common.normalizationResponse(
-            dataresult
+            dataresult, ["user"]
         );
         ctx.send(Object.values(removeAuthorFields(dailypromotionModels)));
     },
     getpopup: async ctx => {
         var dataresult = await strapi.query('dailypromotion').find({ status_eq: 3, dailypromotiontype_eq: 4 });
         var dailypromotionModels = await strapi.services.common.normalizationResponse(
-            dataresult
+            dataresult, ["user"]
         );
         ctx.send(Object.values(removeAuthorFields(dailypromotionModels)));
     },
     getproductionlist: async ctx => {
         var dataresult = await strapi.query('dailypromotion').find({ status_eq: 3, dailypromotiontype_eq: 5 });
         var dailypromotionModels = await strapi.services.common.normalizationResponse(
-            dataresult
+            dataresult, ["user"]
         );
         ctx.send(Object.values(removeAuthorFields(dailypromotionModels)));
     },
     getproductioncategory: async ctx => {
         var dataresult = await strapi.query('dailypromotion').find({ status_eq: 3, dailypromotiontype_eq: 5 });
         var dailypromotionModels = await strapi.services.common.normalizationResponse(
-            dataresult
+            dataresult, ["user"]
         );
         ctx.send(Object.values(removeAuthorFields(dailypromotionModels)));
     },
     getnewoutlet: async ctx => {
         var dataresult = await strapi.query('dailypromotion').find({ status_eq: 3, dailypromotiontype_eq: 7 });
         var dailypromotionModels = await strapi.services.common.normalizationResponse(
-            dataresult
+            dataresult, ["user"]
         );
         ctx.send(Object.values(removeAuthorFields(dailypromotionModels)));
     },
     getcampaign: async ctx => {
         var dataresult = await strapi.query('dailypromotion').find({ status_eq: 3, dailypromotiontype_eq: 8 });
         var dailypromotionModels = await strapi.services.common.normalizationResponse(
-            dataresult
+            dataresult, ["user"]
         );
         ctx.send(Object.values(removeAuthorFields(dailypromotionModels)));
     },
     getmemberexclusive: async ctx => {
         var dataresult = await strapi.query('dailypromotion').find({ status_eq: 3, dailypromotiontype_eq: 9 });
         var dailypromotionModels = await strapi.services.common.normalizationResponse(
-            dataresult
+            dataresult, ["user"]
         );
         ctx.send(Object.values(removeAuthorFields(dailypromotionModels)));
     },
     getPromotionBanner: async ctx => {
         var dataresult = await strapi.query('dailypromotion').find({ status_eq: 3, dailypromotiontype_eq: 10 });
         var dailypromotionModels = await strapi.services.common.normalizationResponse(
-            dataresult
+            dataresult, ["user"]
         );
         ctx.send(Object.values(removeAuthorFields(dailypromotionModels)));
     }
