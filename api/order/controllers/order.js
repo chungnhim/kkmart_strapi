@@ -45,39 +45,52 @@ const getByOrdersUserId = async(pageIndex, pageSize, userId) => {
 module.exports = {
     checkOut: async (ctx) => {
         // {
-        //     "order_via": "Web",
+        //     "billing": {
+        //         "address": "",
+        //         "district_id": "",
+        //         "full_name": "",
+        //         "note": "",
+        //         "phone_number": "",
+        //         "province_id": ""
+        //     },
+        //     "cart_items_id": [],
         //     "currency": "MYR",
+        //     "order_via": "Web",
         //     "payment_method": "",
         //     "shipping": {
-        //         "full_name": "Test",
-        //         "phone_number": "Test 1111",
-        //         "province_id": "",
-        //         "district_id": "",
-        //         "ward_id": "",
         //         "address": "HN",
-        //         "note":"TEST"
-        //     },
-        //     "shopping_cart_id": 10,
-        //     "shopping_cart_items": []
+        //         "district_id": "",
+        //         "full_name": "Test",
+        //         "note": "TEST",
+        //         "phone_number": "Test 1111",
+        //         "province_id": ""
+        //     }
         // }
 
         const params = _.assign({}, ctx.request.body, ctx.params);
         let userId = await strapi.services.common.getLoggedUserId(ctx);
-        if (_.isNil(userId) || userId == 0) {
+        if (userId == 0) {
+            return ctx.badRequest(
+                null,
+                formatError({
+                    id: 'Invalid Token',
+                    message: 'Invalid Token',
+                })
+            );
+        }
+
+        if (_.isNil(params.cart_items_id) || params.cart_items_id.length == 0) {
             ctx.send({
                 success: false,
-                message: "To complete this payment, please login to your account"
+                message: "No product for checkout"
             });
 
             return;
         }
 
-        var shoppingCartId = params.shopping_cart_id;
         var shoppingCart = await strapi.query("shopping-cart").findOne({
-            id: shoppingCartId,
+            user: userId
         });
-
-        console.log(`shoppingCart`, shoppingCart);
 
         if (_.isNil(shoppingCart)) {
             ctx.send({
@@ -97,24 +110,16 @@ module.exports = {
             return;
         }
 
-        // if (shoppingCart.status != strapi.config.constants.shopping_cart_status.new) {
-        //     ctx.send({
-        //         success: false,
-        //         message: "Shopping cart has been paid or cancelled"
-        //     });
-
-        //     return;
-        // }
-
-        // let checkOutProducts = shoppingCart.shopping_cart_products.filter(s=>s.productId == )
+        let checkOutProducts = shoppingCart.shopping_cart_products.filter(s => params.cart_items_id.includes(s.id));
 
         let totalAmount = 0;
         let discountAmount = 0;
         let hasError = false;
         let orderProductEntities = [];
 
-        for (let index = 0; index < shoppingCart.shopping_cart_products.length; index++) {
-            const cartItem = shoppingCart.shopping_cart_products[index];
+        for (let index = 0; index < checkOutProducts.length; index++) {
+            const cartItem = checkOutProducts[index];
+            console.log(`cartItem`, cartItem);
             let product = await strapi.services.product.getProductById(cartItem.product);
             if (_.isNil(product)) {
                 hasError = true;
@@ -165,6 +170,7 @@ module.exports = {
         };
 
         var order = await strapi.query("order").create(orderEntity);
+
         if (_.isNil(order)) {
             ctx.send({
                 success: false,
@@ -193,7 +199,6 @@ module.exports = {
             order: order.id,
             full_name: params.shipping.full_name,
             phone_number: params.shipping.phone_number,
-            country: params.shipping.country_id,
             province: params.shipping.province_id,
             district: params.shipping.district_id,
             address: params.shipping.address,
@@ -212,7 +217,6 @@ module.exports = {
             order: order.id,
             full_name: params.billing.full_name,
             phone_number: params.billing.phone_number,
-            country: params.shipping.country_id,
             province: params.billing.province_id,
             district: params.billing.district_id,
             address: params.billing.address,
@@ -221,7 +225,11 @@ module.exports = {
             billing_date: null
         };
 
+        console.log(`billingAddress`, billingAddress);
         await strapi.query("order-billing").create(billingAddress);
+        await strapi.query("shopping-cart-product").delete({
+            shopping_cart: shoppingCart.id
+        });
 
         ctx.send({
             success: true,
