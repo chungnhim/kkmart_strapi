@@ -43,7 +43,24 @@ const getByOrdersUserId = async(pageIndex, pageSize, userId) => {
 }
 
 module.exports = {
-    checkOut: async(ctx) => {
+    checkOut: async (ctx) => {
+        // {
+        //     "order_via": "Web",
+        //     "currency": "MYR",
+        //     "payment_method": "",
+        //     "shipping": {
+        //         "full_name": "Test",
+        //         "phone_number": "Test 1111",
+        //         "province_id": "",
+        //         "district_id": "",
+        //         "ward_id": "",
+        //         "address": "HN",
+        //         "note":"TEST"
+        //     },
+        //     "shopping_cart_id": 10,
+        //     "shopping_cart_items": []
+        // }
+
         const params = _.assign({}, ctx.request.body, ctx.params);
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
@@ -59,6 +76,8 @@ module.exports = {
         var shoppingCart = await strapi.query("shopping-cart").findOne({
             id: shoppingCartId,
         });
+
+        console.log(`shoppingCart`, shoppingCart);
 
         if (_.isNil(shoppingCart)) {
             ctx.send({
@@ -78,14 +97,16 @@ module.exports = {
             return;
         }
 
-        if (shoppingCart.status != strapi.config.constants.shopping_cart_status.new) {
-            ctx.send({
-                success: false,
-                message: "Shopping cart has been paid or cancelled"
-            });
+        // if (shoppingCart.status != strapi.config.constants.shopping_cart_status.new) {
+        //     ctx.send({
+        //         success: false,
+        //         message: "Shopping cart has been paid or cancelled"
+        //     });
 
-            return;
-        }
+        //     return;
+        // }
+
+        // let checkOutProducts = shoppingCart.shopping_cart_products.filter(s=>s.productId == )
 
         let totalAmount = 0;
         let discountAmount = 0;

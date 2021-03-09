@@ -49,6 +49,14 @@
       }
     },
     {
+      "method": "GET",
+      "path": "/v1/shopping-carts",
+      "handler": "shopping-cart.getByUserId",
+      "config": {
+        "policies": []
+      }
+    },
+    {
       "method": "POST",
       "path": "/v1/shopping-carts/add-to-cart",
       "handler": "shopping-cart.addProductToCart",
@@ -59,14 +67,14 @@
     {
       "method": "GET",
       "path": "/v1/shopping-carts/:shopping_cart_id",
-      "handler": "shopping-cart.getCart",
+      "handler": "shopping-cart.getCartById",
       "config": {
         "policies": []
       }
     },
     {
       "method": "DELETE",
-      "path": "/v1/shopping-carts/:shopping_cart_id/:cart_product_id",
+      "path": "/v1/shopping-carts/remove-cart-item/:cart_item_id",
       "handler": "shopping-cart.removeCartItem",
       "config": {
         "policies": []
