@@ -859,12 +859,6 @@
                   "type": "string"
                 }
               },
-              "order_products": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "promotionproduct": {
                 "type": "string"
               },
@@ -878,6 +872,12 @@
                 }
               },
               "categories": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "order_products": {
                 "type": "array",
                 "items": {
                   "type": "string"

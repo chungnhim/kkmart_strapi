@@ -84,10 +84,6 @@
       "collection": "shopping-cart-product",
       "via": "product"
     },
-    "order_products": {
-      "collection": "order-product",
-      "via": "products"
-    },
     "promotionproduct": {
       "model": "promotionproduct",
       "via": "products"
@@ -111,6 +107,10 @@
       "collection": "category",
       "via": "products",
       "dominant": true
+    },
+    "order_products": {
+      "via": "product",
+      "collection": "order-product"
     }
   }
 }

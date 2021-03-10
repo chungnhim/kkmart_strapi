@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "03/10/2021 10:55:42 PM"
+    "x-generation-date": "03/11/2021 12:48:38 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -21157,6 +21157,77 @@
             }
           }
         ]
+      }
+    },
+    "/v1/orders/create-order": {
+      "post": {
+        "deprecated": false,
+        "description": "Create a new record",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Order"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "foo": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/outlets": {
@@ -42409,12 +42480,6 @@
                     "type": "string"
                   }
                 },
-                "order_products": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
                 "promotionproduct": {
                   "type": "string"
                 },
@@ -42428,6 +42493,12 @@
                   }
                 },
                 "categories": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "order_products": {
                   "type": "array",
                   "items": {
                     "type": "string"
@@ -46720,12 +46791,6 @@
                     "type": "string"
                   }
                 },
-                "order_products": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
                 "promotionproduct": {
                   "type": "string"
                 },
@@ -46739,6 +46804,12 @@
                   }
                 },
                 "categories": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "order_products": {
                   "type": "array",
                   "items": {
                     "type": "string"
@@ -49267,127 +49338,124 @@
               }
             }
           },
-          "products": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "supplierid": {
-                  "type": "integer"
-                },
-                "productkeyword": {
-                  "type": "string"
-                },
-                "categoryid": {
-                  "type": "integer"
-                },
-                "shortdescription": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "price": {
-                  "type": "number"
-                },
-                "currencycode": {
-                  "type": "integer"
-                },
-                "currencycodeiso": {
-                  "type": "string"
-                },
-                "retailprice": {
-                  "type": "number"
-                },
-                "status": {
-                  "type": "integer"
-                },
-                "sku": {
-                  "type": "string"
-                },
-                "brand": {
-                  "type": "string"
-                },
-                "stock": {
-                  "type": "integer"
-                },
-                "soldqtty": {
-                  "type": "integer"
-                },
-                "minimumorderqtty": {
-                  "type": "integer"
-                },
-                "maximumorderqtty": {
-                  "type": "integer"
-                },
-                "weight": {
-                  "type": "integer"
-                },
-                "rating_point": {
-                  "type": "number"
-                },
-                "barcode": {
-                  "type": "string"
-                },
-                "slug": {
-                  "type": "string"
-                },
-                "product_variants": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "product_ratings": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "shopping_cart_products": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "order_products": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "promotionproduct": {
-                  "type": "string"
-                },
-                "flashsaleproduct": {
-                  "type": "string"
-                },
-                "productimgs": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "categories": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
+          "product": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "supplierid": {
+                "type": "integer"
+              },
+              "productkeyword": {
+                "type": "string"
+              },
+              "categoryid": {
+                "type": "integer"
+              },
+              "shortdescription": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "price": {
+                "type": "number"
+              },
+              "currencycode": {
+                "type": "integer"
+              },
+              "currencycodeiso": {
+                "type": "string"
+              },
+              "retailprice": {
+                "type": "number"
+              },
+              "status": {
+                "type": "integer"
+              },
+              "sku": {
+                "type": "string"
+              },
+              "brand": {
+                "type": "string"
+              },
+              "stock": {
+                "type": "integer"
+              },
+              "soldqtty": {
+                "type": "integer"
+              },
+              "minimumorderqtty": {
+                "type": "integer"
+              },
+              "maximumorderqtty": {
+                "type": "integer"
+              },
+              "weight": {
+                "type": "integer"
+              },
+              "rating_point": {
+                "type": "number"
+              },
+              "barcode": {
+                "type": "string"
+              },
+              "slug": {
+                "type": "string"
+              },
+              "product_variants": {
+                "type": "array",
+                "items": {
                   "type": "string"
                 }
+              },
+              "product_ratings": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "shopping_cart_products": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "promotionproduct": {
+                "type": "string"
+              },
+              "flashsaleproduct": {
+                "type": "string"
+              },
+              "productimgs": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "categories": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "order_products": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
               }
             }
           },
@@ -49409,58 +49477,55 @@
           "note": {
             "type": "string"
           },
-          "product_variants": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "sku": {
-                  "type": "string"
-                },
-                "barcode": {
-                  "type": "string"
-                },
-                "price": {
-                  "type": "number"
-                },
-                "selling_price": {
-                  "type": "number"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "product_variant_images": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "product_id": {
-                  "type": "string"
-                },
-                "shopping_cart_products": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "order_products": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
+          "product_variant": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "sku": {
+                "type": "string"
+              },
+              "barcode": {
+                "type": "string"
+              },
+              "price": {
+                "type": "number"
+              },
+              "selling_price": {
+                "type": "number"
+              },
+              "name": {
+                "type": "string"
+              },
+              "product_variant_images": {
+                "type": "array",
+                "items": {
                   "type": "string"
                 }
+              },
+              "product_id": {
+                "type": "string"
+              },
+              "shopping_cart_products": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "order_products": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
               }
             }
           },
@@ -49559,11 +49624,8 @@
           "order": {
             "type": "string"
           },
-          "products": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+          "product": {
+            "type": "string"
           },
           "qtty": {
             "type": "integer"
@@ -49583,11 +49645,8 @@
           "note": {
             "type": "string"
           },
-          "product_variants": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+          "product_variant": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
@@ -50201,11 +50260,8 @@
                 "order": {
                   "type": "string"
                 },
-                "products": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+                "product": {
+                  "type": "string"
                 },
                 "qtty": {
                   "type": "integer"
@@ -50225,11 +50281,8 @@
                 "note": {
                   "type": "string"
                 },
-                "product_variants": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+                "product_variant": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -52888,12 +52941,6 @@
                   "type": "string"
                 }
               },
-              "order_products": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "promotionproduct": {
                 "type": "string"
               },
@@ -52907,6 +52954,12 @@
                 }
               },
               "categories": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "order_products": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -53446,12 +53499,6 @@
                   "type": "string"
                 }
               },
-              "order_products": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "promotionproduct": {
                 "type": "string"
               },
@@ -53465,6 +53512,12 @@
                 }
               },
               "categories": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "order_products": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -53528,11 +53581,8 @@
                 "order": {
                   "type": "string"
                 },
-                "products": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+                "product": {
+                  "type": "string"
                 },
                 "qtty": {
                   "type": "integer"
@@ -53552,11 +53602,8 @@
                 "note": {
                   "type": "string"
                 },
-                "product_variants": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+                "product_variant": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -53934,58 +53981,6 @@
               }
             }
           },
-          "order_products": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "order": {
-                  "type": "string"
-                },
-                "products": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "qtty": {
-                  "type": "integer"
-                },
-                "origin_price": {
-                  "type": "number"
-                },
-                "selling_price": {
-                  "type": "number"
-                },
-                "currency": {
-                  "type": "string"
-                },
-                "discount_amount": {
-                  "type": "number"
-                },
-                "note": {
-                  "type": "string"
-                },
-                "product_variants": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
-          },
           "promotionproduct": {
             "required": [
               "id"
@@ -54230,6 +54225,52 @@
               }
             }
           },
+          "order_products": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "order": {
+                  "type": "string"
+                },
+                "product": {
+                  "type": "string"
+                },
+                "qtty": {
+                  "type": "integer"
+                },
+                "origin_price": {
+                  "type": "number"
+                },
+                "selling_price": {
+                  "type": "number"
+                },
+                "currency": {
+                  "type": "string"
+                },
+                "discount_amount": {
+                  "type": "number"
+                },
+                "note": {
+                  "type": "string"
+                },
+                "product_variant": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -54403,12 +54444,6 @@
               "type": "string"
             }
           },
-          "order_products": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
           "promotionproduct": {
             "type": "string"
           },
@@ -54416,6 +54451,12 @@
             "type": "string"
           },
           "categories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "order_products": {
             "type": "array",
             "items": {
               "type": "string"
@@ -54806,12 +54847,6 @@
                     "type": "string"
                   }
                 },
-                "order_products": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
                 "promotionproduct": {
                   "type": "string"
                 },
@@ -54825,6 +54860,12 @@
                   }
                 },
                 "categories": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "order_products": {
                   "type": "array",
                   "items": {
                     "type": "string"
@@ -55518,12 +55559,6 @@
                   "type": "string"
                 }
               },
-              "order_products": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "promotionproduct": {
                 "type": "string"
               },
@@ -55537,6 +55572,12 @@
                 }
               },
               "categories": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "order_products": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -59536,12 +59577,6 @@
                   "type": "string"
                 }
               },
-              "order_products": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "promotionproduct": {
                 "type": "string"
               },
@@ -59555,6 +59590,12 @@
                 }
               },
               "categories": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "order_products": {
                 "type": "array",
                 "items": {
                   "type": "string"

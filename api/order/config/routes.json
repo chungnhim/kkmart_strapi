@@ -71,6 +71,14 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/orders/create-order",
+      "handler": "order.createOrder",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }

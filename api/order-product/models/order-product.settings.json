@@ -10,13 +10,12 @@
   },
   "attributes": {
     "order": {
-      "via": "order_products",
-      "model": "order"
+      "model": "order",
+      "via": "order_products"
     },
-    "products": {
-      "via": "order_products",
-      "collection": "product",
-      "dominant": true
+    "product": {
+      "model": "product",
+      "via": "order_products"
     },
     "qtty": {
       "type": "integer"
@@ -36,10 +35,9 @@
     "note": {
       "type": "richtext"
     },
-    "product_variants": {
-      "collection": "product-variant",
-      "via": "order_products",
-      "dominant": true
+    "product_variant": {
+      "model": "product-variant",
+      "via": "order_products"
     }
   }
 }
