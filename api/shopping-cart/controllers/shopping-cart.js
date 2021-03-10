@@ -138,7 +138,7 @@ module.exports = {
             });
         } else {
             // Case update qtty of an existing item
-            existsProduct.qtty += qtty;
+            existsProduct.qtty = qtty;
             shoppingCartProduct = await strapi.query("shopping-cart-product").update({ id: existsProduct.id },
                 existsProduct
             );
@@ -191,7 +191,9 @@ module.exports = {
         let cartItemId = params.cart_item_id;
 
         var shoppingCart = await strapi.query("shopping-cart").findOne({
-            user: userId
+            user: userId,
+            status: strapi.config.constants.shopping_cart_status.new,
+            _sort: "id:desc"
         });
 
         if (_.isNil(shoppingCart)) {
@@ -207,7 +209,7 @@ module.exports = {
         if (_.isNil(existsProduct)) {
             ctx.send({
                 success: false,
-                message: "Product does not exists"
+                message: "Product does not exists in shopping cart"
             });
 
             return;
