@@ -18,7 +18,7 @@ const generateOrderCode = (length = 6) => {
     return moment.utc(new Date).format("YYYYMMDD") + text;
 }
 
-const getByOrderCode = async(orderCode) => {
+const getByOrderCode = async (orderCode) => {
     var order = await strapi.query("order").findOne({
         order_code: orderCode,
     });
@@ -26,7 +26,7 @@ const getByOrderCode = async(orderCode) => {
     return order;
 }
 
-const getByOrdersUserId = async(pageIndex, pageSize, userId) => {
+const getByOrdersUserId = async (pageIndex, pageSize, userId) => {
     var dataQuery = {
         _start: (pageIndex - 1) * pageSize,
         _limit: pageSize,
@@ -89,7 +89,9 @@ module.exports = {
         }
 
         var shoppingCart = await strapi.query("shopping-cart").findOne({
-            user: userId
+            user: userId,
+            status: strapi.config.constants.shopping_cart_status.new,
+            _sort: "id:desc"
         });
 
         if (_.isNil(shoppingCart)) {
@@ -111,6 +113,16 @@ module.exports = {
         }
 
         let checkOutProducts = shoppingCart.shopping_cart_products.filter(s => params.cart_items_id.includes(s.id));
+        if (_.isNil(checkOutProducts) || checkOutProducts.length == 0) {
+            ctx.send({
+                success: false,
+                message: "The checkout product does not have in shopping cart"
+            });
+
+            return;
+        }
+
+        console.log(`checkOutProducts`, checkOutProducts);
 
         let totalAmount = 0;
         let discountAmount = 0;
@@ -119,7 +131,6 @@ module.exports = {
 
         for (let index = 0; index < checkOutProducts.length; index++) {
             const cartItem = checkOutProducts[index];
-            console.log(`cartItem`, cartItem);
             let product = await strapi.services.product.getProductById(cartItem.product);
             if (_.isNil(product)) {
                 hasError = true;
@@ -180,13 +191,6 @@ module.exports = {
             return;
         }
 
-        await strapi.query("shopping-cart").update({
-            id: shoppingCart.id
-        }, {
-            status: strapi.config.constants.shopping_cart_status.paid,
-            user: !_.isNil(shoppingCart.user) ? shoppingCart.user.id : null
-        });
-
         for (let i = 0; i < orderProductEntities.length; i++) {
             const product = orderProductEntities[i];
             product.order = order.id;
@@ -225,11 +229,11 @@ module.exports = {
             billing_date: null
         };
 
-        console.log(`billingAddress`, billingAddress);
         await strapi.query("order-billing").create(billingAddress);
-        await strapi.query("shopping-cart-product").delete({
-            shopping_cart: shoppingCart.id
-        });
+        for (let index = 0; index < checkOutProducts.length; index++) {
+            const cartItem = checkOutProducts[index];
+            strapi.query("shopping-cart-product").delete({ id: cartItem.id });
+        }
 
         ctx.send({
             success: true,
@@ -240,7 +244,7 @@ module.exports = {
             order_code: orderEntity.order_code
         });
     },
-    getByOrderCode: async(ctx) => {
+    getByOrderCode: async (ctx) => {
         const params = _.assign({}, ctx.request.params, ctx.params);
         var orderCode = params.orderCode;
 
@@ -274,7 +278,7 @@ module.exports = {
             order: res
         });
     },
-    getOrdersByUserId: async(ctx) => {
+    getOrdersByUserId: async (ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
             ctx.send({
