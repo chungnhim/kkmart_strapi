@@ -676,12 +676,6 @@
                   "type": "string"
                 }
               },
-              "order_products": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "promotionproduct": {
                 "type": "string"
               },
@@ -695,6 +689,12 @@
                 }
               },
               "categories": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "order_products": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -758,11 +758,8 @@
                 "order": {
                   "type": "string"
                 },
-                "products": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+                "product": {
+                  "type": "string"
                 },
                 "qtty": {
                   "type": "integer"
@@ -782,11 +779,8 @@
                 "note": {
                   "type": "string"
                 },
-                "product_variants": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+                "product_variant": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
