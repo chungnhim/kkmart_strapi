@@ -75,7 +75,7 @@ module.exports = {
                 //calculation flash sales
                 //get full info flash sale for get name  
                 var flashsaleInfo = await strapi.query('flashsale').findOne({ id: flashsaleData.flashsale });
-                product.flashsaleproduct.name = flashsaleInfo.name;
+                //product.flashsaleproduct.name = flashsaleInfo.name;
 
                 switch (flashsaleData.flashsaletype) {
                     case strapi.config.constants.flashsale_types_status.discount_money:

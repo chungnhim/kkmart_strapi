@@ -15,14 +15,11 @@ module.exports = {
                     "users-permissions"
                 ].services.jwt.getToken(ctx);
                 userId = id;
-
-                console.log(`userId`, userId);
             } catch (err) {}
         }
 
         if (userId == 0) {
             ctx.unauthorized(`You're not logged in!`);
-
             return;
         }
 
@@ -32,7 +29,8 @@ module.exports = {
             comment: body.comment,
             user: userId,
             product: parseFloat(body.product_id),
-            status: 1
+            status: 1,
+            images: body.images
         };
 
         var res = await strapi.query('product-rating').create(entity);
