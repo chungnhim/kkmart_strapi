@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "03/10/2021 10:55:42 PM"
+    "x-generation-date": "03/11/2021 10:18:35 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -42741,12 +42741,6 @@
                     "type": "string"
                   }
                 },
-                "user_addresses": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
                 "order_billings": {
                   "type": "array",
                   "items": {
@@ -42836,22 +42830,28 @@
                 "country": {
                   "type": "string"
                 },
-                "province": {
+                "is_default": {
+                  "type": "boolean"
+                },
+                "state": {
                   "type": "string"
                 },
-                "district": {
+                "address1": {
                   "type": "string"
                 },
-                "address": {
+                "address2": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "postcode": {
                   "type": "string"
                 },
                 "phone_number": {
                   "type": "string"
                 },
-                "email_address": {
-                  "type": "string"
-                },
-                "is_default": {
+                "is_default_billing": {
                   "type": "boolean"
                 },
                 "created_by": {
@@ -44967,12 +44967,6 @@
                   "type": "string"
                 }
               },
-              "user_addresses": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "order_billings": {
                 "type": "array",
                 "items": {
@@ -45041,49 +45035,6 @@
                 },
                 "order": {
                   "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "user_addresses": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "user": {
-                  "type": "string"
-                },
-                "country": {
-                  "type": "string"
-                },
-                "province": {
-                  "type": "string"
-                },
-                "district": {
-                  "type": "string"
-                },
-                "address": {
-                  "type": "string"
-                },
-                "phone_number": {
-                  "type": "string"
-                },
-                "email_address": {
-                  "type": "string"
-                },
-                "is_default": {
-                  "type": "boolean"
                 },
                 "created_by": {
                   "type": "string"
@@ -45245,12 +45196,6 @@
             "type": "string"
           },
           "order_shippings": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "user_addresses": {
             "type": "array",
             "items": {
               "type": "string"
@@ -49008,12 +48953,6 @@
                   "type": "string"
                 }
               },
-              "user_addresses": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "order_billings": {
                 "type": "array",
                 "items": {
@@ -49046,12 +48985,6 @@
                 "type": "string"
               },
               "order_shippings": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "user_addresses": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -49710,12 +49643,6 @@
                   "type": "string"
                 }
               },
-              "user_addresses": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "order_billings": {
                 "type": "array",
                 "items": {
@@ -49748,12 +49675,6 @@
                 "type": "string"
               },
               "order_shippings": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "user_addresses": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -50754,6 +50675,12 @@
               },
               "country": {
                 "type": "string"
+              },
+              "user_addresses": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "created_by": {
                 "type": "string"
@@ -55089,12 +55016,6 @@
                     "type": "string"
                   }
                 },
-                "user_addresses": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
                 "order_billings": {
                   "type": "array",
                   "items": {
@@ -55158,49 +55079,6 @@
                 },
                 "order": {
                   "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "user_addresses": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "user": {
-                  "type": "string"
-                },
-                "country": {
-                  "type": "string"
-                },
-                "province": {
-                  "type": "string"
-                },
-                "district": {
-                  "type": "string"
-                },
-                "address": {
-                  "type": "string"
-                },
-                "phone_number": {
-                  "type": "string"
-                },
-                "email_address": {
-                  "type": "string"
-                },
-                "is_default": {
-                  "type": "boolean"
                 },
                 "created_by": {
                   "type": "string"
@@ -55368,12 +55246,6 @@
             }
           },
           "order_shippings": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "user_addresses": {
             "type": "array",
             "items": {
               "type": "string"
@@ -56806,6 +56678,55 @@
               }
             }
           },
+          "user_addresses": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "country": {
+                  "type": "string"
+                },
+                "is_default": {
+                  "type": "boolean"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "address1": {
+                  "type": "string"
+                },
+                "address2": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "postcode": {
+                  "type": "string"
+                },
+                "phone_number": {
+                  "type": "string"
+                },
+                "is_default_billing": {
+                  "type": "boolean"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -56903,6 +56824,12 @@
           },
           "country": {
             "type": "string"
+          },
+          "user_addresses": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "created_by": {
             "type": "string"
@@ -57242,6 +57169,12 @@
               },
               "country": {
                 "type": "string"
+              },
+              "user_addresses": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "created_by": {
                 "type": "string"
@@ -58842,7 +58775,10 @@
               }
             }
           },
-          "province": {
+          "is_default": {
+            "type": "boolean"
+          },
+          "state": {
             "required": [
               "id"
             ],
@@ -58851,33 +58787,12 @@
                 "type": "string"
               },
               "name": {
-                "type": "string"
-              },
-              "code": {
                 "type": "string"
               },
               "country": {
                 "type": "string"
               },
-              "districts": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "order_shippings": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "user_addresses": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "order_billings": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -58891,59 +58806,22 @@
               }
             }
           },
-          "district": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "province": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "code": {
-                "type": "string"
-              },
-              "order_shippings": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "user_addresses": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "order_billings": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
+          "address1": {
+            "type": "string"
           },
-          "address": {
+          "address2": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "postcode": {
             "type": "string"
           },
           "phone_number": {
             "type": "string"
           },
-          "email_address": {
-            "type": "string"
-          },
-          "is_default": {
+          "is_default_billing": {
             "type": "boolean"
           },
           "created_by": {
@@ -59044,22 +58922,28 @@
           "country": {
             "type": "string"
           },
-          "province": {
+          "is_default": {
+            "type": "boolean"
+          },
+          "state": {
             "type": "string"
           },
-          "district": {
+          "address1": {
             "type": "string"
           },
-          "address": {
+          "address2": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "postcode": {
             "type": "string"
           },
           "phone_number": {
             "type": "string"
           },
-          "email_address": {
-            "type": "string"
-          },
-          "is_default": {
+          "is_default_billing": {
             "type": "boolean"
           },
           "created_by": {
@@ -60280,6 +60164,12 @@
               "country": {
                 "type": "string"
               },
+              "user_addresses": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "created_by": {
                 "type": "string"
               },
@@ -60797,22 +60687,28 @@
                 "country": {
                   "type": "string"
                 },
-                "province": {
+                "is_default": {
+                  "type": "boolean"
+                },
+                "state": {
                   "type": "string"
                 },
-                "district": {
+                "address1": {
                   "type": "string"
                 },
-                "address": {
+                "address2": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "postcode": {
                   "type": "string"
                 },
                 "phone_number": {
                   "type": "string"
                 },
-                "email_address": {
-                  "type": "string"
-                },
-                "is_default": {
+                "is_default_billing": {
                   "type": "boolean"
                 },
                 "created_by": {

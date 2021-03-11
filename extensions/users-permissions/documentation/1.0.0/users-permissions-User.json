@@ -1416,6 +1416,12 @@
               "country": {
                 "type": "string"
               },
+              "user_addresses": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "created_by": {
                 "type": "string"
               },
@@ -1933,22 +1939,28 @@
                 "country": {
                   "type": "string"
                 },
-                "province": {
+                "is_default": {
+                  "type": "boolean"
+                },
+                "state": {
                   "type": "string"
                 },
-                "district": {
+                "address1": {
                   "type": "string"
                 },
-                "address": {
+                "address2": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "postcode": {
                   "type": "string"
                 },
                 "phone_number": {
                   "type": "string"
                 },
-                "email_address": {
-                  "type": "string"
-                },
-                "is_default": {
+                "is_default_billing": {
                   "type": "boolean"
                 },
                 "created_by": {

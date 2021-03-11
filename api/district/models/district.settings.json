@@ -23,10 +23,6 @@
       "via": "district",
       "collection": "order-shipping"
     },
-    "user_addresses": {
-      "via": "district",
-      "collection": "user-address"
-    },
     "order_billings": {
       "via": "district",
       "collection": "order-billing"

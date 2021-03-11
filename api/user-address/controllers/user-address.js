@@ -23,12 +23,15 @@ module.exports = {
         var entity = {
             user: userId,
             country: params.country_id,
-            province: params.province_id,
-            district: params.district_id,
-            address: params.address,
+            state: params.state_id,
+            address1: params.address1,
+            address2: params.address2,
+            city: params.city,
+            postcode: params.postcode,
             phone_number: params.phone_number,
             email_address: params.email_address,
-            is_default: params.is_default
+            is_default: params.is_default,
+            is_default_billing: params.is_default_billing
         }
 
         var userAddress = await strapi.query("user-address").create(entity);
@@ -62,13 +65,14 @@ module.exports = {
             _start: (pageIndex - 1) * pageSize,
             _limit: pageSize,
             _sort: "created_at:desc",
+            user: userId
         };
 
         var totalRows = await strapi.query('user-address').count(dataQuery);
         var entities = await strapi.query("user-address").find(dataQuery);
 
         let models = await strapi.services.common.normalizationResponse(
-            entities, ["user"]
+            entities, ["user", "created_at", "updated_at"]
         );
 
         ctx.send({
@@ -106,7 +110,8 @@ module.exports = {
         }
 
         var oldDefaults = await strapi.query("user-address").find({
-            is_default: true
+            is_default: true,
+            is_default_billing: true
         });
 
         for (let index = 0; index < oldDefaults.length; index++) {
