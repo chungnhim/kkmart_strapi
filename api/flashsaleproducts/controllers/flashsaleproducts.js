@@ -97,6 +97,13 @@ module.exports = {
         if (!_.isNil(queryString.flashsale_ids) && !_.isEmpty(queryString.flashsale_ids)) {
             var arrayFlashsaleProduct = await strapi.services.promotionproduct.getListFlashSaleProductsActivesId(flashsale_ids);
             dataQuery.flashsaleproduct_in = arrayFlashsaleProduct;
+        } else {
+            var arrayFlashsaleActives = await strapi.services.promotionproduct.getListFlashSaleActivesId();
+            console.log(arrayFlashsaleActives);
+            if (arrayFlashsaleActives && arrayFlashsaleActives.length > 0) {
+                var arrayFlashsaleProduct = await strapi.services.promotionproduct.getListFlashSaleProductsActivesId(arrayFlashsaleActives);
+                dataQuery.flashsaleproduct_in = arrayFlashsaleProduct;
+            }
         }
 
         var totalRows = await strapi.query('product').count(dataQuery);

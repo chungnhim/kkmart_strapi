@@ -80,12 +80,12 @@ module.exports = {
                 switch (flashsaleData.flashsaletype) {
                     case strapi.config.constants.flashsale_types_status.discount_money:
                         product.flashsale_price = product.price - flashsaleData.reduction;
-                        product.flashsale_percent = (product.flashsale_price * 100) / product.price;
+                        product.flashsale_percent = 100 - ((product.flashsale_price * 100) / product.price);
                         //Check variants
                         if (product.product_variants && product.product_variants.length > 0) {
                             product.product_variants.forEach(function(variantItem) {
                                 variantItem.flashsale_price = variantItem.price - flashsaleData.reduction;
-                                variantItem.flashsale_percent = (variantItem.flashsale_price * 100) / variantItem.price;
+                                variantItem.flashsale_percent = 100 - ((variantItem.flashsale_price * 100) / variantItem.price);
                             });
                         }
                         break;
@@ -103,12 +103,12 @@ module.exports = {
                         break;
                     case strapi.config.constants.flashsale_types_status.fix_money:
                         product.flashsale_price = flashsaleData.reduction;
-                        product.flashsale_percent = (product.flashsale_price * 100) / product.price;
+                        product.flashsale_percent = 100 - ((product.flashsale_price * 100) / product.price);
                         //Check variants
                         if (product.product_variants && product.product_variants.length > 0) {
                             product.product_variants.forEach(function(variantItem) {
                                 variantItem.flashsale_price = flashsaleData.reduction;
-                                variantItem.flashsale_percent = (variantItem.flashsale_price * 100) / variantItem.price;
+                                variantItem.flashsale_percent = 100 - ((variantItem.flashsale_price * 100) / variantItem.price);
                             });
                         }
                         break;
@@ -134,12 +134,12 @@ module.exports = {
                 switch (promotionData.promotiontype) {
                     case strapi.config.constants.promotion_types_status.discount_money:
                         product.promotion_price = product.price - promotionData.reduction;
-                        product.promotion_percent = (product.promotion_price * 100) / product.price;
+                        product.promotion_percent = 100 - ((product.promotion_price * 100) / product.price);
                         //Check variants
                         if (product.product_variants && product.product_variants.length > 0) {
                             product.product_variants.forEach(function(variantItem) {
                                 variantItem.promotion_price = variantItem.price - promotionData.reduction;
-                                variantItem.promotion_percent = (variantItem.promotion_price * 100) / variantItem.price;
+                                variantItem.promotion_percent = 100 - ((variantItem.promotion_price * 100) / variantItem.price);
                             });
                         }
                         break;
@@ -157,12 +157,12 @@ module.exports = {
                         break;
                     case strapi.config.constants.promotion_types_status.fix_money:
                         product.promotion_price = promotionData.reduction;
-                        product.promotion_percent = (product.promotion_price * 100) / product.price;
+                        product.promotion_percent = 100 - ((product.promotion_price * 100) / product.price);
                         //Check variants
                         if (product.product_variants && product.product_variants.length > 0) {
                             product.product_variants.forEach(function(variantItem) {
                                 variantItem.promotion_price = promotionData.reduction;
-                                variantItem.promotion_percent = (variantItem.promotion_price * 100) / variantItem.price;
+                                variantItem.promotion_percent = 100 - ((variantItem.promotion_price * 100) / variantItem.price);
                             });
                         }
                         break;
