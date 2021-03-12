@@ -10,7 +10,7 @@ const axios = require('axios');
 
 const removeAuthorFields = (entity) => {
     const sanitizedValue = _.omit(entity, ['created_by', 'updated_by', 'user', 'formats', 'promotiontype',
-        'reduction', 'promotionapplytype', 'promotionapplyfor', 'activedate', 'enddate', 'isenddate', 'created_at', 'updated_at', 'numberapply', 'isfreeship',
+        'reduction', 'promotionapplytype', 'promotionapplyfor', 'enddate', 'isenddate', 'created_at', 'updated_at', 'numberapply', 'isfreeship',
         'products'
     ]);
     _.forEach(sanitizedValue, (value, key) => {
@@ -58,7 +58,8 @@ module.exports = {
             //"starttime",
             //"endtime",
             "status",
-            "runeveryday", "user"
+            //"runeveryday", 
+            "user"
         ];
         dataresult = await strapi.services.common.normalizationResponse(
             dataresult, removeflashsaleFields
