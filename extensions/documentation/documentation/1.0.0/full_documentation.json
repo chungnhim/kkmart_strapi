@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "03/11/2021 11:04:34 PM"
+    "x-generation-date": "03/13/2021 12:29:48 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -42504,6 +42504,15 @@
                     "type": "string"
                   }
                 },
+                "coin_earn": {
+                  "type": "number"
+                },
+                "coin_use": {
+                  "type": "number"
+                },
+                "can_use_coin": {
+                  "type": "boolean"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -46760,6 +46769,15 @@
                     "type": "string"
                   }
                 },
+                "coin_earn": {
+                  "type": "number"
+                },
+                "coin_use": {
+                  "type": "number"
+                },
+                "can_use_coin": {
+                  "type": "boolean"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -49389,6 +49407,15 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "coin_earn": {
+                "type": "number"
+              },
+              "coin_use": {
+                "type": "number"
+              },
+              "can_use_coin": {
+                "type": "boolean"
               },
               "created_by": {
                 "type": "string"
@@ -52898,6 +52925,15 @@
                   "type": "string"
                 }
               },
+              "coin_earn": {
+                "type": "number"
+              },
+              "coin_use": {
+                "type": "number"
+              },
+              "can_use_coin": {
+                "type": "boolean"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -53455,6 +53491,15 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "coin_earn": {
+                "type": "number"
+              },
+              "coin_use": {
+                "type": "number"
+              },
+              "can_use_coin": {
+                "type": "boolean"
               },
               "created_by": {
                 "type": "string"
@@ -54207,6 +54252,15 @@
               }
             }
           },
+          "coin_earn": {
+            "type": "number"
+          },
+          "coin_use": {
+            "type": "number"
+          },
+          "can_use_coin": {
+            "type": "boolean"
+          },
           "created_by": {
             "required": [
               "id",
@@ -54397,6 +54451,15 @@
             "items": {
               "type": "string"
             }
+          },
+          "coin_earn": {
+            "type": "number"
+          },
+          "coin_use": {
+            "type": "number"
+          },
+          "can_use_coin": {
+            "type": "boolean"
           },
           "created_by": {
             "type": "string"
@@ -54806,6 +54869,15 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "coin_earn": {
+                  "type": "number"
+                },
+                "coin_use": {
+                  "type": "number"
+                },
+                "can_use_coin": {
+                  "type": "boolean"
                 },
                 "created_by": {
                   "type": "string"
@@ -55463,6 +55535,15 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "coin_earn": {
+                "type": "number"
+              },
+              "coin_use": {
+                "type": "number"
+              },
+              "can_use_coin": {
+                "type": "boolean"
               },
               "created_by": {
                 "type": "string"
@@ -59493,6 +59574,15 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "coin_earn": {
+                "type": "number"
+              },
+              "coin_use": {
+                "type": "number"
+              },
+              "can_use_coin": {
+                "type": "boolean"
               },
               "created_by": {
                 "type": "string"

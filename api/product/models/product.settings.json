@@ -77,8 +77,8 @@
       "via": "product_id"
     },
     "product_ratings": {
-      "via": "product",
-      "collection": "product-rating"
+      "collection": "product-rating",
+      "via": "product"
     },
     "shopping_cart_products": {
       "collection": "shopping-cart-product",
@@ -89,8 +89,8 @@
       "via": "products"
     },
     "flashsaleproduct": {
-      "via": "products",
-      "model": "flashsaleproducts"
+      "model": "flashsaleproducts",
+      "via": "products"
     },
     "productimgs": {
       "collection": "file",
@@ -109,8 +109,17 @@
       "dominant": true
     },
     "order_products": {
-      "via": "product",
-      "collection": "order-product"
+      "collection": "order-product",
+      "via": "product"
+    },
+    "coin_earn": {
+      "type": "float"
+    },
+    "coin_use": {
+      "type": "float"
+    },
+    "can_use_coin": {
+      "type": "boolean"
     }
   }
 }

@@ -10,8 +10,8 @@
   },
   "attributes": {
     "product": {
-      "model": "product",
-      "via": "product_ratings"
+      "via": "product_ratings",
+      "model": "product"
     },
     "rating_point": {
       "type": "float"

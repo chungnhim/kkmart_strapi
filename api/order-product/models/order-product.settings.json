@@ -14,8 +14,8 @@
       "via": "order_products"
     },
     "product": {
-      "model": "product",
-      "via": "order_products"
+      "via": "order_products",
+      "model": "product"
     },
     "qtty": {
       "type": "integer"
