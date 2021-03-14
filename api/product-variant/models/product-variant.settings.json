@@ -29,16 +29,25 @@
       "via": "product_variant_id"
     },
     "product_id": {
-      "via": "product_variants",
-      "model": "product"
+      "model": "product",
+      "via": "product_variants"
     },
     "shopping_cart_products": {
-      "via": "product_variant",
-      "collection": "shopping-cart-product"
+      "collection": "shopping-cart-product",
+      "via": "product_variant"
     },
     "order_products": {
-      "via": "product_variant",
-      "collection": "order-product"
+      "collection": "order-product",
+      "via": "product_variant"
+    },
+    "coin_earn": {
+      "type": "integer"
+    },
+    "coin_use": {
+      "type": "integer"
+    },
+    "can_use_coin": {
+      "type": "boolean"
     }
   }
 }
