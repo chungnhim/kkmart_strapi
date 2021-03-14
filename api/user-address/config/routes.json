@@ -1,76 +1,83 @@
 {
-  "routes": [
-    {
-      "method": "GET",
-      "path": "/user-addresses",
-      "handler": "user-address.find",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/user-addresses/count",
-      "handler": "user-address.count",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/user-addresses/:id",
-      "handler": "user-address.findOne",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "POST",
-      "path": "/user-addresses",
-      "handler": "user-address.create",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "PUT",
-      "path": "/user-addresses/:id",
-      "handler": "user-address.update",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "DELETE",
-      "path": "/user-addresses/:id",
-      "handler": "user-address.delete",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "POST",
-      "path": "/v1/user-addresses",
-      "handler": "user-address.addUserAddress",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/v1/user-addresses/:page_index/:page_size",
-      "handler": "user-address.getUserAddress",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "POST",
-      "path": "/v1/user-addresses/set-default",
-      "handler": "user-address.setDefaultUserAddress",
-      "config": {
-        "policies": []
-      }
-    }
-  ]
+    "routes": [{
+            "method": "GET",
+            "path": "/user-addresses",
+            "handler": "user-address.find",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/user-addresses/count",
+            "handler": "user-address.count",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/user-addresses/:id",
+            "handler": "user-address.findOne",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/user-addresses",
+            "handler": "user-address.create",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "PUT",
+            "path": "/user-addresses/:id",
+            "handler": "user-address.update",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "PUT",
+            "path": "/v1/user-addresses/update-user-address",
+            "handler": "user-address.updateUserAddress",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "DELETE",
+            "path": "/user-addresses/:id",
+            "handler": "user-address.delete",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/v1/user-addresses",
+            "handler": "user-address.addUserAddress",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/v1/user-addresses/:page_index/:page_size",
+            "handler": "user-address.getUserAddress",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/v1/user-addresses/set-default",
+            "handler": "user-address.setDefaultUserAddress",
+            "config": {
+                "policies": []
+            }
+        }
+    ]
 }

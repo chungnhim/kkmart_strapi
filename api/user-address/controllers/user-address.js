@@ -31,10 +31,71 @@ module.exports = {
             phone_number: params.phone_number,
             email_address: params.email_address,
             is_default: params.is_default,
-            is_default_billing: params.is_default_billing
+            is_default_billing: params.is_default_billing,
+            full_name: params.full_name,
+            full_name: params.home_office,
+        }
+        var userAddress;
+        if (params.id) {
+            entity.id = params.id;
+            userAddress = await strapi.query("user-address").update({ id: entity.id }, entity);
+        } else {
+            userAddress = await strapi.query("user-address").create(entity);
         }
 
-        var userAddress = await strapi.query("user-address").create(entity);
+        ctx.send({
+            success: true,
+            message: "Add user address has been successfully",
+            user_address_id: userAddress.id
+        });
+    },
+    updateUserAddress: async(ctx) => {
+        const params = _.assign({}, ctx.request.body, ctx.params);
+        let userId = await strapi.services.common.getLoggedUserId(ctx);
+        if (_.isNil(userId) || userId == 0) {
+            ctx.send({
+                success: false,
+                message: "Please login to your account"
+            });
+
+            return;
+        }
+
+        var entity = {
+            user: userId,
+            country: params.country_id,
+            state: params.state_id,
+            address1: params.address1,
+            address2: params.address2,
+            city: params.city,
+            postcode: params.postcode,
+            phone_number: params.phone_number,
+            email_address: params.email_address,
+            is_default: params.is_default,
+            is_default_billing: params.is_default_billing,
+            full_name: params.full_name,
+            full_name: params.home_office,
+        }
+
+        //check and find user address of exist or not
+
+        var checkUserAddress = await strapi.query('user-address').findOne({ user: userId, id: entity.id });
+        if (_.isNil(checkUserAddress)) {
+            ctx.send({
+                success: false,
+                message: "Address of user is not exist!"
+            });
+            return;
+        }
+
+        var userAddress;
+        if (params.id) {
+            entity.id = params.id;
+            userAddress = await strapi.query("user-address").update({ id: entity.id }, entity);
+        } else {
+            userAddress = await strapi.query("user-address").create(entity);
+        }
+
         ctx.send({
             success: true,
             message: "Add user address has been successfully",

@@ -95,7 +95,8 @@ module.exports = {
         }
 
         if (!_.isNil(queryString.flashsale_ids) && !_.isEmpty(queryString.flashsale_ids)) {
-            var arrayFlashsaleProduct = await strapi.services.promotionproduct.getListFlashSaleProductsActivesId(flashsale_ids);
+            var arrayFlashIDs = queryString.flashsale_ids.split(',');
+            var arrayFlashsaleProduct = await strapi.services.promotionproduct.getListFlashSaleProductsActivesId(arrayFlashIDs);
             dataQuery.flashsaleproduct_in = arrayFlashsaleProduct;
         } else {
             var arrayFlashsaleActives = await strapi.services.promotionproduct.getListFlashSaleActivesId();

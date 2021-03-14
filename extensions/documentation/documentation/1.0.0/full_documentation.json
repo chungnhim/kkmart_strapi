@@ -31393,6 +31393,78 @@
         }
       }
     },
+    "/v1/shopping-carts/update-to-cart": {
+      "put": {
+        "deprecated": false,
+        "description": "Update a record",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Shopping-cart"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "foo": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": []
+      }
+    },
     "/v1/shopping-carts/{shopping_cart_id}": {
       "get": {
         "deprecated": false,
@@ -38689,6 +38761,78 @@
         ]
       }
     },
+    "/v1/user-addresses/update-user-address": {
+      "put": {
+        "deprecated": false,
+        "description": "Update a record",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "User-address"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "foo": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": []
+      }
+    },
     "/v1/user-addresses": {
       "post": {
         "deprecated": false,
@@ -43004,6 +43148,12 @@
                 },
                 "is_default_billing": {
                   "type": "boolean"
+                },
+                "full_name": {
+                  "type": "string"
+                },
+                "home_office": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -56920,6 +57070,12 @@
                 "is_default_billing": {
                   "type": "boolean"
                 },
+                "full_name": {
+                  "type": "string"
+                },
+                "home_office": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -59026,6 +59182,12 @@
           "is_default_billing": {
             "type": "boolean"
           },
+          "full_name": {
+            "type": "string"
+          },
+          "home_office": {
+            "type": "string"
+          },
           "created_by": {
             "required": [
               "id",
@@ -59147,6 +59309,12 @@
           },
           "is_default_billing": {
             "type": "boolean"
+          },
+          "full_name": {
+            "type": "string"
+          },
+          "home_office": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
@@ -60921,6 +61089,12 @@
                 },
                 "is_default_billing": {
                   "type": "boolean"
+                },
+                "full_name": {
+                  "type": "string"
+                },
+                "home_office": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"

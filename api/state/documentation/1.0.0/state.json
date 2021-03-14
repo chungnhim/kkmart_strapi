@@ -740,6 +740,12 @@
                 "is_default_billing": {
                   "type": "boolean"
                 },
+                "full_name": {
+                  "type": "string"
+                },
+                "home_office": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },
