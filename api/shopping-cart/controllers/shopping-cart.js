@@ -178,7 +178,7 @@ module.exports = {
                 null,
                 formatError({
                     id: 'Error',
-                    message: 'product_variant_id is requied.',
+                    message: 'product_variant_id is required.',
                 })
             );
         }
@@ -188,7 +188,7 @@ module.exports = {
                 null,
                 formatError({
                     id: 'Error',
-                    message: 'shopping_cart_id is requied.',
+                    message: 'shopping_cart_id is required.',
                 })
             );
         }
