@@ -1,84 +1,91 @@
 {
-  "routes": [
-    {
-      "method": "GET",
-      "path": "/shopping-carts",
-      "handler": "shopping-cart.find",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/shopping-carts/count",
-      "handler": "shopping-cart.count",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/shopping-carts/:id",
-      "handler": "shopping-cart.findOne",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "POST",
-      "path": "/shopping-carts",
-      "handler": "shopping-cart.create",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "PUT",
-      "path": "/shopping-carts/:id",
-      "handler": "shopping-cart.update",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "DELETE",
-      "path": "/shopping-carts/:id",
-      "handler": "shopping-cart.delete",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/v1/shopping-carts",
-      "handler": "shopping-cart.getByUserId",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "POST",
-      "path": "/v1/shopping-carts/add-to-cart",
-      "handler": "shopping-cart.addProductToCart",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/v1/shopping-carts/:shopping_cart_id",
-      "handler": "shopping-cart.getCartById",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "DELETE",
-      "path": "/v1/shopping-carts/remove-cart-item/:cart_item_id",
-      "handler": "shopping-cart.removeCartItem",
-      "config": {
-        "policies": []
-      }
-    }
-  ]
+    "routes": [{
+            "method": "GET",
+            "path": "/shopping-carts",
+            "handler": "shopping-cart.find",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/shopping-carts/count",
+            "handler": "shopping-cart.count",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/shopping-carts/:id",
+            "handler": "shopping-cart.findOne",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/shopping-carts",
+            "handler": "shopping-cart.create",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "PUT",
+            "path": "/shopping-carts/:id",
+            "handler": "shopping-cart.update",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "DELETE",
+            "path": "/shopping-carts/:id",
+            "handler": "shopping-cart.delete",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/v1/shopping-carts",
+            "handler": "shopping-cart.getByUserId",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/v1/shopping-carts/add-to-cart",
+            "handler": "shopping-cart.addProductToCart",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "PUT",
+            "path": "/v1/shopping-carts/update-to-cart",
+            "handler": "shopping-cart.updateProductToCart",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/v1/shopping-carts/:shopping_cart_id",
+            "handler": "shopping-cart.getCartById",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "DELETE",
+            "path": "/v1/shopping-carts/remove-cart-item/:cart_item_id",
+            "handler": "shopping-cart.removeCartItem",
+            "config": {
+                "policies": []
+            }
+        }
+    ]
 }
