@@ -31,10 +31,17 @@ module.exports = {
             phone_number: params.phone_number,
             email_address: params.email_address,
             is_default: params.is_default,
-            is_default_billing: params.is_default_billing
+            is_default_billing: params.is_default_billing,
+            full_name: params.full_name,
+            full_name: params.home_office,
+        }
+        if (params.id) {
+            entity.id = params.id;
+            var userAddress = await strapi.query("user-address").update({ id: entity.id }, entity);
+        } else {
+            var userAddress = await strapi.query("user-address").create(entity);
         }
 
-        var userAddress = await strapi.query("user-address").create(entity);
         ctx.send({
             success: true,
             message: "Add user address has been successfully",

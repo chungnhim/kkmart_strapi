@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "03/13/2021 12:46:34 AM"
+    "x-generation-date": "03/13/2021 11:39:21 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -42934,6 +42934,12 @@
                 "is_default_billing": {
                   "type": "boolean"
                 },
+                "full_name": {
+                  "type": "string"
+                },
+                "home_office": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -56849,6 +56855,12 @@
                 "is_default_billing": {
                   "type": "boolean"
                 },
+                "full_name": {
+                  "type": "string"
+                },
+                "home_office": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -58955,6 +58967,12 @@
           "is_default_billing": {
             "type": "boolean"
           },
+          "full_name": {
+            "type": "string"
+          },
+          "home_office": {
+            "type": "string"
+          },
           "created_by": {
             "required": [
               "id",
@@ -59076,6 +59094,12 @@
           },
           "is_default_billing": {
             "type": "boolean"
+          },
+          "full_name": {
+            "type": "string"
+          },
+          "home_office": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
@@ -60850,6 +60874,12 @@
                 },
                 "is_default_billing": {
                   "type": "boolean"
+                },
+                "full_name": {
+                  "type": "string"
+                },
+                "home_office": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
