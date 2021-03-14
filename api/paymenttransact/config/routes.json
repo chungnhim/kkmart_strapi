@@ -47,6 +47,14 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment/create",
+      "handler": "paymenttransact.createpayment",
+      "config": {
+          "policies": []
+      }
     }
   ]
 }
