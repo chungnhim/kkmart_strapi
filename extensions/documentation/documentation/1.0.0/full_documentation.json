@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "03/14/2021 6:20:59 PM"
+    "x-generation-date": "03/15/2021 12:28:18 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -49708,6 +49708,15 @@
                   "type": "string"
                 }
               },
+              "coin_earn": {
+                "type": "integer"
+              },
+              "coin_use": {
+                "type": "integer"
+              },
+              "can_use_coin": {
+                "type": "boolean"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -53813,6 +53822,15 @@
               }
             }
           },
+          "coin_earn": {
+            "type": "integer"
+          },
+          "coin_use": {
+            "type": "integer"
+          },
+          "can_use_coin": {
+            "type": "boolean"
+          },
           "created_by": {
             "required": [
               "id",
@@ -53940,6 +53958,15 @@
             "items": {
               "type": "string"
             }
+          },
+          "coin_earn": {
+            "type": "integer"
+          },
+          "coin_use": {
+            "type": "integer"
+          },
+          "can_use_coin": {
+            "type": "boolean"
           },
           "created_by": {
             "type": "string"
@@ -54093,6 +54120,15 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "coin_earn": {
+                  "type": "integer"
+                },
+                "coin_use": {
+                  "type": "integer"
+                },
+                "can_use_coin": {
+                  "type": "boolean"
                 },
                 "created_by": {
                   "type": "string"
@@ -54819,6 +54855,15 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "coin_earn": {
+                  "type": "integer"
+                },
+                "coin_use": {
+                  "type": "integer"
+                },
+                "can_use_coin": {
+                  "type": "boolean"
                 },
                 "created_by": {
                   "type": "string"
@@ -55826,6 +55871,15 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "coin_earn": {
+                "type": "integer"
+              },
+              "coin_use": {
+                "type": "integer"
+              },
+              "can_use_coin": {
+                "type": "boolean"
               },
               "created_by": {
                 "type": "string"
