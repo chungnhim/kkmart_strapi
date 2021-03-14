@@ -81,16 +81,16 @@
       "via": "product"
     },
     "shopping_cart_products": {
-      "collection": "shopping-cart-product",
-      "via": "product"
+      "via": "product",
+      "collection": "shopping-cart-product"
     },
     "promotionproduct": {
       "model": "promotionproduct",
       "via": "products"
     },
     "flashsaleproduct": {
-      "model": "flashsaleproducts",
-      "via": "products"
+      "via": "products",
+      "model": "flashsaleproducts"
     },
     "productimgs": {
       "collection": "file",
