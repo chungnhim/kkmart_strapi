@@ -911,12 +911,6 @@
                     "type": "string"
                   }
                 },
-                "order_products": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
                 "promotionproduct": {
                   "type": "string"
                 },
@@ -934,6 +928,21 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "order_products": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "coin_earn": {
+                  "type": "number"
+                },
+                "coin_use": {
+                  "type": "number"
+                },
+                "can_use_coin": {
+                  "type": "boolean"
                 },
                 "created_by": {
                   "type": "string"

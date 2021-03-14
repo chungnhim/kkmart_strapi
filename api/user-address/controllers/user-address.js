@@ -8,7 +8,7 @@
 const _ = require("lodash");
 
 module.exports = {
-    addUserAddress: async (ctx) => {
+    addUserAddress: async(ctx) => {
         const params = _.assign({}, ctx.request.body, ctx.params);
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
@@ -23,12 +23,15 @@ module.exports = {
         var entity = {
             user: userId,
             country: params.country_id,
-            province: params.province_id,
-            district: params.district_id,
-            address: params.address,
+            state: params.state_id,
+            address1: params.address1,
+            address2: params.address2,
+            city: params.city,
+            postcode: params.postcode,
             phone_number: params.phone_number,
             email_address: params.email_address,
-            is_default: params.is_default
+            is_default: params.is_default,
+            is_default_billing: params.is_default_billing
         }
 
         var userAddress = await strapi.query("user-address").create(entity);
@@ -38,7 +41,7 @@ module.exports = {
             user_address_id: userAddress.id
         });
     },
-    getUserAddress: async (ctx) => {
+    getUserAddress: async(ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
             ctx.send({
@@ -62,13 +65,14 @@ module.exports = {
             _start: (pageIndex - 1) * pageSize,
             _limit: pageSize,
             _sort: "created_at:desc",
+            user: userId
         };
 
         var totalRows = await strapi.query('user-address').count(dataQuery);
         var entities = await strapi.query("user-address").find(dataQuery);
 
         let models = await strapi.services.common.normalizationResponse(
-            entities
+            entities, ["user", "created_at", "updated_at"]
         );
 
         ctx.send({
@@ -77,7 +81,7 @@ module.exports = {
             address: _.values(models)
         });
     },
-    setDefaultUserAddress: async (ctx) => {
+    setDefaultUserAddress: async(ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
             ctx.send({
@@ -106,21 +110,16 @@ module.exports = {
         }
 
         var oldDefaults = await strapi.query("user-address").find({
-            is_default: true
+            is_default: true,
+            is_default_billing: true
         });
 
         for (let index = 0; index < oldDefaults.length; index++) {
             const add = oldDefaults[index];
-            await strapi.query("user-address").update(
-                { id: add.id },
-                { is_default: false }
-            );
+            await strapi.query("user-address").update({ id: add.id }, { is_default: false });
         }
 
-        var res = await strapi.query("user-address").update(
-            { id: params.address_id },
-            { is_default: true }
-        );
+        var res = await strapi.query("user-address").update({ id: params.address_id }, { is_default: true });
 
         ctx.send({
             success: true,

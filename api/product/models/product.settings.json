@@ -84,10 +84,6 @@
       "collection": "shopping-cart-product",
       "via": "product"
     },
-    "order_products": {
-      "collection": "order-product",
-      "via": "products"
-    },
     "promotionproduct": {
       "model": "promotionproduct",
       "via": "products"
@@ -111,6 +107,19 @@
       "collection": "category",
       "via": "products",
       "dominant": true
+    },
+    "order_products": {
+      "collection": "order-product",
+      "via": "product"
+    },
+    "coin_earn": {
+      "type": "float"
+    },
+    "coin_use": {
+      "type": "float"
+    },
+    "can_use_coin": {
+      "type": "boolean"
     }
   }
 }

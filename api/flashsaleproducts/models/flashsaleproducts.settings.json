@@ -42,6 +42,9 @@
     },
     "numberapply": {
       "type": "integer"
+    },
+    "name": {
+      "type": "string"
     }
   }
 }

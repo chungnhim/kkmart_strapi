@@ -11,7 +11,7 @@ var removeFields = [
     "order_products",
     "product_ratings",
     "brand",
-
+    "user"
     //"promotionproduct",
     //"flashsaleproduct"
 ];
@@ -23,6 +23,7 @@ module.exports = {
             id: productId,
         });
         let productModels = await strapi.services.promotionproduct.priceRecalculationOfProduct(productResult);
+
         productModels = await strapi.services.common.normalizationResponse(
             productModels,
             removeFields

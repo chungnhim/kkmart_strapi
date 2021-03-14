@@ -92,27 +92,41 @@ module.exports = {
     },
     async getOfUser(ctx) {
 
-        const { userId } = ctx.params;
+        let userId = await strapi.services.common.getLoggedUserId(ctx);
+
+        if (userId == 0) {
+            return ctx.badRequest(
+                null,
+                formatError({
+                    id: 'Invalidate Token',
+                    message: 'Invalidate Token',
+                })
+            );
+        }
+
         let dataQuery = {
             user: userId
         }
+
         var dataResult = await strapi.query("wishlist").find(dataQuery);
         if (dataResult.length > 0) {
             var dataProductResult = [];
 
             for (const item of dataResult) {
-                console.log(item.product.id);
-                var getProductResult = await strapi.query("product").findOne({ id: item.product.id });
-                getProductResult = await strapi.services.promotionproduct.priceRecalculationOfProduct(getProductResult);
-                getProductResult.is_wish_list = await strapi.services.wishlist.checkWishlist(
-                    userId,
-                    getProductResult.id
-                );
-                dataProductResult.push(getProductResult);
+                if (item.product != null) {
+                    //console.log(item.product.id);
+                    var getProductResult = await strapi.query("product").findOne({ id: item.product.id });
+                    getProductResult = await strapi.services.promotionproduct.priceRecalculationOfProduct(getProductResult);
+                    getProductResult.is_wish_list = await strapi.services.wishlist.checkWishlist(
+                        userId,
+                        getProductResult.id
+                    );
+                    dataProductResult.push(getProductResult);
+                }
             }
 
             let data = Object.values(removeAuthorFields(dataProductResult));
-            let productModel = await strapi.services.common.normalizationResponse(data);
+            let productModel = await strapi.services.common.normalizationResponse(data, ["user"]);
             ctx.send(Object.values(productModel));
         } else {
             ctx.send({

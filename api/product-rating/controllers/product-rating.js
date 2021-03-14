@@ -7,7 +7,7 @@
 const _ = require("lodash");
 
 module.exports = {
-    productRating: async (ctx) => {
+    productRating: async(ctx) => {
         var userId = 0;
         if (ctx.request && ctx.request.header && ctx.request.header.authorization) {
             try {
@@ -15,14 +15,11 @@ module.exports = {
                     "users-permissions"
                 ].services.jwt.getToken(ctx);
                 userId = id;
-
-                console.log(`userId`, userId);
-            } catch (err) { }
+            } catch (err) {}
         }
 
         if (userId == 0) {
             ctx.unauthorized(`You're not logged in!`);
-
             return;
         }
 
@@ -32,7 +29,8 @@ module.exports = {
             comment: body.comment,
             user: userId,
             product: parseFloat(body.product_id),
-            status: 1
+            status: 1,
+            images: body.images
         };
 
         var res = await strapi.query('product-rating').create(entity);
@@ -52,17 +50,14 @@ module.exports = {
         var totalRating = _.sumBy(productRatings, "rating_point")
         var avgRating = Number(parseFloat(totalRating / productRatings.length).toFixed(1));
 
-        await strapi.query('product').update(
-            { id: parseFloat(body.product_id) },
-            { rating_point: avgRating }
-        );
+        await strapi.query('product').update({ id: parseFloat(body.product_id) }, { rating_point: avgRating });
 
         ctx.send({
             message: "Rating has been saved",
             success: true
         });
     },
-    getRatingsByProductId: async (ctx) => {
+    getRatingsByProductId: async(ctx) => {
         const queryString = _.assign({}, ctx.request.query, ctx.params);
         const params = _.assign({}, ctx.request.params, ctx.params);
 
@@ -91,8 +86,11 @@ module.exports = {
 
         var totalRows = await strapi.query('product-rating').count(dataQuery);
         var entities = await strapi.query("product-rating").find(dataQuery);
+
+        //console.log(entities);
+
         let models = await strapi.services.common.normalizationResponse(
-            entities, ["product"]
+            entities, ["product", "password", "provider", "resetPasswordToken", "confirmed", "blocked", "role", "created_at", "updated_at", "phone", "dateofbirth", "gender", "kcoin", "maritalstatus", "referralcode", "companyname", "promotionrewardpoint", "nonpromotionalrewardpoint", "membershiptype", "Address1", "Address2", "country", "state", "city", "postcode", "ethnicgroup", "qrcode", "maritalstatuother", "personalinterestother", "employmentstatuother", "socialmediaactivestatuother", "address1", "address2", "iscompleteinformation", "preferredname", "friendcode"]
         );
 
         var res = {

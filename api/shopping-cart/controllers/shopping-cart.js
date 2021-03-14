@@ -6,56 +6,66 @@
  */
 
 const _ = require("lodash");
+const formatError = error => [
+    { messages: [{ id: error.id, message: error.message, field: error.field }] },
+];
 
 module.exports = {
-    find: async(ctx) => {
+    getByUserId: async (ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (userId == 0) {
             return ctx.badRequest(
                 null,
                 formatError({
-                    id: 'Invalidate Token',
-                    message: 'Invalidate Token',
+                    id: 'Invalid Token',
+                    message: 'Invalid Token',
                 })
             );
         }
+
         var shoppingCart = await strapi.query("shopping-cart").findOne({
             user: userId,
             status: strapi.config.constants.shopping_cart_status.new,
             _sort: "id:desc"
         });
-        //
 
         shoppingCart = await strapi.services.product.getProductOfShoppingCartOne(shoppingCart);
+        let cartModel = await strapi.services.common.normalizationResponse(shoppingCart, ["user"]);
 
-        let cartModel = await strapi.services.common.normalizationResponse(shoppingCart);
         ctx.send({
             success: true,
             cart: cartModel
         });
     },
-    addProductToCart: async(ctx) => {
+    addProductToCart: async (ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
 
         if (userId == 0) {
             return ctx.badRequest(
                 null,
                 formatError({
-                    id: 'Invalidate Token',
-                    message: 'Invalidate Token',
+                    id: 'Invalid Token',
+                    message: 'Invalid Token',
                 })
             );
         }
 
         const params = _.assign({}, ctx.request.body, ctx.params);
+        // {
+        //     "shopping_cart_id": 9,
+        //     "product_id": 2,
+        //     "product_variant_id": 1,
+        //     "qtty": 12
+        // }
+
         let productId = params.product_id;
         let productVariantId = params.product_variant_id;
         let qtty = params.qtty;
         let shoppingCartId = params.shopping_cart_id == null ? 0 : params.shopping_cart_id;
 
-
         var shoppingCart = await strapi.query("shopping-cart").findOne({
             id: shoppingCartId,
+            user: userId
         });
 
         //Get cart newest of user
@@ -104,6 +114,7 @@ module.exports = {
             return;
         }
 
+        var shoppingCartProduct = null;
         var variant = product.product_variants.find(s => s.id == productVariantId);
         if (_.isNil(variant)) {
             ctx.send({
@@ -115,12 +126,8 @@ module.exports = {
         }
 
         var existsProduct = shoppingCart.shopping_cart_products.find(s => s.product == productId && s.product_variant == productVariantId);
-        var shoppingCartProduct = null;
-
         if (_.isNil(existsProduct)) {
             // Case add new item to cart            
-            console.log('Case add new item to cart');
-
             shoppingCartProduct = await strapi.query("shopping-cart-product").create({
                 shopping_cart: shoppingCart.id,
                 product: productId,
@@ -131,9 +138,7 @@ module.exports = {
             });
         } else {
             // Case update qtty of an existing item
-            console.log('Case update qtty of an existing item');
-
-            existsProduct.qtty += qtty;
+            existsProduct.qtty = qtty;
             shoppingCartProduct = await strapi.query("shopping-cart-product").update({ id: existsProduct.id },
                 existsProduct
             );
@@ -154,7 +159,7 @@ module.exports = {
             cart_id: shoppingCart.id
         });
     },
-    getCart: async(ctx) => {
+    getCartById: async (ctx) => {
         const params = _.assign({}, ctx.request.params, ctx.params);
 
         var shoppingCartId = params.shopping_cart_id;
@@ -163,30 +168,32 @@ module.exports = {
         });
 
         shoppingCart = await strapi.services.product.getProductOfShoppingCartOne(shoppingCart);
-        let cartModel = await strapi.services.common.normalizationResponse(shoppingCart);
+        let cartModel = await strapi.services.common.normalizationResponse(shoppingCart, ["user"]);
+        
         ctx.send({
             success: true,
             cart: cartModel
         });
     },
-    removeCartItem: async(ctx) => {
-        const params = _.assign({}, ctx.request.params, ctx.params);
-        let cartProductId = params.cart_product_id;
-        var shoppingCartId = params.shopping_cart_id;
-
+    removeCartItem: async (ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (userId == 0) {
             return ctx.badRequest(
                 null,
                 formatError({
-                    id: 'Invalidate Token',
-                    message: 'Invalidate Token',
+                    id: 'Invalid Token',
+                    message: 'Invalid Token',
                 })
             );
         }
 
+        const params = _.assign({}, ctx.request.params, ctx.params);
+        let cartItemId = params.cart_item_id;
+
         var shoppingCart = await strapi.query("shopping-cart").findOne({
-            id: shoppingCartId,
+            user: userId,
+            status: strapi.config.constants.shopping_cart_status.new,
+            _sort: "id:desc"
         });
 
         if (_.isNil(shoppingCart)) {
@@ -197,37 +204,27 @@ module.exports = {
 
             return;
         }
-        var existsProduct = shoppingCart.shopping_cart_products.find(s => s.product == cartProductId);
 
+        var existsProduct = shoppingCart.shopping_cart_products.find(s => s.id == cartItemId);
         if (_.isNil(existsProduct)) {
             ctx.send({
                 success: false,
-                message: "Product does not exists"
+                message: "Product does not exists in shopping cart"
             });
 
             return;
         }
 
-        var dataShoppingCart = await strapi.query("shopping-cart-product").findOne();
-
-        //console.log(dataShoppingCart);
-
         var res = await strapi.query("shopping-cart-product").delete({
-            product: cartProductId,
-            shopping_cart: shoppingCartId
+            id: cartItemId,
+            shopping_cart: shoppingCart.id
         });
-
-        console.log(res);
-        if (!_.isNil(res) && res.id !== 0) {
-            ctx.send({
-                success: true,
-                message: "Cart item has been remove successfully"
-            });
-        }
 
         ctx.send({
-            success: false,
-            message: "Product does not exists"
+            success: true,
+            message: "Cart item has been remove successfully"
         });
+
+        return;
     }
 };

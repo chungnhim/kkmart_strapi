@@ -27,10 +27,6 @@
       "via": "province",
       "collection": "order-shipping"
     },
-    "user_addresses": {
-      "via": "province",
-      "collection": "user-address"
-    },
     "order_billings": {
       "via": "province",
       "collection": "order-billing"

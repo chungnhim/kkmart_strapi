@@ -727,6 +727,77 @@
           }
         ]
       }
+    },
+    "/v1/orders/create-order": {
+      "post": {
+        "deprecated": false,
+        "description": "Create a new record",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Order"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "foo": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -962,11 +1033,8 @@
                 "order": {
                   "type": "string"
                 },
-                "products": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+                "product": {
+                  "type": "string"
                 },
                 "qtty": {
                   "type": "integer"
@@ -986,11 +1054,8 @@
                 "note": {
                   "type": "string"
                 },
-                "product_variants": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+                "product_variant": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"

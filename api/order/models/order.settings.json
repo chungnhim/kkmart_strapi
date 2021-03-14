@@ -42,8 +42,8 @@
       "via": "orders"
     },
     "order_products": {
-      "collection": "order-product",
-      "via": "order"
+      "via": "order",
+      "collection": "order-product"
     },
     "order_billing": {
       "via": "order",

@@ -24,7 +24,7 @@ module.exports = {
         const sanitizedEntity = sanitizeEntity(entity, { model: strapi.models.state });
         var dataArrayUrl = removeAuthorFields(sanitizedEntity);
         dataArrayUrl = await strapi.services.common.normalizationResponse(
-            dataArrayUrl
+            dataArrayUrl, ["user", "user_addresses"]
         );
         dataArrayUrl = Object.values(removeAuthorFields(dataArrayUrl))
         ctx.send(dataArrayUrl);
@@ -35,12 +35,20 @@ module.exports = {
         const params = _.assign({}, ctx.request.params, ctx.params);
         var countryid = parseFloat(queryString.countryid);
         var dataresult = await strapi.query('state').find({ country_eq: countryid });
-        ctx.send(Object.values(removeAuthorFields(dataresult)));
+        dataresult = await strapi.services.common.normalizationResponse(
+            dataresult, ["user", "user_addresses"]
+        );
+        dataresult = Object.values(removeAuthorFields(dataresult))
+        ctx.send(dataresult);
     },
     getbycountrypost: async ctx => {
         const params = _.assign({}, ctx.request.body, ctx.params);
         let countryid = params.countryid;
         var dataresult = await strapi.query('state').find({ country_eq: countryid });
-        ctx.send(Object.values(removeAuthorFields(dataresult)));
+        dataresult = await strapi.services.common.normalizationResponse(
+            dataresult, ["user", "user_addresses"]
+        );
+        dataresult = Object.values(removeAuthorFields(dataresult))
+        ctx.send(dataresult);
     },
 };

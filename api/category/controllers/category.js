@@ -24,7 +24,7 @@ module.exports = {
         var dataresult = await strapi.query('category').find({ level_eq: 1, isenable_eq: true });
         var dataArrayUrl = Object.values(removeAuthorFields(dataresult))
         var dataArrayUrl = await strapi.services.common.normalizationResponse(
-            dataArrayUrl
+            dataArrayUrl, ["user"]
         );
         dataArrayUrl = Object.values(removeAuthorFields(dataArrayUrl))
         ctx.send(dataArrayUrl);
@@ -46,7 +46,7 @@ module.exports = {
             var dataresult = await strapi.query('category').find({ parentid_eq: parentid, isenable_eq: true });
             var dataArrayUrl = Object.values(removeAuthorFields(dataresult))
             var dataArrayUrl = await strapi.services.common.normalizationResponse(
-                dataArrayUrl
+                dataArrayUrl, ["user"]
             );
             dataArrayUrl = Object.values(removeAuthorFields(dataArrayUrl))
             ctx.send(dataArrayUrl);
