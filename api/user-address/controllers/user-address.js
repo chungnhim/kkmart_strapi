@@ -178,12 +178,36 @@ module.exports = {
             });
             return;
         }
-
-        var res = await strapi.query("user-address").update({ id: params.address_id }, { is_default: true });
+        address.is_default = true;
+        address.is_default_billing = true;
+        var res = await strapi.query("user-address").update({ id: params.address_id }, address);
 
         ctx.send({
             success: true,
             message: "Set default address has been successfully"
         });
+    },
+    deleteOfUser: async(ctx) => {
+        let userId = await strapi.services.common.getLoggedUserId(ctx);
+        if (_.isNil(userId) || userId == 0) {
+            ctx.send({
+                success: false,
+                message: "Please login to your account"
+            });
+            return;
+        }
+
+        const params = _.assign({}, ctx.request.params, ctx.params);
+        let addressid = params.id;
+        var res = await strapi.query("user-address").delete({
+            id: addressid,
+            user: userId
+        });
+
+        ctx.send({
+            success: true,
+            message: "Address has been remove successfully"
+        });
+
     }
 };
