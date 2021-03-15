@@ -33,7 +33,7 @@ module.exports = {
             is_default: params.is_default,
             is_default_billing: params.is_default_billing,
             full_name: params.full_name,
-            full_name: params.home_office,
+            home_office: params.home_office
         }
         var userAddress;
         if (params.id) {
@@ -74,7 +74,7 @@ module.exports = {
             is_default: params.is_default,
             is_default_billing: params.is_default_billing,
             full_name: params.full_name,
-            full_name: params.home_office,
+            home_office: params.home_office
         }
 
         //check and find user address of exist or not

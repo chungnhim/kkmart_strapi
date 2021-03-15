@@ -805,6 +805,15 @@
                     "type": "string"
                   }
                 },
+                "coin_earn": {
+                  "type": "integer"
+                },
+                "coin_use": {
+                  "type": "integer"
+                },
+                "can_use_coin": {
+                  "type": "boolean"
+                },
                 "created_by": {
                   "type": "string"
                 },

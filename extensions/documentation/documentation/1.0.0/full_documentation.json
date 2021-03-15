@@ -49708,6 +49708,15 @@
                   "type": "string"
                 }
               },
+              "coin_earn": {
+                "type": "integer"
+              },
+              "coin_use": {
+                "type": "integer"
+              },
+              "can_use_coin": {
+                "type": "boolean"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -53813,6 +53822,15 @@
               }
             }
           },
+          "coin_earn": {
+            "type": "integer"
+          },
+          "coin_use": {
+            "type": "integer"
+          },
+          "can_use_coin": {
+            "type": "boolean"
+          },
           "created_by": {
             "required": [
               "id",
@@ -53940,6 +53958,15 @@
             "items": {
               "type": "string"
             }
+          },
+          "coin_earn": {
+            "type": "integer"
+          },
+          "coin_use": {
+            "type": "integer"
+          },
+          "can_use_coin": {
+            "type": "boolean"
           },
           "created_by": {
             "type": "string"
@@ -54093,6 +54120,15 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "coin_earn": {
+                  "type": "integer"
+                },
+                "coin_use": {
+                  "type": "integer"
+                },
+                "can_use_coin": {
+                  "type": "boolean"
                 },
                 "created_by": {
                   "type": "string"
@@ -54819,6 +54855,15 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "coin_earn": {
+                  "type": "integer"
+                },
+                "coin_use": {
+                  "type": "integer"
+                },
+                "can_use_coin": {
+                  "type": "boolean"
                 },
                 "created_by": {
                   "type": "string"
@@ -55826,6 +55871,15 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "coin_earn": {
+                "type": "integer"
+              },
+              "coin_use": {
+                "type": "integer"
+              },
+              "can_use_coin": {
+                "type": "boolean"
               },
               "created_by": {
                 "type": "string"

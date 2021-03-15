@@ -73,8 +73,8 @@
       "type": "string"
     },
     "product_variants": {
-      "collection": "product-variant",
-      "via": "product_id"
+      "via": "product_id",
+      "collection": "product-variant"
     },
     "product_ratings": {
       "collection": "product-rating",

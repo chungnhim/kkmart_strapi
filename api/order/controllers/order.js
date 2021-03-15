@@ -62,10 +62,8 @@ const processCheckout = async (userId, products, currency, orderVia, shipping, b
 
     for (let index = 0; index < products.length; index++) {
         const cartItem = products[index];
-        console.log(`cartItem`, cartItem);
 
         let product = await strapi.services.product.getProductById(cartItem.product_id);
-        console.log(`cartItem product`, product);
         if (_.isNil(product)) {
             return {
                 success: false,
@@ -82,8 +80,6 @@ const processCheckout = async (userId, products, currency, orderVia, shipping, b
         }
 
         totalAmount += variant.selling_price * cartItem.qtty;
-        console.log(`product`, product);
-        console.log(`variant`, variant);
 
         orderProductEntities.push({
             product: product.id,
@@ -266,113 +262,6 @@ module.exports = {
             params.shipping,
             params.billing
         );
-
-        // let totalAmount = 0;
-        // let discountAmount = 0;
-        // let hasError = false;
-        // let orderProductEntities = [];
-
-        // for (let index = 0; index < checkOutProducts.length; index++) {
-        //     const cartItem = checkOutProducts[index];
-        //     let product = await strapi.services.product.getProductById(cartItem.product);
-        //     if (_.isNil(product)) {
-        //         hasError = true;
-
-        //         return;
-        //     }
-
-        //     let variant = product.product_variants.find(s => s.product_variant == product.product_variant);
-        //     if (_.isNil(variant)) {
-        //         hasError = true;
-
-        //         return;
-        //     }
-
-        //     totalAmount += variant.selling_price * cartItem.qtty;
-        //     orderProductEntities.push({
-        //         products: product.id,
-        //         product_variants: variant.id,
-        //         qtty: cartItem.qtty,
-        //         origin_price: 0,
-        //         selling_price: variant.selling_price,
-        //         currency: params.currency,
-        //         discount_amount: 0,
-        //         note: null
-        //     });
-        // }
-
-        // if (hasError) {
-        //     ctx.send({
-        //         success: false,
-        //         message: "Product does not exists"
-        //     });
-
-        //     return;
-        // }
-
-        // let orderEntity = {
-        //     order_code: generateOrderCode(5),
-        //     order_via: params.order_via,
-        //     order_status: 1,
-        //     payment_status: 1,
-        //     shipping_status: 1,
-        //     total_amount: totalAmount,
-        //     currency: params.currency,
-        //     discount_amount: discountAmount,
-        //     order_note: "",
-        //     user: userId
-        // };
-
-        // var order = await strapi.query("order").create(orderEntity);
-
-        // if (_.isNil(order)) {
-        //     ctx.send({
-        //         success: false,
-        //         message: "Pre checkout failed"
-        //     });
-
-        //     return;
-        // }
-
-        // for (let i = 0; i < orderProductEntities.length; i++) {
-        //     const product = orderProductEntities[i];
-        //     product.order = order.id;
-
-        //     await strapi.query("order-product").create(product);
-        // }
-
-        // // Add shipping information
-        // var shipping = {
-        //     order: order.id,
-        //     full_name: params.shipping.full_name,
-        //     phone_number: params.shipping.phone_number,
-        //     province: params.shipping.province_id,
-        //     district: params.shipping.district_id,
-        //     address: params.shipping.address,
-        //     note: params.shipping.note,
-        //     status: 1,
-        //     deliver_date: null,
-        //     actual_deliver_date: null,
-        //     deliver_note: null,
-        //     shipping_provider: null
-        // };
-
-        // await strapi.query("order-shipping").create(shipping);
-
-        // // Add billing address
-        // var billingAddress = {
-        //     order: order.id,
-        //     full_name: params.billing.full_name,
-        //     phone_number: params.billing.phone_number,
-        //     province: params.billing.province_id,
-        //     district: params.billing.district_id,
-        //     address: params.billing.address,
-        //     note: params.billing.note,
-        //     status: 1,
-        //     billing_date: null
-        // };
-
-        // await strapi.query("order-billing").create(billingAddress);
 
         if (createOrderRes.success) {
             for (let index = 0; index < checkOutProducts.length; index++) {
