@@ -35,6 +35,19 @@ module.exports = {
             full_name: params.full_name,
             home_office: params.home_office
         }
+
+        if (params.is_default && params.is_default == true) {
+            //set all to none
+            var listaddress = await strapi.query("user-address").find({ user: userId });
+
+            for (let index = 0; index < listaddress.length; index++) {
+                let objectUpdate = listaddress[index];
+                objectUpdate.is_default = false;
+                objectUpdate.is_default_billing = false;
+                await strapi.query("user-address").update({ id: objectUpdate.id }, objectUpdate);
+            }
+        }
+
         var userAddress;
         if (params.id) {
             entity.id = params.id;
@@ -86,6 +99,18 @@ module.exports = {
                 message: "Address of user is not exist!"
             });
             return;
+        }
+
+        if (params.is_default && params.is_default == true) {
+            //set all to none
+            var listaddress = await strapi.query("user-address").find({ user: userId });
+
+            for (let index = 0; index < listaddress.length; index++) {
+                let objectUpdate = listaddress[index];
+                objectUpdate.is_default = false;
+                objectUpdate.is_default_billing = false;
+                await strapi.query("user-address").update({ id: objectUpdate.id }, objectUpdate);
+            }
         }
 
         var userAddress;
@@ -160,16 +185,6 @@ module.exports = {
             user: userId
         };
 
-        //set all to none
-        var listaddress = await strapi.query("user-address").findOne({ user: userId });
-
-        for (let index = 0; index < listaddress.length; index++) {
-            let objectUpdate = listaddress[index];
-            objectUpdate.is_default = false;
-            objectUpdate.is_default_billing = false;
-            await strapi.query("user-address").update({ id: objectUpdate.id }, objectUpdate);
-        }
-
         var address = await strapi.query("user-address").findOne(dataQuery);
         if (_.isNil(address)) {
             ctx.send({
@@ -178,6 +193,17 @@ module.exports = {
             });
             return;
         }
+
+        //set all to none
+        var listaddress = await strapi.query("user-address").find({ user: userId });
+
+        for (let index = 0; index < listaddress.length; index++) {
+            let objectUpdate = listaddress[index];
+            objectUpdate.is_default = false;
+            objectUpdate.is_default_billing = false;
+            await strapi.query("user-address").update({ id: objectUpdate.id }, objectUpdate);
+        }
+
         address.is_default = true;
         address.is_default_billing = true;
         var res = await strapi.query("user-address").update({ id: params.address_id }, address);
