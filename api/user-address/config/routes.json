@@ -56,14 +56,6 @@
             }
         },
         {
-            "method": "DELETE",
-            "path": "/v1/user-addresses/delete-address/:id",
-            "handler": "user-address.deleteOfUser",
-            "config": {
-                "policies": []
-            }
-        },
-        {
             "method": "POST",
             "path": "/v1/user-addresses",
             "handler": "user-address.addUserAddress",
