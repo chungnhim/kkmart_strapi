@@ -50,8 +50,8 @@
       "via": "order"
     },
     "order_shipping": {
-      "model": "order-shipping",
-      "via": "order"
+      "via": "order",
+      "model": "order-shipping"
     },
     "vouchercode": {
       "type": "string"

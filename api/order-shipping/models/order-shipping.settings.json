@@ -49,8 +49,17 @@
       "via": "order_shippings"
     },
     "order": {
-      "via": "order_shipping",
-      "model": "order"
+      "model": "order",
+      "via": "order_shipping"
+    },
+    "postcode": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "shippingfee": {
+      "type": "decimal"
     }
   }
 }

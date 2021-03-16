@@ -42,7 +42,7 @@ const getByOrdersUserId = async (pageIndex, pageSize, userId) => {
     };
 }
 
-const processCheckout = async (userId, products, is_expressmart, user_address_id, order_via, vouchercode,is_use_coin, shipping_note) => {
+const processCheckout = async (userId, products, is_expressmart, user_address_id, order_via, vouchercode,is_use_coin, shipping_note,currency) => {
     // [
     //     {
     //         "product_id": 1,
@@ -61,6 +61,7 @@ const processCheckout = async (userId, products, is_expressmart, user_address_id
     let orderProductEntities = [];
     let kcoin_used = 0;
     let kcoin_earned = 0;
+    let shipping_fee = 0;
 
     for (let index = 0; index < products.length; index++) {
         const cartItem = products[index];
@@ -165,14 +166,16 @@ const processCheckout = async (userId, products, is_expressmart, user_address_id
         full_name: userAddressInf.full_name,
         phone_number: userAddressInf.phone_number,
         province: userAddressInf.state,
-        district: userAddressInf.city,
+        city: userAddressInf.city,
         address: userAddressInf.address1,
         note: shipping_note,
         status: 1,
         deliver_date: null,
         actual_deliver_date: null,
         deliver_note: null,
-        shipping_provider: null
+        shipping_provider: null,
+        postcode: userAddressInf.postcode,
+        shippingfee: shipping_fee
     };
 
     await strapi.query("order-shipping").create(shipping);
@@ -210,7 +213,8 @@ module.exports = {
         //     "is_expressmart": false,
         //     "user_address_id": "",
         //     "shipping_note": "",
-        //     "cart_items_id": [],        
+        //     "cart_items_id": [],
+        //     "currency": "MYR",        
         //     "order_via": "Web",
         //     "vouchercode": "",
         //     "is_use_coin": true
@@ -289,7 +293,8 @@ module.exports = {
             params.order_via,
             params.vouchercode,
             params.is_use_coin,
-            params.shipping_note
+            params.shipping_note,
+            params.currency
         );
 
         if (createOrderRes.success) {

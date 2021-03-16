@@ -666,6 +666,15 @@
                 "order": {
                   "type": "string"
                 },
+                "postcode": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "shippingfee": {
+                  "type": "number"
+                },
                 "created_by": {
                   "type": "string"
                 },
