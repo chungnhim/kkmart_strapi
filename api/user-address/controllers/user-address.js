@@ -35,6 +35,19 @@ module.exports = {
             full_name: params.full_name,
             home_office: params.home_office
         }
+
+        if (params.is_default && params.is_default == true) {
+            //set all to none
+            var listaddress = await strapi.query("user-address").find({ user: userId });
+
+            for (let index = 0; index < listaddress.length; index++) {
+                let objectUpdate = listaddress[index];
+                objectUpdate.is_default = false;
+                objectUpdate.is_default_billing = false;
+                await strapi.query("user-address").update({ id: objectUpdate.id }, objectUpdate);
+            }
+        }
+
         var userAddress;
         if (params.id) {
             entity.id = params.id;
@@ -86,6 +99,18 @@ module.exports = {
                 message: "Address of user is not exist!"
             });
             return;
+        }
+
+        if (params.is_default && params.is_default == true) {
+            //set all to none
+            var listaddress = await strapi.query("user-address").find({ user: userId });
+
+            for (let index = 0; index < listaddress.length; index++) {
+                let objectUpdate = listaddress[index];
+                objectUpdate.is_default = false;
+                objectUpdate.is_default_billing = false;
+                await strapi.query("user-address").update({ id: objectUpdate.id }, objectUpdate);
+            }
         }
 
         var userAddress;
@@ -166,25 +191,49 @@ module.exports = {
                 success: false,
                 message: "Address does not exists"
             });
-
             return;
         }
 
-        var oldDefaults = await strapi.query("user-address").find({
-            is_default: true,
-            is_default_billing: true
-        });
+        //set all to none
+        var listaddress = await strapi.query("user-address").find({ user: userId });
 
-        for (let index = 0; index < oldDefaults.length; index++) {
-            const add = oldDefaults[index];
-            await strapi.query("user-address").update({ id: add.id }, { is_default: false });
+        for (let index = 0; index < listaddress.length; index++) {
+            let objectUpdate = listaddress[index];
+            objectUpdate.is_default = false;
+            objectUpdate.is_default_billing = false;
+            await strapi.query("user-address").update({ id: objectUpdate.id }, objectUpdate);
         }
 
-        var res = await strapi.query("user-address").update({ id: params.address_id }, { is_default: true });
+        address.is_default = true;
+        address.is_default_billing = true;
+        var res = await strapi.query("user-address").update({ id: params.address_id }, address);
 
         ctx.send({
             success: true,
             message: "Set default address has been successfully"
         });
+    },
+    deleteOfUser: async(ctx) => {
+        let userId = await strapi.services.common.getLoggedUserId(ctx);
+        if (_.isNil(userId) || userId == 0) {
+            ctx.send({
+                success: false,
+                message: "Please login to your account"
+            });
+            return;
+        }
+
+        const params = _.assign({}, ctx.request.params, ctx.params);
+        let addressid = params.id;
+        var res = await strapi.query("user-address").delete({
+            id: addressid,
+            user: userId
+        });
+
+        ctx.send({
+            success: true,
+            message: "Address has been remove successfully"
+        });
+
     }
 };
