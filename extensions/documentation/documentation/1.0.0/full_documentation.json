@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "03/16/2021 9:32:47 AM"
+    "x-generation-date": "03/16/2021 4:47:06 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -38833,71 +38833,6 @@
         "parameters": []
       }
     },
-    "/v1/user-addresses/delete-address/{id}": {
-      "delete": {
-        "deprecated": false,
-        "description": "Delete a record",
-        "responses": {
-          "200": {
-            "description": "deletes a single record based on the ID supplied",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int64"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "User-address"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "deprecated": false,
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
     "/v1/user-addresses": {
       "post": {
         "deprecated": false,
@@ -49248,6 +49183,21 @@
               "order_shipping": {
                 "type": "string"
               },
+              "vouchercode": {
+                "type": "string"
+              },
+              "coin_earned": {
+                "type": "number"
+              },
+              "coin_used": {
+                "type": "number"
+              },
+              "voucher_discount_amt": {
+                "type": "number"
+              },
+              "is_express_delivery": {
+                "type": "boolean"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -49573,6 +49523,21 @@
               "order_shipping": {
                 "type": "string"
               },
+              "vouchercode": {
+                "type": "string"
+              },
+              "coin_earned": {
+                "type": "number"
+              },
+              "coin_used": {
+                "type": "number"
+              },
+              "voucher_discount_amt": {
+                "type": "number"
+              },
+              "is_express_delivery": {
+                "type": "boolean"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -49790,6 +49755,18 @@
               }
             }
           },
+          "coin_earned": {
+            "type": "number"
+          },
+          "coin_used": {
+            "type": "number"
+          },
+          "voucher_applied": {
+            "type": "string"
+          },
+          "voucher_discount_amt": {
+            "type": "number"
+          },
           "created_by": {
             "required": [
               "id",
@@ -49908,6 +49885,18 @@
           },
           "product_variant": {
             "type": "string"
+          },
+          "coin_earned": {
+            "type": "number"
+          },
+          "coin_used": {
+            "type": "number"
+          },
+          "voucher_applied": {
+            "type": "string"
+          },
+          "voucher_discount_amt": {
+            "type": "number"
           },
           "created_by": {
             "type": "string"
@@ -50130,6 +50119,21 @@
               },
               "order_shipping": {
                 "type": "string"
+              },
+              "vouchercode": {
+                "type": "string"
+              },
+              "coin_earned": {
+                "type": "number"
+              },
+              "coin_used": {
+                "type": "number"
+              },
+              "voucher_discount_amt": {
+                "type": "number"
+              },
+              "is_express_delivery": {
+                "type": "boolean"
               },
               "created_by": {
                 "type": "string"
@@ -50533,6 +50537,18 @@
                 "product_variant": {
                   "type": "string"
                 },
+                "coin_earned": {
+                  "type": "number"
+                },
+                "coin_used": {
+                  "type": "number"
+                },
+                "voucher_applied": {
+                  "type": "string"
+                },
+                "voucher_discount_amt": {
+                  "type": "number"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -50642,6 +50658,21 @@
                 "type": "string"
               }
             }
+          },
+          "vouchercode": {
+            "type": "string"
+          },
+          "coin_earned": {
+            "type": "number"
+          },
+          "coin_used": {
+            "type": "number"
+          },
+          "voucher_discount_amt": {
+            "type": "number"
+          },
+          "is_express_delivery": {
+            "type": "boolean"
           },
           "created_by": {
             "required": [
@@ -50776,6 +50807,21 @@
           },
           "order_shipping": {
             "type": "string"
+          },
+          "vouchercode": {
+            "type": "string"
+          },
+          "coin_earned": {
+            "type": "number"
+          },
+          "coin_used": {
+            "type": "number"
+          },
+          "voucher_discount_amt": {
+            "type": "number"
+          },
+          "is_express_delivery": {
+            "type": "boolean"
           },
           "created_by": {
             "type": "string"
@@ -53878,6 +53924,18 @@
                 "product_variant": {
                   "type": "string"
                 },
+                "coin_earned": {
+                  "type": "number"
+                },
+                "coin_used": {
+                  "type": "number"
+                },
+                "voucher_applied": {
+                  "type": "string"
+                },
+                "voucher_discount_amt": {
+                  "type": "number"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -54564,6 +54622,18 @@
                 },
                 "product_variant": {
                   "type": "string"
+                },
+                "coin_earned": {
+                  "type": "number"
+                },
+                "coin_used": {
+                  "type": "number"
+                },
+                "voucher_applied": {
+                  "type": "string"
+                },
+                "voucher_discount_amt": {
+                  "type": "number"
                 },
                 "created_by": {
                   "type": "string"
@@ -61159,6 +61229,21 @@
                 },
                 "order_shipping": {
                   "type": "string"
+                },
+                "vouchercode": {
+                  "type": "string"
+                },
+                "coin_earned": {
+                  "type": "number"
+                },
+                "coin_used": {
+                  "type": "number"
+                },
+                "voucher_discount_amt": {
+                  "type": "number"
+                },
+                "is_express_delivery": {
+                  "type": "boolean"
                 },
                 "created_by": {
                   "type": "string"

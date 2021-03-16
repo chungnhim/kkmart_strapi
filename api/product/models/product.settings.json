@@ -109,8 +109,8 @@
       "dominant": true
     },
     "order_products": {
-      "collection": "order-product",
-      "via": "product"
+      "via": "product",
+      "collection": "order-product"
     },
     "coin_earn": {
       "type": "float"

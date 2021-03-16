@@ -791,6 +791,18 @@
                 "product_variant": {
                   "type": "string"
                 },
+                "coin_earned": {
+                  "type": "number"
+                },
+                "coin_used": {
+                  "type": "number"
+                },
+                "voucher_applied": {
+                  "type": "string"
+                },
+                "voucher_discount_amt": {
+                  "type": "number"
+                },
                 "created_by": {
                   "type": "string"
                 },

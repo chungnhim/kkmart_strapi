@@ -186,8 +186,7 @@ module.exports = {
         //             "checkout": true,
         //             "qtty": 2
         //         }
-        //     ],
-        //     "use_coins": true,
+        //     ],        
         //     "vouchercode": "YTGTUI"
         // }
 
@@ -264,7 +263,7 @@ module.exports = {
                 return;
             }
 
-            if (params.use_coins && element.checkout && product.can_use_coin == true) {
+            if (element.checkout && product.can_use_coin == true) {
                 if (!_.isNil(product.coin_use) && product.coin_use != 0) {
                     kkoin += product.coin_use * element.qtty;
                 }

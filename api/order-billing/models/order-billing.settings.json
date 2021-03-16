@@ -28,8 +28,8 @@
       "type": "datetime"
     },
     "order": {
-      "model": "order",
-      "via": "order_billing"
+      "via": "order_billing",
+      "model": "order"
     },
     "country": {
       "model": "country",

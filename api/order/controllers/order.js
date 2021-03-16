@@ -42,7 +42,7 @@ const getByOrdersUserId = async (pageIndex, pageSize, userId) => {
     };
 }
 
-const processCheckout = async (userId, products, currency, orderVia, shipping, billing) => {
+const processCheckout = async (userId, products, is_expressmart, user_address_id, order_via, vouchercode,is_use_coin, shipping_note) => {
     // [
     //     {
     //         "product_id": 1,
@@ -59,6 +59,8 @@ const processCheckout = async (userId, products, currency, orderVia, shipping, b
     let totalAmount = 0;
     let discountAmount = 0;
     let orderProductEntities = [];
+    let kcoin_used = 0;
+    let kcoin_earned = 0;
 
     for (let index = 0; index < products.length; index++) {
         const cartItem = products[index];
@@ -80,22 +82,50 @@ const processCheckout = async (userId, products, currency, orderVia, shipping, b
         }
 
         totalAmount += variant.selling_price * cartItem.qtty;
+        let coin_can_use = 0;
+        // calculate kcoin used if is_use_coin = true
+        if(is_use_coin){
+            
+            if((variant.can_use_coin===true) && (variant.coin_can_use > 0 ))
+            {
+                coin_can_use = variant.coin_can_use;
+            }
+            else{
+                if (!_.isNil(product.can_use_coin) && product.can_use_coin == true) {
+                coin_can_use = product.coin_can_use;
+                }
+            }
 
+            kcoin_used += coin_can_use;
+        }
+        let kcoin_each_earn = 0;
+        // calculate kcoin earn
+        if(variant.coin_earn > 0)
+        {
+            kcoin_each_earn = variant.coin_earn;
+        }
+        else{
+            kcoin_each_earn = product.coin_earn|0;
+        }
+         kcoin_earned += kcoin_each_earn;
+        
         orderProductEntities.push({
             product: product.id,
             product_variant: variant.id,
             qtty: cartItem.qtty,
-            origin_price: 0,
+            origin_price: product.price,
             selling_price: variant.selling_price,
             currency: currency,
             discount_amount: 0,
-            note: null
+            note: null,
+            coin_earned: kcoin_each_earn,
+            coin_used: coin_can_use
         });
     }
 
     let orderEntity = {
         order_code: generateOrderCode(5),
-        order_via: orderVia,
+        order_via: order_via,
         order_status: 1,
         payment_status: 1,
         shipping_status: 1,
@@ -103,7 +133,11 @@ const processCheckout = async (userId, products, currency, orderVia, shipping, b
         currency: currency,
         discount_amount: discountAmount,
         order_note: "",
-        user: userId
+        user: userId,
+        coin_earned: kcoin_earned,
+        coin_used: kcoin_used,
+        vouchercode: vouchercode,
+        is_express_delivery: is_expressmart
     };
 
     var order = await strapi.query("order").create(orderEntity);
@@ -121,15 +155,19 @@ const processCheckout = async (userId, products, currency, orderVia, shipping, b
         await strapi.query("order-product").create(product);
     }
 
+    // get Shipping Info
+    var userAddressInf = await strapi.query("user-address").findOne({
+        id: user_address_id
+    });
     // Add shipping information
     var shipping = {
         order: order.id,
-        full_name: shipping.full_name,
-        phone_number: shipping.phone_number,
-        province: shipping.province_id,
-        district: shipping.district_id,
-        address: shipping.address,
-        note: shipping.note,
+        full_name: userAddressInf.full_name,
+        phone_number: userAddressInf.phone_number,
+        province: userAddressInf.state,
+        district: userAddressInf.city,
+        address: userAddressInf.address1,
+        note: shipping_note,
         status: 1,
         deliver_date: null,
         actual_deliver_date: null,
@@ -140,6 +178,7 @@ const processCheckout = async (userId, products, currency, orderVia, shipping, b
     await strapi.query("order-shipping").create(shipping);
 
     // Add billing address
+    /*
     var billingAddress = {
         order: order.id,
         full_name: billing.full_name,
@@ -153,6 +192,7 @@ const processCheckout = async (userId, products, currency, orderVia, shipping, b
     };
 
     await strapi.query("order-billing").create(billingAddress);
+    */
 
     return {
         success: true,
@@ -167,26 +207,13 @@ const processCheckout = async (userId, products, currency, orderVia, shipping, b
 module.exports = {
     checkOut: async (ctx) => {
         // {
-        //     "billing": {
-        //         "address": "",
-        //         "district_id": "",
-        //         "full_name": "",
-        //         "note": "",
-        //         "phone_number": "",
-        //         "province_id": ""
-        //     },
-        //     "cart_items_id": [],
-        //     "currency": "MYR",
+        //     "is_expressmart": false,
+        //     "user_address_id": "",
+        //     "shipping_note": "",
+        //     "cart_items_id": [],        
         //     "order_via": "Web",
-        //     "payment_method": "",
-        //     "shipping": {
-        //         "address": "HN",
-        //         "district_id": "",
-        //         "full_name": "Test",
-        //         "note": "TEST",
-        //         "phone_number": "Test 1111",
-        //         "province_id": ""
-        //     }
+        //     "vouchercode": "",
+        //     "is_use_coin": true
         // }
 
         const params = _.assign({}, ctx.request.body, ctx.params);
@@ -257,10 +284,12 @@ module.exports = {
 
         var createOrderRes = await processCheckout(userId,
             products,
-            params.currency,
+            params.is_expressmart,
+            params.user_address_id,
             params.order_via,
-            params.shipping,
-            params.billing
+            params.vouchercode,
+            params.is_use_coin,
+            params.shipping_note
         );
 
         if (createOrderRes.success) {

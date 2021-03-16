@@ -49,8 +49,8 @@
       "via": "order_shippings"
     },
     "order": {
-      "model": "order",
-      "via": "order_shipping"
+      "via": "order_shipping",
+      "model": "order"
     }
   }
 }

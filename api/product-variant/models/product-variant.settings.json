@@ -37,8 +37,8 @@
       "via": "product_variant"
     },
     "order_products": {
-      "collection": "order-product",
-      "via": "product_variant"
+      "via": "product_variant",
+      "collection": "order-product"
     },
     "coin_earn": {
       "type": "integer"

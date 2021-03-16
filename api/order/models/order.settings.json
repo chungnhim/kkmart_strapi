@@ -42,16 +42,31 @@
       "via": "orders"
     },
     "order_products": {
-      "via": "order",
-      "collection": "order-product"
+      "collection": "order-product",
+      "via": "order"
     },
     "order_billing": {
-      "via": "order",
-      "model": "order-billing"
+      "model": "order-billing",
+      "via": "order"
     },
     "order_shipping": {
-      "via": "order",
-      "model": "order-shipping"
+      "model": "order-shipping",
+      "via": "order"
+    },
+    "vouchercode": {
+      "type": "string"
+    },
+    "coin_earned": {
+      "type": "decimal"
+    },
+    "coin_used": {
+      "type": "decimal"
+    },
+    "voucher_discount_amt": {
+      "type": "decimal"
+    },
+    "is_express_delivery": {
+      "type": "boolean"
     }
   }
 }
