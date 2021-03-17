@@ -1,0 +1,53 @@
+{
+  "kind": "collectionType",
+  "collectionName": "order_checkouts",
+  "info": {
+    "name": "OrderCheckout"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "is_expressmart": {
+      "type": "boolean"
+    },
+    "shipping_prodiver_code": {
+      "type": "string"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "shopping_cart": {
+      "model": "shopping-cart"
+    },
+    "currency": {
+      "type": "string"
+    },
+    "order_via": {
+      "type": "string"
+    },
+    "vouchercode": {
+      "type": "string"
+    },
+    "is_use_coin": {
+      "type": "boolean"
+    },
+    "coin_earned": {
+      "type": "decimal"
+    },
+    "coin_used": {
+      "type": "decimal"
+    },
+    "discount_amount": {
+      "type": "decimal"
+    },
+    "total_amount": {
+      "type": "decimal"
+    },
+    "checkoutstatus": {
+      "type": "integer"
+    }
+  }
+}
