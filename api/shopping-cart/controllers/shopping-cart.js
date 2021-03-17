@@ -238,10 +238,18 @@ module.exports = {
         }
 
         let kkoin = 0;
+        let totalamount = 0;
         for (let index = 0; index < params.cart_items.length; index++) {
-            const element = params.cart_items[index];
+            const element = params.cart_items[index];            
             var cartItem = shoppingCart.shopping_cart_products.find(s => s.id == element.cart_item_id);
-
+            if (_.isNil(cartItem)) {
+                ctx.send({
+                    success: false,
+                    message: "Cart item does not exists"
+                });
+    
+                return;
+            }
             let product = await strapi.services.product.getProductById(cartItem.product);
             if (_.isNil(product)) {
                 ctx.send({
@@ -271,7 +279,9 @@ module.exports = {
                     kkoin += variant.coin_use * element.qtty;
                 }
             }
-
+            let price = variant.selling_price*1;
+            totalamount += price*element.qtty;
+            
             var existsProduct = shoppingCart.shopping_cart_products.find(s => s.product == cartItem.product && s.product_variant == cartItem.product_variant);
             if (_.isNil(existsProduct)) {
                 // Case add new item to cart            
@@ -307,7 +317,8 @@ module.exports = {
             cart_id: shoppingCart.id,
             kkoin_can_use: kkoin,
             shipping_fee: 0,
-            discount_amount: 0
+            discount_amount: 0,
+            totalamount: totalamount
         });
     },
     getCartById: async (ctx) => {

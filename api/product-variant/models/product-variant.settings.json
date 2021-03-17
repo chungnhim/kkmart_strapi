@@ -33,8 +33,8 @@
       "via": "product_variants"
     },
     "shopping_cart_products": {
-      "collection": "shopping-cart-product",
-      "via": "product_variant"
+      "via": "product_variant",
+      "collection": "shopping-cart-product"
     },
     "order_products": {
       "via": "product_variant",

@@ -10,8 +10,8 @@
   },
   "attributes": {
     "shopping_cart_products": {
-      "collection": "shopping-cart-product",
-      "via": "shopping_cart"
+      "via": "shopping_cart",
+      "collection": "shopping-cart-product"
     },
     "user": {
       "plugin": "users-permissions",

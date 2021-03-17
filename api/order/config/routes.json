@@ -79,6 +79,14 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/orders/checkout",
+      "handler": "order.getCheckout",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }

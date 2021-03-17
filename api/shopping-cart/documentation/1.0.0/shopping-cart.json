@@ -896,6 +896,9 @@
                 "product_variant": {
                   "type": "string"
                 },
+                "checkoutid": {
+                  "type": "integer"
+                },
                 "created_by": {
                   "type": "string"
                 },

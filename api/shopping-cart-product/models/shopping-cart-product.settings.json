@@ -10,12 +10,12 @@
   },
   "attributes": {
     "shopping_cart": {
-      "via": "shopping_cart_products",
-      "model": "shopping-cart"
+      "model": "shopping-cart",
+      "via": "shopping_cart_products"
     },
     "product": {
-      "via": "shopping_cart_products",
-      "model": "product"
+      "model": "product",
+      "via": "shopping_cart_products"
     },
     "qtty": {
       "type": "integer"
@@ -27,8 +27,11 @@
       "type": "decimal"
     },
     "product_variant": {
-      "via": "shopping_cart_products",
-      "model": "product-variant"
+      "model": "product-variant",
+      "via": "shopping_cart_products"
+    },
+    "checkoutid": {
+      "type": "integer"
     }
   }
 }
