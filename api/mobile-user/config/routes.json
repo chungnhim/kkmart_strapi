@@ -57,6 +57,14 @@
         },
         {
             "method": "POST",
+            "path": "/mobile-user/login-admin",
+            "handler": "mobile-user.loginAdmin",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
             "path": "/mobile-user/forgot-password",
             "handler": "mobile-user.forgotPassword",
             "config": {

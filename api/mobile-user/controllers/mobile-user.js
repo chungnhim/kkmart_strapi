@@ -790,6 +790,234 @@ module.exports = {
             });
         }
     },
+    async loginAdmin(ctx) {
+        //input: identifier(phone, email, username)
+        //input: password
+        //input: devicename;  optional
+        //input: serial;      optional
+        //input: devicerid;   optional
+        //input: devicereg(generate from firebase)
+        const provider = ctx.params.provider || 'local';
+        const params = ctx.request.body;
+        console.log(params);
+        const store = await strapi.store({
+            environment: '',
+            type: 'plugin',
+            name: 'users-permissions',
+        });
+
+        if (provider === 'local') {
+            if (!_.get(await store.get({ key: 'grant' }), 'email.enabled')) {
+                return ctx.badRequest(null, 'This provider is disabled.');
+            }
+
+            // The identifier is required.
+            if (!params.identifier) {
+                return ctx.badRequest(
+                    null,
+                    formatError({
+                        id: 'mobile_user.login.error.email.provide',
+                        message: 'Please provide your username or your e-mail.',
+                    })
+                );
+            }
+
+            // The password is required.
+            if (!params.password) {
+                return ctx.badRequest(
+                    null,
+                    formatError({
+                        id: 'mobile_user.login.error.password.provide',
+                        message: 'Please provide your password.',
+                    })
+                );
+            }
+
+            if (!params.devicereg) {
+                return ctx.badRequest(
+                    null,
+                    formatError({
+                        id: 'mobile_user.login.error.devicereg.provide',
+                        message: 'Please provide devicereg from firebase.',
+                    })
+                );
+            }
+
+            const query = { provider };
+            const querybyphone = { provider };
+            querybyphone.phone = params.identifier.replace("+", "");
+            // Check if the provided identifier is an email or not.
+            const isEmail = emailRegExp.test(params.identifier);
+
+            // Set the identifier to the appropriate query field.
+            if (isEmail) {
+                query.email = params.identifier.toLowerCase();
+            } else {
+                query.username = params.identifier;
+            }
+
+            // Check if the user exists.
+            var user = await strapi.query('user', 'users-permissions').findOne(query);
+            var userbyphone = await strapi.query('user', 'users-permissions').findOne(querybyphone);
+            if (user == null && userbyphone != null) {
+                user = userbyphone;
+            } else {
+                if (!user) {
+                    return ctx.badRequest(
+                        null,
+                        formatError({
+                            id: 'mobile_user.login.error.invalid',
+                            message: 'Identifier or password invalid.',
+                        })
+                    );
+                }
+            }
+
+            console.log(user.role.id);
+
+            if (user.role.id !== 1) {
+                return ctx.badRequest(
+                    null,
+                    formatError({
+                        id: 'mobile_user.login.error.invalid',
+                        message: 'You have not administrator permission.',
+                    })
+                );
+            }
+
+            if (
+                _.get(await store.get({ key: 'advanced' }), 'email_confirmation') &&
+                user.confirmed !== true
+            ) {
+                return ctx.badRequest(
+                    null,
+                    formatError({
+                        id: 'mobile_user.login.error.confirmed',
+                        message: 'Your account email is not confirmed',
+                    })
+                );
+            }
+
+            if (user.blocked === true) {
+                return ctx.badRequest(
+                    null,
+                    formatError({
+                        id: 'mobile_user.login.error.blocked',
+                        message: 'Your account has been blocked by an administrator',
+                    })
+                );
+            }
+
+            // The user never authenticated with the `local` provider.
+            if (!user.password) {
+                return ctx.badRequest(
+                    null,
+                    formatError({
+                        id: 'mobile_user.login.error.password.local',
+                        message: 'This user never set a local password, please login with the provider used during account creation.',
+                    })
+                );
+            }
+
+            const validPassword = strapi.plugins['users-permissions'].services.user.validatePassword(
+                params.password,
+                user.password
+            );
+
+            if (!validPassword) {
+                return ctx.badRequest(
+                    null,
+                    formatError({
+                        id: 'mobile_user.login.error.invalid',
+                        message: 'Identifier or password invalid.',
+                    })
+                );
+            } else {
+                //add field to Deviceinfo
+                var checkDeviceReg = params.devicereg;
+                if (checkDeviceReg != null && checkDeviceReg != '') {
+                    //check and update deviceinfo
+                    var checkDeviceinfo = await strapi
+                        .query('deviceinfo')
+                        .findOne({ devicereg: params.devicereg });
+                    if (checkDeviceinfo == null) {
+                        const newDeviceinfo = await strapi.query('deviceinfo').create({
+                            devicename: params.devicename,
+                            serial: params.serial,
+                            devicerid: params.devicerid,
+                            devicereg: params.devicereg,
+                            imei: params.imei,
+                            platform: params.platform,
+                            user: user
+                        });
+                    } else {
+                        if (checkDeviceinfo.devicename !== params.devicename) {
+                            checkDeviceinfo.devicename = params.devicename;
+                        }
+                        if (checkDeviceinfo.serial !== params.serial) {
+                            checkDeviceinfo.serial = params.serial;
+                        }
+                        if (checkDeviceinfo.devicerid !== params.devicerid) {
+                            checkDeviceinfo.devicerid = params.devicerid;
+                        }
+                        if (checkDeviceinfo.imei !== params.imei) {
+                            checkDeviceinfo.imei = params.imei;
+                        }
+                        const updateDeviceinfo = await strapi.query('deviceinfo').update({ id: checkDeviceinfo.id }, {
+                            devicename: checkDeviceinfo.devicename,
+                            serial: checkDeviceinfo.serial,
+                            devicerid: checkDeviceinfo.devicerid,
+                            imei: checkDeviceinfo.imei,
+                            platform: params.platform,
+                            user: user
+                        });
+                    }
+                }
+                ctx.send({
+                    jwt: strapi.plugins['users-permissions'].services.jwt.issue({
+                        id: user.id,
+                    }),
+                    user: removeAuthorFields(sanitizeEntity(user.toJSON ? user.toJSON() : user, {
+                        model: strapi.query('user', 'users-permissions').model,
+                    })),
+                });
+            }
+        } else {
+            if (!_.get(await store.get({ key: 'grant' }), [provider, 'enabled'])) {
+                return ctx.badRequest(
+                    null,
+                    formatError({
+                        id: 'provider.disabled',
+                        message: 'This provider is disabled.',
+                    })
+                );
+            }
+
+            // Connect the user with the third-party provider.
+            let user, error;
+            try {
+                [user, error] = await strapi.plugins['users-permissions'].services.providers.connect(
+                    provider,
+                    ctx.query
+                );
+            } catch ([user, error]) {
+                return ctx.badRequest(null, error === 'array' ? error[0] : error);
+            }
+
+            if (!user) {
+                return ctx.badRequest(null, error === 'array' ? error[0] : error);
+            }
+
+            ctx.send({
+                jwt: strapi.plugins['users-permissions'].services.jwt.issue({
+                    id: user.id,
+                }),
+                user: removeAuthorFields(sanitizeEntity(user.toJSON ? user.toJSON() : user, {
+                    model: strapi.query('user', 'users-permissions').model,
+                })),
+            });
+        }
+    },
     //================>Forgot password
     async forgotPassword(ctx) {
         //input: email
