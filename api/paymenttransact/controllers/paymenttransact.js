@@ -11,6 +11,21 @@ const _ = require('lodash');
  */
 
 module.exports = {
+    getPaymentType: async ctx =>{
+
+        let pmType = await strapi.query("paymenttype").find({
+            isactive: true
+        });
+        let paymentType = await strapi.services.common.normalizationResponse(pmType, ["created_at","updated_at","isactive"]);
+        return Object.values(paymentType);
+    },
+    getPaymentMethods: async ctx =>{
+        let pmType = await strapi.query("paymentmethods").find({
+            isactive: true
+        });
+        let paymentType = await strapi.services.common.normalizationResponse(pmType, ["created_at","updated_at","isactive","gwcode","merchantcode","countrycode","paymenttypecode","wallet_provider_id"]);
+        return Object.values(paymentType);
+    },
     createpayment: async ctx => {
 
         let amt_currency = ctx.request.body.currency;

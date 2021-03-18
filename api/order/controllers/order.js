@@ -177,6 +177,17 @@ const processCreateOrder = async (userId, products, is_expressmart, user_address
     let kcoin_used = 0;
     let kcoin_earned = 0;
     let shipping_fee = 0;
+    // get Shipping Info
+    let userAddressInf = await strapi.query("user-address").findOne({
+        id: user_address_id
+    });
+
+    if (_.isNil(userAddressInf)) {
+        return {
+            success: false,
+            message: "Please choose the shipping address"
+        };
+    }
 
     for (let index = 0; index < products.length; index++) {
         const cartItem = products[index];
@@ -271,10 +282,7 @@ const processCreateOrder = async (userId, products, is_expressmart, user_address
         await strapi.query("order-product").create(product);
     }
 
-    // get Shipping Info
-    var userAddressInf = await strapi.query("user-address").findOne({
-        id: user_address_id
-    });
+    
     // Add shipping information
     var shipping = {
         order: order.id,
@@ -427,13 +435,11 @@ module.exports = {
         ctx.send(createOrderRes);
     },
     createOrder: async (ctx) => {
-       // {
-        //     "is_expressmart": false,
+       // {        
         //     "user_address_id": "",
         //     "shipping_note": "",
-        //     "cart_items_id": [],
-        //     "currency": "MYR",        
-        //     "order_via": "Web",
+        //     "checkout_id": 4, 
+        //     "paymentmethod_id": 4,                             
         //     "vouchercode": "",
         //     "is_use_coin": true
         // }
@@ -450,15 +456,20 @@ module.exports = {
             );
         }
 
-        if (_.isNil(params.cart_items_id) || params.cart_items_id.length == 0) {
+        // get order checkedout          
+        let ordcheckout = await strapi.query("order-checkout").findOne({
+            id: params.checkout_id,            
+            checkoutstatus: strapi.config.constants.shopping_cart_status.new
+        });
+
+        if (_.isNil(ordcheckout) ) {
             ctx.send({
                 success: false,
                 message: "No product for checkout"
             });
-
             return;
         }
-
+        // get Shoping cartitem
         var shoppingCart = await strapi.query("shopping-cart").findOne({
             user: userId,
             status: strapi.config.constants.shopping_cart_status.new,
@@ -483,7 +494,8 @@ module.exports = {
             return;
         }
 
-        let checkOutProducts = shoppingCart.shopping_cart_products.filter(s => params.cart_items_id.includes(s.id));
+        // get checkout products
+        let checkOutProducts = shoppingCart.shopping_cart_products.filter(s => s.checkoutid== params.checkout_id);
         if (_.isNil(checkOutProducts) || checkOutProducts.length == 0) {
             ctx.send({
                 success: false,
@@ -492,7 +504,7 @@ module.exports = {
 
             return;
         }
-
+        
         var products = [];
 
         for (let index = 0; index < checkOutProducts.length; index++) {
@@ -506,13 +518,13 @@ module.exports = {
 
         var createOrderRes = await processCreateOrder(userId,
             products,
-            params.is_expressmart,
+            ordcheckout.is_expressmart,
             params.user_address_id,
-            params.order_via,
+            ordcheckout.order_via,
             params.vouchercode,
             params.is_use_coin,
             params.shipping_note,
-            params.currency
+            ordcheckout.currency
         );
 
         if (createOrderRes.success) {

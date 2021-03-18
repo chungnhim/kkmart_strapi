@@ -29,6 +29,12 @@
     },
     "currency": {
       "type": "string"
+    },
+    "paymenttypecode": {
+      "type": "string"
+    },
+    "wallet_provider_id": {
+      "type": "string"
     }
   }
 }
