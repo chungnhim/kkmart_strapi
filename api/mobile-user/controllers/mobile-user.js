@@ -581,7 +581,7 @@ module.exports = {
         //input: devicereg(generate from firebase)
         const provider = ctx.params.provider || 'local';
         const params = ctx.request.body;
-        console.log(params);
+
         const store = await strapi.store({
             environment: '',
             type: 'plugin',
@@ -799,7 +799,7 @@ module.exports = {
         //input: devicereg(generate from firebase)
         const provider = ctx.params.provider || 'local';
         const params = ctx.request.body;
-        console.log(params);
+
         const store = await strapi.store({
             environment: '',
             type: 'plugin',
@@ -873,7 +873,7 @@ module.exports = {
                 }
             }
 
-            console.log(user.role.id);
+            //Admin Role
 
             if (user.role.id !== 1) {
                 return ctx.badRequest(
@@ -1564,7 +1564,7 @@ module.exports = {
                     _limit: 1
                 };
                 let smshistoriesData = await strapi.services.smshistory.find(dataquery);
-                console.log(smshistoriesData);
+
                 if (smshistoriesData != null && smshistoriesData.length > 0) {
                     if (smshistoriesData[0].code === code) {
                         //Check success and expire
