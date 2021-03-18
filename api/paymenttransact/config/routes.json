@@ -55,6 +55,14 @@
       "config": {
           "policies": []
       }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment/paymenttype",
+      "handler": "paymenttransact.getPaymentType",
+      "config": {
+          "policies": []
+      }
     }
   ]
 }
