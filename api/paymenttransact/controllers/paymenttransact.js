@@ -20,6 +20,10 @@ module.exports = {
         return Object.values(paymentType);
     },
     getPaymentMethods: async ctx =>{
+        const params = _.assign({}, ctx.request.params, ctx.params);
+
+        var shoppingCartId = params.paymenttypecode;
+        
         let pmType = await strapi.query("paymentmethods").find({
             isactive: true
         });

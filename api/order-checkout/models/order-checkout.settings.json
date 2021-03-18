@@ -48,6 +48,10 @@
     },
     "checkoutstatus": {
       "type": "integer"
+    },
+    "voucher_discount_amt": {
+      "type": "decimal",
+      "default": 0
     }
   }
 }

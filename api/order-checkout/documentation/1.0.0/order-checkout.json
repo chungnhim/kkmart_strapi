@@ -779,6 +779,10 @@
           "checkoutstatus": {
             "type": "integer"
           },
+          "voucher_discount_amt": {
+            "type": "number",
+            "default": 0
+          },
           "created_by": {
             "required": [
               "id",
@@ -909,6 +913,10 @@
           },
           "checkoutstatus": {
             "type": "integer"
+          },
+          "voucher_discount_amt": {
+            "type": "number",
+            "default": 0
           },
           "created_by": {
             "type": "string"

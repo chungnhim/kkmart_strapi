@@ -61,6 +61,7 @@ const processCheckout = async (userId, products, is_expressmart, shipping_prodiv
     
     let kcoin_used = 0;
     let kcoin_earned = 0;    
+    let voucher_discount_amt = 0;
 
     for (let index = 0; index < products.length; index++) {
         const cartItem = products[index];
@@ -138,7 +139,8 @@ const processCheckout = async (userId, products, is_expressmart, shipping_prodiv
         is_expressmart: is_expressmart,
         shipping_prodiver_code: shipping_prodiver_code,
         shopping_cart: shopping_cart_id,
-        is_use_coin: is_use_coin
+        is_use_coin: is_use_coin,
+        voucher_discount_amt: voucher_discount_amt
     };
 
     var order = await strapi.query("order-checkout").create(ckoutEntity);
@@ -579,7 +581,17 @@ module.exports = {
         }
 
         // get shoppingcart item checked
+        let cartItemsCk = shoppingCart.shopping_cart_products.filter(s => s.checkoutid== ordcheckout.id);
+        if (_.isNil(cartItemsCk) || cartItemsCk.length == 0) {
+            ctx.send({
+                success: false,
+                message: "The checkout product does not have in shopping cart"
+            });
 
+            return;
+        }
+
+        /*
         let cartItems = await strapi.query("shopping-cart-product").find({           
             shopping_cart: shoppingCart.id,                     
             _sort: "id:desc"
@@ -601,7 +613,7 @@ module.exports = {
             });
             return;
         }
-       
+       */
         let cartModel = await strapi.services.common.normalizationResponse(cartItemsCk, ["user"]);
         ctx.send({
             checkout_id: ordcheckout.id,
@@ -610,6 +622,8 @@ module.exports = {
             is_use_coin: ordcheckout.is_use_coin,
             kkoin_can_use: ordcheckout.coin_used,
             shipping_fee: 0,
+            totalamount: ordcheckout.total_amount,
+            voucher_discount_amt: ordcheckout.voucher_discount_amt,
             cart: Object.values(cartModel)
         });
 
