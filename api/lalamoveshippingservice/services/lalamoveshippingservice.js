@@ -88,14 +88,15 @@ const countiesCode = [
 const generateSignature = async (rawBody, method, path) => {
 	try {
 		const LALAMOVE_API = process.env.LALAMOVE_API || 'https://sandbox-rest.lalamove.com';
-		const secretKey = process.env.LALAMOVE_SECRET_KEY || 'MCwCAQACBQDDym2lAgMBAAECBDHB';
-		const apiKey = process.env.LALAMOVE_API_KEY || 'apiKey';
-		const time = new Date().getTime().toString();
+		const apiKey = process.env.LALAMOVE_API_KEY || 'd28388cb4ccf46d2b58d22f711c8c664';
+		const secretKey = process.env.LALAMOVE_SECRET_KEY || 'MCwCAQACBQC35+AtAgMBAAECBG/mKcECAwDkqQIDAM3lAgMAtykCAgV5AgJV';
+		const time = new Date().getTime().toString();;
 
 		const body = JSON.stringify(rawBody);
 		const rawSignature = `${time}\r\n${method}\r\n${path}\r\n\r\n${body}`;
-		const signature = CryptoJS.HmacSHA256(rawSignature, secretKey).toString();
+		// `${time}${method}${path}${body}`;
 
+		const signature = CryptoJS.HmacSHA256(rawSignature, secretKey).toString();
 		return {
 			success: true,
 			signature,
@@ -114,8 +115,10 @@ const generateSignature = async (rawBody, method, path) => {
 const getHttpHeader = (apiKey, timestamp, signature) => {
 	const TOKEN = `${apiKey}:${timestamp}:${signature}`
 
+	console.log(`TOKEN`, TOKEN);
+
 	return {
-		'Authorization': `hmac ${TOKEN}`,
+		'Authorization': `${TOKEN}`,
 		'X-LLM-Country': 'MY',
 		'X-Request-ID': uuid()
 	};
@@ -151,11 +154,15 @@ module.exports = {
 		// 		"phone_number": "",
 		// 		"remarks": ""
 		// 	},
-		// 	"service_type": "",
-		// 	"toStop": 1
+		// 	"service_type": ""
 		// }
 
-		let serviceType = malaysiaServiceTypes.find(s => s.key == body.serviceType);
+		let serviceTypeKey = "MOTORCYCLE";
+		if (!_.isNil(body.service_type)) {
+			serviceTypeKey = body.service_type.toUpperCase();
+		}
+
+		let serviceType = malaysiaServiceTypes.find(s => s.key.toUpperCase() == serviceTypeKey);
 		if (_.isNil(serviceType)) {
 			return {
 				success: false,
@@ -163,56 +170,72 @@ module.exports = {
 			}
 		}
 
-		let pickUpCountry = countiesCode.find(s => s.code == pickup_location.country_code).locale_keys;
-		let deliverCountry = countiesCode.find(s => s.code == deliver_location.country_code).locale_keys;
 		var req = {
 			"scheduleAt": body.scheduleAt, // in UTC timezone
-			"serviceType": body.serviceType,
+			"serviceType": serviceTypeKey,
 			"stops": [
 				{
 					"location": {
-						"lat": body.pickUpLocation.lat,
-						"lng": body.pickUpLocation.lng
+						"lat": body.pickup_location.lat,
+						"lng": body.pickup_location.lng
 					},
-					"addresses": {
-						pickUpCountry: {
-							"displayString": body.pickUpLocation.address,
-							"country": pickup_location.country_code
-						}
-					}
+					"addresses": {}
 				},
 				{
 					"location": {
-						"lat": body.deliverLocation.lat,
-						"lng": body.deliverLocation.lng
+						"lat": body.deliver_location.lat,
+						"lng": body.deliver_location.lng
 					},
-					"addresses": {
-						deliverCountry: {
-							"displayString": body.deliverLocation.address,
-							"country": deliver_location.country_code
-						}
-					}
+					"addresses": {}
 				}
 			],
-			"deliveries": {
+			"deliveries": [{
 				"toStop": 1,
 				"toContact": {
 					"name": body.sender.name,
 					"phone": body.sender.phone_number
 				},
 				"remarks": body.sender.remarks
-			},
+			}],
 			"requesterContact": {
 				"name": body.receiver.name,
 				"phone": body.receiver.phone_number
 			},
-			"specialRequests": special_requests
+			"specialRequests": body.special_requests
 		}
+
+		var pickUpCountry = countiesCode.find(s => s.code == body.pickup_location.country_code);
+		if (_.isNil(pickUpCountry)) {
+			return {
+				success: false,
+				message: "pickup_location.country_code in valid"
+			};
+		}
+
+		req.stops[0].addresses[pickUpCountry.locale_keys] = {
+			"displayString": body.pickup_location.address,
+			"country": body.pickup_location.country_code
+		};
+
+		var deliverCountry = countiesCode.find(s => s.code == body.deliver_location.country_code);
+		if (_.isNil(deliverCountry)) {
+			return {
+				success: false,
+				message: "pickup_location.country_code in valid"
+			};
+		}
+
+		req.stops[1].addresses[deliverCountry.locale_keys] = {
+			"displayString": body.deliver_location.address,
+			"country": body.deliver_location.country_code
+		};
 
 		const path = "/v2/quotations";
 		const method = "POST";
 
-		var auth = await generateSignature(body, method, path);
+		console.log(`req`, JSON.stringify(req));
+
+		var auth = await generateSignature(req, method, path);
 		if (!auth.success) {
 			return {
 				success: false,
@@ -232,6 +255,8 @@ module.exports = {
 					data: response.data
 				}
 			}).catch(function (error) {
+				console.log(`error`, error.body);
+
 				let httpCode = error.response.status;
 				let message = "";
 				if (httpCode == 401) {

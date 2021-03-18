@@ -58,7 +58,7 @@
     },
     {
       "method": "POST",
-      "path": "/lalamove/get-quotations",
+      "path": "/shipping/estimate-price",
       "handler": "lalamoveShipping.getQuotations",
       "config": {
         "policies": []

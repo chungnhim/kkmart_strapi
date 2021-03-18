@@ -57,7 +57,7 @@
         "parameters": []
       }
     },
-    "/lalamove/get-quotations": {
+    "/shipping/estimate-price": {
       "post": {
         "deprecated": false,
         "description": "Create a new record",
