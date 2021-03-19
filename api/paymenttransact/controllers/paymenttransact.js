@@ -22,11 +22,12 @@ module.exports = {
     getPaymentMethods: async ctx =>{
         const params = _.assign({}, ctx.request.params, ctx.params);
 
-        var shoppingCartId = params.paymenttypecode;
+        var paymentTypeCode = params.paymenttypecode;
         
         let pmType = await strapi.query("paymentmethods").find({
-            isactive: true
-        });
+            "isactive": true,
+            "paymenttypecode":paymentTypeCode
+        });        
         let paymentType = await strapi.services.common.normalizationResponse(pmType, ["created_at","updated_at","isactive","gwcode","merchantcode","countrycode","paymenttypecode","wallet_provider_id"]);
         return Object.values(paymentType);
     },
