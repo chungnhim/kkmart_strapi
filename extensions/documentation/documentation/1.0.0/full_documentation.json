@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "03/19/2021 9:42:53 PM"
+    "x-generation-date": "03/19/2021 11:31:09 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -53422,16 +53422,13 @@
           "id": {
             "type": "string"
           },
-          "walletid": {
+          "methodid": {
             "type": "string"
           },
           "gwcode": {
             "type": "string"
           },
-          "walletname": {
-            "type": "string"
-          },
-          "walleticon": {
+          "methodname": {
             "type": "string"
           },
           "merchantcode": {
@@ -53448,6 +53445,77 @@
           },
           "wallet_provider_id": {
             "type": "string"
+          },
+          "isactive": {
+            "type": "boolean",
+            "default": true
+          },
+          "methodicon": {
+            "required": [
+              "id",
+              "name",
+              "hash",
+              "mime",
+              "size",
+              "url",
+              "provider"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "alternativeText": {
+                "type": "string"
+              },
+              "caption": {
+                "type": "string"
+              },
+              "width": {
+                "type": "integer"
+              },
+              "height": {
+                "type": "integer"
+              },
+              "formats": {
+                "type": "object"
+              },
+              "hash": {
+                "type": "string"
+              },
+              "ext": {
+                "type": "string"
+              },
+              "mime": {
+                "type": "string"
+              },
+              "size": {
+                "type": "number"
+              },
+              "url": {
+                "type": "string"
+              },
+              "previewUrl": {
+                "type": "string"
+              },
+              "provider": {
+                "type": "string"
+              },
+              "provider_metadata": {
+                "type": "object"
+              },
+              "related": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           },
           "created_by": {
             "required": [
@@ -53541,16 +53609,13 @@
       },
       "NewPaymentmethods": {
         "properties": {
-          "walletid": {
+          "methodid": {
             "type": "string"
           },
           "gwcode": {
             "type": "string"
           },
-          "walletname": {
-            "type": "string"
-          },
-          "walleticon": {
+          "methodname": {
             "type": "string"
           },
           "merchantcode": {
@@ -53567,6 +53632,10 @@
           },
           "wallet_provider_id": {
             "type": "string"
+          },
+          "isactive": {
+            "type": "boolean",
+            "default": true
           },
           "created_by": {
             "type": "string"

@@ -9,16 +9,13 @@
     "timestamps": true
   },
   "attributes": {
-    "walletid": {
+    "methodid": {
       "type": "string"
     },
     "gwcode": {
       "type": "string"
     },
-    "walletname": {
-      "type": "string"
-    },
-    "walleticon": {
+    "methodname": {
       "type": "string"
     },
     "merchantcode": {
@@ -35,6 +32,21 @@
     },
     "wallet_provider_id": {
       "type": "string"
+    },
+    "isactive": {
+      "type": "boolean",
+      "default": true
+    },
+    "methodicon": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
     }
   }
 }
