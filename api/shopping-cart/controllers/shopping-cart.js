@@ -241,7 +241,8 @@ module.exports = {
         let totalamount = 0;
         for (let index = 0; index < params.cart_items.length; index++) {
             const element = params.cart_items[index];            
-            var cartItem = shoppingCart.shopping_cart_products.find(s => s.id == element.cart_item_id);
+            var cartItem = shoppingCart.
+            shopping_cart_products.find(s => s.id == element.cart_item_id);
             if (_.isNil(cartItem)) {
                 ctx.send({
                     success: false,
@@ -279,9 +280,24 @@ module.exports = {
                     kkoin += variant.coin_use * element.qtty;
                 }
             }
-            let price = variant.selling_price*1;
-            totalamount += price*element.qtty;
-            
+            let sellingprice = 0;
+            //console.log(product);
+            //let sellingproduct = await strapi.services.promotionproduct.priceRecalculationOfProduct(product);
+            if(product.ishave_discount_flashsale){
+                sellingprice = product.flashsale_price
+            }
+            else if(product.ishave_discount_promotion){
+                sellingprice = product.promotion_price
+            }
+            else{
+                sellingprice = variant.selling_price
+            }
+
+            if(element.checkout)
+            {
+                totalamount+= sellingprice*element.qtty ;
+            }
+            totalamount = Math.round(totalamount * 100) / 100;
             var existsProduct = shoppingCart.shopping_cart_products.find(s => s.product == cartItem.product && s.product_variant == cartItem.product_variant);
             if (_.isNil(existsProduct)) {
                 // Case add new item to cart            

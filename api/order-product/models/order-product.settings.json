@@ -36,8 +36,8 @@
       "type": "richtext"
     },
     "product_variant": {
-      "model": "product-variant",
-      "via": "order_products"
+      "via": "order_products",
+      "model": "product-variant"
     },
     "coin_earned": {
       "type": "decimal"

@@ -16,10 +16,10 @@
       "type": "string"
     },
     "price": {
-      "type": "float"
+      "type": "decimal"
     },
     "selling_price": {
-      "type": "float"
+      "type": "decimal"
     },
     "name": {
       "type": "string"
@@ -33,12 +33,12 @@
       "via": "product_variants"
     },
     "shopping_cart_products": {
-      "via": "product_variant",
-      "collection": "shopping-cart-product"
+      "collection": "shopping-cart-product",
+      "via": "product_variant"
     },
     "order_products": {
-      "via": "product_variant",
-      "collection": "order-product"
+      "collection": "order-product",
+      "via": "product_variant"
     },
     "coin_earn": {
       "type": "integer"
