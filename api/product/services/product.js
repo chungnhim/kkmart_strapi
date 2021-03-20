@@ -63,5 +63,23 @@ module.exports = {
             }
         }
         return shoppingCart;
+    },
+    getProductOfShoppingCartOneCheckOut: async(shoppingCart,checkoutId) => {
+        let cartItem = [];
+        var shoppingCartData = shoppingCart.shopping_cart_products.filter(s => s.checkoutid== checkoutId);
+        if (shoppingCartData) {
+            for (let j = 0; j < shoppingCartData.length; j++) {
+                let shoppingCartDataItems = shoppingCartData[j];
+                if (shoppingCartDataItems) {
+                    if (shoppingCartDataItems.product != 'null') {
+                        let productId = shoppingCartDataItems.product;
+                        shoppingCartDataItems.product = await strapi.services.product.getProductById(productId);
+                    }
+                }
+                cartItem.push(shoppingCartDataItems);
+            }
+        }
+        return cartItem;
     }
+
 };
