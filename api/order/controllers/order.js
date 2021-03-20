@@ -578,10 +578,11 @@ module.exports = {
             });
 
             return;
-        }
-
+        }       
+        
+        let cartItemsCk = await strapi.services.product.getProductOfShoppingCartOneCheckOut(shoppingCart,ordcheckout.id);
         // get shoppingcart item checked
-        let cartItemsCk = shoppingCart.shopping_cart_products.filter(s => s.checkoutid== ordcheckout.id);
+        //let cartItemsCk = shoppingCart.shopping_cart_products.filter(s => s.checkoutid== ordcheckout.id);        
         if (_.isNil(cartItemsCk) || cartItemsCk.length == 0) {
             ctx.send({
                 success: false,
@@ -589,8 +590,7 @@ module.exports = {
             });
 
             return;
-        }
-
+        }        
         /*
         let cartItems = await strapi.query("shopping-cart-product").find({           
             shopping_cart: shoppingCart.id,                     
