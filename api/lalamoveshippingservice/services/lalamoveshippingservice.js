@@ -178,22 +178,7 @@ module.exports = {
 			"scheduleAt": body.scheduleAt, // in UTC timezone
 			"serviceType": serviceTypeKey,
 			"specialRequests": [],
-			"stops": [
-				// {
-				// 	"location": {
-				// 		// "lat": body.pickup_location.lat,
-				// 		// "lng": body.pickup_location.lng
-				// 	},
-				// 	"addresses": {}
-				// },
-				// {
-				// 	"location": {
-				// 		// "lat": body.deliver_location.lat,
-				// 		// "lng": body.deliver_location.lng
-				// 	},
-				// 	"addresses": {}
-				// }
-			],
+			"stops": [],
 			"requesterContact": {
 				"name": body.receiver.name,
 				"phone": body.receiver.phone_number
@@ -217,7 +202,7 @@ module.exports = {
 
 			// Optional depending on the providers
 			// fetch: customFetchImplementation,
-			apiKey: 'b_tw_a6m371Kris1qsOWLzhA2jerXM2A8BP8eNwiK4o', // for Mapquest, OpenCage, Google Premier, Here
+			apiKey: process.env.HERE_API_KEY || 'b_tw_a6m371Kris1qsOWLzhA2jerXM2A8BP8eNwiK4o', // for Mapquest, OpenCage, Google Premier, Here
 			formatter: null // 'gpx', 'string', ...
 		};
 
@@ -309,8 +294,6 @@ module.exports = {
 					data: response.data
 				}
 			}).catch(function (error) {
-				console.log(`error`, error);
-
 				let httpCode = error.response.status;
 				let message = "";
 				if (httpCode == 401) {

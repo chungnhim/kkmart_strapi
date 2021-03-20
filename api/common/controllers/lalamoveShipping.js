@@ -14,8 +14,6 @@ module.exports = {
   },
   async getQuotations(ctx) {
     const params = _.assign({}, ctx.request.body, ctx.params);
-    console.log(`params.body`, params);
-
     var res = await strapi.services.lalamoveshippingservice.getQuotations(
       params
     );

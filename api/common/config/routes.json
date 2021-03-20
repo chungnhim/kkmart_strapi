@@ -50,7 +50,7 @@
     },
     {
       "method": "GET",
-      "path": "/lalamove/get-configuration",
+      "path": "/shipping/get-configuration",
       "handler": "lalamoveShipping.getConfiguration",
       "config": {
         "policies": []

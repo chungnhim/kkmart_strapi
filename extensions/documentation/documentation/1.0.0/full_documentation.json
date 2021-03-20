@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "03/20/2021 11:31:14 PM"
+    "x-generation-date": "03/20/2021 11:39:48 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -2345,7 +2345,7 @@
         ]
       }
     },
-    "/lalamove/get-configuration": {
+    "/shipping/get-configuration": {
       "get": {
         "deprecated": false,
         "description": "",

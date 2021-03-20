@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/lalamove/get-configuration": {
+    "/shipping/get-configuration": {
       "get": {
         "deprecated": false,
         "description": "",
