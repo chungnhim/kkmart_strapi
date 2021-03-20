@@ -19,5 +19,13 @@ module.exports = {
     );
 
     ctx.send(res);
+  },
+  async placeOrder(ctx) {
+    const params = _.assign({}, ctx.request.body, ctx.params);
+    var res = await strapi.services.lalamoveshippingservice.placeOrder(
+      params
+    );
+
+    ctx.send(res);
   }
 };

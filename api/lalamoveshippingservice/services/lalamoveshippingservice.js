@@ -9,6 +9,7 @@ const axios = require('axios');
 const _ = require("lodash");
 const uuid = require('uuid');
 const NodeGeocoder = require('node-geocoder');
+const LALAMOVE_API = process.env.LALAMOVE_API || 'https://sandbox-rest.lalamove.com';
 
 const malaysiaServiceTypes = [
 	{
@@ -103,7 +104,7 @@ const generateSignature = async (rawBody, method, path) => {
 		const time = new Date().getTime().toString();
 
 		const body = JSON.stringify(rawBody);
-		const rawSignature = `${time}\r\nPOST\r\n/v2/quotations\r\n\r\n${body}`;
+		const rawSignature = `${time}\r\n${method}\r\n${path}\r\n\r\n${body}`;
 		const signature = CryptoJS.HmacSHA256(rawSignature, secretKey).toString();
 
 		return {
@@ -130,6 +131,142 @@ const getHttpHeader = (apiKey, timestamp, signature, countryLocode) => {
 		'Content-Type': 'application/json'
 	};
 }
+
+const getQuotationBody = async (body) => {
+	// {
+	// 	"pickup_location": {
+	// 		"address": "Bumi Bukit Jalil, No 2-1, Jalan Jalil 1, Lebuhraya Bukit Jalil, Sungai Besi, 57000 Kuala Lumpur, Malaysia",
+	// 		"country_code": "MY"
+	// 	},
+	// 	"deliver_location": {
+	// 		"address": "64000 Sepang, Selangor, Malaysia",
+	// 		"country_code": "MY"
+	// 	},
+	// 	"receiver": {
+	// 		"name": "Chris Wong",
+	// 		"phone_number": "0376886555"
+	// 	},
+	// 	"schedule_at": "",
+	// 	"sender": {
+	// 		"name": "Shen Ong",
+	// 		"phone_number": "0376886555",
+	// 		"remarks": "Remarks for drop-off point (#1)."
+	// 	},
+	// 	"service_type": "MOTORCYCLE"
+	// }
+
+	let serviceTypeKey = "MOTORCYCLE";
+	if (!_.isNil(body.service_type)) {
+		serviceTypeKey = body.service_type.toUpperCase();
+	}
+
+	let serviceType = malaysiaServiceTypes.find(s => s.key.toUpperCase() == serviceTypeKey);
+	if (_.isNil(serviceType)) {
+		return {
+			success: false,
+			message: "Shipping service type not supported"
+		}
+	}
+
+	var req = {
+		"scheduleAt": body.scheduleAt, // in UTC timezone
+		"serviceType": serviceTypeKey,
+		"specialRequests": [],
+		"stops": [],
+		"requesterContact": {
+			"name": body.receiver.name,
+			"phone": body.receiver.phone_number
+		},
+		"deliveries": [{
+			"toStop": 1,
+			"toContact": {
+				"name": body.sender.name,
+				"phone": body.sender.phone_number
+			},
+			"remarks": body.sender.remarks
+		}]
+	}
+
+	if (!_.isNil(body.special_requests)) {
+		req.specialRequests.push(body.special_requests);
+	}
+
+	const options = {
+		provider: 'here',
+
+		// Optional depending on the providers
+		// fetch: customFetchImplementation,
+		apiKey: process.env.HERE_API_KEY || 'b_tw_a6m371Kris1qsOWLzhA2jerXM2A8BP8eNwiK4o', // for Mapquest, OpenCage, Google Premier, Here
+		formatter: null // 'gpx', 'string', ...
+	};
+
+	const geocoder = NodeGeocoder(options);
+
+	var pickUpCountry = countiesCode.find(s => s.code == body.pickup_location.country_code);
+	if (_.isNil(pickUpCountry)) {
+		return {
+			success: false,
+			message: "pickup_location.country_code in valid"
+		};
+	}
+
+	const mapForPickup = await geocoder.geocode(body.pickup_location.address);
+	if (_.isNil(mapForPickup)) {
+		return {
+			success: false,
+			message: "Can not detect pickup_location"
+		};
+	}
+
+	var pickUP = {
+		"location": {
+			"lat": mapForPickup[0].latitude.toString(),
+			"lng": mapForPickup[0].longitude.toString()
+		},
+		"addresses": {}
+	};
+
+	pickUP.addresses[pickUpCountry.locale_keys] = {
+		"displayString": body.pickup_location.address,
+		"country": pickUpCountry.locode
+	};
+
+	req.stops.push(pickUP)
+
+	var deliverCountry = countiesCode.find(s => s.code == body.deliver_location.country_code);
+	if (_.isNil(deliverCountry)) {
+		return {
+			success: false,
+			message: "pickup_location.country_code in valid"
+		};
+	}
+
+	const mapForDeliver = await geocoder.geocode(body.deliver_location.address);
+	if (_.isNil(mapForDeliver)) {
+		return {
+			success: false,
+			message: "Can not detect deliver_location"
+		};
+	}
+
+	var deliver = {
+		"location": {
+			"lat": mapForDeliver[0].latitude.toString(),
+			"lng": mapForDeliver[0].longitude.toString()
+		},
+		"addresses": {}
+	};
+
+	deliver.addresses[deliverCountry.locale_keys] = {
+		"displayString": body.deliver_location.address,
+		"country": deliverCountry.locode
+	};
+
+	req.stops.push(deliver);
+
+	return req;
+}
+
 module.exports = {
 	getConfiguration: () => {
 		return {
@@ -138,142 +275,12 @@ module.exports = {
 		};
 	},
 	getQuotations: async (body) => {
-		// {
-		// 	"pickup_location": {
-		// 		"address": "Bumi Bukit Jalil, No 2-1, Jalan Jalil 1, Lebuhraya Bukit Jalil, Sungai Besi, 57000 Kuala Lumpur, Malaysia",
-		// 		"country_code": "MY"
-		// 	},
-		// 	"deliver_location": {
-		// 		"address": "64000 Sepang, Selangor, Malaysia",
-		// 		"country_code": "MY"
-		// 	},
-		// 	"receiver": {
-		// 		"name": "Chris Wong",
-		// 		"phone_number": "0376886555"
-		// 	},
-		// 	"schedule_at": "",
-		// 	"sender": {
-		// 		"name": "Shen Ong",
-		// 		"phone_number": "0376886555",
-		// 		"remarks": "Remarks for drop-off point (#1)."
-		// 	},
-		// 	"service_type": "MOTORCYCLE",
-		// 	"toStop": 1
-		// }
-
-		let serviceTypeKey = "MOTORCYCLE";
-		if (!_.isNil(body.service_type)) {
-			serviceTypeKey = body.service_type.toUpperCase();
-		}
-
-		let serviceType = malaysiaServiceTypes.find(s => s.key.toUpperCase() == serviceTypeKey);
-		if (_.isNil(serviceType)) {
-			return {
-				success: false,
-				message: "Shipping service type not supported"
-			}
-		}
-
-		var req = {
-			"scheduleAt": body.scheduleAt, // in UTC timezone
-			"serviceType": serviceTypeKey,
-			"specialRequests": [],
-			"stops": [],
-			"requesterContact": {
-				"name": body.receiver.name,
-				"phone": body.receiver.phone_number
-			},
-			"deliveries": [{
-				"toStop": 1,
-				"toContact": {
-					"name": body.sender.name,
-					"phone": body.sender.phone_number
-				},
-				"remarks": body.sender.remarks
-			}]
-		}
-
-		if (!_.isNil(body.special_requests)) {
-			req.specialRequests.push(body.special_requests);
-		}
-
-		const options = {
-			provider: 'here',
-
-			// Optional depending on the providers
-			// fetch: customFetchImplementation,
-			apiKey: process.env.HERE_API_KEY || 'b_tw_a6m371Kris1qsOWLzhA2jerXM2A8BP8eNwiK4o', // for Mapquest, OpenCage, Google Premier, Here
-			formatter: null // 'gpx', 'string', ...
-		};
-
-		const geocoder = NodeGeocoder(options);
-
-		var pickUpCountry = countiesCode.find(s => s.code == body.pickup_location.country_code);
-		if (_.isNil(pickUpCountry)) {
-			return {
-				success: false,
-				message: "pickup_location.country_code in valid"
-			};
-		}
-
-		const mapForPickup = await geocoder.geocode(body.pickup_location.address);
-		if (_.isNil(mapForPickup)) {
-			return {
-				success: false,
-				message: "Can not detect pickup_location"
-			};
-		}
-
-		var pickUP = {
-			"location": {
-				"lat": mapForPickup[0].latitude.toString(),
-				"lng": mapForPickup[0].longitude.toString()
-			},
-			"addresses": {}
-		};
-
-		pickUP.addresses[pickUpCountry.locale_keys] = {
-			"displayString": body.pickup_location.address,
-			"country": pickUpCountry.locode
-		};
-		
-		req.stops.push(pickUP)
-		
-		var deliverCountry = countiesCode.find(s => s.code == body.deliver_location.country_code);
-		if (_.isNil(deliverCountry)) {
-			return {
-				success: false,
-				message: "pickup_location.country_code in valid"
-			};
-		}
-
-		const mapForDeliver = await geocoder.geocode(body.deliver_location.address);
-		if (_.isNil(mapForDeliver)) {
-			return {
-				success: false,
-				message: "Can not detect deliver_location"
-			};
-		}
-
-		var deliver = {
-			"location": {
-				"lat": mapForDeliver[0].latitude.toString(),
-				"lng": mapForDeliver[0].longitude.toString()
-			},
-			"addresses": {}
-		};
-
-		deliver.addresses[deliverCountry.locale_keys] = {
-			"displayString": body.deliver_location.address,
-			"country": deliverCountry.locode
-		};
-
-		req.stops.push(deliver)
+		let quotationBody = await getQuotationBody(body);
 
 		const path = "/v2/quotations";
 		const method = "POST";
 
-		var auth = await generateSignature(req, method, path);
+		var auth = await generateSignature(quotationBody, method, path);
 		if (!auth.success) {
 			return {
 				success: false,
@@ -281,11 +288,63 @@ module.exports = {
 			}
 		}
 
-		let header = getHttpHeader(auth.apiKey, auth.timestamp, auth.signature, pickUpCountry.locode);
-		const LALAMOVE_API = process.env.LALAMOVE_API || 'https://sandbox-rest.lalamove.com';
-
+		let header = getHttpHeader(auth.apiKey, auth.timestamp, auth.signature, "MY_KUL");
 		var res = await
-			axios.post(`${LALAMOVE_API}${path}`, req, {
+			axios.post(`${LALAMOVE_API}${path}`, quotationBody, {
+				headers: header
+			}).then(function (response) {
+				let httpCode = response.status;
+				return {
+					success: true,
+					data: response.data
+				}
+			}).catch(function (error) {
+				let httpCode = error.response.status;
+				let message = "";
+				if (httpCode == 401) {
+					message = "Unauthorized";
+				} else {
+					message = "Get quotation failed"
+				}
+
+				return {
+					success: false,
+					message: message,
+					data: error.response.data
+				}
+			});
+
+		return res;
+	},
+	placeOrder: async (body) => {
+		const path = "/v2/orders";
+		const method = "POST";
+
+		var quotationRes = await strapi.services.lalamoveshippingservice.getQuotations(body);
+		if (_.isNil(quotationRes) || !quotationRes.success) {
+			return {
+				success: false,
+				message: "Can not get shipping information"
+			}
+		}
+
+		let quotationBody = await getQuotationBody(body);
+		quotationBody.quotedTotalFee = {
+			"amount": quotationRes.data.totalFee,
+			"currency": quotationRes.data.totalFeeCurrency
+		};
+
+		var auth = await generateSignature(quotationBody, method, path);
+		if (!auth.success) {
+			return {
+				success: false,
+				message: "Unauthorized"
+			}
+		}
+
+		let header = getHttpHeader(auth.apiKey, auth.timestamp, auth.signature, "MY_KUL");		
+		var res = await
+			axios.post(`${LALAMOVE_API}${path}`, quotationBody, {
 				headers: header
 			}).then(function (response) {
 				let httpCode = response.status;

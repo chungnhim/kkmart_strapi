@@ -63,6 +63,14 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "POST",
+      "path": "/shipping/place-order",
+      "handler": "lalamoveShipping.placeOrder",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }
