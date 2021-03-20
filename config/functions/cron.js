@@ -21,7 +21,7 @@ module.exports = {
    * Every monday at 1am.
    */
   '*/1 * * * *': async() => {
-		console.log("Job credit balance");
+		// console.log("Job credit balance");
 		var moment = require('moment');
 		var startDate = new Date;
 		var startDateUTC = moment.utc(startDate);
