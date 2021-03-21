@@ -97,6 +97,20 @@ const countiesCode = [
 	}
 ]
 
+// Unit is Gram
+const serviceTypesByWeigh = [
+	{ key: "MOTORCYCLE", min: 0, max: 10000 },
+	{ key: "CAR", min: 10001, max: 40000 },
+	{ key: "VAN", min: 40001, max: 500000 },
+	{ key: "4X4", min: 500001, max: 250000 },
+	{ key: "TRUCK330", min: 250001, max: 1000000 },
+	{ key: "TRUCK550", min: 1000001, max: 3000000 }
+];
+
+const formatError = error => [
+	{ messages: [{ id: error.id, message: error.message, field: error.field }] },
+];
+
 const generateSignature = async (rawBody, method, path) => {
 	try {
 		const apiKey = process.env.LALAMOVE_API_KEY || 'd28388cb4ccf46d2b58d22f711c8c664';
@@ -110,7 +124,7 @@ const generateSignature = async (rawBody, method, path) => {
 		} else {
 			rawSignature = `${time}\r\n${method}\r\n${path}\r\n\r\n`;
 		}
-		
+
 		const signature = CryptoJS.HmacSHA256(rawSignature, secretKey).toString();
 
 		return {
@@ -138,7 +152,19 @@ const getHttpHeader = (apiKey, timestamp, signature, countryLocode) => {
 	};
 }
 
-const getQuotationBody = async (body) => {
+const getQuotationBody = async (scheduleAt, serviceType, pickUpPoint, deliverPoint) => {
+	// {
+	// 	"pickUpPoint": {
+	// 		"address": "",
+	// 		"countryCode": "",
+	// 		"latitude": "",
+	// 		"longitude": "",
+	// 		"name":"",
+	// 		"phone":"",
+	// 		"remarks":""
+	// 	}
+	// }
+
 	// {
 	// 	"pickup_location": {
 	// 		"address": "Bumi Bukit Jalil, No 2-1, Jalan Jalil 1, Lebuhraya Bukit Jalil, Sungai Besi, 57000 Kuala Lumpur, Malaysia",
@@ -161,54 +187,41 @@ const getQuotationBody = async (body) => {
 	// 	"service_type": "MOTORCYCLE"
 	// }
 
-	let serviceTypeKey = "MOTORCYCLE";
-	if (!_.isNil(body.service_type)) {
-		serviceTypeKey = body.service_type.toUpperCase();
-	}
-
-	let serviceType = malaysiaServiceTypes.find(s => s.key.toUpperCase() == serviceTypeKey);
-	if (_.isNil(serviceType)) {
-		return {
-			success: false,
-			message: "Shipping service type not supported"
-		}
-	}
-
 	var req = {
-		"scheduleAt": body.scheduleAt, // in UTC timezone
-		"serviceType": serviceTypeKey,
+		"serviceType": serviceType,
 		"specialRequests": [],
 		"stops": [],
 		"requesterContact": {
-			"name": body.receiver.name,
-			"phone": body.receiver.phone_number
+			"name": pickUpPoint.name,
+			"phone": pickUpPoint.phone
 		},
 		"deliveries": [{
 			"toStop": 1,
 			"toContact": {
-				"name": body.sender.name,
-				"phone": body.sender.phone_number
+				"name": deliverPoint.name,
+				"phone": deliverPoint.phone
 			},
-			"remarks": body.sender.remarks
+			"remarks": deliverPoint.remarks
 		}]
 	}
 
-	if (!_.isNil(body.special_requests)) {
-		req.specialRequests.push(body.special_requests);
+	if (!_.isNil(scheduleAt) && scheduleAt != "") {
+		req.scheduleAt = scheduleAt; // in UTC timezone
 	}
 
-	const options = {
-		provider: 'here',
+	// if (!_.isNil(body.special_requests)) {
+	// 	req.specialRequests.push(body.special_requests);
+	// }
 
-		// Optional depending on the providers
-		// fetch: customFetchImplementation,
-		apiKey: process.env.HERE_API_KEY || 'b_tw_a6m371Kris1qsOWLzhA2jerXM2A8BP8eNwiK4o', // for Mapquest, OpenCage, Google Premier, Here
-		formatter: null // 'gpx', 'string', ...
-	};
+	// const options = {
+	// 	provider: 'here',
+	// 	apiKey: process.env.HERE_API_KEY || 'b_tw_a6m371Kris1qsOWLzhA2jerXM2A8BP8eNwiK4o', // for Mapquest, OpenCage, Google Premier, Here
+	// 	formatter: null // 'gpx', 'string', ...
+	// };
 
-	const geocoder = NodeGeocoder(options);
+	// const geocoder = NodeGeocoder(options);
 
-	var pickUpCountry = countiesCode.find(s => s.code == body.pickup_location.country_code);
+	var pickUpCountry = countiesCode.find(s => s.code == pickUpPoint.countryCode);
 	if (_.isNil(pickUpCountry)) {
 		return {
 			success: false,
@@ -216,30 +229,30 @@ const getQuotationBody = async (body) => {
 		};
 	}
 
-	const mapForPickup = await geocoder.geocode(body.pickup_location.address);
-	if (_.isNil(mapForPickup)) {
-		return {
-			success: false,
-			message: "Can not detect pickup_location"
-		};
-	}
+	// const mapForPickup = await geocoder.geocode(body.pickup_location.address);
+	// if (_.isNil(mapForPickup)) {
+	// 	return {
+	// 		success: false,
+	// 		message: "Can not detect pickup_location"
+	// 	};
+	// }
 
 	var pickUP = {
 		"location": {
-			"lat": mapForPickup[0].latitude.toString(),
-			"lng": mapForPickup[0].longitude.toString()
+			"lat": pickUpPoint.latitude.toString(),
+			"lng": pickUpPoint.longitude.toString()
 		},
 		"addresses": {}
 	};
 
 	pickUP.addresses[pickUpCountry.locale_keys] = {
-		"displayString": body.pickup_location.address,
+		"displayString": pickUpPoint.address,
 		"country": pickUpCountry.locode
 	};
 
 	req.stops.push(pickUP)
 
-	var deliverCountry = countiesCode.find(s => s.code == body.deliver_location.country_code);
+	var deliverCountry = countiesCode.find(s => s.code == deliverPoint.countryCode);
 	if (_.isNil(deliverCountry)) {
 		return {
 			success: false,
@@ -247,30 +260,33 @@ const getQuotationBody = async (body) => {
 		};
 	}
 
-	const mapForDeliver = await geocoder.geocode(body.deliver_location.address);
-	if (_.isNil(mapForDeliver)) {
-		return {
-			success: false,
-			message: "Can not detect deliver_location"
-		};
-	}
+	// const mapForDeliver = await geocoder.geocode(body.deliver_location.address);
+	// if (_.isNil(mapForDeliver)) {
+	// 	return {
+	// 		success: false,
+	// 		message: "Can not detect deliver_location"
+	// 	};
+	// }
 
 	var deliver = {
 		"location": {
-			"lat": mapForDeliver[0].latitude.toString(),
-			"lng": mapForDeliver[0].longitude.toString()
+			"lat": deliverPoint.latitude.toString(),
+			"lng": deliverPoint.longitude.toString()
 		},
 		"addresses": {}
 	};
 
 	deliver.addresses[deliverCountry.locale_keys] = {
-		"displayString": body.deliver_location.address,
+		"displayString": deliverPoint.address,
 		"country": deliverCountry.locode
 	};
 
 	req.stops.push(deliver);
 
-	return req;
+	return {
+		success: true,
+		data: req
+	};
 }
 
 module.exports = {
@@ -280,13 +296,28 @@ module.exports = {
 			"countries": countiesCode
 		};
 	},
-	getQuotations: async (body) => {
-		let quotationBody = await getQuotationBody(body);
+	getQuotations: async (scheduleAt, weigh, pickUpPoint, deliverPoint) => {
+		let serviceType = serviceTypesByWeigh.find(s => s.min <= weigh && weigh <= s.max);
+		if (_.isNil(serviceType) || _.isNil(malaysiaServiceTypes.find(s => s.key.toUpperCase() == serviceType.key))) {
+			return {
+				success: false,
+				message: "Shipping service type not supported"
+			}
+		}
+
+		console.log(`pickUpPoint`, pickUpPoint);
+		console.log(`deliverPoint`, deliverPoint);
+		let quotationBody = await getQuotationBody(scheduleAt, serviceType.key, pickUpPoint, deliverPoint);
+
+		console.log(`quotationBody`, JSON.stringify(quotationBody));
+		if (!quotationBody.success) {
+			return res;
+		}
 
 		const path = "/v2/quotations";
 		const method = "POST";
 
-		var auth = await generateSignature(quotationBody, method, path);
+		var auth = await generateSignature(quotationBody.data, method, path);
 		if (!auth.success) {
 			return {
 				success: false,
@@ -296,7 +327,7 @@ module.exports = {
 
 		let header = getHttpHeader(auth.apiKey, auth.timestamp, auth.signature, "MY_KUL");
 		var res = await
-			axios.post(`${LALAMOVE_API}${path}`, quotationBody, {
+			axios.post(`${LALAMOVE_API}${path}`, quotationBody.data, {
 				headers: header
 			}).then(function (response) {
 				let httpCode = response.status;
@@ -348,7 +379,7 @@ module.exports = {
 			}
 		}
 
-		let header = getHttpHeader(auth.apiKey, auth.timestamp, auth.signature, "MY_KUL");		
+		let header = getHttpHeader(auth.apiKey, auth.timestamp, auth.signature, "MY_KUL");
 		var res = await
 			axios.post(`${LALAMOVE_API}${path}`, quotationBody, {
 				headers: header

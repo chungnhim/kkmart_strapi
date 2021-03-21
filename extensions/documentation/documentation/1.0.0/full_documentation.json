@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "03/21/2021 10:48:15 AM"
+    "x-generation-date": "03/21/2021 5:50:48 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -44085,6 +44085,12 @@
                 "home_office": {
                   "type": "string"
                 },
+                "longitude": {
+                  "type": "number"
+                },
+                "latitude": {
+                  "type": "number"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -58658,6 +58664,12 @@
                 "home_office": {
                   "type": "string"
                 },
+                "longitude": {
+                  "type": "number"
+                },
+                "latitude": {
+                  "type": "number"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -60770,6 +60782,12 @@
           "home_office": {
             "type": "string"
           },
+          "longitude": {
+            "type": "number"
+          },
+          "latitude": {
+            "type": "number"
+          },
           "created_by": {
             "required": [
               "id",
@@ -60897,6 +60915,12 @@
           },
           "home_office": {
             "type": "string"
+          },
+          "longitude": {
+            "type": "number"
+          },
+          "latitude": {
+            "type": "number"
           },
           "created_by": {
             "type": "string"
@@ -62692,6 +62716,12 @@
                 },
                 "home_office": {
                   "type": "string"
+                },
+                "longitude": {
+                  "type": "number"
+                },
+                "latitude": {
+                  "type": "number"
                 },
                 "created_by": {
                   "type": "string"
