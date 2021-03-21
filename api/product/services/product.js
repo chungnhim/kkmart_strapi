@@ -23,7 +23,7 @@ module.exports = {
             id: productId,
         });
         let productModels = await strapi.services.promotionproduct.priceRecalculationOfProduct(productResult);
-      
+
         productModels = await strapi.services.common.normalizationResponse(
             productModels,
             removeFields
@@ -39,14 +39,13 @@ module.exports = {
                     if (shoppingCartDataItems) {
                         if (shoppingCartDataItems.product != 'null') {
                             let productId = shoppingCartDataItems.product;
-                            shoppingCartDataItems.product = await strapi.services.product.getProductById(productId);                            
-                              //Lay 1 variant cua cart                     
-                        var variant_select_data =  shoppingCartDataItems.product.product_variants.find(s=>s.id=shoppingCartDataItems.product_variant);                       
-                        if(!_.isNil(variant_select_data))
-                        {
-                            shoppingCartDataItems.product.product_variants=[];
-                            shoppingCartDataItems.product.product_variants.push(variant_select_data);
-                        }      
+                            shoppingCartDataItems.product = await strapi.services.product.getProductById(productId);
+                            //Lay 1 variant cua cart                     
+                            var variant_select_data = shoppingCartDataItems.product.product_variants.find(s => s.id = shoppingCartDataItems.product_variant);
+                            if (!_.isNil(variant_select_data)) {
+                                shoppingCartDataItems.product.product_variants = [];
+                                shoppingCartDataItems.product.product_variants.push(variant_select_data);
+                            }
                         }
                     }
                 }
@@ -63,26 +62,25 @@ module.exports = {
                 let shoppingCartDataItems = shoppingCartData[j];
                 if (shoppingCartDataItems) {
                     if (shoppingCartDataItems.product != 'null') {
-                      
-                        let productId = shoppingCartDataItems.product;                    
-                        shoppingCartDataItems.product = await strapi.services.product.getProductById(productId);  
+
+                        let productId = shoppingCartDataItems.product;
+                        shoppingCartDataItems.product = await strapi.services.product.getProductById(productId);
                         //Lay 1 variant cua cart                     
-                        var variant_select_data =  shoppingCartDataItems.product.product_variants.find(s=>s.id=shoppingCartDataItems.product_variant);                       
-                        if(!_.isNil(variant_select_data))
-                        {
-                            shoppingCartDataItems.product.product_variants=[];
+                        var variant_select_data = shoppingCartDataItems.product.product_variants.find(s => s.id = shoppingCartDataItems.product_variant);
+                        if (!_.isNil(variant_select_data)) {
+                            shoppingCartDataItems.product.product_variants = [];
                             shoppingCartDataItems.product.product_variants.push(variant_select_data);
-                        }      
-                                 
+                        }
+
                     }
                 }
             }
         }
         return shoppingCart;
     },
-    getProductOfShoppingCartOneCheckOut: async(shoppingCart,checkoutId) => {
+    getProductOfShoppingCartOneCheckOut: async(shoppingCart, checkoutId) => {
         let cartItem = [];
-        var shoppingCartData = shoppingCart.shopping_cart_products.filter(s => s.checkoutid== checkoutId);
+        var shoppingCartData = shoppingCart.shopping_cart_products.filter(s => s.checkoutid == checkoutId);
         if (shoppingCartData) {
             for (let j = 0; j < shoppingCartData.length; j++) {
                 let shoppingCartDataItems = shoppingCartData[j];
@@ -90,13 +88,12 @@ module.exports = {
                     if (shoppingCartDataItems.product != 'null') {
                         let productId = shoppingCartDataItems.product;
                         shoppingCartDataItems.product = await strapi.services.product.getProductById(productId);
-                          //Lay 1 variant cua cart                     
-                          var variant_select_data =  shoppingCartDataItems.product.product_variants.find(s=>s.id=shoppingCartDataItems.product_variant);                       
-                          if(!_.isNil(variant_select_data))
-                          {
-                              shoppingCartDataItems.product.product_variants=[];
-                              shoppingCartDataItems.product.product_variants.push(variant_select_data);
-                          }      
+                        //Lay 1 variant cua cart                     
+                        var variant_select_data = shoppingCartDataItems.product.product_variants.find(s => s.id = shoppingCartDataItems.product_variant);
+                        if (!_.isNil(variant_select_data)) {
+                            shoppingCartDataItems.product.product_variants = [];
+                            shoppingCartDataItems.product.product_variants.push(variant_select_data);
+                        }
                     }
                 }
                 cartItem.push(shoppingCartDataItems);
