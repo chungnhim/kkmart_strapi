@@ -44,7 +44,6 @@ module.exports = {
             status: strapi.config.constants.shopping_cart_status.new,
             _sort: "id:desc"
         });
-
         shoppingCart = await strapi.services.product.getProductOfShoppingCartOne(shoppingCart);
         let cartModel = await strapi.services.common.normalizationResponse(shoppingCart, ["user"]);
         let kkoin = await calculateKkoin(cartModel.shopping_cart_products);
