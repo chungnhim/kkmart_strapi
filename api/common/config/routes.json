@@ -50,16 +50,32 @@
     },
     {
       "method": "GET",
-      "path": "/lalamove/get-configuration",
-      "handler": "lalamoveShipping.getConfiguration",
+      "path": "/shipping/get-configuration",
+      "handler": "shipping.getConfiguration",
       "config": {
         "policies": []
       }
     },
     {
       "method": "POST",
-      "path": "/lalamove/get-quotations",
-      "handler": "lalamoveShipping.getQuotations",
+      "path": "/shipping/estimate-price",
+      "handler": "shipping.getQuotations",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/shipping/place-order",
+      "handler": "shipping.placeOrder",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/shipping/order-details/:provider/:orderRef",
+      "handler": "shipping.getOrderDetails",
       "config": {
         "policies": []
       }

@@ -48,6 +48,12 @@
     },
     "home_office": {
       "type": "string"
+    },
+    "longitude": {
+      "type": "float"
+    },
+    "latitude": {
+      "type": "float"
     }
   }
 }

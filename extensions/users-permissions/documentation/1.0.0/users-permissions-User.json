@@ -1984,6 +1984,12 @@
                 "home_office": {
                   "type": "string"
                 },
+                "longitude": {
+                  "type": "number"
+                },
+                "latitude": {
+                  "type": "number"
+                },
                 "created_by": {
                   "type": "string"
                 },
