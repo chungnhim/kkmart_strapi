@@ -103,8 +103,14 @@ const generateSignature = async (rawBody, method, path) => {
 		const secretKey = process.env.LALAMOVE_SECRET_KEY || 'MCwCAQACBQC35+AtAgMBAAECBG/mKcECAwDkqQIDAM3lAgMAtykCAgV5AgJV';
 		const time = new Date().getTime().toString();
 
-		const body = JSON.stringify(rawBody);
-		const rawSignature = `${time}\r\n${method}\r\n${path}\r\n\r\n${body}`;
+		let rawSignature = "";
+		if (!_.isNil(rawBody) && rawBody != "") {
+			const body = JSON.stringify(rawBody);
+			rawSignature = `${time}\r\n${method}\r\n${path}\r\n\r\n${body}`;
+		} else {
+			rawSignature = `${time}\r\n${method}\r\n${path}\r\n\r\n`;
+		}
+		
 		const signature = CryptoJS.HmacSHA256(rawSignature, secretKey).toString();
 
 		return {
@@ -358,7 +364,49 @@ module.exports = {
 				if (httpCode == 401) {
 					message = "Unauthorized";
 				} else {
-					message = "Get quotation failed"
+					message = "Place order failed"
+				}
+
+				return {
+					success: false,
+					message: message,
+					data: error.response.data
+				}
+			});
+
+		return res;
+	},
+	getOrderDetails: async (orderRef) => {
+		const path = `/v2/orders/${orderRef}`;
+		const method = "GET";
+
+		var auth = await generateSignature("", method, path);
+		console.log(`authc`, auth);
+
+		if (!auth.success) {
+			return {
+				success: false,
+				message: "Unauthorized"
+			}
+		}
+
+		let header = getHttpHeader(auth.apiKey, auth.timestamp, auth.signature, "MY_KUL");
+		var res = await
+			axios.get(`${LALAMOVE_API}${path}`, {
+				headers: header
+			}).then(function (response) {
+				return {
+					success: true,
+					data: response.data
+				}
+			}).catch(function (error) {
+				console.log(`error`, error);
+				let httpCode = error.response.status;
+				let message = "";
+				if (httpCode == 401) {
+					message = "Unauthorized";
+				} else {
+					message = "Get order detail failed"
 				}
 
 				return {

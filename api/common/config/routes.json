@@ -51,7 +51,7 @@
     {
       "method": "GET",
       "path": "/shipping/get-configuration",
-      "handler": "lalamoveShipping.getConfiguration",
+      "handler": "shipping.getConfiguration",
       "config": {
         "policies": []
       }
@@ -59,7 +59,7 @@
     {
       "method": "POST",
       "path": "/shipping/estimate-price",
-      "handler": "lalamoveShipping.getQuotations",
+      "handler": "shipping.getQuotations",
       "config": {
         "policies": []
       }
@@ -67,7 +67,15 @@
     {
       "method": "POST",
       "path": "/shipping/place-order",
-      "handler": "lalamoveShipping.placeOrder",
+      "handler": "shipping.placeOrder",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/shipping/order-details/:provider/:orderRef",
+      "handler": "shipping.getOrderDetails",
       "config": {
         "policies": []
       }
