@@ -57,6 +57,14 @@
       }
     },
     {
+      "method": "GET",
+      "path": "/shipping/shipping-providers",
+      "handler": "shipping.shippingProvider",
+      "config": {
+        "policies": []
+      }
+    },
+    {
       "method": "POST",
       "path": "/shipping/estimate-price",
       "handler": "shipping.getQuotations",
