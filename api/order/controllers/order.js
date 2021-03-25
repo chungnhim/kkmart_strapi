@@ -18,7 +18,7 @@ const generateOrderCode = (length = 6) => {
     return moment.utc(new Date).format("YYYYMMDD") + text;
 }
 
-const getByOrderCode = async (orderCode) => {
+const getByOrderCode = async(orderCode) => {
     var order = await strapi.query("order").findOne({
         order_code: orderCode,
     });
@@ -26,7 +26,7 @@ const getByOrderCode = async (orderCode) => {
     return order;
 }
 
-const getByOrdersUserId = async (pageIndex, pageSize, userId) => {
+const getByOrdersUserId = async(pageIndex, pageSize, userId) => {
     var dataQuery = {
         _start: (pageIndex - 1) * pageSize,
         _limit: pageSize,
@@ -42,7 +42,7 @@ const getByOrdersUserId = async (pageIndex, pageSize, userId) => {
     };
 }
 
-const processCheckout = async (userId, products, is_expressmart, shipping_prodiver_code, order_via, vouchercode,is_use_coin, currency,shopping_cart_id) => {
+const processCheckout = async(userId, products, is_expressmart, shipping_prodiver_code, order_via, vouchercode, is_use_coin, currency, shopping_cart_id) => {
     // [
     //     {
     //         "product_id": 1,
@@ -58,9 +58,9 @@ const processCheckout = async (userId, products, is_expressmart, shipping_prodiv
 
     let totalAmount = 0;
     let discountAmount = 0;
-    
+
     let kcoin_used = 0;
-    let kcoin_earned = 0;    
+    let kcoin_earned = 0;
     let voucher_discount_amt = 0;
 
     for (let index = 0; index < products.length; index++) {
@@ -85,15 +85,13 @@ const processCheckout = async (userId, products, is_expressmart, shipping_prodiv
         totalAmount += variant.selling_price * cartItem.qtty;
         let coin_can_use = 0;
         // calculate kcoin used if is_use_coin = true
-        if(is_use_coin){
-            
-            if((variant.can_use_coin===true) && (variant.coin_can_use > 0 ))
-            {
+        if (is_use_coin) {
+
+            if ((variant.can_use_coin === true) && (variant.coin_can_use > 0)) {
                 coin_can_use = variant.coin_can_use;
-            }
-            else{
+            } else {
                 if (!_.isNil(product.can_use_coin) && product.can_use_coin == true) {
-                coin_can_use = product.coin_can_use;
+                    coin_can_use = product.coin_can_use;
                 }
             }
 
@@ -101,15 +99,13 @@ const processCheckout = async (userId, products, is_expressmart, shipping_prodiv
         }
         let kcoin_each_earn = 0;
         // calculate kcoin earn
-        if(variant.coin_earn > 0)
-        {
+        if (variant.coin_earn > 0) {
             kcoin_each_earn = variant.coin_earn;
+        } else {
+            kcoin_each_earn = product.coin_earn | 0;
         }
-        else{
-            kcoin_each_earn = product.coin_earn|0;
-        }
-         kcoin_earned += kcoin_each_earn;                     
-         
+        kcoin_earned += kcoin_each_earn;
+
     }
 
     // check existing to delete
@@ -121,17 +117,17 @@ const processCheckout = async (userId, products, is_expressmart, shipping_prodiv
         _sort: "id:desc"
     });
     if (!_.isNil(ordcheckout)) {
-       await strapi.query("order-checkout").delete({
-           id: ordcheckout.id     
+        await strapi.query("order-checkout").delete({
+            id: ordcheckout.id
         });
     }
-    
-    let ckoutEntity = {        
+
+    let ckoutEntity = {
         order_via: order_via,
-        checkoutstatus: 1,       
+        checkoutstatus: 1,
         total_amount: totalAmount,
         currency: currency,
-        discount_amount: discountAmount,        
+        discount_amount: discountAmount,
         user: userId,
         coin_earned: kcoin_earned,
         coin_used: kcoin_used,
@@ -159,7 +155,7 @@ const processCheckout = async (userId, products, is_expressmart, shipping_prodiv
         discount_amount: discountAmount
     };
 }
-const processCreateOrder = async (userId, products, is_expressmart, user_address_id, order_via, vouchercode,is_use_coin, shipping_note,currency) => {
+const processCreateOrder = async(userId, products, is_expressmart, user_address_id, order_via, vouchercode, is_use_coin, shipping_note, currency) => {
     // [
     //     {
     //         "product_id": 1,
@@ -213,15 +209,13 @@ const processCreateOrder = async (userId, products, is_expressmart, user_address
         totalAmount += variant.selling_price * cartItem.qtty;
         let coin_can_use = 0;
         // calculate kcoin used if is_use_coin = true
-        if(is_use_coin){
-            
-            if((variant.can_use_coin===true) && (variant.coin_can_use > 0 ))
-            {
+        if (is_use_coin) {
+
+            if ((variant.can_use_coin === true) && (variant.coin_can_use > 0)) {
                 coin_can_use = variant.coin_can_use;
-            }
-            else{
+            } else {
                 if (!_.isNil(product.can_use_coin) && product.can_use_coin == true) {
-                coin_can_use = product.coin_can_use;
+                    coin_can_use = product.coin_can_use;
                 }
             }
 
@@ -229,15 +223,13 @@ const processCreateOrder = async (userId, products, is_expressmart, user_address
         }
         let kcoin_each_earn = 0;
         // calculate kcoin earn
-        if(variant.coin_earn > 0)
-        {
+        if (variant.coin_earn > 0) {
             kcoin_each_earn = variant.coin_earn;
+        } else {
+            kcoin_each_earn = product.coin_earn | 0;
         }
-        else{
-            kcoin_each_earn = product.coin_earn|0;
-        }
-         kcoin_earned += kcoin_each_earn;
-        
+        kcoin_earned += kcoin_each_earn;
+
         orderProductEntities.push({
             product: product.id,
             product_variant: variant.id,
@@ -284,7 +276,7 @@ const processCreateOrder = async (userId, products, is_expressmart, user_address
         await strapi.query("order-product").create(product);
     }
 
-    
+
     // Add shipping information
     var shipping = {
         order: order.id,
@@ -332,7 +324,7 @@ const processCreateOrder = async (userId, products, is_expressmart, user_address
     };
 }
 module.exports = {
-    checkOut: async (ctx) => {
+    checkOut: async(ctx) => {
         //{
         //   "is_expressmart": false,
         //    "shipping_prodiver_code": "LALAMOVE",
@@ -405,7 +397,7 @@ module.exports = {
 
         for (let index = 0; index < checkOutProducts.length; index++) {
             const cartItem = checkOutProducts[index];
-            products.push({                
+            products.push({
                 product_id: cartItem.product,
                 product_variant_id: cartItem.product_variant,
                 qtty: cartItem.qtty
@@ -415,10 +407,10 @@ module.exports = {
         var createOrderRes = await processCheckout(userId,
             products,
             params.is_expressmart,
-            params.shipping_prodiver_code,            
+            params.shipping_prodiver_code,
             params.order_via,
             params.vouchercode,
-            params.is_use_coin,            
+            params.is_use_coin,
             params.currency,
             shoppingCart.id
         );
@@ -430,14 +422,14 @@ module.exports = {
                 cartItem.checkoutid = createOrderRes.checkout_id;
                 await strapi.query("shopping-cart-product").update({ id: cartItem.id },
                     cartItem
-                );                
+                );
             }
-        }        
+        }
 
         ctx.send(createOrderRes);
     },
-    createOrder: async (ctx) => {
-       // {        
+    createOrder: async(ctx) => {
+        // {        
         //     "user_address_id": "",
         //     "shipping_note": "",
         //     "checkout_id": 4, 
@@ -460,11 +452,11 @@ module.exports = {
 
         // get order checkedout          
         let ordcheckout = await strapi.query("order-checkout").findOne({
-            id: params.checkout_id,            
+            id: params.checkout_id,
             checkoutstatus: strapi.config.constants.shopping_cart_status.new
         });
 
-        if (_.isNil(ordcheckout) ) {
+        if (_.isNil(ordcheckout)) {
             ctx.send({
                 success: false,
                 message: "No product for checkout"
@@ -497,7 +489,7 @@ module.exports = {
         }
 
         // get checkout products
-        let checkOutProducts = shoppingCart.shopping_cart_products.filter(s => s.checkoutid== params.checkout_id);
+        let checkOutProducts = shoppingCart.shopping_cart_products.filter(s => s.checkoutid == params.checkout_id);
         if (_.isNil(checkOutProducts) || checkOutProducts.length == 0) {
             ctx.send({
                 success: false,
@@ -506,7 +498,7 @@ module.exports = {
 
             return;
         }
-        
+
         var products = [];
 
         for (let index = 0; index < checkOutProducts.length; index++) {
@@ -534,11 +526,11 @@ module.exports = {
                 const cartItem = checkOutProducts[index];
                 strapi.query("shopping-cart-product").delete({ id: cartItem.id });
             }
-        }        
+        }
 
         ctx.send(createOrderRes);
     },
-    getCheckout: async(ctx)=>{
+    getCheckout: async(ctx) => {
 
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (userId == 0) {
@@ -578,9 +570,9 @@ module.exports = {
             });
 
             return;
-        }       
-        
-        let cartItemsCk = await strapi.services.product.getProductOfShoppingCartOneCheckOut(shoppingCart,ordcheckout.id);
+        }
+
+        let cartItemsCk = await strapi.services.product.getProductOfShoppingCartOneCheckOut(shoppingCart, ordcheckout.id);
         // get shoppingcart item checked
         //let cartItemsCk = shoppingCart.shopping_cart_products.filter(s => s.checkoutid== ordcheckout.id);        
         if (_.isNil(cartItemsCk) || cartItemsCk.length == 0) {
@@ -590,7 +582,7 @@ module.exports = {
             });
 
             return;
-        }        
+        }
         /*
         let cartItems = await strapi.query("shopping-cart-product").find({           
             shopping_cart: shoppingCart.id,                     
@@ -621,6 +613,7 @@ module.exports = {
             vouchercode: ordcheckout.vouchercode,
             is_use_coin: ordcheckout.is_use_coin,
             kkoin_can_use: ordcheckout.coin_used,
+            kkoin_earned: ordcheckout.coin_earned,
             shipping_fee: 0,
             totalamount: ordcheckout.total_amount,
             voucher_discount_amt: ordcheckout.voucher_discount_amt,
@@ -628,7 +621,7 @@ module.exports = {
         });
 
     },
-    getByOrderCode: async (ctx) => {
+    getByOrderCode: async(ctx) => {
         const params = _.assign({}, ctx.request.params, ctx.params);
         var orderCode = params.orderCode;
 
@@ -662,7 +655,7 @@ module.exports = {
             order: res
         });
     },
-    getOrdersByUserId: async (ctx) => {
+    getOrdersByUserId: async(ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
             ctx.send({
