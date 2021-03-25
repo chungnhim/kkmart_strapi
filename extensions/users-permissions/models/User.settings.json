@@ -181,6 +181,10 @@
     "user_addresses": {
       "via": "user",
       "collection": "user-address"
+    },
+    "searchhistories": {
+      "via": "user",
+      "collection": "searchhistory"
     }
   }
 }

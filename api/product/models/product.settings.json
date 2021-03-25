@@ -73,24 +73,24 @@
       "type": "string"
     },
     "product_variants": {
-      "via": "product_id",
-      "collection": "product-variant"
+      "collection": "product-variant",
+      "via": "product_id"
     },
     "product_ratings": {
       "collection": "product-rating",
       "via": "product"
     },
     "shopping_cart_products": {
-      "via": "product",
-      "collection": "shopping-cart-product"
+      "collection": "shopping-cart-product",
+      "via": "product"
     },
     "promotionproduct": {
       "model": "promotionproduct",
       "via": "products"
     },
     "flashsaleproduct": {
-      "via": "products",
-      "model": "flashsaleproducts"
+      "model": "flashsaleproducts",
+      "via": "products"
     },
     "productimgs": {
       "collection": "file",
@@ -109,8 +109,8 @@
       "dominant": true
     },
     "order_products": {
-      "via": "product",
-      "collection": "order-product"
+      "collection": "order-product",
+      "via": "product"
     },
     "coin_earn": {
       "type": "float"
@@ -120,6 +120,10 @@
     },
     "can_use_coin": {
       "type": "boolean"
+    },
+    "isexpress": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

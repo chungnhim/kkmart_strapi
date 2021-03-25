@@ -1999,6 +1999,34 @@
               }
             }
           },
+          "searchhistories": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "searchkeyword": {
+                  "type": "string"
+                },
+                "searchtime": {
+                  "type": "datetime"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -2254,6 +2282,12 @@
             }
           },
           "user_addresses": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "searchhistories": {
             "type": "array",
             "items": {
               "type": "string"

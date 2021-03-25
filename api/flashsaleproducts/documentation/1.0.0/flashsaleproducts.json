@@ -764,6 +764,9 @@
                 "can_use_coin": {
                   "type": "boolean"
                 },
+                "isexpress": {
+                  "type": "boolean"
+                },
                 "created_by": {
                   "type": "string"
                 },

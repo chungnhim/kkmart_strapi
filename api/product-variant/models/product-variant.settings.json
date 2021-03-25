@@ -29,8 +29,8 @@
       "via": "product_variant_id"
     },
     "product_id": {
-      "model": "product",
-      "via": "product_variants"
+      "via": "product_variants",
+      "model": "product"
     },
     "shopping_cart_products": {
       "collection": "shopping-cart-product",

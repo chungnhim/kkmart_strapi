@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "searchhistories",
+  "info": {
+    "name": "searchhistory"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "searchhistories"
+    },
+    "searchkeyword": {
+      "type": "string"
+    },
+    "searchtime": {
+      "type": "datetime"
+    }
+  }
+}

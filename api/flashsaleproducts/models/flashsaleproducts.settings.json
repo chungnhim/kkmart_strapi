@@ -19,8 +19,8 @@
       "type": "string"
     },
     "products": {
-      "collection": "product",
-      "via": "flashsaleproduct"
+      "via": "flashsaleproduct",
+      "collection": "product"
     },
     "flashsaletype": {
       "type": "integer"

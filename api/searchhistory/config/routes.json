@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/searchhistories",
+      "handler": "searchhistory.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/searchhistories/count",
+      "handler": "searchhistory.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/searchhistories/:id",
+      "handler": "searchhistory.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/searchhistories",
+      "handler": "searchhistory.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/searchhistories/:id",
+      "handler": "searchhistory.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/searchhistories/:id",
+      "handler": "searchhistory.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

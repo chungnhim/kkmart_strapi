@@ -14,8 +14,8 @@
       "via": "shopping_cart_products"
     },
     "product": {
-      "model": "product",
-      "via": "shopping_cart_products"
+      "via": "shopping_cart_products",
+      "model": "product"
     },
     "qtty": {
       "type": "integer"

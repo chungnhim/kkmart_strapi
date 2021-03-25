@@ -1217,6 +1217,10 @@
           "can_use_coin": {
             "type": "boolean"
           },
+          "isexpress": {
+            "type": "boolean",
+            "default": false
+          },
           "created_by": {
             "required": [
               "id",
@@ -1416,6 +1420,10 @@
           },
           "can_use_coin": {
             "type": "boolean"
+          },
+          "isexpress": {
+            "type": "boolean",
+            "default": false
           },
           "created_by": {
             "type": "string"
