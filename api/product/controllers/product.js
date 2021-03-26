@@ -75,6 +75,14 @@ module.exports = {
             dataQuery.brand_in = queryString.brand_ids.split(",");
         }
 
+        //console.log(queryString.isexpress);
+
+        if (!_.isNil(queryString.isexpress) && !_.isEmpty(queryString.isexpress) && queryString.isexpress == 'true') {
+            dataQuery.isexpress = true;
+        } else {
+            dataQuery.isexpress = false;
+        }
+
         if (!_.isNil(queryString.price_order) && !_.isEmpty(queryString.price_order)) {
             //low to high
             if (queryString.price_order == '1') {
@@ -86,6 +94,9 @@ module.exports = {
             }
             //console.log(dataQuery);
         }
+
+        //console.log(dataQuery);
+
         var totalRows = await strapi.query('product').count(dataQuery);
         var entities = await strapi.query("product").find(dataQuery);
         //Check promotion and flashsale --- get price selling

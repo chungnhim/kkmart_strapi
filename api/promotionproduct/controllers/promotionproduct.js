@@ -132,6 +132,12 @@ module.exports = {
             dataQuery.promotionproduct_in = arrayPromotionActive;
         }
 
+        // if (!_.isNil(queryString.isexpress) && !_.isEmpty(queryString.isexpress) && queryString.isexpress == true) {
+        //     dataQuery.isexpress = true;
+        // } else {
+        //     dataQuery.isexpress = false;
+        // }
+
         if (!_.isNil(queryString.price_order) && !_.isEmpty(queryString.price_order)) {
             //low to high
             if (queryString.price_order == '1') {

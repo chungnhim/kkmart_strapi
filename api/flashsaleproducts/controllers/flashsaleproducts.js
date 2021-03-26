@@ -107,6 +107,12 @@ module.exports = {
             }
         }
 
+        // if (!_.isNil(queryString.isexpress) && !_.isEmpty(queryString.isexpress) && queryString.isexpress == true) {
+        //     dataQuery.isexpress = true;
+        // } else {
+        //     dataQuery.isexpress = false;
+        // }
+
         var totalRows = await strapi.query('product').count(dataQuery);
         var entities = await strapi.query("product").find(dataQuery);
         //Check promotion and flashsale --- get price selling
