@@ -1,52 +1,75 @@
 {
-  "routes": [
-    {
-      "method": "GET",
-      "path": "/searchhistories",
-      "handler": "searchhistory.find",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/searchhistories/count",
-      "handler": "searchhistory.count",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/searchhistories/:id",
-      "handler": "searchhistory.findOne",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "POST",
-      "path": "/searchhistories",
-      "handler": "searchhistory.create",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "PUT",
-      "path": "/searchhistories/:id",
-      "handler": "searchhistory.update",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "DELETE",
-      "path": "/searchhistories/:id",
-      "handler": "searchhistory.delete",
-      "config": {
-        "policies": []
-      }
-    }
-  ]
+    "routes": [{
+            "method": "GET",
+            "path": "/searchhistories",
+            "handler": "searchhistory.find",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/searchhistories/count",
+            "handler": "searchhistory.count",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/searchhistories/:id",
+            "handler": "searchhistory.findOne",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/searchhistories",
+            "handler": "searchhistory.create",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/v1/searchhistories/create-new",
+            "handler": "searchhistory.createNew",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/v1/searchhistories/get-search-history",
+            "handler": "searchhistory.getSearchHistory",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "DELETE",
+            "path": "/v1/searchhistories/:id",
+            "handler": "searchhistory.deleteOfUse",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "PUT",
+            "path": "/searchhistories/:id",
+            "handler": "searchhistory.update",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "DELETE",
+            "path": "/searchhistories/:id",
+            "handler": "searchhistory.delete",
+            "config": {
+                "policies": []
+            }
+        }
+    ]
 }

@@ -16,9 +16,6 @@
     },
     "searchkeyword": {
       "type": "string"
-    },
-    "searchtime": {
-      "type": "datetime"
     }
   }
 }
