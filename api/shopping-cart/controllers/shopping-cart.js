@@ -46,14 +46,7 @@ module.exports = {
             isexpress = true;
         }
 
-        //console.log(params.isexpress);
-
-        console.log({
-            user: userId,
-            status: strapi.config.constants.shopping_cart_status.new,
-            isexpress: isexpress,
-            _sort: "id:desc"
-        });
+        //console.log(params.isexpress);      
 
         var shoppingCart = await strapi.query("shopping-cart").findOne({
             user: userId,
@@ -106,11 +99,12 @@ module.exports = {
         let qtty = params.qtty;
         let shoppingCartId = params.shopping_cart_id == null ? 0 : params.shopping_cart_id;
         //Get info of product and check isexpress of product
-        var productInfo = await strapi.query().findOne({ id: productId });
+        var productInfo = await strapi.query("product").findOne({ id: productId });
         if (!_.isNil(productInfo)) {
+            //console.log(productInfo);
             isexpress = productInfo.isexpress;
         }
-
+        //console.log(productInfo);
         var shoppingCart = await strapi.query("shopping-cart").findOne({
             id: shoppingCartId,
             user: userId,
@@ -410,11 +404,12 @@ module.exports = {
         }
 
         const params = _.assign({}, ctx.request.params, ctx.params);
+        const queryString = _.assign({}, ctx.request.query, ctx.params);
         let cartItemId = params.cart_item_id;
 
         var isexpress = false;
 
-        if (!_.isNil(params.isexpress) && params.isexpress == true) {
+        if (!_.isNil(queryString.isexpress) && queryString.isexpress == 'true') {
             isexpress = true;
         }
 
