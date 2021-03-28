@@ -1,0 +1,19 @@
+{
+  "kind": "collectionType",
+  "collectionName": "banner_types",
+  "info": {
+    "name": "BannerType"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "typename": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    }
+  }
+}

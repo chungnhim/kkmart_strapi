@@ -1,0 +1,19 @@
+{
+  "kind": "collectionType",
+  "collectionName": "displays",
+  "info": {
+    "name": "Display"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "mobile": {
+      "type": "boolean"
+    },
+    "pc": {
+      "type": "boolean"
+    }
+  }
+}
