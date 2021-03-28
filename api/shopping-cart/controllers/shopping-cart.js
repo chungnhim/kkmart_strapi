@@ -10,7 +10,7 @@ const formatError = error => [
     { messages: [{ id: error.id, message: error.message, field: error.field }] },
 ];
 
-const calculateKkoin = async (shoppingCartProducts) => {
+const calculateKkoin = async(shoppingCartProducts) => {
     var totalCoin = 0;
     shoppingCartProducts.forEach(item => {
         let product = item.product;
@@ -27,7 +27,7 @@ const calculateKkoin = async (shoppingCartProducts) => {
 }
 
 module.exports = {
-    getByUserId: async (ctx) => {
+    getByUserId: async(ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (userId == 0) {
             return ctx.badRequest(
@@ -38,24 +38,53 @@ module.exports = {
                 })
             );
         }
+        const queryString = _.assign({}, ctx.request.query, ctx.params);
+        //const params = _.assign({}, ctx.request.body, ctx.params);
+        var isexpress = false;
+
+        if (!_.isNil(queryString.isexpress) && queryString.isexpress == 'true') {
+            isexpress = true;
+        }
+
+        //console.log(params.isexpress);
+
+        console.log({
+            user: userId,
+            status: strapi.config.constants.shopping_cart_status.new,
+            isexpress: isexpress,
+            _sort: "id:desc"
+        });
 
         var shoppingCart = await strapi.query("shopping-cart").findOne({
             user: userId,
             status: strapi.config.constants.shopping_cart_status.new,
+            isexpress: isexpress,
             _sort: "id:desc"
         });
-        shoppingCart = await strapi.services.product.getProductOfShoppingCartOne(shoppingCart);
-        let cartModel = await strapi.services.common.normalizationResponse(shoppingCart, ["user"]);
-        let kkoin = await calculateKkoin(cartModel.shopping_cart_products);
+        //Bổ sung thêm tham số isexpress
+        if (!_.isNil(shoppingCart)) {
+            shoppingCart = await strapi.services.product.getProductOfShoppingCartOne(shoppingCart);
+            let cartModel = await strapi.services.common.normalizationResponse(shoppingCart, ["user"]);
+            let kkoin = await calculateKkoin(cartModel.shopping_cart_products);
 
-        ctx.send({
-            success: true,
-            cart: cartModel,
-            kkoin_can_use: kkoin,
-            shipping_fee: 0
-        });
+            ctx.send({
+                success: true,
+                cart: cartModel,
+                kkoin_can_use: kkoin,
+                shipping_fee: 0
+            });
+        } else {
+
+            ctx.send({
+                success: true,
+                cart: null,
+                kkoin_can_use: 0,
+                shipping_fee: 0
+            });
+        }
+
     },
-    addProductToCart: async (ctx) => {
+    addProductToCart: async(ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
 
         if (userId == 0) {
@@ -67,6 +96,8 @@ module.exports = {
                 })
             );
         }
+
+        var isexpress = false;
 
         const params = _.assign({}, ctx.request.body, ctx.params);
 
@@ -74,10 +105,16 @@ module.exports = {
         let productVariantId = params.product_variant_id;
         let qtty = params.qtty;
         let shoppingCartId = params.shopping_cart_id == null ? 0 : params.shopping_cart_id;
+        //Get info of product and check isexpress of product
+        var productInfo = await strapi.query().findOne({ id: productId });
+        if (!_.isNil(productInfo)) {
+            isexpress = productInfo.isexpress;
+        }
 
         var shoppingCart = await strapi.query("shopping-cart").findOne({
             id: shoppingCartId,
-            user: userId
+            user: userId,
+            isexpress: isexpress
         });
 
         //Get cart newest of user
@@ -85,13 +122,15 @@ module.exports = {
             shoppingCart = await strapi.query("shopping-cart").findOne({
                 user: userId,
                 status: strapi.config.constants.shopping_cart_status.new,
+                isexpress: isexpress,
                 _sort: "id:desc"
             });
         }
 
         if (_.isNil(shoppingCart)) {
             var cartEntity = {
-                status: strapi.config.constants.shopping_cart_status.new
+                status: strapi.config.constants.shopping_cart_status.new,
+                isexpress: isexpress
             };
 
             if (userId != 0) {
@@ -177,7 +216,7 @@ module.exports = {
             cart_id: shoppingCart.id
         });
     },
-    updateProductToCart: async (ctx) => {
+    updateProductToCart: async(ctx) => {
         // {
         //     "cart_items": [
         //         {
@@ -202,12 +241,19 @@ module.exports = {
         }
 
         const params = _.assign({}, ctx.request.body, ctx.params);
+        var isexpress = false;
 
+        if (!_.isNil(params.isexpress) && params.isexpress == true) {
+            isexpress = true;
+        }
         var shoppingCart = await strapi.query("shopping-cart").findOne({
             user: userId,
             status: strapi.config.constants.shopping_cart_status.new,
+            isexpress: isexpress,
             _sort: "id:desc"
         });
+
+        //Get info of shopping cart item id
 
         if (_.isNil(shoppingCart)) {
             var cartEntity = {
@@ -239,7 +285,7 @@ module.exports = {
         let kkoin = 0;
         let totalamount = 0;
         for (let index = 0; index < params.cart_items.length; index++) {
-            const element = params.cart_items[index];            
+            const element = params.cart_items[index];
             var cartItem = shoppingCart.
             shopping_cart_products.find(s => s.id == element.cart_item_id);
             if (_.isNil(cartItem)) {
@@ -247,7 +293,7 @@ module.exports = {
                     success: false,
                     message: "Cart item does not exists"
                 });
-    
+
                 return;
             }
             let product = await strapi.services.product.getProductById(cartItem.product);
@@ -274,27 +320,23 @@ module.exports = {
             if (element.checkout && product.can_use_coin == true) {
                 if (!_.isNil(product.coin_use) && product.coin_use != 0) {
                     kkoin += product.coin_use * element.qtty;
-                }
-                else {
+                } else {
                     kkoin += variant.coin_use * element.qtty;
                 }
             }
             let sellingprice = 0;
             console.log(product);
             //let sellingproduct = await strapi.services.promotionproduct.priceRecalculationOfProduct(product);
-            if(product.ishave_discount_flashsale){
+            if (product.ishave_discount_flashsale) {
                 sellingprice = product.flashsale_price
-            }
-            else if(product.ishave_discount_promotion){
+            } else if (product.ishave_discount_promotion) {
                 sellingprice = product.promotion_price
-            }
-            else{
+            } else {
                 sellingprice = variant.selling_price
             }
 
-            if(element.checkout)
-            {
-                totalamount+= sellingprice*element.qtty ;
+            if (element.checkout) {
+                totalamount += sellingprice * element.qtty;
             }
             totalamount = Math.round(totalamount * 100) / 100;
             var existsProduct = shoppingCart.shopping_cart_products.find(s => s.product == cartItem.product && s.product_variant == cartItem.product_variant);
@@ -336,7 +378,7 @@ module.exports = {
             totalamount: totalamount
         });
     },
-    getCartById: async (ctx) => {
+    getCartById: async(ctx) => {
         const params = _.assign({}, ctx.request.params, ctx.params);
 
         var shoppingCartId = params.shopping_cart_id;
@@ -355,7 +397,7 @@ module.exports = {
             shipping_fee: 0
         });
     },
-    removeCartItem: async (ctx) => {
+    removeCartItem: async(ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (userId == 0) {
             return ctx.badRequest(
@@ -370,9 +412,16 @@ module.exports = {
         const params = _.assign({}, ctx.request.params, ctx.params);
         let cartItemId = params.cart_item_id;
 
+        var isexpress = false;
+
+        if (!_.isNil(params.isexpress) && params.isexpress == true) {
+            isexpress = true;
+        }
+
         var shoppingCart = await strapi.query("shopping-cart").findOne({
             user: userId,
             status: strapi.config.constants.shopping_cart_status.new,
+            isexpress: isexpress,
             _sort: "id:desc"
         });
 
