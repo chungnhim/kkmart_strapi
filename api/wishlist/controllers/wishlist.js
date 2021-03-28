@@ -59,7 +59,7 @@ module.exports = {
 
         //get in table type
         //
-        //console.log(ctx.query);
+
         const params = _.assign({}, ctx.request.body, ctx.params);
         let productId = params.productId;
         let dataQuery = {
@@ -67,8 +67,13 @@ module.exports = {
             product: productId
         }
         var dataresult = await strapi.query('wishlist').find(dataQuery);
+
         if (dataresult != null && dataresult.length > 0) {
-            await strapi.query('wishlist').delete({ id: dataresult[0].id });
+            for (let index = 0; index < dataresult.length; index++) {
+                const element = dataresult[index];
+                await strapi.query('wishlist').delete({ id: element.id });
+            }
+
             ctx.send({
                 statusCode: 0,
                 error: 'none',
@@ -109,19 +114,22 @@ module.exports = {
         }
 
         var dataResult = await strapi.query("wishlist").find(dataQuery);
+
         if (dataResult.length > 0) {
             var dataProductResult = [];
 
             for (const item of dataResult) {
                 if (item.product != null) {
-                    //console.log(item.product.id);
-                    var getProductResult = await strapi.query("product").findOne({ id: item.product.id });
-                    getProductResult = await strapi.services.promotionproduct.priceRecalculationOfProduct(getProductResult);
-                    getProductResult.is_wish_list = await strapi.services.wishlist.checkWishlist(
-                        userId,
-                        getProductResult.id
-                    );
-                    dataProductResult.push(getProductResult);
+
+                    if (!_.isNil(item.product.id)) {
+                        var getProductResult = await strapi.query("product").findOne({ id: item.product.id });
+                        getProductResult = await strapi.services.promotionproduct.priceRecalculationOfProduct(getProductResult);
+                        getProductResult.is_wish_list = await strapi.services.wishlist.checkWishlist(
+                            userId,
+                            getProductResult.id
+                        );
+                        dataProductResult.push(getProductResult);
+                    }
                 }
             }
 

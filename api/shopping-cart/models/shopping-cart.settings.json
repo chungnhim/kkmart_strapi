@@ -10,8 +10,8 @@
   },
   "attributes": {
     "shopping_cart_products": {
-      "via": "shopping_cart",
-      "collection": "shopping-cart-product"
+      "collection": "shopping-cart-product",
+      "via": "shopping_cart"
     },
     "user": {
       "plugin": "users-permissions",
@@ -19,6 +19,10 @@
     },
     "status": {
       "type": "integer"
+    },
+    "isexpress": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

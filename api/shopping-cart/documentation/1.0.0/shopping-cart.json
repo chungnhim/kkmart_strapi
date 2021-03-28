@@ -1100,6 +1100,10 @@
           "status": {
             "type": "integer"
           },
+          "isexpress": {
+            "type": "boolean",
+            "default": false
+          },
           "created_by": {
             "required": [
               "id",
@@ -1203,6 +1207,10 @@
           },
           "status": {
             "type": "integer"
+          },
+          "isexpress": {
+            "type": "boolean",
+            "default": false
           },
           "created_by": {
             "type": "string"

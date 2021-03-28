@@ -750,6 +750,9 @@
               "status": {
                 "type": "integer"
               },
+              "isexpress": {
+                "type": "boolean"
+              },
               "created_by": {
                 "type": "string"
               },
