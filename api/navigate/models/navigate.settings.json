@@ -1,0 +1,19 @@
+{
+  "kind": "collectionType",
+  "collectionName": "navigates",
+  "info": {
+    "name": "Navigate"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    }
+  }
+}

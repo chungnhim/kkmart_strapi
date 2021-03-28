@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "banners",
+  "info": {
+    "name": "Banner"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "starttime": {
+      "type": "datetime"
+    },
+    "endtime": {
+      "type": "datetime"
+    },
+    "banner_image": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "banner_type": {
+      "model": "banner-type"
+    },
+    "navigate": {
+      "model": "navigate"
+    },
+    "bannerdatum": {
+      "model": "bannerdata"
+    },
+    "displayorder": {
+      "type": "float"
+    }
+  }
+}

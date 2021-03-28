@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/bannerdata",
+      "handler": "bannerdata.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/bannerdata/count",
+      "handler": "bannerdata.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/bannerdata/:id",
+      "handler": "bannerdata.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/bannerdata",
+      "handler": "bannerdata.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/bannerdata/:id",
+      "handler": "bannerdata.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/bannerdata/:id",
+      "handler": "bannerdata.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
