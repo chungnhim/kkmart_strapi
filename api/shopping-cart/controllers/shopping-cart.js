@@ -319,7 +319,7 @@ module.exports = {
                 }
             }
             let sellingprice = 0;
-            console.log(product);
+            //console.log(product);
             //let sellingproduct = await strapi.services.promotionproduct.priceRecalculationOfProduct(product);
             if (product.ishave_discount_flashsale) {
                 sellingprice = product.flashsale_price
