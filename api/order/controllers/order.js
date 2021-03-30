@@ -304,7 +304,25 @@ const processCreateOrder = async (userId,
 
     var shipping = await strapi.query("order-shipping").create(shipping);
     if (is_expressmart == true) {
-        var quotationRes = await strapi.services.lalamoveshippingservice.placeOrder(userId, user_address_id, products, shippingNote, scheduleAt);
+        var quotationRes = await strapi.services.lalamoveshippingservice.placeOrder(
+            user_address_id,
+            products,
+            shipping_note,
+            null
+        );
+
+        if (quotationRes.success) {
+            shipping.shipping_provider = quotationRes.data.shippingProvider;
+            shipping.shipping_ref_number = quotationRes.data.orderRef;
+
+            await strapi.query("order-shipping").update(
+                { id: shipping.id },
+                {
+                    shipping_provider: quotationRes.data.shippingProvider,
+                    shipping_ref_number: quotationRes.data.orderRef
+                }
+            );
+        }
     }
 
     // Add billing address
@@ -498,6 +516,8 @@ module.exports = {
             return;
         }
 
+        console.log(`shoppingCart 111`, shoppingCart);
+
         // get checkout products
         let checkOutProducts = shoppingCart.shopping_cart_products.filter(s => s.checkoutid == params.checkout_id);
         if (_.isNil(checkOutProducts) || checkOutProducts.length == 0) {
@@ -510,7 +530,7 @@ module.exports = {
         }
 
         var products = [];
-
+        console.log(`checkOutProducts`, checkOutProducts);
         for (let index = 0; index < checkOutProducts.length; index++) {
             const cartItem = checkOutProducts[index];
             products.push({

@@ -60,6 +60,9 @@
     },
     "shippingfee": {
       "type": "decimal"
+    },
+    "shipping_ref_number": {
+      "type": "string"
     }
   }
 }

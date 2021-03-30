@@ -138,7 +138,6 @@ module.exports = {
             );
 
             ctx.send(res);
-
             return;
         }
 

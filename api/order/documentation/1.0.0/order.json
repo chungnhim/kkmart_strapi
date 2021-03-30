@@ -1241,6 +1241,9 @@
               "shippingfee": {
                 "type": "number"
               },
+              "shipping_ref_number": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },

@@ -343,7 +343,6 @@ module.exports = {
 		const method = "POST";
 
 		var auth = await generateSignature(req, method, path);
-		console.log(`auth`, auth);
 		if (!auth.success) {
 			return {
 				success: false,
@@ -352,9 +351,6 @@ module.exports = {
 		}
 
 		let header = getHttpHeader(auth.apiKey, auth.timestamp, auth.signature, "MY_KUL");
-		console.log(`req data`, JSON.stringify(req));
-		console.log(`header`, header);
-
 		var res = await
 			axios.post(`${LALAMOVE_API}${path}`, req, {
 				headers: header
@@ -362,8 +358,12 @@ module.exports = {
 				let httpCode = response.status;
 				return {
 					success: true,
-					data: response.data
-				}
+					data: {
+						customerOrderId: response.data.customerOrderId,
+						orderRef: response.data.orderRef,
+						shippingProvider: "LALAMOVE"
+					}
+				};
 			}).catch(function (error) {
 				// console.log(error.response);
 				return {

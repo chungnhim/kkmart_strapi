@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "03/30/2021 11:21:40 PM"
+    "x-generation-date": "03/31/2021 12:08:15 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -48069,6 +48069,9 @@
                 "shippingfee": {
                   "type": "number"
                 },
+                "shipping_ref_number": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -50446,6 +50449,9 @@
                 },
                 "shippingfee": {
                   "type": "number"
+                },
+                "shipping_ref_number": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -55814,6 +55820,9 @@
           "shippingfee": {
             "type": "number"
           },
+          "shipping_ref_number": {
+            "type": "string"
+          },
           "created_by": {
             "required": [
               "id",
@@ -55953,6 +55962,9 @@
           },
           "shippingfee": {
             "type": "number"
+          },
+          "shipping_ref_number": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
@@ -56345,6 +56357,9 @@
               },
               "shippingfee": {
                 "type": "number"
+              },
+              "shipping_ref_number": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -61434,6 +61449,9 @@
                 },
                 "shippingfee": {
                   "type": "number"
+                },
+                "shipping_ref_number": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
