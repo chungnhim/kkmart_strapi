@@ -8,7 +8,6 @@ const CryptoJS = require('crypto-js');
 const axios = require('axios');
 const _ = require("lodash");
 const uuid = require('uuid');
-const NodeGeocoder = require('node-geocoder');
 const LALAMOVE_API = process.env.LALAMOVE_API || 'https://sandbox-rest.lalamove.com';
 
 const malaysiaServiceTypes = [
@@ -213,14 +212,6 @@ const getQuotationBody = async (scheduleAt, serviceType, pickUpPoint, deliverPoi
 	// 	req.specialRequests.push(body.special_requests);
 	// }
 
-	// const options = {
-	// 	provider: 'here',
-	// 	apiKey: process.env.HERE_API_KEY || 'b_tw_a6m371Kris1qsOWLzhA2jerXM2A8BP8eNwiK4o', // for Mapquest, OpenCage, Google Premier, Here
-	// 	formatter: null // 'gpx', 'string', ...
-	// };
-
-	// const geocoder = NodeGeocoder(options);
-
 	var pickUpCountry = countiesCode.find(s => s.code == pickUpPoint.countryCode);
 	if (_.isNil(pickUpCountry)) {
 		return {
@@ -228,14 +219,6 @@ const getQuotationBody = async (scheduleAt, serviceType, pickUpPoint, deliverPoi
 			message: "pickup_location.country_code in valid"
 		};
 	}
-
-	// const mapForPickup = await geocoder.geocode(body.pickup_location.address);
-	// if (_.isNil(mapForPickup)) {
-	// 	return {
-	// 		success: false,
-	// 		message: "Can not detect pickup_location"
-	// 	};
-	// }
 
 	var pickUP = {
 		"location": {
