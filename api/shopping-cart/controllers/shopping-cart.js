@@ -171,6 +171,8 @@ module.exports = {
         }
 
         var existsProduct = shoppingCart.shopping_cart_products.find(s => s.product == productId && s.product_variant == productVariantId);
+        console.log(`existsProduct`, existsProduct);
+
         if (_.isNil(existsProduct)) {
             // Case add new item to cart            
             shoppingCartProduct = await strapi.query("shopping-cart-product").create({
@@ -197,12 +199,6 @@ module.exports = {
 
             return;
         }
-
-        shoppingCart = await strapi.query("shopping-cart").findOne({
-            user: userId,
-            status: strapi.config.constants.shopping_cart_status.new,
-            _sort: "id:desc"
-        });
 
         ctx.send({
             success: true,

@@ -288,7 +288,6 @@ module.exports = {
 		}
 
 		let quotationBody = await getQuotationBody(scheduleAt, serviceType.key, pickUpPoint, deliverPoint);
-
 		if (!quotationBody.success) {
 			return quotationBody;
 		}
@@ -304,11 +303,7 @@ module.exports = {
 			}
 		}
 
-		console.log(`quotationBody.data`, JSON.stringify(quotationBody.data));
 		let header = getHttpHeader(auth.apiKey, auth.timestamp, auth.signature, "MY_KUL");
-
-		console.log(`header`, header);
-
 		var res = await
 			axios.post(`${LALAMOVE_API}${path}`, quotationBody.data, {
 				headers: header
@@ -336,11 +331,17 @@ module.exports = {
 
 		return res;
 	},
-	placeOrder: async (body) => {
-		const path = "/v2/orders";
-		const method = "POST";
+	placeOrder: async (scheduleAt, weigh, pickUpPoint, deliverPoint) => {
+		let serviceType = serviceTypesByWeigh.find(s => s.min <= weigh && weigh <= s.max);
+		if (_.isNil(serviceType) || _.isNil(malaysiaServiceTypes.find(s => s.key.toUpperCase() == serviceType.key))) {
+			return {
+				success: false,
+				message: "Shipping service type not supported"
+			}
+		}
 
-		var quotationRes = await strapi.services.lalamoveshippingservice.getQuotations(body);
+		var quotationRes = await strapi.services.lalamoveshippingservice.getQuotations(scheduleAt, weigh, pickUpPoint, deliverPoint);
+		console.log(`quotationRes`, quotationRes);
 		if (_.isNil(quotationRes) || !quotationRes.success) {
 			return {
 				success: false,
@@ -348,13 +349,22 @@ module.exports = {
 			}
 		}
 
-		let quotationBody = await getQuotationBody(body);
-		quotationBody.quotedTotalFee = {
+		let quotationBody = await getQuotationBody(scheduleAt, serviceType.key, pickUpPoint, deliverPoint);
+		if (!quotationBody.success) {
+			return quotationBody;
+		}
+
+		var req = quotationBody.data;
+		req.quotedTotalFee = {
 			"amount": quotationRes.data.totalFee,
 			"currency": quotationRes.data.totalFeeCurrency
 		};
 
-		var auth = await generateSignature(quotationBody, method, path);
+		const path = "/v2/orders";
+		const method = "POST";
+
+		var auth = await generateSignature(req, method, path);
+		console.log(`auth`, auth);
 		if (!auth.success) {
 			return {
 				success: false,
@@ -363,8 +373,11 @@ module.exports = {
 		}
 
 		let header = getHttpHeader(auth.apiKey, auth.timestamp, auth.signature, "MY_KUL");
+		console.log(`req data`, JSON.stringify(req));
+		console.log(`header`, header);
+
 		var res = await
-			axios.post(`${LALAMOVE_API}${path}`, quotationBody, {
+			axios.post(`${LALAMOVE_API}${path}`, req, {
 				headers: header
 			}).then(function (response) {
 				let httpCode = response.status;
@@ -373,17 +386,10 @@ module.exports = {
 					data: response.data
 				}
 			}).catch(function (error) {
-				let httpCode = error.response.status;
-				let message = "";
-				if (httpCode == 401) {
-					message = "Unauthorized";
-				} else {
-					message = "Place order failed"
-				}
-
+				// console.log(error.response);
 				return {
 					success: false,
-					message: message,
+					message: "Place order failed",
 					data: error.response.data
 				}
 			});
