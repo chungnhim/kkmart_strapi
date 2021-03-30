@@ -186,6 +186,13 @@ const getQuotationBody = async (scheduleAt, serviceType, pickUpPoint, deliverPoi
 	// 	"service_type": "MOTORCYCLE"
 	// }
 
+	if (_.isNil(deliverPoint.phone) || deliverPoint.phone == "") {
+		return {
+			success: false,
+			message: "The receiver phone number is required"
+		};
+	}
+
 	var req = {
 		"serviceType": serviceType,
 		"specialRequests": [],
@@ -243,14 +250,6 @@ const getQuotationBody = async (scheduleAt, serviceType, pickUpPoint, deliverPoi
 		};
 	}
 
-	// const mapForDeliver = await geocoder.geocode(body.deliver_location.address);
-	// if (_.isNil(mapForDeliver)) {
-	// 	return {
-	// 		success: false,
-	// 		message: "Can not detect deliver_location"
-	// 	};
-	// }
-
 	var deliver = {
 		"location": {
 			"lat": deliverPoint.latitude.toString(),
@@ -288,13 +287,10 @@ module.exports = {
 			}
 		}
 
-		console.log(`pickUpPoint`, pickUpPoint);
-		console.log(`deliverPoint`, deliverPoint);
 		let quotationBody = await getQuotationBody(scheduleAt, serviceType.key, pickUpPoint, deliverPoint);
 
-		console.log(`quotationBody`, JSON.stringify(quotationBody));
 		if (!quotationBody.success) {
-			return res;
+			return quotationBody;
 		}
 
 		const path = "/v2/quotations";
@@ -308,7 +304,11 @@ module.exports = {
 			}
 		}
 
+		console.log(`quotationBody.data`, JSON.stringify(quotationBody.data));
 		let header = getHttpHeader(auth.apiKey, auth.timestamp, auth.signature, "MY_KUL");
+
+		console.log(`header`, header);
+
 		var res = await
 			axios.post(`${LALAMOVE_API}${path}`, quotationBody.data, {
 				headers: header

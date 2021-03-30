@@ -31,7 +31,7 @@ module.exports = {
     const userAddressId = params.user_address_id;
     const cartItemsId = params.cart_items_id;
 
-    let userId = 49; // await strapi.services.common.getLoggedUserId(ctx);
+    let userId = await strapi.services.common.getLoggedUserId(ctx);
     if (userId == 0) {
       return ctx.badRequest(
         null,
@@ -86,7 +86,7 @@ module.exports = {
       }
     }
 
-    console.log(`nearMe`, nearMe);
+    // console.log(`nearMe`, nearMe);
 
     let pickUpPoint = {
       address: nearMe[0].address,
