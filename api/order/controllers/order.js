@@ -284,7 +284,6 @@ const processCreateOrder = async (userId,
         await strapi.query("order-product").create(product);
     }
 
-
     // Add shipping information
     var shipping = {
         order: order.id,
@@ -303,7 +302,10 @@ const processCreateOrder = async (userId,
         shippingfee: shipping_fee
     };
 
-    await strapi.query("order-shipping").create(shipping);
+    var shipping = await strapi.query("order-shipping").create(shipping);
+    if (is_expressmart == true) {
+        var quotationRes = await strapi.services.lalamoveshippingservice.placeOrder(userId, user_address_id, products, shippingNote, scheduleAt);
+    }
 
     // Add billing address
     /*

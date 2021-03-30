@@ -39,15 +39,46 @@ module.exports = {
 
         const params = _.assign({}, ctx.request.body, ctx.params);
         const userAddressId = params.user_address_id;
-        const cartItemsId = params.cart_items_id;
         const shippingNote = params.shipping_note;
+
+        var shoppingCart = await strapi.query("shopping-cart").findOne({
+            user: userId,
+            status: strapi.config.constants.shopping_cart_status.new,
+            _sort: "id:desc"
+        });
+
+        if (_.isNil(shoppingCart)) {
+            return {
+                success: false,
+                message: "Shopping cart does not exists"
+            }
+        }
+
+        if (_.isNil(shoppingCart.shopping_cart_products) || shoppingCart.shopping_cart_products.length == 0) {
+            return {
+                success: false,
+                message: "No product in shopping cart"
+            }
+        }
+
+        let products = shoppingCart.shopping_cart_products.filter(s => params.cart_items_id.includes(s.id));
+        if (_.isNil(products) || products.length == 0) {
+            return {
+                success: false,
+                message: "Products does not exists in shopping cart"
+            }
+        }
 
         if (params.provider == "LALAMOVE") {
             var res = await strapi.services.lalamoveshippingservice.getQuotations(
-                userId, userAddressId, cartItemsId, shippingNote
+                userAddressId, products, shippingNote, null
             );
 
-            ctx.send(res);
+            ctx.send({
+                success: res.success,
+                totalFee: res.totalFee,
+                totalFeeCurrency: res.totalFeeCurrency
+            });
 
             return;
         }
@@ -71,12 +102,39 @@ module.exports = {
 
         const params = _.assign({}, ctx.request.body, ctx.params);
         const userAddressId = params.user_address_id;
-        const cartItemsId = params.cart_items_id;
         const shippingNote = params.shipping_note;
+
+        var shoppingCart = await strapi.query("shopping-cart").findOne({
+            user: userId,
+            status: strapi.config.constants.shopping_cart_status.new,
+            _sort: "id:desc"
+        });
+
+        if (_.isNil(shoppingCart)) {
+            return {
+                success: false,
+                message: "Shopping cart does not exists"
+            }
+        }
+
+        if (_.isNil(shoppingCart.shopping_cart_products) || shoppingCart.shopping_cart_products.length == 0) {
+            return {
+                success: false,
+                message: "No product in shopping cart"
+            }
+        }
+
+        let products = shoppingCart.shopping_cart_products.filter(s => params.cart_items_id.includes(s.id));
+        if (_.isNil(products) || products.length == 0) {
+            return {
+                success: false,
+                message: "Products does not exists in shopping cart"
+            }
+        }
 
         if (params.provider == "LALAMOVE") {
             var res = await strapi.services.lalamoveshippingservice.placeOrder(
-                userId, userAddressId, cartItemsId, shippingNote
+                userAddressId, products, shippingNote, null
             );
 
             ctx.send(res);

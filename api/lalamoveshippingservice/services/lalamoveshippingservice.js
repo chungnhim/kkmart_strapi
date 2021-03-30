@@ -151,115 +151,9 @@ const getHttpHeader = (apiKey, timestamp, signature, countryLocode) => {
 	};
 }
 
-const getQuotationBody = async (scheduleAt, serviceType, pickUpPoint, deliverPoint) => {
-	if (_.isNil(deliverPoint.phone) || deliverPoint.phone == "") {
-		return {
-			success: false,
-			message: "The receiver phone number is required"
-		};
-	}
-
-	var req = {
-		"serviceType": serviceType,
-		"specialRequests": [],
-		"stops": [],
-		"requesterContact": {
-			"name": pickUpPoint.name,
-			"phone": pickUpPoint.phone
-		},
-		"deliveries": [{
-			"toStop": 1,
-			"toContact": {
-				"name": deliverPoint.name,
-				"phone": deliverPoint.phone
-			},
-			"remarks": deliverPoint.remarks
-		}]
-	}
-
-	if (!_.isNil(scheduleAt) && scheduleAt != "") {
-		req.scheduleAt = scheduleAt; // in UTC timezone
-	}
-
-	// if (!_.isNil(body.special_requests)) {
-	// 	req.specialRequests.push(body.special_requests);
-	// }
-
-	var pickUpCountry = countiesCode.find(s => s.code == pickUpPoint.countryCode);
-	if (_.isNil(pickUpCountry)) {
-		return {
-			success: false,
-			message: "pickup_location.country_code in valid"
-		};
-	}
-
-	var pickUP = {
-		"location": {
-			"lat": pickUpPoint.latitude.toString(),
-			"lng": pickUpPoint.longitude.toString()
-		},
-		"addresses": {}
-	};
-
-	pickUP.addresses[pickUpCountry.locale_keys] = {
-		"displayString": pickUpPoint.address,
-		"country": pickUpCountry.locode
-	};
-
-	req.stops.push(pickUP)
-
-	var deliverCountry = countiesCode.find(s => s.code == deliverPoint.countryCode);
-	if (_.isNil(deliverCountry)) {
-		return {
-			success: false,
-			message: "pickup_location.country_code in valid"
-		};
-	}
-
-	var deliver = {
-		"location": {
-			"lat": deliverPoint.latitude.toString(),
-			"lng": deliverPoint.longitude.toString()
-		},
-		"addresses": {}
-	};
-
-	deliver.addresses[deliverCountry.locale_keys] = {
-		"displayString": deliverPoint.address,
-		"country": deliverCountry.locode
-	};
-
-	req.stops.push(deliver);
-
-	return {
-		success: true,
-		data: req
-	};
-}
-
-const buildLalamoveReq = async (userId, userAddressId, cartItemsId, shippingNote, scheduleAt) => {
-	var shoppingCart = await strapi.query("shopping-cart").findOne({
-		user: userId,
-		status: strapi.config.constants.shopping_cart_status.new,
-		_sort: "id:desc"
-	});
-
-	if (_.isNil(shoppingCart)) {
-		return {
-			success: false,
-			message: "Shopping cart does not exists"
-		}
-	}
-
-	if (_.isNil(shoppingCart.shopping_cart_products) || shoppingCart.shopping_cart_products.length == 0) {
-		return {
-			success: false,
-			message: "No product in shopping cart"
-		}
-	}
-
+const buildLalamoveReq = async (userAddressId, products, shippingNote, scheduleAt) => {
 	let weigh = 0;
-	shoppingCart.shopping_cart_products.filter(s => cartItemsId.includes(s.id)).forEach(product => {
+	products.forEach(product => {
 		weigh += (_.isNil(product.weight) ? 0 : parseFloat(product.weight));
 	});
 
@@ -383,8 +277,8 @@ module.exports = {
 			"countries": countiesCode
 		};
 	},
-	getQuotations: async (userId, userAddressId, cartItemsId, shippingNote) => {
-		let quotationBody = await buildLalamoveReq(userId, userAddressId, cartItemsId, shippingNote);
+	getQuotations: async (userAddressId, products, shippingNote, scheduleAt) => {
+		let quotationBody = await buildLalamoveReq(userAddressId, products, shippingNote);
 		if (!quotationBody.success) {
 			return quotationBody;
 		}
@@ -430,9 +324,8 @@ module.exports = {
 
 		return res;
 	},
-	placeOrder: async (userId, userAddressId, cartItemsId, shippingNote, scheduleAt) => {
-		var quotationRes = await strapi.services.lalamoveshippingservice.getQuotations(userId, userAddressId, cartItemsId, shippingNote, scheduleAt);
-		console.log(`quotationRes`, quotationRes);
+	placeOrder: async (userAddressId, products, shippingNote, scheduleAt) => {
+		var quotationRes = await strapi.services.lalamoveshippingservice.getQuotations(userAddressId, products, shippingNote, scheduleAt);
 		if (_.isNil(quotationRes) || !quotationRes.success) {
 			return {
 				success: false,
@@ -440,7 +333,6 @@ module.exports = {
 			}
 		}
 
-		console.log(`quotationRes`, JSON.stringify(quotationRes));
 		var req = quotationRes.body;
 		req.quotedTotalFee = {
 			"amount": quotationRes.totalFee,
