@@ -18,7 +18,7 @@ const generateOrderCode = (length = 6) => {
     return moment.utc(new Date).format("YYYYMMDD") + text;
 }
 
-const getByOrderCode = async(orderCode) => {
+const getByOrderCode = async (orderCode) => {
     var order = await strapi.query("order").findOne({
         order_code: orderCode,
     });
@@ -26,7 +26,7 @@ const getByOrderCode = async(orderCode) => {
     return order;
 }
 
-const getByOrdersUserId = async(pageIndex, pageSize, userId) => {
+const getByOrdersUserId = async (pageIndex, pageSize, userId) => {
     var dataQuery = {
         _start: (pageIndex - 1) * pageSize,
         _limit: pageSize,
@@ -42,7 +42,7 @@ const getByOrdersUserId = async(pageIndex, pageSize, userId) => {
     };
 }
 
-const processCheckout = async(userId, products, is_expressmart, shipping_prodiver_code, order_via, vouchercode, is_use_coin, currency, shopping_cart_id) => {
+const processCheckout = async (userId, products, is_expressmart, shipping_prodiver_code, order_via, vouchercode, is_use_coin, currency, shopping_cart_id) => {
     // [
     //     {
     //         "product_id": 1,
@@ -155,7 +155,15 @@ const processCheckout = async(userId, products, is_expressmart, shipping_prodive
         discount_amount: discountAmount
     };
 }
-const processCreateOrder = async(userId, products, is_expressmart, user_address_id, order_via, vouchercode, is_use_coin, shipping_note, currency) => {
+const processCreateOrder = async (userId,
+    products,
+    is_expressmart,
+    user_address_id,
+    order_via,
+    vouchercode,
+    is_use_coin,
+    shipping_note,
+    currency) => {
     // [
     //     {
     //         "product_id": 1,
@@ -286,10 +294,10 @@ const processCreateOrder = async(userId, products, is_expressmart, user_address_
         city: userAddressInf.city,
         address: userAddressInf.address1,
         note: shipping_note,
-        status: 1,
+        status: strapi.config.constants.shipping_status.new,
         deliver_date: null,
         actual_deliver_date: null,
-        deliver_note: null,
+        deliver_note: shipping_note,
         shipping_provider: null,
         postcode: userAddressInf.postcode,
         shippingfee: shipping_fee
@@ -324,7 +332,7 @@ const processCreateOrder = async(userId, products, is_expressmart, user_address_
     };
 }
 module.exports = {
-    checkOut: async(ctx) => {
+    checkOut: async (ctx) => {
         //{
         //   "is_expressmart": false,
         //    "shipping_prodiver_code": "LALAMOVE",
@@ -428,7 +436,7 @@ module.exports = {
 
         ctx.send(createOrderRes);
     },
-    createOrder: async(ctx) => {
+    createOrder: async (ctx) => {
         // {        
         //     "user_address_id": "",
         //     "shipping_note": "",
@@ -530,7 +538,7 @@ module.exports = {
 
         ctx.send(createOrderRes);
     },
-    getCheckout: async(ctx) => {
+    getCheckout: async (ctx) => {
 
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (userId == 0) {
@@ -621,7 +629,7 @@ module.exports = {
         });
 
     },
-    getByOrderCode: async(ctx) => {
+    getByOrderCode: async (ctx) => {
         const params = _.assign({}, ctx.request.params, ctx.params);
         var orderCode = params.orderCode;
 
@@ -655,7 +663,7 @@ module.exports = {
             order: res
         });
     },
-    getOrdersByUserId: async(ctx) => {
+    getOrdersByUserId: async (ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
             ctx.send({

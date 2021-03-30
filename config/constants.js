@@ -2,6 +2,13 @@ module.exports = ({ env }) => ({
     order_status: {
         new: 1
     },
+    shipping_status: {
+        new: 1,
+        inProvider: 2,
+        onDelivery: 3,
+        completed: 4,
+        cancelled: 5
+    },
     shopping_cart_status: {
         new: 1,
         paid: 2,

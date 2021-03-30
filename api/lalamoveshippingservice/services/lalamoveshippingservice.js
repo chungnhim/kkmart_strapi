@@ -152,40 +152,6 @@ const getHttpHeader = (apiKey, timestamp, signature, countryLocode) => {
 }
 
 const getQuotationBody = async (scheduleAt, serviceType, pickUpPoint, deliverPoint) => {
-	// {
-	// 	"pickUpPoint": {
-	// 		"address": "",
-	// 		"countryCode": "",
-	// 		"latitude": "",
-	// 		"longitude": "",
-	// 		"name":"",
-	// 		"phone":"",
-	// 		"remarks":""
-	// 	}
-	// }
-
-	// {
-	// 	"pickup_location": {
-	// 		"address": "Bumi Bukit Jalil, No 2-1, Jalan Jalil 1, Lebuhraya Bukit Jalil, Sungai Besi, 57000 Kuala Lumpur, Malaysia",
-	// 		"country_code": "MY"
-	// 	},
-	// 	"deliver_location": {
-	// 		"address": "64000 Sepang, Selangor, Malaysia",
-	// 		"country_code": "MY"
-	// 	},
-	// 	"receiver": {
-	// 		"name": "Chris Wong",
-	// 		"phone_number": "0376886555"
-	// 	},
-	// 	"schedule_at": "",
-	// 	"sender": {
-	// 		"name": "Shen Ong",
-	// 		"phone_number": "0376886555",
-	// 		"remarks": "Remarks for drop-off point (#1)."
-	// 	},
-	// 	"service_type": "MOTORCYCLE"
-	// }
-
 	if (_.isNil(deliverPoint.phone) || deliverPoint.phone == "") {
 		return {
 			success: false,
@@ -271,6 +237,145 @@ const getQuotationBody = async (scheduleAt, serviceType, pickUpPoint, deliverPoi
 	};
 }
 
+const buildLalamoveReq = async (userId, userAddressId, cartItemsId, shippingNote, scheduleAt) => {
+	var shoppingCart = await strapi.query("shopping-cart").findOne({
+		user: userId,
+		status: strapi.config.constants.shopping_cart_status.new,
+		_sort: "id:desc"
+	});
+
+	if (_.isNil(shoppingCart)) {
+		return {
+			success: false,
+			message: "Shopping cart does not exists"
+		}
+	}
+
+	if (_.isNil(shoppingCart.shopping_cart_products) || shoppingCart.shopping_cart_products.length == 0) {
+		return {
+			success: false,
+			message: "No product in shopping cart"
+		}
+	}
+
+	let weigh = 0;
+	shoppingCart.shopping_cart_products.filter(s => cartItemsId.includes(s.id)).forEach(product => {
+		weigh += (_.isNil(product.weight) ? 0 : parseFloat(product.weight));
+	});
+
+	var userAddress = await strapi.query("user-address").findOne({ id: userAddressId });
+	if (_.isNil(userAddress)) {
+		return {
+			success: false,
+			message: "User address not found"
+		}
+	}
+
+	var nearMe = await strapi.services.outlet.getNearMe(userAddress.longitude,
+		userAddress.latitude,
+		100000);
+
+	if (nearMe.length == 0) {
+		return {
+			success: false,
+			message: "Can not detect pickup address"
+		}
+	}
+
+	let deliverAddress = `${userAddress.address1}, ${userAddress.city}, ${userAddress.state.name}, ${userAddress.country.name}`;
+	if (_.isNil(userAddress.phone_number) || userAddress.phone_number == "") {
+		return {
+			success: false,
+			message: "The receiver phone number is required"
+		};
+	}
+
+	let serviceType = serviceTypesByWeigh.find(s => s.min <= weigh && weigh <= s.max);
+	if (_.isNil(serviceType) || _.isNil(malaysiaServiceTypes.find(s => s.key.toUpperCase() == serviceType.key))) {
+		return {
+			success: false,
+			message: "Shipping service type not supported"
+		}
+	}
+
+	var req = {
+		"serviceType": serviceType.key,
+		"specialRequests": [],
+		"stops": [],
+		"requesterContact": {
+			"name": nearMe[0].name,
+			"phone": nearMe[0].telephone
+		},
+		"deliveries": [{
+			"toStop": 1,
+			"toContact": {
+				"name": userAddress.full_name,
+				"phone": userAddress.phone_number
+			},
+			"remarks": shippingNote
+		}]
+	}
+
+	if (!_.isNil(scheduleAt) && scheduleAt != "") {
+		req.scheduleAt = scheduleAt; // in UTC timezone
+	}
+
+	// if (!_.isNil(body.special_requests)) {
+	// 	req.specialRequests.push(body.special_requests);
+	// }
+
+	var pickUpCountry = countiesCode.find(s => s.code == nearMe[0].country.codeiso2);
+	if (_.isNil(pickUpCountry)) {
+		return {
+			success: false,
+			message: "pickup_location.country_code in valid"
+		};
+	}
+
+	var pickUP = {
+		"location": {
+			"lat": nearMe[0].latitude.toString(),
+			"lng": nearMe[0].longitude.toString()
+		},
+		"addresses": {}
+	};
+
+	pickUP.addresses[pickUpCountry.locale_keys] = {
+		"displayString": nearMe[0].address,
+		"country": pickUpCountry.locode
+	};
+
+	req.stops.push(pickUP)
+
+	var deliverCountry = countiesCode.find(s => s.code == userAddress.country.codeiso2);
+	if (_.isNil(deliverCountry)) {
+		return {
+			success: false,
+			message: "pickup_location.country_code in valid"
+		};
+	}
+
+	var deliver = {
+		"location": {
+			"lat": userAddress.latitude.toString(),
+			"lng": userAddress.longitude.toString()
+		},
+		"addresses": {}
+	};
+
+	deliver.addresses[deliverCountry.locale_keys] = {
+		"displayString": deliverAddress,
+		"country": deliverCountry.locode
+	};
+
+	req.stops.push(deliver);
+
+	return {
+		success: true,
+		data: req
+	};
+}
+
 module.exports = {
 	getConfiguration: () => {
 		return {
@@ -278,16 +383,8 @@ module.exports = {
 			"countries": countiesCode
 		};
 	},
-	getQuotations: async (scheduleAt, weigh, pickUpPoint, deliverPoint) => {
-		let serviceType = serviceTypesByWeigh.find(s => s.min <= weigh && weigh <= s.max);
-		if (_.isNil(serviceType) || _.isNil(malaysiaServiceTypes.find(s => s.key.toUpperCase() == serviceType.key))) {
-			return {
-				success: false,
-				message: "Shipping service type not supported"
-			}
-		}
-
-		let quotationBody = await getQuotationBody(scheduleAt, serviceType.key, pickUpPoint, deliverPoint);
+	getQuotations: async (userId, userAddressId, cartItemsId, shippingNote) => {
+		let quotationBody = await buildLalamoveReq(userId, userAddressId, cartItemsId, shippingNote);
 		if (!quotationBody.success) {
 			return quotationBody;
 		}
@@ -311,7 +408,9 @@ module.exports = {
 				let httpCode = response.status;
 				return {
 					success: true,
-					data: response.data
+					body: quotationBody.data,
+					totalFee: response.data.totalFee,
+					totalFeeCurrency: response.data.totalFeeCurrency
 				}
 			}).catch(function (error) {
 				let httpCode = error.response.status;
@@ -331,16 +430,8 @@ module.exports = {
 
 		return res;
 	},
-	placeOrder: async (scheduleAt, weigh, pickUpPoint, deliverPoint) => {
-		let serviceType = serviceTypesByWeigh.find(s => s.min <= weigh && weigh <= s.max);
-		if (_.isNil(serviceType) || _.isNil(malaysiaServiceTypes.find(s => s.key.toUpperCase() == serviceType.key))) {
-			return {
-				success: false,
-				message: "Shipping service type not supported"
-			}
-		}
-
-		var quotationRes = await strapi.services.lalamoveshippingservice.getQuotations(scheduleAt, weigh, pickUpPoint, deliverPoint);
+	placeOrder: async (userId, userAddressId, cartItemsId, shippingNote, scheduleAt) => {
+		var quotationRes = await strapi.services.lalamoveshippingservice.getQuotations(userId, userAddressId, cartItemsId, shippingNote, scheduleAt);
 		console.log(`quotationRes`, quotationRes);
 		if (_.isNil(quotationRes) || !quotationRes.success) {
 			return {
@@ -349,15 +440,11 @@ module.exports = {
 			}
 		}
 
-		let quotationBody = await getQuotationBody(scheduleAt, serviceType.key, pickUpPoint, deliverPoint);
-		if (!quotationBody.success) {
-			return quotationBody;
-		}
-
-		var req = quotationBody.data;
+		console.log(`quotationRes`, JSON.stringify(quotationRes));
+		var req = quotationRes.body;
 		req.quotedTotalFee = {
-			"amount": quotationRes.data.totalFee,
-			"currency": quotationRes.data.totalFeeCurrency
+			"amount": quotationRes.totalFee,
+			"currency": quotationRes.totalFeeCurrency
 		};
 
 		const path = "/v2/orders";
