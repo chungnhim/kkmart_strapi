@@ -256,7 +256,7 @@
         }
       }
     },
-    "/shipping/order-details/{provider}/{orderRef}": {
+    "/v1/shipping/order-details/{provider}/{orderNumber}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -322,7 +322,7 @@
             }
           },
           {
-            "name": "orderRef",
+            "name": "orderNumber",
             "in": "path",
             "description": "",
             "deprecated": false,

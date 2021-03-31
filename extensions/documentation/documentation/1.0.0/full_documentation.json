@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "03/31/2021 12:08:15 AM"
+    "x-generation-date": "03/31/2021 11:56:15 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -4147,7 +4147,7 @@
         }
       }
     },
-    "/shipping/order-details/{provider}/{orderRef}": {
+    "/v1/shipping/order-details/{provider}/{orderNumber}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -4213,7 +4213,7 @@
             }
           },
           {
-            "name": "orderRef",
+            "name": "orderNumber",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -47990,12 +47990,6 @@
                     "type": "string"
                   }
                 },
-                "order_shippings": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
                 "order_billings": {
                   "type": "array",
                   "items": {
@@ -48051,12 +48045,6 @@
                 "country": {
                   "type": "string"
                 },
-                "province": {
-                  "type": "string"
-                },
-                "district": {
-                  "type": "string"
-                },
                 "order": {
                   "type": "string"
                 },
@@ -48070,6 +48058,9 @@
                   "type": "number"
                 },
                 "shipping_ref_number": {
+                  "type": "string"
+                },
+                "state": {
                   "type": "string"
                 },
                 "created_by": {
@@ -50366,12 +50357,6 @@
                   "type": "string"
                 }
               },
-              "order_shippings": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "order_billings": {
                 "type": "array",
                 "items": {
@@ -50391,76 +50376,6 @@
           },
           "code": {
             "type": "string"
-          },
-          "order_shippings": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "full_name": {
-                  "type": "string"
-                },
-                "phone_number": {
-                  "type": "string"
-                },
-                "address": {
-                  "type": "string"
-                },
-                "note": {
-                  "type": "string"
-                },
-                "status": {
-                  "type": "integer"
-                },
-                "deliver_date": {
-                  "type": "datetime"
-                },
-                "actual_deliver_date": {
-                  "type": "datetime"
-                },
-                "deliver_note": {
-                  "type": "string"
-                },
-                "shipping_provider": {
-                  "type": "string"
-                },
-                "country": {
-                  "type": "string"
-                },
-                "province": {
-                  "type": "string"
-                },
-                "district": {
-                  "type": "string"
-                },
-                "order": {
-                  "type": "string"
-                },
-                "postcode": {
-                  "type": "string"
-                },
-                "city": {
-                  "type": "string"
-                },
-                "shippingfee": {
-                  "type": "number"
-                },
-                "shipping_ref_number": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
           },
           "order_billings": {
             "type": "array",
@@ -50611,12 +50526,6 @@
           },
           "code": {
             "type": "string"
-          },
-          "order_shippings": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
           },
           "order_billings": {
             "type": "array",
@@ -54535,12 +54444,6 @@
                   "type": "string"
                 }
               },
-              "order_shippings": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "order_billings": {
                 "type": "array",
                 "items": {
@@ -54571,12 +54474,6 @@
               },
               "code": {
                 "type": "string"
-              },
-              "order_shippings": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
               },
               "order_billings": {
                 "type": "array",
@@ -55658,86 +55555,6 @@
               }
             }
           },
-          "province": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "code": {
-                "type": "string"
-              },
-              "country": {
-                "type": "string"
-              },
-              "districts": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "order_shippings": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "order_billings": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "district": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "province": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "code": {
-                "type": "string"
-              },
-              "order_shippings": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "order_billings": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
           "order": {
             "required": [
               "id"
@@ -55822,6 +55639,40 @@
           },
           "shipping_ref_number": {
             "type": "string"
+          },
+          "state": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "country": {
+                "type": "string"
+              },
+              "user_addresses": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "order_shippings": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           },
           "created_by": {
             "required": [
@@ -55945,12 +55796,6 @@
           "country": {
             "type": "string"
           },
-          "province": {
-            "type": "string"
-          },
-          "district": {
-            "type": "string"
-          },
           "order": {
             "type": "string"
           },
@@ -55964,6 +55809,9 @@
             "type": "number"
           },
           "shipping_ref_number": {
+            "type": "string"
+          },
+          "state": {
             "type": "string"
           },
           "created_by": {
@@ -56340,12 +56188,6 @@
               "country": {
                 "type": "string"
               },
-              "province": {
-                "type": "string"
-              },
-              "district": {
-                "type": "string"
-              },
               "order": {
                 "type": "string"
               },
@@ -56359,6 +56201,9 @@
                 "type": "number"
               },
               "shipping_ref_number": {
+                "type": "string"
+              },
+              "state": {
                 "type": "string"
               },
               "created_by": {
@@ -56820,6 +56665,12 @@
                 "type": "string"
               },
               "user_addresses": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "order_shippings": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -61371,87 +61222,11 @@
                 "code": {
                   "type": "string"
                 },
-                "order_shippings": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
                 "order_billings": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "order_shippings": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "full_name": {
-                  "type": "string"
-                },
-                "phone_number": {
-                  "type": "string"
-                },
-                "address": {
-                  "type": "string"
-                },
-                "note": {
-                  "type": "string"
-                },
-                "status": {
-                  "type": "integer"
-                },
-                "deliver_date": {
-                  "type": "datetime"
-                },
-                "actual_deliver_date": {
-                  "type": "datetime"
-                },
-                "deliver_note": {
-                  "type": "string"
-                },
-                "shipping_provider": {
-                  "type": "string"
-                },
-                "country": {
-                  "type": "string"
-                },
-                "province": {
-                  "type": "string"
-                },
-                "district": {
-                  "type": "string"
-                },
-                "order": {
-                  "type": "string"
-                },
-                "postcode": {
-                  "type": "string"
-                },
-                "city": {
-                  "type": "string"
-                },
-                "shippingfee": {
-                  "type": "number"
-                },
-                "shipping_ref_number": {
-                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -61613,12 +61388,6 @@
             "type": "string"
           },
           "districts": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "order_shippings": {
             "type": "array",
             "items": {
               "type": "string"
@@ -63471,6 +63240,73 @@
               }
             }
           },
+          "order_shippings": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "full_name": {
+                  "type": "string"
+                },
+                "phone_number": {
+                  "type": "string"
+                },
+                "address": {
+                  "type": "string"
+                },
+                "note": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "integer"
+                },
+                "deliver_date": {
+                  "type": "datetime"
+                },
+                "actual_deliver_date": {
+                  "type": "datetime"
+                },
+                "deliver_note": {
+                  "type": "string"
+                },
+                "shipping_provider": {
+                  "type": "string"
+                },
+                "country": {
+                  "type": "string"
+                },
+                "order": {
+                  "type": "string"
+                },
+                "postcode": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "shippingfee": {
+                  "type": "number"
+                },
+                "shipping_ref_number": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -63570,6 +63406,12 @@
             "type": "string"
           },
           "user_addresses": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "order_shippings": {
             "type": "array",
             "items": {
               "type": "string"
@@ -63915,6 +63757,12 @@
                 "type": "string"
               },
               "user_addresses": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "order_shippings": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -65554,6 +65402,12 @@
                   "type": "string"
                 }
               },
+              "order_shippings": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "created_by": {
                 "type": "string"
               },
@@ -66969,6 +66823,12 @@
                 "type": "string"
               },
               "user_addresses": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "order_shippings": {
                 "type": "array",
                 "items": {
                   "type": "string"

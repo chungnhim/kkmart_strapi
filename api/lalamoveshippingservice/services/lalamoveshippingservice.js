@@ -350,6 +350,8 @@ module.exports = {
 			}
 		}
 
+		console.log(`placeOrder`, req);
+
 		let header = getHttpHeader(auth.apiKey, auth.timestamp, auth.signature, "MY_KUL");
 		var res = await
 			axios.post(`${LALAMOVE_API}${path}`, req, {

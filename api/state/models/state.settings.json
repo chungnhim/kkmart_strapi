@@ -18,6 +18,10 @@
     "user_addresses": {
       "via": "state",
       "collection": "user-address"
+    },
+    "order_shippings": {
+      "via": "state",
+      "collection": "order-shipping"
     }
   }
 }

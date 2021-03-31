@@ -82,7 +82,7 @@
     },
     {
       "method": "GET",
-      "path": "/shipping/order-details/:provider/:orderRef",
+      "path": "/v1/shipping/order-details/:provider/:orderNumber",
       "handler": "shipping.getOrderDetails",
       "config": {
         "policies": []
