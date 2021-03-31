@@ -278,7 +278,7 @@ module.exports = {
 		};
 	},
 	getQuotations: async (userAddressId, products, shippingNote, scheduleAt) => {
-		let quotationBody = await buildLalamoveReq(userAddressId, products, shippingNote);
+		let quotationBody = await buildLalamoveReq(userAddressId, products, shippingNote, scheduleAt);
 		if (!quotationBody.success) {
 			return quotationBody;
 		}
@@ -349,8 +349,6 @@ module.exports = {
 				message: "Unauthorized"
 			}
 		}
-
-		console.log(`placeOrder`, req);
 
 		let header = getHttpHeader(auth.apiKey, auth.timestamp, auth.signature, "MY_KUL");
 		var res = await
