@@ -6,9 +6,33 @@
  */
 
 const _ = require("lodash");
+const NodeGeocoder = require('node-geocoder');
+
+const getLngLat = async (address) => {
+    const options = {
+        provider: 'here',
+        apiKey: process.env.HERE_API_KEY || 'b_tw_a6m371Kris1qsOWLzhA2jerXM2A8BP8eNwiK4o', // for Mapquest, OpenCage, Google Premier, Here
+        formatter: null // 'gpx', 'string', ...
+    };
+
+    const geocoder = NodeGeocoder(options);
+
+    const mapForPickup = await geocoder.geocode(address);
+    if (_.isNil(mapForPickup) || mapForPickup.length == 0) {
+        return {
+            latitude: 0,
+            longitude: 0
+        };
+    }
+
+    return {
+        latitude: mapForPickup[0].latitude,
+        longitude: mapForPickup[0].longitude
+    };
+}
 
 module.exports = {
-    addUserAddress: async(ctx) => {
+    addUserAddress: async (ctx) => {
         const params = _.assign({}, ctx.request.body, ctx.params);
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
@@ -56,13 +80,22 @@ module.exports = {
             userAddress = await strapi.query("user-address").create(entity);
         }
 
+        if (!_.isNil(userAddress) && !_.isNil(userAddress.state) && !_.isNil(userAddress.country)) {
+            var addressText = `${params.address1}, ${userAddress.city}, ${userAddress.state.name}, ${userAddress.country.name}`;
+            var lngLat = await getLngLat(addressText);
+            userAddress.longitude = lngLat.longitude;
+            userAddress.latitude = lngLat.latitude;
+
+            userAddress = await strapi.query("user-address").update({ id: userAddress.id }, userAddress);
+        }
+
         ctx.send({
             success: true,
             message: "Add user address has been successfully",
             user_address_id: userAddress.id
         });
     },
-    updateUserAddress: async(ctx) => {
+    updateUserAddress: async (ctx) => {
         const params = _.assign({}, ctx.request.body, ctx.params);
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
@@ -121,13 +154,22 @@ module.exports = {
             userAddress = await strapi.query("user-address").create(entity);
         }
 
+        if (!_.isNil(userAddress) && !_.isNil(userAddress.state) && !_.isNil(userAddress.country)) {
+            var addressText = `${params.address1}, ${userAddress.city}, ${userAddress.state.name}, ${userAddress.country.name}`;
+            var lngLat = await getLngLat(addressText);
+            userAddress.longitude = lngLat.longitude;
+            userAddress.latitude = lngLat.latitude;
+
+            userAddress = await strapi.query("user-address").update({ id: userAddress.id }, userAddress);
+        }
+
         ctx.send({
             success: true,
             message: "Add user address has been successfully",
             user_address_id: userAddress.id
         });
     },
-    getUserAddress: async(ctx) => {
+    getUserAddress: async (ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
             ctx.send({
@@ -167,7 +209,7 @@ module.exports = {
             address: _.values(models)
         });
     },
-    setDefaultUserAddress: async(ctx) => {
+    setDefaultUserAddress: async (ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
             ctx.send({
@@ -213,7 +255,7 @@ module.exports = {
             message: "Set default address has been successfully"
         });
     },
-    deleteOfUser: async(ctx) => {
+    deleteOfUser: async (ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
             ctx.send({

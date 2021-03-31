@@ -8,7 +8,6 @@ const CryptoJS = require('crypto-js');
 const axios = require('axios');
 const _ = require("lodash");
 const uuid = require('uuid');
-const NodeGeocoder = require('node-geocoder');
 const LALAMOVE_API = process.env.LALAMOVE_API || 'https://sandbox-rest.lalamove.com';
 
 const malaysiaServiceTypes = [
@@ -152,56 +151,62 @@ const getHttpHeader = (apiKey, timestamp, signature, countryLocode) => {
 	};
 }
 
-const getQuotationBody = async (scheduleAt, serviceType, pickUpPoint, deliverPoint) => {
-	// {
-	// 	"pickUpPoint": {
-	// 		"address": "",
-	// 		"countryCode": "",
-	// 		"latitude": "",
-	// 		"longitude": "",
-	// 		"name":"",
-	// 		"phone":"",
-	// 		"remarks":""
-	// 	}
-	// }
+const buildLalamoveReq = async (userAddressId, products, shippingNote, scheduleAt) => {
+	let weigh = 0;
+	products.forEach(product => {
+		weigh += (_.isNil(product.weight) ? 0 : parseFloat(product.weight));
+	});
 
-	// {
-	// 	"pickup_location": {
-	// 		"address": "Bumi Bukit Jalil, No 2-1, Jalan Jalil 1, Lebuhraya Bukit Jalil, Sungai Besi, 57000 Kuala Lumpur, Malaysia",
-	// 		"country_code": "MY"
-	// 	},
-	// 	"deliver_location": {
-	// 		"address": "64000 Sepang, Selangor, Malaysia",
-	// 		"country_code": "MY"
-	// 	},
-	// 	"receiver": {
-	// 		"name": "Chris Wong",
-	// 		"phone_number": "0376886555"
-	// 	},
-	// 	"schedule_at": "",
-	// 	"sender": {
-	// 		"name": "Shen Ong",
-	// 		"phone_number": "0376886555",
-	// 		"remarks": "Remarks for drop-off point (#1)."
-	// 	},
-	// 	"service_type": "MOTORCYCLE"
-	// }
+	var userAddress = await strapi.query("user-address").findOne({ id: userAddressId });
+	if (_.isNil(userAddress)) {
+		return {
+			success: false,
+			message: "User address not found"
+		}
+	}
+
+	var nearMe = await strapi.services.outlet.getNearMe(userAddress.longitude,
+		userAddress.latitude,
+		100000);
+
+	if (nearMe.length == 0) {
+		return {
+			success: false,
+			message: "Can not detect pickup address"
+		}
+	}
+
+	let deliverAddress = `${userAddress.address1}, ${userAddress.city}, ${userAddress.state.name}, ${userAddress.country.name}`;
+	if (_.isNil(userAddress.phone_number) || userAddress.phone_number == "") {
+		return {
+			success: false,
+			message: "The receiver phone number is required"
+		};
+	}
+
+	let serviceType = serviceTypesByWeigh.find(s => s.min <= weigh && weigh <= s.max);
+	if (_.isNil(serviceType) || _.isNil(malaysiaServiceTypes.find(s => s.key.toUpperCase() == serviceType.key))) {
+		return {
+			success: false,
+			message: "Shipping service type not supported"
+		}
+	}
 
 	var req = {
-		"serviceType": serviceType,
+		"serviceType": serviceType.key,
 		"specialRequests": [],
 		"stops": [],
 		"requesterContact": {
-			"name": pickUpPoint.name,
-			"phone": pickUpPoint.phone
+			"name": nearMe[0].name,
+			"phone": nearMe[0].telephone
 		},
 		"deliveries": [{
 			"toStop": 1,
 			"toContact": {
-				"name": deliverPoint.name,
-				"phone": deliverPoint.phone
+				"name": userAddress.full_name,
+				"phone": userAddress.phone_number
 			},
-			"remarks": deliverPoint.remarks
+			"remarks": shippingNote
 		}]
 	}
 
@@ -213,15 +218,7 @@ const getQuotationBody = async (scheduleAt, serviceType, pickUpPoint, deliverPoi
 	// 	req.specialRequests.push(body.special_requests);
 	// }
 
-	// const options = {
-	// 	provider: 'here',
-	// 	apiKey: process.env.HERE_API_KEY || 'b_tw_a6m371Kris1qsOWLzhA2jerXM2A8BP8eNwiK4o', // for Mapquest, OpenCage, Google Premier, Here
-	// 	formatter: null // 'gpx', 'string', ...
-	// };
-
-	// const geocoder = NodeGeocoder(options);
-
-	var pickUpCountry = countiesCode.find(s => s.code == pickUpPoint.countryCode);
+	var pickUpCountry = countiesCode.find(s => s.code == nearMe[0].country.codeiso2);
 	if (_.isNil(pickUpCountry)) {
 		return {
 			success: false,
@@ -229,30 +226,22 @@ const getQuotationBody = async (scheduleAt, serviceType, pickUpPoint, deliverPoi
 		};
 	}
 
-	// const mapForPickup = await geocoder.geocode(body.pickup_location.address);
-	// if (_.isNil(mapForPickup)) {
-	// 	return {
-	// 		success: false,
-	// 		message: "Can not detect pickup_location"
-	// 	};
-	// }
-
 	var pickUP = {
 		"location": {
-			"lat": pickUpPoint.latitude.toString(),
-			"lng": pickUpPoint.longitude.toString()
+			"lat": nearMe[0].latitude.toString(),
+			"lng": nearMe[0].longitude.toString()
 		},
 		"addresses": {}
 	};
 
 	pickUP.addresses[pickUpCountry.locale_keys] = {
-		"displayString": pickUpPoint.address,
+		"displayString": nearMe[0].address,
 		"country": pickUpCountry.locode
 	};
 
 	req.stops.push(pickUP)
 
-	var deliverCountry = countiesCode.find(s => s.code == deliverPoint.countryCode);
+	var deliverCountry = countiesCode.find(s => s.code == userAddress.country.codeiso2);
 	if (_.isNil(deliverCountry)) {
 		return {
 			success: false,
@@ -260,24 +249,16 @@ const getQuotationBody = async (scheduleAt, serviceType, pickUpPoint, deliverPoi
 		};
 	}
 
-	// const mapForDeliver = await geocoder.geocode(body.deliver_location.address);
-	// if (_.isNil(mapForDeliver)) {
-	// 	return {
-	// 		success: false,
-	// 		message: "Can not detect deliver_location"
-	// 	};
-	// }
-
 	var deliver = {
 		"location": {
-			"lat": deliverPoint.latitude.toString(),
-			"lng": deliverPoint.longitude.toString()
+			"lat": userAddress.latitude.toString(),
+			"lng": userAddress.longitude.toString()
 		},
 		"addresses": {}
 	};
 
 	deliver.addresses[deliverCountry.locale_keys] = {
-		"displayString": deliverPoint.address,
+		"displayString": deliverAddress,
 		"country": deliverCountry.locode
 	};
 
@@ -296,22 +277,10 @@ module.exports = {
 			"countries": countiesCode
 		};
 	},
-	getQuotations: async (scheduleAt, weigh, pickUpPoint, deliverPoint) => {
-		let serviceType = serviceTypesByWeigh.find(s => s.min <= weigh && weigh <= s.max);
-		if (_.isNil(serviceType) || _.isNil(malaysiaServiceTypes.find(s => s.key.toUpperCase() == serviceType.key))) {
-			return {
-				success: false,
-				message: "Shipping service type not supported"
-			}
-		}
-
-		console.log(`pickUpPoint`, pickUpPoint);
-		console.log(`deliverPoint`, deliverPoint);
-		let quotationBody = await getQuotationBody(scheduleAt, serviceType.key, pickUpPoint, deliverPoint);
-
-		console.log(`quotationBody`, JSON.stringify(quotationBody));
+	getQuotations: async (userAddressId, products, shippingNote, scheduleAt) => {
+		let quotationBody = await buildLalamoveReq(userAddressId, products, shippingNote);
 		if (!quotationBody.success) {
-			return res;
+			return quotationBody;
 		}
 
 		const path = "/v2/quotations";
@@ -333,7 +302,9 @@ module.exports = {
 				let httpCode = response.status;
 				return {
 					success: true,
-					data: response.data
+					body: quotationBody.data,
+					totalFee: response.data.totalFee,
+					totalFeeCurrency: response.data.totalFeeCurrency
 				}
 			}).catch(function (error) {
 				let httpCode = error.response.status;
@@ -353,11 +324,8 @@ module.exports = {
 
 		return res;
 	},
-	placeOrder: async (body) => {
-		const path = "/v2/orders";
-		const method = "POST";
-
-		var quotationRes = await strapi.services.lalamoveshippingservice.getQuotations(body);
+	placeOrder: async (userAddressId, products, shippingNote, scheduleAt) => {
+		var quotationRes = await strapi.services.lalamoveshippingservice.getQuotations(userAddressId, products, shippingNote, scheduleAt);
 		if (_.isNil(quotationRes) || !quotationRes.success) {
 			return {
 				success: false,
@@ -365,13 +333,16 @@ module.exports = {
 			}
 		}
 
-		let quotationBody = await getQuotationBody(body);
-		quotationBody.quotedTotalFee = {
-			"amount": quotationRes.data.totalFee,
-			"currency": quotationRes.data.totalFeeCurrency
+		var req = quotationRes.body;
+		req.quotedTotalFee = {
+			"amount": quotationRes.totalFee,
+			"currency": quotationRes.totalFeeCurrency
 		};
 
-		var auth = await generateSignature(quotationBody, method, path);
+		const path = "/v2/orders";
+		const method = "POST";
+
+		var auth = await generateSignature(req, method, path);
 		if (!auth.success) {
 			return {
 				success: false,
@@ -381,26 +352,23 @@ module.exports = {
 
 		let header = getHttpHeader(auth.apiKey, auth.timestamp, auth.signature, "MY_KUL");
 		var res = await
-			axios.post(`${LALAMOVE_API}${path}`, quotationBody, {
+			axios.post(`${LALAMOVE_API}${path}`, req, {
 				headers: header
 			}).then(function (response) {
 				let httpCode = response.status;
 				return {
 					success: true,
-					data: response.data
-				}
+					data: {
+						customerOrderId: response.data.customerOrderId,
+						orderRef: response.data.orderRef,
+						shippingProvider: "LALAMOVE"
+					}
+				};
 			}).catch(function (error) {
-				let httpCode = error.response.status;
-				let message = "";
-				if (httpCode == 401) {
-					message = "Unauthorized";
-				} else {
-					message = "Place order failed"
-				}
-
+				// console.log(error.response);
 				return {
 					success: false,
-					message: message,
+					message: "Place order failed",
 					data: error.response.data
 				}
 			});
