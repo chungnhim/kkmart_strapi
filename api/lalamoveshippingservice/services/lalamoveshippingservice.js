@@ -278,7 +278,7 @@ module.exports = {
 		};
 	},
 	getQuotations: async (userAddressId, products, shippingNote, scheduleAt) => {
-		let quotationBody = await buildLalamoveReq(userAddressId, products, shippingNote);
+		let quotationBody = await buildLalamoveReq(userAddressId, products, shippingNote, scheduleAt);
 		if (!quotationBody.success) {
 			return quotationBody;
 		}

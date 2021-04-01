@@ -289,8 +289,9 @@ const processCreateOrder = async (userId,
         order: order.id,
         full_name: userAddressInf.full_name,
         phone_number: userAddressInf.phone_number,
-        province: userAddressInf.state,
+        state: userAddressInf.state,
         city: userAddressInf.city,
+        country: userAddressInf.country,
         address: userAddressInf.address1,
         note: shipping_note,
         status: strapi.config.constants.shipping_status.new,
@@ -311,6 +312,7 @@ const processCreateOrder = async (userId,
             null
         );
 
+        console.log(`quotationRes.data`, quotationRes.data);
         if (quotationRes.success) {
             shipping.shipping_provider = quotationRes.data.shippingProvider;
             shipping.shipping_ref_number = quotationRes.data.orderRef;
@@ -319,7 +321,8 @@ const processCreateOrder = async (userId,
                 { id: shipping.id },
                 {
                     shipping_provider: quotationRes.data.shippingProvider,
-                    shipping_ref_number: quotationRes.data.orderRef
+                    shipping_ref_number: quotationRes.data.orderRef,
+                    shipping_fee: quotationRes.data.orderRef
                 }
             );
         }

@@ -19,10 +19,6 @@
     "code": {
       "type": "string"
     },
-    "order_shippings": {
-      "via": "district",
-      "collection": "order-shipping"
-    },
     "order_billings": {
       "via": "district",
       "collection": "order-billing"

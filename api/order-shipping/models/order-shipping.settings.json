@@ -40,14 +40,6 @@
       "model": "country",
       "via": "order_shippings"
     },
-    "province": {
-      "model": "province",
-      "via": "order_shippings"
-    },
-    "district": {
-      "model": "district",
-      "via": "order_shippings"
-    },
     "order": {
       "model": "order",
       "via": "order_shipping"
@@ -63,6 +55,10 @@
     },
     "shipping_ref_number": {
       "type": "string"
+    },
+    "state": {
+      "model": "state",
+      "via": "order_shippings"
     }
   }
 }

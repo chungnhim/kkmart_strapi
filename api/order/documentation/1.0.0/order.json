@@ -1223,12 +1223,6 @@
               "country": {
                 "type": "string"
               },
-              "province": {
-                "type": "string"
-              },
-              "district": {
-                "type": "string"
-              },
               "order": {
                 "type": "string"
               },
@@ -1242,6 +1236,9 @@
                 "type": "number"
               },
               "shipping_ref_number": {
+                "type": "string"
+              },
+              "state": {
                 "type": "string"
               },
               "created_by": {
