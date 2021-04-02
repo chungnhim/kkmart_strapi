@@ -44,6 +44,9 @@
     "dailypromotion": {
       "via": "dailypromotiondetails",
       "model": "dailypromotion"
+    },
+    "order": {
+      "type": "float"
     }
   }
 }

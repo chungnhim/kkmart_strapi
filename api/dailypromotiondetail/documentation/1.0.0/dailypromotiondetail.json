@@ -651,6 +651,9 @@
                   "type": "string"
                 }
               },
+              "order": {
+                "type": "number"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -658,6 +661,9 @@
                 "type": "string"
               }
             }
+          },
+          "order": {
+            "type": "number"
           },
           "created_by": {
             "required": [
@@ -774,6 +780,9 @@
           },
           "dailypromotion": {
             "type": "string"
+          },
+          "order": {
+            "type": "number"
           },
           "created_by": {
             "type": "string"

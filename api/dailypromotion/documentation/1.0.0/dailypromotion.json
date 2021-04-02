@@ -1329,6 +1329,9 @@
                 "dailypromotion": {
                   "type": "string"
                 },
+                "order": {
+                  "type": "number"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -1337,6 +1340,9 @@
                 }
               }
             }
+          },
+          "order": {
+            "type": "number"
           },
           "created_by": {
             "required": [
@@ -1459,6 +1465,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "order": {
+            "type": "number"
           },
           "created_by": {
             "type": "string"

@@ -36,6 +36,9 @@
     "dailypromotiondetails": {
       "collection": "dailypromotiondetail",
       "via": "dailypromotion"
+    },
+    "order": {
+      "type": "float"
     }
   }
 }
