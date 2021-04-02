@@ -525,6 +525,9 @@
           "name": {
             "type": "string"
           },
+          "displayorder": {
+            "type": "number"
+          },
           "created_by": {
             "required": [
               "id",
@@ -619,6 +622,9 @@
         "properties": {
           "name": {
             "type": "string"
+          },
+          "displayorder": {
+            "type": "number"
           },
           "created_by": {
             "type": "string"

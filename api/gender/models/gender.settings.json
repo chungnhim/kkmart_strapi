@@ -11,6 +11,9 @@
   "attributes": {
     "name": {
       "type": "string"
+    },
+    "displayorder": {
+      "type": "float"
     }
   }
 }

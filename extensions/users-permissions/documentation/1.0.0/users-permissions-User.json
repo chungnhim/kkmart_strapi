@@ -1268,6 +1268,9 @@
               "name": {
                 "type": "string"
               },
+              "displayorder": {
+                "type": "number"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -1452,6 +1455,9 @@
               },
               "name": {
                 "type": "string"
+              },
+              "displayorder": {
+                "type": "number"
               },
               "created_by": {
                 "type": "string"
