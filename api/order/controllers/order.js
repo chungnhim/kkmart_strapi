@@ -18,7 +18,7 @@ const generateOrderCode = (length = 6) => {
     return moment.utc(new Date).format("YYYYMMDD") + text;
 }
 
-const getByOrderCode = async (orderCode) => {
+const getByOrderCode = async(orderCode) => {
     var order = await strapi.query("order").findOne({
         order_code: orderCode,
     });
@@ -26,7 +26,7 @@ const getByOrderCode = async (orderCode) => {
     return order;
 }
 
-const getByOrdersUserId = async (pageIndex, pageSize, userId) => {
+const getByOrdersUserId = async(pageIndex, pageSize, userId) => {
     var dataQuery = {
         _start: (pageIndex - 1) * pageSize,
         _limit: pageSize,
@@ -42,7 +42,7 @@ const getByOrdersUserId = async (pageIndex, pageSize, userId) => {
     };
 }
 
-const processCheckout = async (userId, products, is_expressmart, shipping_prodiver_code, order_via, vouchercode, is_use_coin, currency, shopping_cart_id) => {
+const processCheckout = async(userId, products, is_expressmart, shipping_prodiver_code, order_via, vouchercode, is_use_coin, currency, shopping_cart_id) => {
     // [
     //     {
     //         "product_id": 1,
@@ -155,7 +155,7 @@ const processCheckout = async (userId, products, is_expressmart, shipping_prodiv
         discount_amount: discountAmount
     };
 }
-const processCreateOrder = async (userId,
+const processCreateOrder = async(userId,
     products,
     is_expressmart,
     user_address_id,
@@ -317,14 +317,11 @@ const processCreateOrder = async (userId,
             shipping.shipping_provider = quotationRes.data.shippingProvider;
             shipping.shipping_ref_number = quotationRes.data.orderRef;
 
-            await strapi.query("order-shipping").update(
-                { id: shipping.id },
-                {
-                    shipping_provider: quotationRes.data.shippingProvider,
-                    shipping_ref_number: quotationRes.data.orderRef,
-                    shipping_fee: quotationRes.data.orderRef
-                }
-            );
+            await strapi.query("order-shipping").update({ id: shipping.id }, {
+                shipping_provider: quotationRes.data.shippingProvider,
+                shipping_ref_number: quotationRes.data.orderRef,
+                shipping_fee: quotationRes.data.orderRef
+            });
         }
     }
 
@@ -355,7 +352,7 @@ const processCreateOrder = async (userId,
     };
 }
 module.exports = {
-    checkOut: async (ctx) => {
+    checkOut: async(ctx) => {
         //{
         //   "is_expressmart": false,
         //    "shipping_prodiver_code": "LALAMOVE",
@@ -390,9 +387,14 @@ module.exports = {
             return;
         }
 
+        var isexpress = false;
+        if (params.is_expressmart && params.is_expressmart == true) {
+            isexpress = true;
+        }
         var shoppingCart = await strapi.query("shopping-cart").findOne({
             user: userId,
             status: strapi.config.constants.shopping_cart_status.new,
+            isexpress: isexpress,
             _sort: "id:desc"
         });
 
@@ -459,7 +461,7 @@ module.exports = {
 
         ctx.send(createOrderRes);
     },
-    createOrder: async (ctx) => {
+    createOrder: async(ctx) => {
         // {        
         //     "user_address_id": "",
         //     "shipping_note": "",
@@ -563,7 +565,7 @@ module.exports = {
 
         ctx.send(createOrderRes);
     },
-    getCheckout: async (ctx) => {
+    getCheckout: async(ctx) => {
 
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (userId == 0) {
@@ -654,7 +656,7 @@ module.exports = {
         });
 
     },
-    getByOrderCode: async (ctx) => {
+    getByOrderCode: async(ctx) => {
         const params = _.assign({}, ctx.request.params, ctx.params);
         var orderCode = params.orderCode;
 
@@ -688,7 +690,7 @@ module.exports = {
             order: res
         });
     },
-    getOrdersByUserId: async (ctx) => {
+    getOrdersByUserId: async(ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
             ctx.send({
