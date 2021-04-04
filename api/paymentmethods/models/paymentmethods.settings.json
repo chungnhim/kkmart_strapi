@@ -1,52 +1,65 @@
 {
-  "kind": "collectionType",
-  "collectionName": "paymentmethods",
-  "info": {
-    "name": "paymentmethods"
-  },
-  "options": {
-    "increments": true,
-    "timestamps": true
-  },
-  "attributes": {
-    "methodid": {
-      "type": "string"
+    "kind": "collectionType",
+    "collectionName": "paymentmethods",
+    "info": {
+        "name": "paymentmethods"
     },
-    "gwcode": {
-      "type": "string"
+    "options": {
+        "increments": true,
+        "timestamps": true,
+        "privateAttributes": [
+            "created_at",
+            "updated_at",
+            "paymenttypecode",
+            "wallet_provider_id",
+            "isactive",
+            "gwcode",
+            "merchantcode"
+        ]
     },
-    "methodname": {
-      "type": "string"
-    },
-    "merchantcode": {
-      "type": "string"
-    },
-    "countrycode": {
-      "type": "string"
-    },
-    "currency": {
-      "type": "string"
-    },
-    "paymenttypecode": {
-      "type": "string"
-    },
-    "wallet_provider_id": {
-      "type": "string"
-    },
-    "isactive": {
-      "type": "boolean",
-      "default": true
-    },
-    "methodicon": {
-      "model": "file",
-      "via": "related",
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos"
-      ],
-      "plugin": "upload",
-      "required": false
+    "attributes": {
+        "methodid": {
+            "type": "string"
+        },
+        "gwcode": {
+            "type": "string",
+            "private": true
+        },
+        "methodname": {
+            "type": "string"
+        },
+        "merchantcode": {
+            "type": "string"
+        },
+        "countrycode": {
+            "type": "string"
+        },
+        "currency": {
+            "type": "string"
+        },
+        "paymenttypecode": {
+            "type": "string",
+            "private": true
+        },
+        "wallet_provider_id": {
+            "type": "string",
+            "private": true
+        },
+        "isactive": {
+            "type": "boolean",
+            "default": true,
+            "private": true
+        },
+        "methodicon": {
+            "model": "file",
+            "via": "related",
+            "allowedTypes": [
+                "images",
+                "files",
+                "videos"
+            ],
+            "plugin": "upload",
+            "required": false
+        }
     }
-  }
 }

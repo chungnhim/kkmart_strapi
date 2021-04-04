@@ -6,7 +6,11 @@
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "privateAttributes": [
+      "created_at",
+      "updated_at"
+    ]
   },
   "attributes": {
     "typename": {
@@ -28,6 +32,9 @@
     },
     "isactive": {
       "type": "boolean"
+    },
+    "paymentmethods": {
+      "collection": "paymentmethods"
     }
   }
 }

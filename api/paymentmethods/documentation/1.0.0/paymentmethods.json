@@ -525,9 +525,6 @@
           "methodid": {
             "type": "string"
           },
-          "gwcode": {
-            "type": "string"
-          },
           "methodname": {
             "type": "string"
           },
@@ -539,16 +536,6 @@
           },
           "currency": {
             "type": "string"
-          },
-          "paymenttypecode": {
-            "type": "string"
-          },
-          "wallet_provider_id": {
-            "type": "string"
-          },
-          "isactive": {
-            "type": "boolean",
-            "default": true
           },
           "methodicon": {
             "required": [
