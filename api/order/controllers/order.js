@@ -577,10 +577,18 @@ module.exports = {
                 })
             );
         }
+        const queryString = _.assign({}, ctx.request.query, ctx.params);
+        //const params = _.assign({}, ctx.request.params, ctx.params);
+        var isexpress = false;
+        if (!_.isNil(queryString.is_expressmart) && !_.isEmpty(queryString.is_expressmart && queryString.is_expressmart == 'true')) {
+            isexpress = true;
+        }
+
         // get shopping cart
         let shoppingCart = await strapi.query("shopping-cart").findOne({
             user: userId,
             status: strapi.config.constants.shopping_cart_status.new,
+            isexpress: isexpress,
             _sort: "id:desc"
         });
         if (_.isNil(shoppingCart.shopping_cart_products)) {
