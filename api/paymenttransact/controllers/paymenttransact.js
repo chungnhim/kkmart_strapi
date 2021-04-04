@@ -1,5 +1,5 @@
 'use strict';
-const { sanitizeEntity } = require('strapi-utils');
+const sanitizeEntity = require('strapi-utils');
 const _ = require('lodash');
 /**
  * Read the documentation (https://strapi.io/documentation/v3.x/concepts/controllers.html#core-controllers)
@@ -11,33 +11,35 @@ const _ = require('lodash');
  */
 
 module.exports = {
-    getPaymentType: async ctx =>{
+    getPaymentType: async ctx => {
 
         let pmType = await strapi.query("paymenttype").find({
             isactive: true
         });
-        let paymentType = await strapi.services.common.normalizationResponse(pmType, ["created_at","updated_at","isactive"]);
+        let paymentType = await strapi.services.common.normalizationResponse(pmType, ["created_at", "updated_at", "isactive", "gwcode", "merchantcode", "countrycode", "paymenttypecode", "wallet_provider_id"]);
+
         return Object.values(paymentType);
+
     },
-    getPaymentMethods: async ctx =>{
+    getPaymentMethods: async ctx => {
         const params = _.assign({}, ctx.request.params, ctx.params);
 
         var paymentTypeCode = params.paymenttypecode;
-        
+
         let pmType = await strapi.query("paymentmethods").find({
             "isactive": true,
-            "paymenttypecode":paymentTypeCode
-        });        
-        let paymentType = await strapi.services.common.normalizationResponse(pmType, ["created_at","updated_at","isactive","gwcode","merchantcode","countrycode","paymenttypecode","wallet_provider_id"]);
+            "paymenttypecode": paymentTypeCode
+        });
+        let paymentType = await strapi.services.common.normalizationResponse(pmType, ["created_at", "updated_at", "isactive", "gwcode", "merchantcode", "countrycode", "paymenttypecode", "wallet_provider_id"]);
         return Object.values(paymentType);
     },
     createpayment: async ctx => {
 
         let amt_currency = ctx.request.body.currency;
         let amt = parseFloat(ctx.request.body.amount);
-        let transdes= ctx.request.body.transdes;
+        let transdes = ctx.request.body.transdes;
         let orderId = ctx.request.body.orderId;
-        let walletId =  ctx.request.body.walletId;
+        let walletId = ctx.request.body.walletId;
         let transID = "khhfyy";
         let params = {
             "TransID": transID,
@@ -45,8 +47,8 @@ module.exports = {
         }
         console.log("Go to here");
         let value = await strapi.services.happypaypaymentservice.createPayment(params);
-        
-ctx.send   ('ok');
+
+        ctx.send('ok');
 
     }
 };

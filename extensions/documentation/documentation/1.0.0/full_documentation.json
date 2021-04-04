@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "04/02/2021 10:23:08 PM"
+    "x-generation-date": "04/04/2021 5:02:35 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -57744,9 +57744,6 @@
           "methodid": {
             "type": "string"
           },
-          "gwcode": {
-            "type": "string"
-          },
           "methodname": {
             "type": "string"
           },
@@ -57758,16 +57755,6 @@
           },
           "currency": {
             "type": "string"
-          },
-          "paymenttypecode": {
-            "type": "string"
-          },
-          "wallet_provider_id": {
-            "type": "string"
-          },
-          "isactive": {
-            "type": "boolean",
-            "default": true
           },
           "methodicon": {
             "required": [
@@ -58212,6 +58199,52 @@
           "isactive": {
             "type": "boolean"
           },
+          "paymentmethods": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "methodid": {
+                "type": "string"
+              },
+              "gwcode": {
+                "type": "string"
+              },
+              "methodname": {
+                "type": "string"
+              },
+              "merchantcode": {
+                "type": "string"
+              },
+              "countrycode": {
+                "type": "string"
+              },
+              "currency": {
+                "type": "string"
+              },
+              "paymenttypecode": {
+                "type": "string"
+              },
+              "wallet_provider_id": {
+                "type": "string"
+              },
+              "isactive": {
+                "type": "boolean"
+              },
+              "methodicon": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -58312,6 +58345,9 @@
           },
           "isactive": {
             "type": "boolean"
+          },
+          "paymentmethods": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
