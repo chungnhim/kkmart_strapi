@@ -755,8 +755,12 @@ module.exports = {
                 element.order_shipping.status_label = getShippingStatusLabel(element.order_shipping.status);
             }
 
+            var state_id = 0;
+            if (element.order_shipping && element.order_shipping.state && !_.isNil(element.order_shipping.state)) {
+                state_id = element.order_shipping.state;
+            }
             var state = await strapi.query("state").findOne({
-                id: element.order_shipping.state
+                id: state_id
             });
 
             if (!_.isNil(state)) {
