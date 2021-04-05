@@ -731,12 +731,6 @@
               "name": {
                 "type": "string"
               },
-              "product_variant_images": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "product_id": {
                 "type": "string"
               },
@@ -760,6 +754,12 @@
               },
               "can_use_coin": {
                 "type": "boolean"
+              },
+              "product_variant_images": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "created_by": {
                 "type": "string"

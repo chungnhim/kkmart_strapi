@@ -18,7 +18,7 @@ const generateOrderCode = (length = 6) => {
     return moment.utc(new Date).format("YYYYMMDD") + text;
 }
 
-const getByOrderCode = async(orderCode) => {
+const getByOrderCode = async (orderCode) => {
     var order = await strapi.query("order").findOne({
         order_code: orderCode,
     });
@@ -26,8 +26,9 @@ const getByOrderCode = async(orderCode) => {
     return order;
 }
 
-const getByOrdersUserId = async(pageIndex, pageSize, userId) => {
+const getByOrdersUserId = async (pageIndex, pageSize, userId) => {
     var dataQuery = {
+        user: userId,
         _start: (pageIndex - 1) * pageSize,
         _limit: pageSize,
         _sort: "created_at:desc",
@@ -42,7 +43,7 @@ const getByOrdersUserId = async(pageIndex, pageSize, userId) => {
     };
 }
 
-const processCheckout = async(userId, products, is_expressmart, shipping_prodiver_code, order_via, vouchercode, is_use_coin, currency, shopping_cart_id) => {
+const processCheckout = async (userId, products, is_expressmart, shipping_prodiver_code, order_via, vouchercode, is_use_coin, currency, shopping_cart_id) => {
     // [
     //     {
     //         "product_id": 1,
@@ -155,7 +156,8 @@ const processCheckout = async(userId, products, is_expressmart, shipping_prodive
         discount_amount: discountAmount
     };
 }
-const processCreateOrder = async(userId,
+
+const processCreateOrder = async (userId,
     products,
     is_expressmart,
     user_address_id,
@@ -351,8 +353,9 @@ const processCreateOrder = async(userId,
         order_code: orderEntity.order_code
     };
 }
+
 module.exports = {
-    checkOut: async(ctx) => {
+    checkOut: async (ctx) => {
         //{
         //   "is_expressmart": false,
         //    "shipping_prodiver_code": "LALAMOVE",
@@ -461,7 +464,7 @@ module.exports = {
 
         ctx.send(createOrderRes);
     },
-    createOrder: async(ctx) => {
+    createOrder: async (ctx) => {
         // {        
         //     "user_address_id": "",
         //     "shipping_note": "",
@@ -565,7 +568,7 @@ module.exports = {
 
         ctx.send(createOrderRes);
     },
-    getCheckout: async(ctx) => {
+    getCheckout: async (ctx) => {
 
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (userId == 0) {
@@ -577,10 +580,18 @@ module.exports = {
                 })
             );
         }
+        const queryString = _.assign({}, ctx.request.query, ctx.params);
+        //const params = _.assign({}, ctx.request.params, ctx.params);
+        var isexpress = false;
+        if (!_.isNil(queryString.is_expressmart) && !_.isEmpty(queryString.is_expressmart && queryString.is_expressmart == 'true')) {
+            isexpress = true;
+        }
+
         // get shopping cart
         let shoppingCart = await strapi.query("shopping-cart").findOne({
             user: userId,
             status: strapi.config.constants.shopping_cart_status.new,
+            isexpress: isexpress,
             _sort: "id:desc"
         });
         if (_.isNil(shoppingCart.shopping_cart_products)) {
@@ -656,7 +667,7 @@ module.exports = {
         });
 
     },
-    getByOrderCode: async(ctx) => {
+    getByOrderCode: async (ctx) => {
         const params = _.assign({}, ctx.request.params, ctx.params);
         var orderCode = params.orderCode;
 
@@ -690,7 +701,7 @@ module.exports = {
             order: res
         });
     },
-    getOrdersByUserId: async(ctx) => {
+    getOrdersByUserId: async (ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
             ctx.send({
@@ -718,6 +729,27 @@ module.exports = {
             });
 
             return;
+        }
+
+        for (let i = 0; i < res.entities.length; i++) {
+            console.log(i);
+
+            const element = res.entities[i];
+            
+            var state = await strapi.query("state").findOne({
+                id: element.order_shipping.state
+            });
+
+            element.receiver = {
+                full_name: element.order_shipping.full_name,
+                address: element.order_shipping.address,
+                city: element.order_shipping.city,
+                state: !_.isNil(state) ? state.name : '',
+                country: !_.isNil(state) && !_.isNil(state.country) ? state.country.name : '',
+                phone_number: element.order_shipping.phone_number,
+                deliver_note: element.order_shipping.deliver_note,
+                shipping_provider: element.order_shipping.shipping_provider
+            }
         }
 
         let models = await strapi.services.common.normalizationResponse(

@@ -24,13 +24,9 @@
     "name": {
       "type": "string"
     },
-    "product_variant_images": {
-      "collection": "productimage",
-      "via": "product_variant_id"
-    },
     "product_id": {
-      "via": "product_variants",
-      "model": "product"
+      "model": "product",
+      "via": "product_variants"
     },
     "shopping_cart_products": {
       "collection": "shopping-cart-product",
@@ -48,6 +44,17 @@
     },
     "can_use_coin": {
       "type": "boolean"
+    },
+    "product_variant_images": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
     }
   }
 }
