@@ -86,6 +86,14 @@
             "config": {
                 "policies": []
             }
+        },
+        {
+            "method": "POST",
+            "path": "/v1/user-addresses/addOutlet",
+            "handler": "user-address.addOutlet",
+            "config": {
+                "policies": []
+            }
         }
     ]
 }
