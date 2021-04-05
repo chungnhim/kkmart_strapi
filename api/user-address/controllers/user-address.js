@@ -8,7 +8,7 @@
 const _ = require("lodash");
 const NodeGeocoder = require('node-geocoder');
 
-const getLngLat = async (address) => {
+const getLngLat = async(address) => {
     const options = {
         provider: 'here',
         apiKey: process.env.HERE_API_KEY || 'b_tw_a6m371Kris1qsOWLzhA2jerXM2A8BP8eNwiK4o', // for Mapquest, OpenCage, Google Premier, Here
@@ -32,7 +32,7 @@ const getLngLat = async (address) => {
 }
 
 module.exports = {
-    addUserAddress: async (ctx) => {
+    addUserAddress: async(ctx) => {
         const params = _.assign({}, ctx.request.body, ctx.params);
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
@@ -95,7 +95,7 @@ module.exports = {
             user_address_id: userAddress.id
         });
     },
-    updateUserAddress: async (ctx) => {
+    updateUserAddress: async(ctx) => {
         const params = _.assign({}, ctx.request.body, ctx.params);
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
@@ -169,7 +169,7 @@ module.exports = {
             user_address_id: userAddress.id
         });
     },
-    getUserAddress: async (ctx) => {
+    getUserAddress: async(ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
             ctx.send({
@@ -209,7 +209,7 @@ module.exports = {
             address: _.values(models)
         });
     },
-    setDefaultUserAddress: async (ctx) => {
+    setDefaultUserAddress: async(ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
             ctx.send({
@@ -255,7 +255,7 @@ module.exports = {
             message: "Set default address has been successfully"
         });
     },
-    deleteOfUser: async (ctx) => {
+    deleteOfUser: async(ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
             ctx.send({
@@ -277,5 +277,38 @@ module.exports = {
             message: "Address has been remove successfully"
         });
 
+    },
+    addOutlet: async(ctx) => {
+        const params = _.assign({}, ctx.request.body, ctx.params);
+
+        // get long lat
+        let lngLat = await getLngLat(params.address);
+        let lng = lngLat.longitude;
+        let latt = lngLat.latitude;
+
+        // get state
+        let state = await strapi.query("state").findOne({
+            name: params.state
+        });
+
+        let entity = {
+            name: params.name,
+            street1: params.address,
+            street2: params.address,
+            address: params.address,
+            longitude: lng,
+            latitude: latt,
+            country: params.country,
+            state: state.id,
+            telephone: params.telephone,
+            digi: params.digi
+        }
+
+        let outlet = await strapi.query("outlet").create(entity);
+
+        ctx.send({
+            success: true,
+            message: outlet
+        });
     }
 };
