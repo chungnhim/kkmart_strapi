@@ -867,7 +867,7 @@ module.exports = {
                             .where('user', checkuser.id);
                     }).fetchAll();
                     listdeviceidreg = listdeviceidreg.toJSON();
-                    console.log(listdeviceidreg);
+                    ////console.log(listdeviceidreg);
                     let arraydevicereg = [];
                     let arraydeviceregios = [];
                     for (var index in listdeviceidreg) {
@@ -885,14 +885,14 @@ module.exports = {
                         //android
                         var newcontentforPushFirebase = removeAuthorFields(newNotificationlogs);
                         var dataReturn = await strapi.services.firebasecontrol.sendtoarraydeviceandroid(arraydevicereg, notificationTitle, newcontentforPushFirebase);
-                        console.log(dataReturn);
+                        ////console.log(dataReturn);
                     }
 
                     if (arraydeviceregios.length > 0) {
                         //ios
                         var newcontentforPushFirebase = removeAuthorFields(newNotificationlogs);
                         var dataReturn = await strapi.services.firebasecontrol.sendtoarraydeviceios(arraydeviceregios, notificationTitle, newcontentforPushFirebase);
-                        console.log(dataReturn);
+                        ////console.log(dataReturn);
                     }
 
                 }
@@ -1266,7 +1266,7 @@ module.exports = {
                             //ios
                             var newcontentforPushFirebase = removeAuthorFields(newNotificationlogs);
                             var dataReturn = await strapi.services.firebasecontrol.sendtoarraydeviceios(arraydeviceregios, notificationTitle, newcontentforPushFirebase);
-                            console.log(dataReturn);
+                            ////console.log(dataReturn);
 
                         }
                     }

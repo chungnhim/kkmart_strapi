@@ -42,10 +42,10 @@ module.exports = {
         let walletId = ctx.request.body.walletId;
         let transID = "khhfyy";
         let params = {
-            "TransID": transID,
+                "TransID": transID,
 
-        }
-        console.log("Go to here");
+            }
+            //console.log("Go to here");
         let value = await strapi.services.happypaypaymentservice.createPayment(params);
 
         ctx.send('ok');

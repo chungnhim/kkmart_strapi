@@ -48,7 +48,7 @@ module.exports = {
             isexpress = true;
         }
 
-        //console.log(params.isexpress);      
+        ////console.log(params.isexpress);      
 
         var shoppingCart = await strapi.query("shopping-cart").findOne({
             user: userId,
@@ -106,12 +106,12 @@ module.exports = {
         //Get info of product and check isexpress of product
         var productInfo = await strapi.query("product").findOne({ id: productId });
         if (!_.isNil(productInfo)) {
-            //console.log(productInfo);
+            ////console.log(productInfo);
             if (!_.isNil(productInfo.isexpress)) {
                 isexpress = productInfo.isexpress;
             }
         }
-        //console.log(productInfo);
+        ////console.log(productInfo);
         var shoppingCart = await strapi.query("shopping-cart").findOne({
             id: shoppingCartId,
             user: userId,
@@ -178,7 +178,7 @@ module.exports = {
         }
 
         var existsProduct = shoppingCart.shopping_cart_products.find(s => s.product == productId && s.product_variant == productVariantId);
-        //console.log(`existsProduct`, existsProduct);
+        ////console.log(`existsProduct`, existsProduct);
 
         if (_.isNil(existsProduct)) {
             // Case add new item to cart            
@@ -322,7 +322,7 @@ module.exports = {
                 }
             }
             let sellingprice = 0;
-            //console.log(product);
+            ////console.log(product);
             //let sellingproduct = await strapi.services.promotionproduct.priceRecalculationOfProduct(product);
             if (product.ishave_discount_flashsale) {
                 sellingprice = product.flashsale_price

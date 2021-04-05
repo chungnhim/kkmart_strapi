@@ -69,7 +69,7 @@ module.exports = {
                 }).fetchAll();
 
                 dataresultnew = dataresultnew.toJSON();
-                console.log(dataresultnew);
+                //console.log(dataresultnew);
                 var data = Object.values(removeAuthorFields(dataresultnew));
                 ctx.send(data);
             }

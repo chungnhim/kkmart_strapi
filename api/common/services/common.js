@@ -76,7 +76,7 @@ const getLoggedUserId = async(ctx) => {
 
 module.exports = {
     normalizationResponse: async(entity, fields) => {
-        //console.log(`fields`, fields);
+        ////console.log(`fields`, fields);
         return removeAuthorFields(entity, fields);
     },
     getLoggedUserId: async(ctx) => {

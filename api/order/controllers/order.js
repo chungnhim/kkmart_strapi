@@ -18,7 +18,7 @@ const generateOrderCode = (length = 6) => {
     return moment.utc(new Date).format("YYYYMMDD") + text;
 }
 
-const getByOrderCode = async (orderCode) => {
+const getByOrderCode = async(orderCode) => {
     var order = await strapi.query("order").findOne({
         order_code: orderCode,
     });
@@ -26,7 +26,7 @@ const getByOrderCode = async (orderCode) => {
     return order;
 }
 
-const getByOrdersUserId = async (pageIndex, pageSize, userId) => {
+const getByOrdersUserId = async(pageIndex, pageSize, userId) => {
     var dataQuery = {
         user: userId,
         _start: (pageIndex - 1) * pageSize,
@@ -43,7 +43,7 @@ const getByOrdersUserId = async (pageIndex, pageSize, userId) => {
     };
 }
 
-const processCheckout = async (userId, products, is_expressmart, shipping_prodiver_code, order_via, vouchercode, is_use_coin, currency, shopping_cart_id) => {
+const processCheckout = async(userId, products, is_expressmart, shipping_prodiver_code, order_via, vouchercode, is_use_coin, currency, shopping_cart_id) => {
     // [
     //     {
     //         "product_id": 1,
@@ -157,7 +157,7 @@ const processCheckout = async (userId, products, is_expressmart, shipping_prodiv
     };
 }
 
-const processCreateOrder = async (userId,
+const processCreateOrder = async(userId,
     products,
     is_expressmart,
     user_address_id,
@@ -314,7 +314,7 @@ const processCreateOrder = async (userId,
             null
         );
 
-        console.log(`quotationRes.data`, quotationRes.data);
+        //console.log(`quotationRes.data`, quotationRes.data);
         if (quotationRes.success) {
             shipping.shipping_provider = quotationRes.data.shippingProvider;
             shipping.shipping_ref_number = quotationRes.data.orderRef;
@@ -355,7 +355,7 @@ const processCreateOrder = async (userId,
 }
 
 module.exports = {
-    checkOut: async (ctx) => {
+    checkOut: async(ctx) => {
         //{
         //   "is_expressmart": false,
         //    "shipping_prodiver_code": "LALAMOVE",
@@ -464,7 +464,7 @@ module.exports = {
 
         ctx.send(createOrderRes);
     },
-    createOrder: async (ctx) => {
+    createOrder: async(ctx) => {
         // {        
         //     "user_address_id": "",
         //     "shipping_note": "",
@@ -524,7 +524,7 @@ module.exports = {
             return;
         }
 
-        console.log(`shoppingCart 111`, shoppingCart);
+        //console.log(`shoppingCart 111`, shoppingCart);
 
         // get checkout products
         let checkOutProducts = shoppingCart.shopping_cart_products.filter(s => s.checkoutid == params.checkout_id);
@@ -538,7 +538,7 @@ module.exports = {
         }
 
         var products = [];
-        console.log(`checkOutProducts`, checkOutProducts);
+        //console.log(`checkOutProducts`, checkOutProducts);
         for (let index = 0; index < checkOutProducts.length; index++) {
             const cartItem = checkOutProducts[index];
             products.push({
@@ -568,7 +568,7 @@ module.exports = {
 
         ctx.send(createOrderRes);
     },
-    getCheckout: async (ctx) => {
+    getCheckout: async(ctx) => {
 
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (userId == 0) {
@@ -667,7 +667,7 @@ module.exports = {
         });
 
     },
-    getByOrderCode: async (ctx) => {
+    getByOrderCode: async(ctx) => {
         const params = _.assign({}, ctx.request.params, ctx.params);
         var orderCode = params.orderCode;
 
@@ -690,7 +690,7 @@ module.exports = {
             return;
         }
 
-        console.log(`order`, order);
+        //console.log(`order`, order);
 
         var res = await strapi.services.common.normalizationResponse(
             order, ["user"]
@@ -701,7 +701,7 @@ module.exports = {
             order: res
         });
     },
-    getOrdersByUserId: async (ctx) => {
+    getOrdersByUserId: async(ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
             ctx.send({
@@ -732,10 +732,10 @@ module.exports = {
         }
 
         for (let i = 0; i < res.entities.length; i++) {
-            console.log(i);
+            //console.log(i);
 
             const element = res.entities[i];
-            
+
             var state = await strapi.query("state").findOne({
                 id: element.order_shipping.state
             });

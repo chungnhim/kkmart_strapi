@@ -24,8 +24,8 @@ module.exports = {
         var dateTimeUtcNow = new Date(new Date().toUTCString());
         var dateValue = new Date(dateTimeUtcNow.getFullYear(), dateTimeUtcNow.getMonth(), dateTimeUtcNow.getDate());
         var dateTimeValue = dateTimeUtcNow.getTime();
-        //console.log(dateValue);
-        //console.log(dateTimeValue);
+        ////console.log(dateValue);
+        ////console.log(dateTimeValue);
         // [{ runeveryday: true }, { starttime_gte: dateValue }, { endtime_lte: dateValue }],
         // [{ runeveryday: false }, { activedate: dateValue }, { starttime_gte: dateValue }, { endtime_lte: dateTimeValue }]
         var dataQuery = {
@@ -74,7 +74,7 @@ module.exports = {
                 ishave_discount_flashsale = true;
                 //calculation flash sales
                 //get full info flash sale for get name  
-               
+
                 switch (flashsaleData.flashsaletype) {
                     case strapi.config.constants.flashsale_types_status.discount_money:
                         product.flashsale_price = product.price - flashsaleData.reduction;

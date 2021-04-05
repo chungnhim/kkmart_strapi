@@ -87,7 +87,7 @@ module.exports = {
         var totalRows = await strapi.query('product-rating').count(dataQuery);
         var entities = await strapi.query("product-rating").find(dataQuery);
 
-        //console.log(entities);
+        ////console.log(entities);
 
         let models = await strapi.services.common.normalizationResponse(
             entities, ["product", "password", "provider", "resetPasswordToken", "confirmed", "blocked", "role", "created_at", "updated_at", "phone", "dateofbirth", "gender", "kcoin", "maritalstatus", "referralcode", "companyname", "promotionrewardpoint", "nonpromotionalrewardpoint", "membershiptype", "Address1", "Address2", "country", "state", "city", "postcode", "ethnicgroup", "qrcode", "maritalstatuother", "personalinterestother", "employmentstatuother", "socialmediaactivestatuother", "address1", "address2", "iscompleteinformation", "preferredname", "friendcode"]

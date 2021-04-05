@@ -100,7 +100,7 @@ module.exports = {
             dataQuery.flashsaleproduct_in = arrayFlashsaleProduct;
         } else {
             var arrayFlashsaleActives = await strapi.services.promotionproduct.getListFlashSaleActivesId();
-            console.log(arrayFlashsaleActives);
+            //console.log(arrayFlashsaleActives);
             if (arrayFlashsaleActives && arrayFlashsaleActives.length > 0) {
                 var arrayFlashsaleProduct = await strapi.services.promotionproduct.getListFlashSaleProductsActivesId(arrayFlashsaleActives);
                 dataQuery.flashsaleproduct_in = arrayFlashsaleProduct;

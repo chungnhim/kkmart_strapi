@@ -43,8 +43,8 @@ module.exports = {
         /*
         const { name } = ctx.request.body; 
         const { address } = ctx.request.body; 
-        console.log(name);
-        console.log(address);
+        //console.log(name);
+        //console.log(address);
           ctx.send(name);
         */
         const { id } = ctx.params;
