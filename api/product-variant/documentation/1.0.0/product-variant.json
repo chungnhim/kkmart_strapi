@@ -550,43 +550,6 @@
           "name": {
             "type": "string"
           },
-          "product_variant_images": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "productid": {
-                  "type": "integer"
-                },
-                "status": {
-                  "type": "integer"
-                },
-                "createddate": {
-                  "type": "datetime"
-                },
-                "image": {
-                  "type": "string"
-                },
-                "product_variant_id": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
-          },
           "product_id": {
             "required": [
               "id"
@@ -827,6 +790,76 @@
           "can_use_coin": {
             "type": "boolean"
           },
+          "product_variant_images": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "name",
+                "hash",
+                "mime",
+                "size",
+                "url",
+                "provider"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "alternativeText": {
+                  "type": "string"
+                },
+                "caption": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "integer"
+                },
+                "height": {
+                  "type": "integer"
+                },
+                "formats": {
+                  "type": "object"
+                },
+                "hash": {
+                  "type": "string"
+                },
+                "ext": {
+                  "type": "string"
+                },
+                "mime": {
+                  "type": "string"
+                },
+                "size": {
+                  "type": "number"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "previewUrl": {
+                  "type": "string"
+                },
+                "provider": {
+                  "type": "string"
+                },
+                "provider_metadata": {
+                  "type": "object"
+                },
+                "related": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -933,12 +966,6 @@
           },
           "name": {
             "type": "string"
-          },
-          "product_variant_images": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
           },
           "product_id": {
             "type": "string"

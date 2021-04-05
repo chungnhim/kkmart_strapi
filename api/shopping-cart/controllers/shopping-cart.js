@@ -102,7 +102,9 @@ module.exports = {
         var productInfo = await strapi.query("product").findOne({ id: productId });
         if (!_.isNil(productInfo)) {
             //console.log(productInfo);
-            isexpress = productInfo.isexpress;
+            if (!_.isNil(productInfo.isexpress)) {
+                isexpress = productInfo.isexpress;
+            }
         }
         //console.log(productInfo);
         var shoppingCart = await strapi.query("shopping-cart").findOne({

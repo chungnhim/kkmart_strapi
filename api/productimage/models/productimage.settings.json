@@ -28,11 +28,6 @@
       ],
       "plugin": "upload",
       "required": false
-    },
-    "product_variant_id": {
-      "via": "product_variant_images",
-      "collection": "product-variant",
-      "dominant": true
     }
   }
 }
