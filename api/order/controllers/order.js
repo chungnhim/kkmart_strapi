@@ -322,7 +322,8 @@ const processCreateOrder = async(userId,
             await strapi.query("order-shipping").update({ id: shipping.id }, {
                 shipping_provider: quotationRes.data.shippingProvider,
                 shipping_ref_number: quotationRes.data.orderRef,
-                shipping_fee: quotationRes.data.orderRef
+                shipping_fee: quotationRes.data.orderRef,
+                status: strapi.config.constants.shipping_status.inProvider
             });
         }
     }
@@ -351,6 +352,23 @@ const processCreateOrder = async(userId,
         total_amount: totalAmount,
         discount_amount: discountAmount,
         order_code: orderEntity.order_code
+    };
+}
+
+const getShippingStatusLabel = (status) => {
+    switch (status) {
+        case 1:
+            return "New"
+        case 2:
+            return "In Provider"
+        case 3:
+            return "On Delivery"
+        case 4:
+            return "Completed"
+        case 5:
+            return "Cancelled"
+        default:
+            return "N/A";
     };
 }
 
@@ -732,23 +750,26 @@ module.exports = {
         }
 
         for (let i = 0; i < res.entities.length; i++) {
-            //console.log(i);
-
             const element = res.entities[i];
+            if (!_.isNil(element.order_shipping)) {
+                element.order_shipping.status_label = getShippingStatusLabel(element.order_shipping.status);
+            }
 
             var state = await strapi.query("state").findOne({
                 id: element.order_shipping.state
             });
 
-            element.receiver = {
-                full_name: element.order_shipping.full_name,
-                address: element.order_shipping.address,
-                city: element.order_shipping.city,
-                state: !_.isNil(state) ? state.name : '',
-                country: !_.isNil(state) && !_.isNil(state.country) ? state.country.name : '',
-                phone_number: element.order_shipping.phone_number,
-                deliver_note: element.order_shipping.deliver_note,
-                shipping_provider: element.order_shipping.shipping_provider
+            if (!_.isNil(state)) {
+                element.receiver = {
+                    full_name: element.order_shipping.full_name,
+                    address: element.order_shipping.address,
+                    city: element.order_shipping.city,
+                    state: !_.isNil(state) ? state.name : '',
+                    country: !_.isNil(state) && !_.isNil(state.country) ? state.country.name : '',
+                    phone_number: element.order_shipping.phone_number,
+                    deliver_note: element.order_shipping.deliver_note,
+                    shipping_provider: element.order_shipping.shipping_provider
+                }
             }
         }
 
