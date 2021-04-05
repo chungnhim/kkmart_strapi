@@ -12,16 +12,18 @@ const formatError = error => [
 
 const calculateKkoin = async(shoppingCartProducts) => {
     var totalCoin = 0;
-    shoppingCartProducts.forEach(item => {
-        let product = item.product;
-        if (!_.isNil(product.product_variants) && product.product_variants.length > 0) {
-            totalCoin += product.product_variants[0].coin_use * item.qtty;
-        } else {
-            if (!_.isNil(product.can_use_coin) && product.can_use_coin == true) {
-                totalCoin += product.coin_use * item.qtty;
+    if (shoppingCartProducts) {
+        shoppingCartProducts.forEach(item => {
+            let product = item.product;
+            if (!_.isNil(product.product_variants) && product.product_variants.length > 0) {
+                totalCoin += product.product_variants[0].coin_use * item.qtty;
+            } else {
+                if (!_.isNil(product.can_use_coin) && product.can_use_coin == true) {
+                    totalCoin += product.coin_use * item.qtty;
+                }
             }
-        }
-    });
+        });
+    }
 
     return totalCoin;
 }
@@ -54,10 +56,13 @@ module.exports = {
             isexpress: isexpress,
             _sort: "id:desc"
         });
+
         //Bổ sung thêm tham số isexpress
         if (!_.isNil(shoppingCart)) {
             shoppingCart = await strapi.services.product.getProductOfShoppingCartOne(shoppingCart);
+
             let cartModel = await strapi.services.common.normalizationResponse(shoppingCart, ["user"]);
+
             let kkoin = await calculateKkoin(cartModel.shopping_cart_products);
 
             ctx.send({
@@ -173,7 +178,7 @@ module.exports = {
         }
 
         var existsProduct = shoppingCart.shopping_cart_products.find(s => s.product == productId && s.product_variant == productVariantId);
-        console.log(`existsProduct`, existsProduct);
+        //console.log(`existsProduct`, existsProduct);
 
         if (_.isNil(existsProduct)) {
             // Case add new item to cart            

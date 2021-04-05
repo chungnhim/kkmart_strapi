@@ -8,20 +8,18 @@ const { sanitizeEntity } = require("strapi-utils");
 const _ = require("lodash");
 const axios = require("axios");
 
-var defaultFields = [
-    "created_by",
-    "updated_by",
-    //"user",
-    "formats"
-];
-
 const removeAuthorFields = (entity, fields) => {
     let API_ENPOINT = "http://128.199.86.59:1337";
     if (!_.isNil(process.env.API_ENPOINT)) {
         API_ENPOINT = process.env.API_ENPOINT.trim();
     }
 
-
+    var defaultFields = [
+        "created_by",
+        "updated_by",
+        //"user",
+        "formats"
+    ];
 
     if (!_.isNil(fields)) {
         for (let i = 0; i < fields.length; i++) {
@@ -34,7 +32,10 @@ const removeAuthorFields = (entity, fields) => {
 
     _.forEach(sanitizedValue, (value, key) => {
         if (_.isArray(value)) {
-            sanitizedValue[key] = value.map(removeAuthorFields);
+            sanitizedValue[key] = value.map(
+                function(item, index) {
+                    return removeAuthorFields(item, fields);
+                });
         } else if (_.isObject(value)) {
             if (key == 'created_at' || key == 'updated_at') {
                 if (new Date(value) !== "Invalid Date" && !isNaN(new Date(value))) {
