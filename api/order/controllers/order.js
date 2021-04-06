@@ -18,15 +18,29 @@ const generateOrderCode = (length = 6) => {
     return moment.utc(new Date).format("YYYYMMDD") + text;
 }
 
-const getByOrderCode = async(orderCode) => {
+const getByOrderCode = async (orderCode) => {
     var order = await strapi.query("order").findOne({
         order_code: orderCode,
+    });
+
+    let productIds = [];
+    order.order_products.forEach(product => {
+        productIds.push(product.product);
+    });
+
+    let products = await strapi.query("product").find({
+        id_in: productIds
+    });
+
+    order.order_products.forEach(product => {
+        product.product_info = products.find(s => s.id == product.product);
+        product.product_info.product_variants = product.product_info.product_variants.find(s => s.id == product.product_variant);
     });
 
     return order;
 }
 
-const getByOrdersUserId = async(pageIndex, pageSize, userId) => {
+const getByOrdersUserId = async (pageIndex, pageSize, userId) => {
     var dataQuery = {
         user: userId,
         _start: (pageIndex - 1) * pageSize,
@@ -37,13 +51,35 @@ const getByOrdersUserId = async(pageIndex, pageSize, userId) => {
     var totalRows = await strapi.query('order').count(dataQuery);
     var entities = await strapi.query("order").find(dataQuery);
 
+    let productIds = [];
+    entities.forEach(order => {
+        order.order_products.forEach(product => {
+            productIds.push(product.product);
+        });
+    });
+
+    let products = await strapi.query("product").find({
+        id_in: productIds
+    });
+
+    entities.forEach(order => {
+        order.order_products.forEach(product => {
+            product.product_info = products.find(s => s.id == product.product);
+            console.log(`============================ product.product_info`, product.product_info.product_variants);
+
+            if (!_.isNil(product.product_info.product_variants) && product.product_info.product_variants.length > 0) {
+                product.product_info.product_variants = product.product_info.product_variants.find(s => s.id == product.product_variant);
+            }
+        });
+    });
+
     return {
         totalRows,
         entities
     };
 }
 
-const processCheckout = async(userId, products, is_expressmart, shipping_prodiver_code, order_via, vouchercode, is_use_coin, currency, shopping_cart_id) => {
+const processCheckout = async (userId, products, is_expressmart, shipping_prodiver_code, order_via, vouchercode, is_use_coin, currency, shopping_cart_id) => {
     // [
     //     {
     //         "product_id": 1,
@@ -157,7 +193,7 @@ const processCheckout = async(userId, products, is_expressmart, shipping_prodive
     };
 }
 
-const processCreateOrder = async(userId,
+const processCreateOrder = async (userId,
     products,
     is_expressmart,
     user_address_id,
@@ -314,7 +350,6 @@ const processCreateOrder = async(userId,
             null
         );
 
-        //console.log(`quotationRes.data`, quotationRes.data);
         if (quotationRes.success) {
             shipping.shipping_provider = quotationRes.data.shippingProvider;
             shipping.shipping_ref_number = quotationRes.data.orderRef;
@@ -373,7 +408,7 @@ const getShippingStatusLabel = (status) => {
 }
 
 module.exports = {
-    checkOut: async(ctx) => {
+    checkOut: async (ctx) => {
         //{
         //   "is_expressmart": false,
         //    "shipping_prodiver_code": "LALAMOVE",
@@ -482,7 +517,7 @@ module.exports = {
 
         ctx.send(createOrderRes);
     },
-    createOrder: async(ctx) => {
+    createOrder: async (ctx) => {
         // {        
         //     "user_address_id": "",
         //     "shipping_note": "",
@@ -586,7 +621,7 @@ module.exports = {
 
         ctx.send(createOrderRes);
     },
-    getCheckout: async(ctx) => {
+    getCheckout: async (ctx) => {
 
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (userId == 0) {
@@ -685,7 +720,7 @@ module.exports = {
         });
 
     },
-    getByOrderCode: async(ctx) => {
+    getByOrderCode: async (ctx) => {
         const params = _.assign({}, ctx.request.params, ctx.params);
         var orderCode = params.orderCode;
 
@@ -708,7 +743,28 @@ module.exports = {
             return;
         }
 
-        //console.log(`order`, order);
+        if (!_.isNil(order.order_shipping)) {
+            order.order_shipping.status_label = getShippingStatusLabel(order.order_shipping.status);
+        }
+
+        if (!_.isNil(order.order_shipping)) {
+            var state = await strapi.query("state").findOne({
+                id: order.order_shipping.state
+            });
+
+            if (!_.isNil(state)) {
+                order.receiver = {
+                    full_name: order.order_shipping.full_name,
+                    address: order.order_shipping.address,
+                    city: order.order_shipping.city,
+                    state: !_.isNil(state) ? state.name : '',
+                    country: !_.isNil(state) && !_.isNil(state.country) ? state.country.name : '',
+                    phone_number: order.order_shipping.phone_number,
+                    deliver_note: order.order_shipping.deliver_note,
+                    shipping_provider: order.order_shipping.shipping_provider
+                }
+            }
+        }
 
         var res = await strapi.services.common.normalizationResponse(
             order, ["user"]
@@ -719,7 +775,7 @@ module.exports = {
             order: res
         });
     },
-    getOrdersByUserId: async(ctx) => {
+    getOrdersByUserId: async (ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
             ctx.send({
@@ -755,20 +811,22 @@ module.exports = {
                 element.order_shipping.status_label = getShippingStatusLabel(element.order_shipping.status);
             }
 
-            var state = await strapi.query("state").findOne({
-                id: element.order_shipping.state
-            });
+            if (!_.isNil(element.order_shipping)) {
+                var state = await strapi.query("state").findOne({
+                    id: element.order_shipping.state
+                });
 
-            if (!_.isNil(state)) {
-                element.receiver = {
-                    full_name: element.order_shipping.full_name,
-                    address: element.order_shipping.address,
-                    city: element.order_shipping.city,
-                    state: !_.isNil(state) ? state.name : '',
-                    country: !_.isNil(state) && !_.isNil(state.country) ? state.country.name : '',
-                    phone_number: element.order_shipping.phone_number,
-                    deliver_note: element.order_shipping.deliver_note,
-                    shipping_provider: element.order_shipping.shipping_provider
+                if (!_.isNil(state)) {
+                    element.receiver = {
+                        full_name: element.order_shipping.full_name,
+                        address: element.order_shipping.address,
+                        city: element.order_shipping.city,
+                        state: !_.isNil(state) ? state.name : '',
+                        country: !_.isNil(state) && !_.isNil(state.country) ? state.country.name : '',
+                        phone_number: element.order_shipping.phone_number,
+                        deliver_note: element.order_shipping.deliver_note,
+                        shipping_provider: element.order_shipping.shipping_provider
+                    }
                 }
             }
         }
