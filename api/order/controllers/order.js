@@ -314,7 +314,6 @@ const processCreateOrder = async(userId,
             null
         );
 
-        //console.log(`quotationRes.data`, quotationRes.data);
         if (quotationRes.success) {
             shipping.shipping_provider = quotationRes.data.shippingProvider;
             shipping.shipping_ref_number = quotationRes.data.orderRef;
@@ -708,7 +707,28 @@ module.exports = {
             return;
         }
 
-        //console.log(`order`, order);
+        if (!_.isNil(order.order_shipping)) {
+            order.order_shipping.status_label = getShippingStatusLabel(order.order_shipping.status);
+        }
+
+        if (!_.isNil(order.order_shipping)) {
+            var state = await strapi.query("state").findOne({
+                id: order.order_shipping.state
+            });
+
+            if (!_.isNil(state)) {
+                order.receiver = {
+                    full_name: order.order_shipping.full_name,
+                    address: order.order_shipping.address,
+                    city: order.order_shipping.city,
+                    state: !_.isNil(state) ? state.name : '',
+                    country: !_.isNil(state) && !_.isNil(state.country) ? state.country.name : '',
+                    phone_number: order.order_shipping.phone_number,
+                    deliver_note: order.order_shipping.deliver_note,
+                    shipping_provider: order.order_shipping.shipping_provider
+                }
+            }
+        }
 
         var res = await strapi.services.common.normalizationResponse(
             order, ["user"]
@@ -755,20 +775,22 @@ module.exports = {
                 element.order_shipping.status_label = getShippingStatusLabel(element.order_shipping.status);
             }
 
-            var state = await strapi.query("state").findOne({
-                id: element.order_shipping.state
-            });
+            if (!_.isNil(element.order_shipping)) {
+                var state = await strapi.query("state").findOne({
+                    id: element.order_shipping.state
+                });
 
-            if (!_.isNil(state)) {
-                element.receiver = {
-                    full_name: element.order_shipping.full_name,
-                    address: element.order_shipping.address,
-                    city: element.order_shipping.city,
-                    state: !_.isNil(state) ? state.name : '',
-                    country: !_.isNil(state) && !_.isNil(state.country) ? state.country.name : '',
-                    phone_number: element.order_shipping.phone_number,
-                    deliver_note: element.order_shipping.deliver_note,
-                    shipping_provider: element.order_shipping.shipping_provider
+                if (!_.isNil(state)) {
+                    element.receiver = {
+                        full_name: element.order_shipping.full_name,
+                        address: element.order_shipping.address,
+                        city: element.order_shipping.city,
+                        state: !_.isNil(state) ? state.name : '',
+                        country: !_.isNil(state) && !_.isNil(state.country) ? state.country.name : '',
+                        phone_number: element.order_shipping.phone_number,
+                        deliver_note: element.order_shipping.deliver_note,
+                        shipping_provider: element.order_shipping.shipping_provider
+                    }
                 }
             }
         }
