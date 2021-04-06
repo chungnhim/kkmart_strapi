@@ -18,15 +18,29 @@ const generateOrderCode = (length = 6) => {
     return moment.utc(new Date).format("YYYYMMDD") + text;
 }
 
-const getByOrderCode = async(orderCode) => {
+const getByOrderCode = async (orderCode) => {
     var order = await strapi.query("order").findOne({
         order_code: orderCode,
+    });
+
+    let productIds = [];
+    order.order_products.forEach(product => {
+        productIds.push(product.product);
+    });
+
+    let products = await strapi.query("product").find({
+        id_in: productIds
+    });
+
+    order.order_products.forEach(product => {
+        product.product_info = products.find(s => s.id == product.product);
+        product.product_info.product_variants = product.product_info.product_variants.find(s => s.id == product.product_variant);
     });
 
     return order;
 }
 
-const getByOrdersUserId = async(pageIndex, pageSize, userId) => {
+const getByOrdersUserId = async (pageIndex, pageSize, userId) => {
     var dataQuery = {
         user: userId,
         _start: (pageIndex - 1) * pageSize,
@@ -37,13 +51,35 @@ const getByOrdersUserId = async(pageIndex, pageSize, userId) => {
     var totalRows = await strapi.query('order').count(dataQuery);
     var entities = await strapi.query("order").find(dataQuery);
 
+    let productIds = [];
+    entities.forEach(order => {
+        order.order_products.forEach(product => {
+            productIds.push(product.product);
+        });
+    });
+
+    let products = await strapi.query("product").find({
+        id_in: productIds
+    });
+
+    entities.forEach(order => {
+        order.order_products.forEach(product => {
+            product.product_info = products.find(s => s.id == product.product);
+            console.log(`============================ product.product_info`, product.product_info.product_variants);
+
+            if (!_.isNil(product.product_info.product_variants) && product.product_info.product_variants.length > 0) {
+                product.product_info.product_variants = product.product_info.product_variants.find(s => s.id == product.product_variant);
+            }
+        });
+    });
+
     return {
         totalRows,
         entities
     };
 }
 
-const processCheckout = async(userId, products, is_expressmart, shipping_prodiver_code, order_via, vouchercode, is_use_coin, currency, shopping_cart_id) => {
+const processCheckout = async (userId, products, is_expressmart, shipping_prodiver_code, order_via, vouchercode, is_use_coin, currency, shopping_cart_id) => {
     // [
     //     {
     //         "product_id": 1,
@@ -157,7 +193,7 @@ const processCheckout = async(userId, products, is_expressmart, shipping_prodive
     };
 }
 
-const processCreateOrder = async(userId,
+const processCreateOrder = async (userId,
     products,
     is_expressmart,
     user_address_id,
@@ -372,7 +408,7 @@ const getShippingStatusLabel = (status) => {
 }
 
 module.exports = {
-    checkOut: async(ctx) => {
+    checkOut: async (ctx) => {
         //{
         //   "is_expressmart": false,
         //    "shipping_prodiver_code": "LALAMOVE",
@@ -481,7 +517,7 @@ module.exports = {
 
         ctx.send(createOrderRes);
     },
-    createOrder: async(ctx) => {
+    createOrder: async (ctx) => {
         // {        
         //     "user_address_id": "",
         //     "shipping_note": "",
@@ -585,7 +621,7 @@ module.exports = {
 
         ctx.send(createOrderRes);
     },
-    getCheckout: async(ctx) => {
+    getCheckout: async (ctx) => {
 
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (userId == 0) {
@@ -684,7 +720,7 @@ module.exports = {
         });
 
     },
-    getByOrderCode: async(ctx) => {
+    getByOrderCode: async (ctx) => {
         const params = _.assign({}, ctx.request.params, ctx.params);
         var orderCode = params.orderCode;
 
@@ -739,7 +775,7 @@ module.exports = {
             order: res
         });
     },
-    getOrdersByUserId: async(ctx) => {
+    getOrdersByUserId: async (ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
             ctx.send({
