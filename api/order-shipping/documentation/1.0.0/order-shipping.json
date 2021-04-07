@@ -730,6 +730,43 @@
               }
             }
           },
+          "shipping_trackings": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "trackingstatus": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "sharelink": {
+                  "type": "string"
+                },
+                "amount": {
+                  "type": "number"
+                },
+                "currency": {
+                  "type": "string"
+                },
+                "order_shipping": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -869,6 +906,12 @@
           },
           "state": {
             "type": "string"
+          },
+          "shipping_trackings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "created_by": {
             "type": "string"

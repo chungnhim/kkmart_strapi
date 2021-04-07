@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/product-variants": {
+    "/shipping-trackings": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -52,7 +52,7 @@
         },
         "summary": "",
         "tags": [
-          "Product-variant"
+          "Shipping-tracking"
         ],
         "parameters": [
           {
@@ -244,7 +244,7 @@
         },
         "summary": "",
         "tags": [
-          "Product-variant"
+          "Shipping-tracking"
         ],
         "requestBody": {
           "description": "",
@@ -252,14 +252,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewProduct-variant"
+                "$ref": "#/components/schemas/NewShipping-tracking"
               }
             }
           }
         }
       }
     },
-    "/product-variants/count": {
+    "/shipping-trackings/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -311,12 +311,12 @@
         },
         "summary": "",
         "tags": [
-          "Product-variant"
+          "Shipping-tracking"
         ],
         "parameters": []
       }
     },
-    "/product-variants/{id}": {
+    "/shipping-trackings/{id}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -368,7 +368,7 @@
         },
         "summary": "",
         "tags": [
-          "Product-variant"
+          "Shipping-tracking"
         ],
         "parameters": [
           {
@@ -434,7 +434,7 @@
         },
         "summary": "",
         "tags": [
-          "Product-variant"
+          "Shipping-tracking"
         ],
         "requestBody": {
           "description": "",
@@ -442,7 +442,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewProduct-variant"
+                "$ref": "#/components/schemas/NewShipping-tracking"
               }
             }
           }
@@ -508,7 +508,7 @@
         },
         "summary": "",
         "tags": [
-          "Product-variant"
+          "Shipping-tracking"
         ],
         "parameters": [
           {
@@ -527,7 +527,7 @@
   },
   "components": {
     "schemas": {
-      "Product-variant": {
+      "Shipping-tracking": {
         "required": [
           "id"
         ],
@@ -535,22 +535,22 @@
           "id": {
             "type": "string"
           },
-          "sku": {
+          "trackingstatus": {
             "type": "string"
           },
-          "barcode": {
+          "description": {
             "type": "string"
           },
-          "price": {
+          "sharelink": {
+            "type": "string"
+          },
+          "amount": {
             "type": "number"
           },
-          "selling_price": {
-            "type": "number"
-          },
-          "name": {
+          "currency": {
             "type": "string"
           },
-          "product_id": {
+          "order_shipping": {
             "required": [
               "id"
             ],
@@ -558,311 +558,65 @@
               "id": {
                 "type": "string"
               },
-              "name": {
+              "full_name": {
                 "type": "string"
               },
-              "supplierid": {
-                "type": "integer"
-              },
-              "productkeyword": {
+              "phone_number": {
                 "type": "string"
               },
-              "categoryid": {
-                "type": "integer"
-              },
-              "shortdescription": {
+              "address": {
                 "type": "string"
               },
-              "description": {
+              "note": {
                 "type": "string"
-              },
-              "price": {
-                "type": "number"
-              },
-              "currencycode": {
-                "type": "integer"
-              },
-              "currencycodeiso": {
-                "type": "string"
-              },
-              "retailprice": {
-                "type": "number"
               },
               "status": {
                 "type": "integer"
               },
-              "sku": {
+              "deliver_date": {
+                "type": "datetime"
+              },
+              "actual_deliver_date": {
+                "type": "datetime"
+              },
+              "deliver_note": {
                 "type": "string"
               },
-              "brand": {
+              "shipping_provider": {
                 "type": "string"
               },
-              "stock": {
-                "type": "integer"
+              "country": {
+                "type": "string"
               },
-              "soldqtty": {
-                "type": "integer"
+              "order": {
+                "type": "string"
               },
-              "minimumorderqtty": {
-                "type": "integer"
+              "postcode": {
+                "type": "string"
               },
-              "maximumorderqtty": {
-                "type": "integer"
+              "city": {
+                "type": "string"
               },
-              "weight": {
-                "type": "integer"
-              },
-              "rating_point": {
+              "shippingfee": {
                 "type": "number"
               },
-              "barcode": {
+              "shipping_ref_number": {
                 "type": "string"
               },
-              "slug": {
+              "state": {
                 "type": "string"
               },
-              "product_variants": {
+              "shipping_trackings": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
-              },
-              "product_ratings": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "shopping_cart_products": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "promotionproduct": {
-                "type": "string"
-              },
-              "flashsaleproduct": {
-                "type": "string"
-              },
-              "productimgs": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "categories": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "order_products": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "coin_earn": {
-                "type": "number"
-              },
-              "coin_use": {
-                "type": "number"
-              },
-              "can_use_coin": {
-                "type": "boolean"
-              },
-              "isexpress": {
-                "type": "boolean"
               },
               "created_by": {
                 "type": "string"
               },
               "updated_by": {
                 "type": "string"
-              }
-            }
-          },
-          "shopping_cart_products": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "shopping_cart": {
-                  "type": "string"
-                },
-                "product": {
-                  "type": "string"
-                },
-                "qtty": {
-                  "type": "integer"
-                },
-                "origin_price": {
-                  "type": "number"
-                },
-                "selling_price": {
-                  "type": "number"
-                },
-                "product_variant": {
-                  "type": "string"
-                },
-                "checkoutid": {
-                  "type": "integer"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "order_products": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "order": {
-                  "type": "string"
-                },
-                "product": {
-                  "type": "string"
-                },
-                "qtty": {
-                  "type": "integer"
-                },
-                "origin_price": {
-                  "type": "number"
-                },
-                "selling_price": {
-                  "type": "number"
-                },
-                "currency": {
-                  "type": "string"
-                },
-                "discount_amount": {
-                  "type": "number"
-                },
-                "note": {
-                  "type": "string"
-                },
-                "product_variant": {
-                  "type": "string"
-                },
-                "coin_earned": {
-                  "type": "number"
-                },
-                "coin_used": {
-                  "type": "number"
-                },
-                "voucher_applied": {
-                  "type": "string"
-                },
-                "voucher_discount_amt": {
-                  "type": "number"
-                },
-                "productname": {
-                  "type": "string"
-                },
-                "productimage": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "coin_earn": {
-            "type": "integer"
-          },
-          "coin_use": {
-            "type": "integer"
-          },
-          "can_use_coin": {
-            "type": "boolean"
-          },
-          "product_variant_images": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id",
-                "name",
-                "hash",
-                "mime",
-                "size",
-                "url",
-                "provider"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "alternativeText": {
-                  "type": "string"
-                },
-                "caption": {
-                  "type": "string"
-                },
-                "width": {
-                  "type": "integer"
-                },
-                "height": {
-                  "type": "integer"
-                },
-                "formats": {
-                  "type": "object"
-                },
-                "hash": {
-                  "type": "string"
-                },
-                "ext": {
-                  "type": "string"
-                },
-                "mime": {
-                  "type": "string"
-                },
-                "size": {
-                  "type": "number"
-                },
-                "url": {
-                  "type": "string"
-                },
-                "previewUrl": {
-                  "type": "string"
-                },
-                "provider": {
-                  "type": "string"
-                },
-                "provider_metadata": {
-                  "type": "object"
-                },
-                "related": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
               }
             }
           },
@@ -956,46 +710,25 @@
           }
         }
       },
-      "NewProduct-variant": {
+      "NewShipping-tracking": {
         "properties": {
-          "sku": {
+          "trackingstatus": {
             "type": "string"
           },
-          "barcode": {
+          "description": {
             "type": "string"
           },
-          "price": {
+          "sharelink": {
+            "type": "string"
+          },
+          "amount": {
             "type": "number"
           },
-          "selling_price": {
-            "type": "number"
-          },
-          "name": {
+          "currency": {
             "type": "string"
           },
-          "product_id": {
+          "order_shipping": {
             "type": "string"
-          },
-          "shopping_cart_products": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "order_products": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "coin_earn": {
-            "type": "integer"
-          },
-          "coin_use": {
-            "type": "integer"
-          },
-          "can_use_coin": {
-            "type": "boolean"
           },
           "created_by": {
             "type": "string"

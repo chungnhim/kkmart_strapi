@@ -832,6 +832,12 @@
           "voucher_discount_amt": {
             "type": "number"
           },
+          "productname": {
+            "type": "string"
+          },
+          "productimage": {
+            "type": "string"
+          },
           "created_by": {
             "required": [
               "id",
@@ -962,6 +968,12 @@
           },
           "voucher_discount_amt": {
             "type": "number"
+          },
+          "productname": {
+            "type": "string"
+          },
+          "productimage": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

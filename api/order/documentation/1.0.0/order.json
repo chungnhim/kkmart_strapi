@@ -1130,6 +1130,12 @@
                 "voucher_discount_amt": {
                   "type": "number"
                 },
+                "productname": {
+                  "type": "string"
+                },
+                "productimage": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -1240,6 +1246,12 @@
               },
               "state": {
                 "type": "string"
+              },
+              "shipping_trackings": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "created_by": {
                 "type": "string"

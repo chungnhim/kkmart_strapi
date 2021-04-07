@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "shipping_trackings",
+  "info": {
+    "name": "ShippingTracking"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "trackingstatus": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "sharelink": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "decimal"
+    },
+    "currency": {
+      "type": "string"
+    },
+    "order_shipping": {
+      "model": "order-shipping",
+      "via": "shipping_trackings"
+    }
+  }
+}

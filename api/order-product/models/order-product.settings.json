@@ -10,12 +10,12 @@
   },
   "attributes": {
     "order": {
-      "via": "order_products",
-      "model": "order"
+      "model": "order",
+      "via": "order_products"
     },
     "product": {
-      "via": "order_products",
-      "model": "product"
+      "model": "product",
+      "via": "order_products"
     },
     "qtty": {
       "type": "integer"
@@ -36,8 +36,8 @@
       "type": "richtext"
     },
     "product_variant": {
-      "via": "order_products",
-      "model": "product-variant"
+      "model": "product-variant",
+      "via": "order_products"
     },
     "coin_earned": {
       "type": "decimal"
@@ -50,6 +50,12 @@
     },
     "voucher_discount_amt": {
       "type": "decimal"
+    },
+    "productname": {
+      "type": "string"
+    },
+    "productimage": {
+      "type": "string"
     }
   }
 }

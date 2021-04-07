@@ -59,6 +59,10 @@
     "state": {
       "model": "state",
       "via": "order_shippings"
+    },
+    "shipping_trackings": {
+      "via": "order_shipping",
+      "collection": "shipping-tracking"
     }
   }
 }

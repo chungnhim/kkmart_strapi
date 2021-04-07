@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/shipping-trackings",
+      "handler": "shipping-tracking.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/shipping-trackings/count",
+      "handler": "shipping-tracking.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/shipping-trackings/:id",
+      "handler": "shipping-tracking.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/shipping-trackings",
+      "handler": "shipping-tracking.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/shipping-trackings/:id",
+      "handler": "shipping-tracking.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/shipping-trackings/:id",
+      "handler": "shipping-tracking.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
