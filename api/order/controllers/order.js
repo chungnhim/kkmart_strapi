@@ -18,7 +18,7 @@ const generateOrderCode = (length = 6) => {
     return moment.utc(new Date).format("YYYYMMDD") + text;
 }
 
-const getByOrderCode = async (orderCode) => {
+const getByOrderCode = async(orderCode) => {
     var order = await strapi.query("order").findOne({
         order_code: orderCode,
     });
@@ -40,7 +40,7 @@ const getByOrderCode = async (orderCode) => {
     return order;
 }
 
-const getByOrdersUserId = async (pageIndex, pageSize, userId) => {
+const getByOrdersUserId = async(pageIndex, pageSize, userId) => {
     var dataQuery = {
         user: userId,
         _start: (pageIndex - 1) * pageSize,
@@ -50,7 +50,7 @@ const getByOrdersUserId = async (pageIndex, pageSize, userId) => {
 
     var totalRows = await strapi.query('order').count(dataQuery);
     var entities = await strapi.query("order").find(dataQuery);
-
+    /*
     let productIds = [];
     entities.forEach(order => {
         order.order_products.forEach(product => {
@@ -72,14 +72,14 @@ const getByOrdersUserId = async (pageIndex, pageSize, userId) => {
             }
         });
     });
-
+    */
     return {
         totalRows,
         entities
     };
 }
 
-const processCheckout = async (userId, products, is_expressmart, shipping_prodiver_code, order_via, vouchercode, is_use_coin, currency, shopping_cart_id) => {
+const processCheckout = async(userId, products, is_expressmart, shipping_prodiver_code, order_via, vouchercode, is_use_coin, currency, shopping_cart_id) => {
     // [
     //     {
     //         "product_id": 1,
@@ -193,7 +193,7 @@ const processCheckout = async (userId, products, is_expressmart, shipping_prodiv
     };
 }
 
-const processCreateOrder = async (userId,
+const processCreateOrder = async(userId,
     products,
     is_expressmart,
     user_address_id,
@@ -286,7 +286,9 @@ const processCreateOrder = async (userId,
             discount_amount: 0,
             note: null,
             coin_earned: kcoin_each_earn,
-            coin_used: coin_can_use
+            coin_used: coin_can_use,
+            productname: product.name,
+            productimage: product.productimgs[0].url
         });
     }
 
@@ -360,6 +362,8 @@ const processCreateOrder = async (userId,
                 shipping_fee: quotationRes.data.orderRef,
                 status: strapi.config.constants.shipping_status.inProvider
             });
+            // get order detail
+
         }
     }
 
@@ -408,7 +412,7 @@ const getShippingStatusLabel = (status) => {
 }
 
 module.exports = {
-    checkOut: async (ctx) => {
+    checkOut: async(ctx) => {
         //{
         //   "is_expressmart": false,
         //    "shipping_prodiver_code": "LALAMOVE",
@@ -517,7 +521,7 @@ module.exports = {
 
         ctx.send(createOrderRes);
     },
-    createOrder: async (ctx) => {
+    createOrder: async(ctx) => {
         // {        
         //     "user_address_id": "",
         //     "shipping_note": "",
@@ -553,12 +557,19 @@ module.exports = {
             return;
         }
         // get Shoping cartitem
+        /*
         var shoppingCart = await strapi.query("shopping-cart").findOne({
+            id : ordcheckout.shopping_cart,
             user: userId,
             status: strapi.config.constants.shopping_cart_status.new,
+            isexpress: ordcheckout.isexpress,
             _sort: "id:desc"
+        }); */
+        console.log("ordercheckout: " + ordcheckout);
+        var shoppingCart = await strapi.query("shopping-cart").findOne({
+            id: ordcheckout.shopping_cart.id
         });
-
+        console.log(shoppingCart);
         if (_.isNil(shoppingCart)) {
             ctx.send({
                 success: false,
@@ -577,7 +588,7 @@ module.exports = {
             return;
         }
 
-        //console.log(`shoppingCart 111`, shoppingCart);
+        console.log(`shoppingCart 111`, shoppingCart.shopping_cart_products);
 
         // get checkout products
         let checkOutProducts = shoppingCart.shopping_cart_products.filter(s => s.checkoutid == params.checkout_id);
@@ -621,7 +632,7 @@ module.exports = {
 
         ctx.send(createOrderRes);
     },
-    getCheckout: async (ctx) => {
+    getCheckout: async(ctx) => {
 
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (userId == 0) {
@@ -720,7 +731,7 @@ module.exports = {
         });
 
     },
-    getByOrderCode: async (ctx) => {
+    getByOrderCode: async(ctx) => {
         const params = _.assign({}, ctx.request.params, ctx.params);
         var orderCode = params.orderCode;
 
@@ -775,7 +786,7 @@ module.exports = {
             order: res
         });
     },
-    getOrdersByUserId: async (ctx) => {
+    getOrdersByUserId: async(ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
             ctx.send({
