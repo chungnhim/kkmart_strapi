@@ -23,7 +23,7 @@ module.exports = {
         var res = await strapi.services.outlet.getNearMe(ctx.request.body.longitude,
             ctx.request.body.latitude,
             ctx.request.body.distance);
-        
+
         ctx.send(res);
     },
     getbystate: async ctx => {
@@ -33,4 +33,11 @@ module.exports = {
         let data = Object.values(removeAuthorFields(dataresult));
         ctx.send(data);
     },
+    searchoutlet: async ctx => {
+        //ctx.request.body.query
+        //console.log(ctx.request.body.query);
+        var dataresult = await strapi.query('outlet').find({ address_contains: ctx.request.body.query });
+        let data = Object.values(removeAuthorFields(dataresult));
+        ctx.send(data);
+    }
 };

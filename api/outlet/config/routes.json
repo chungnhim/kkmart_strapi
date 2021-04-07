@@ -62,6 +62,14 @@
             "config": {
                 "policies": []
             }
+        },
+        {
+            "method": "POST",
+            "path": "/outlets/getoutlets",
+            "handler": "outlet.searchoutlet",
+            "config": {
+                "policies": []
+            }
         }
     ]
 }
