@@ -350,9 +350,7 @@ const processCreateOrder = async(userId,
             shipping_note,
             null
         );
-        console.log(`quotationRes`);
-        console.log(quotationRes);
-        console.log(`================end=================`);
+
         if (quotationRes.success) {
             shipping.shipping_provider = quotationRes.data.shippingProvider;
             shipping.shipping_ref_number = quotationRes.data.orderRef;
@@ -366,19 +364,16 @@ const processCreateOrder = async(userId,
             // get order detail
 
             let shipinfo = await strapi.services.lalamoveshippingservice.getOrderDetails(quotationRes.data.orderRef);
-            console.log(`shipinfo`);
-            console.log(quotationRes);
-            console.log(`================end shipinfo=================`);
-            if (!_.isNil(shipinfo)) {
+            if (!_.isNil(shipinfo) && shipinfo.success) {
                 var tracking = {
-                    trackingstatus: shipinfo.status,
-                    description: shipinfo.status,
-                    sharelink: shipinfo.shareLink,
-                    amount: shipinfo.price.amount,
-                    currency: shipinfo.price.currency,
+                    trackingstatus: shipinfo.data.status,
+                    description: shipinfo.data.status,
+                    sharelink: shipinfo.data.shareLink,
+                    amount: shipinfo.data.price.amount,
+                    currency: shipinfo.data.price.currency,
                     order_shipping: shipping.id
                 };
-                var shippingtrack = await strapi.query("shipping_trackings").create(tracking);
+                var shippingtrack = await strapi.query("shipping-tracking").create(tracking);
             }
         }
     }
@@ -832,6 +827,16 @@ module.exports = {
                 element.order_shipping.status_label = getShippingStatusLabel(element.order_shipping.status);
             }
 
+            let shippintracking = await strapi.query("shipping-tracking").find({
+                order_shipping: element.order_shipping.id
+            });
+
+            if (!_.isNil(shippintracking)) {
+                let modelstrack = await strapi.services.common.normalizationResponse(
+                    shippintracking, ["order_shipping"]
+                );
+                element.order_shipping.tracking = Object.values(modelstrack);
+            }
             var state_id = 0;
             if (element.order_shipping && element.order_shipping.state && !_.isNil(element.order_shipping.state)) {
                 state_id = element.order_shipping.state;
