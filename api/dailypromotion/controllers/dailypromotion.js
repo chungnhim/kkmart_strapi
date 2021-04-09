@@ -43,7 +43,12 @@ module.exports = {
 
         if (entities && entities.length > 0) {
             //entities = entities.filter(x => x.status = 3 && x.starttime < utc_timestamp && x.endtime > utc_timestamp);
-            entities = entities.filter(x => x.status = 3 && x.starttime < utc_timestamp && x.endtime > utc_timestamp);
+            entities = entities.filter(x => x.status = 3);
+
+            // var entities = await strapi.services.common.normalizationResponse(
+            //     entities, ["user"]
+            // );
+
         }
         return entities.map(entity => {
             const dailypromotion = sanitizeEntity(entity, {
