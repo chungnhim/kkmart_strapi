@@ -6,7 +6,9 @@ const _ = require('lodash');
  * to customize this controller
  */
 const removeAuthorFields = (entity) => {
-    const sanitizedValue = _.omit(entity, ['created_by', 'updated_by', 'created_at', 'updated_at', 'formats', 'user', 'dailypromotiondetail', 'status', 'dailypromotiontype']);
+    const sanitizedValue = _.omit(entity, ['created_by', 'updated_by', 'created_at', 'updated_at', 'formats', 'user',
+        'dailypromotiondetail', 'status'
+    ]);
     _.forEach(sanitizedValue, (value, key) => {
         if (_.isArray(value)) {
             sanitizedValue[key] = value.map(removeAuthorFields);
@@ -33,6 +35,15 @@ module.exports = {
             entities = await strapi.services.dailypromotion.search(ctx.query);
         } else {
             entities = await strapi.services.dailypromotion.find(ctx.query);
+        }
+        //Add more filter
+        const now = new Date;
+        var utc_timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(),
+            now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
+
+        if (entities && entities.length > 0) {
+            //entities = entities.filter(x => x.status = 3 && x.starttime < utc_timestamp && x.endtime > utc_timestamp);
+            entities = entities.filter(x => x.status = 3 && x.starttime < utc_timestamp && x.endtime > utc_timestamp);
         }
         return entities.map(entity => {
             const dailypromotion = sanitizeEntity(entity, {
