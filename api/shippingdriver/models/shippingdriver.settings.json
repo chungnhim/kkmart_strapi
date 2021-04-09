@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "shippingdrivers",
+  "info": {
+    "name": "shippingdriver"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "drivername": {
+      "type": "string"
+    },
+    "driverphone": {
+      "type": "string"
+    },
+    "platenumber": {
+      "type": "string"
+    },
+    "photo": {
+      "type": "string"
+    }
+  }
+}

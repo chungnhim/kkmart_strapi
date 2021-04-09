@@ -162,10 +162,9 @@ const buildLalamoveReq = async(userAddressId, products, shippingNote, scheduleAt
             message: "User address not found"
         }
     }
-
     var nearMe = await strapi.services.outlet.getNearMe(userAddress.longitude,
         userAddress.latitude,
-        100000);
+        10000);
 
     if (nearMe.length == 0) {
         return {
@@ -183,6 +182,7 @@ const buildLalamoveReq = async(userAddressId, products, shippingNote, scheduleAt
     }
 
     let serviceType = serviceTypesByWeigh.find(s => s.min <= weigh && weigh <= s.max);
+
     if (_.isNil(serviceType) || _.isNil(malaysiaServiceTypes.find(s => s.key.toUpperCase() == serviceType.key))) {
         return {
             success: false,
@@ -216,7 +216,14 @@ const buildLalamoveReq = async(userAddressId, products, shippingNote, scheduleAt
     // 	req.specialRequests.push(body.special_requests);
     // }
 
-    var pickUpCountry = countiesCode.find(s => s.code == nearMe[0].country.codeiso2);
+    // set default for Malaysia
+    let country2 = "MY";
+    if (_.isNil(nearMe[0].country.codeiso2)) {
+        country2 = "MY";
+    } else {
+        country2 = nearMe[0].country.codeiso2;
+    }
+    var pickUpCountry = countiesCode.find(s => s.code == country2);
     if (_.isNil(pickUpCountry)) {
         return {
             success: false,

@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/order-shippings": {
+    "/shippingdrivers": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -10,10 +10,9 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Shippingdriver"
                   }
                 }
               }
@@ -52,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Order-shipping"
+          "Shippingdriver"
         ],
         "parameters": [
           {
@@ -202,11 +201,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Shippingdriver"
                 }
               }
             }
@@ -244,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "Order-shipping"
+          "Shippingdriver"
         ],
         "requestBody": {
           "description": "",
@@ -252,14 +247,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewOrder-shipping"
+                "$ref": "#/components/schemas/NewShippingdriver"
               }
             }
           }
         }
       }
     },
-    "/order-shippings/count": {
+    "/shippingdrivers/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -270,8 +265,8 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "foo": {
-                      "type": "string"
+                    "count": {
+                      "type": "integer"
                     }
                   }
                 }
@@ -311,12 +306,12 @@
         },
         "summary": "",
         "tags": [
-          "Order-shipping"
+          "Shippingdriver"
         ],
         "parameters": []
       }
     },
-    "/order-shippings/{id}": {
+    "/shippingdrivers/{id}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -326,11 +321,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Shippingdriver"
                 }
               }
             }
@@ -368,7 +359,7 @@
         },
         "summary": "",
         "tags": [
-          "Order-shipping"
+          "Shippingdriver"
         ],
         "parameters": [
           {
@@ -392,11 +383,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Shippingdriver"
                 }
               }
             }
@@ -434,7 +421,7 @@
         },
         "summary": "",
         "tags": [
-          "Order-shipping"
+          "Shippingdriver"
         ],
         "requestBody": {
           "description": "",
@@ -442,7 +429,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewOrder-shipping"
+                "$ref": "#/components/schemas/NewShippingdriver"
               }
             }
           }
@@ -508,7 +495,7 @@
         },
         "summary": "",
         "tags": [
-          "Order-shipping"
+          "Shippingdriver"
         ],
         "parameters": [
           {
@@ -527,7 +514,7 @@
   },
   "components": {
     "schemas": {
-      "Order-shipping": {
+      "Shippingdriver": {
         "required": [
           "id"
         ],
@@ -535,240 +522,17 @@
           "id": {
             "type": "string"
           },
-          "full_name": {
+          "drivername": {
             "type": "string"
           },
-          "phone_number": {
+          "driverphone": {
             "type": "string"
           },
-          "address": {
+          "platenumber": {
             "type": "string"
           },
-          "note": {
+          "photo": {
             "type": "string"
-          },
-          "status": {
-            "type": "integer"
-          },
-          "deliver_date": {
-            "type": "datetime"
-          },
-          "actual_deliver_date": {
-            "type": "datetime"
-          },
-          "deliver_note": {
-            "type": "string"
-          },
-          "shipping_provider": {
-            "type": "string"
-          },
-          "country": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "codeiso2": {
-                "type": "string"
-              },
-              "codeiso3": {
-                "type": "string"
-              },
-              "provinces": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "order_shippings": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "user_addresses": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "order_billings": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "order": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "order_code": {
-                "type": "string"
-              },
-              "order_via": {
-                "type": "string"
-              },
-              "order_status": {
-                "type": "integer"
-              },
-              "payment_status": {
-                "type": "integer"
-              },
-              "shipping_status": {
-                "type": "integer"
-              },
-              "total_amount": {
-                "type": "number"
-              },
-              "currency": {
-                "type": "string"
-              },
-              "discount_amount": {
-                "type": "number"
-              },
-              "order_note": {
-                "type": "string"
-              },
-              "user": {
-                "type": "string"
-              },
-              "order_products": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "order_billing": {
-                "type": "string"
-              },
-              "order_shipping": {
-                "type": "string"
-              },
-              "vouchercode": {
-                "type": "string"
-              },
-              "coin_earned": {
-                "type": "number"
-              },
-              "coin_used": {
-                "type": "number"
-              },
-              "voucher_discount_amt": {
-                "type": "number"
-              },
-              "is_express_delivery": {
-                "type": "boolean"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "postcode": {
-            "type": "string"
-          },
-          "city": {
-            "type": "string"
-          },
-          "shippingfee": {
-            "type": "number"
-          },
-          "shipping_ref_number": {
-            "type": "string"
-          },
-          "state": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "country": {
-                "type": "string"
-              },
-              "user_addresses": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "order_shippings": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "shipping_trackings": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "trackingstatus": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "sharelink": {
-                  "type": "string"
-                },
-                "amount": {
-                  "type": "number"
-                },
-                "currency": {
-                  "type": "string"
-                },
-                "order_shipping": {
-                  "type": "string"
-                },
-                "shippingdriver": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
           },
           "created_by": {
             "required": [
@@ -860,61 +624,19 @@
           }
         }
       },
-      "NewOrder-shipping": {
+      "NewShippingdriver": {
         "properties": {
-          "full_name": {
+          "drivername": {
             "type": "string"
           },
-          "phone_number": {
+          "driverphone": {
             "type": "string"
           },
-          "address": {
+          "platenumber": {
             "type": "string"
           },
-          "note": {
+          "photo": {
             "type": "string"
-          },
-          "status": {
-            "type": "integer"
-          },
-          "deliver_date": {
-            "type": "datetime"
-          },
-          "actual_deliver_date": {
-            "type": "datetime"
-          },
-          "deliver_note": {
-            "type": "string"
-          },
-          "shipping_provider": {
-            "type": "string"
-          },
-          "country": {
-            "type": "string"
-          },
-          "order": {
-            "type": "string"
-          },
-          "postcode": {
-            "type": "string"
-          },
-          "city": {
-            "type": "string"
-          },
-          "shippingfee": {
-            "type": "number"
-          },
-          "shipping_ref_number": {
-            "type": "string"
-          },
-          "state": {
-            "type": "string"
-          },
-          "shipping_trackings": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
           },
           "created_by": {
             "type": "string"
@@ -926,5 +648,9 @@
       }
     }
   },
-  "tags": []
+  "tags": [
+    {
+      "name": "Shippingdriver"
+    }
+  ]
 }

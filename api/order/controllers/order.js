@@ -149,7 +149,6 @@ const processCheckout = async(userId, products, is_expressmart, shipping_prodive
     // get current checkoutId
     let ordcheckout = await strapi.query("order-checkout").findOne({
         user: userId,
-        shopping_cart: shopping_cart_id,
         checkoutstatus: strapi.config.constants.shopping_cart_status.new,
         _sort: "id:desc"
     });
@@ -351,7 +350,9 @@ const processCreateOrder = async(userId,
             shipping_note,
             null
         );
-
+        console.log(`quotationRes`);
+        console.log(quotationRes);
+        console.log(`================end=================`);
         if (quotationRes.success) {
             shipping.shipping_provider = quotationRes.data.shippingProvider;
             shipping.shipping_ref_number = quotationRes.data.orderRef;
@@ -364,6 +365,21 @@ const processCreateOrder = async(userId,
             });
             // get order detail
 
+            let shipinfo = await strapi.services.lalamoveshippingservice.getOrderDetails(quotationRes.data.orderRef);
+            console.log(`shipinfo`);
+            console.log(quotationRes);
+            console.log(`================end shipinfo=================`);
+            if (!_.isNil(shipinfo)) {
+                var tracking = {
+                    trackingstatus: shipinfo.status,
+                    description: shipinfo.status,
+                    sharelink: shipinfo.shareLink,
+                    amount: shipinfo.price.amount,
+                    currency: shipinfo.price.currency,
+                    order_shipping: shipping.id
+                };
+                var shippingtrack = await strapi.query("shipping_trackings").create(tracking);
+            }
         }
     }
 
@@ -565,11 +581,11 @@ module.exports = {
             isexpress: ordcheckout.isexpress,
             _sort: "id:desc"
         }); */
-        console.log("ordercheckout: " + ordcheckout);
+        //console.log("ordercheckout: " + ordcheckout);
         var shoppingCart = await strapi.query("shopping-cart").findOne({
             id: ordcheckout.shopping_cart.id
         });
-        console.log(shoppingCart);
+
         if (_.isNil(shoppingCart)) {
             ctx.send({
                 success: false,
@@ -587,8 +603,6 @@ module.exports = {
 
             return;
         }
-
-        console.log(`shoppingCart 111`, shoppingCart.shopping_cart_products);
 
         // get checkout products
         let checkOutProducts = shoppingCart.shopping_cart_products.filter(s => s.checkoutid == params.checkout_id);
@@ -628,6 +642,8 @@ module.exports = {
                 const cartItem = checkOutProducts[index];
                 strapi.query("shopping-cart-product").delete({ id: cartItem.id });
             }
+            // delete ordercheckout
+            await strapi.query("order-checkout").delete({ id: params.checkout_id });
         }
 
         ctx.send(createOrderRes);
@@ -644,19 +660,26 @@ module.exports = {
                 })
             );
         }
-        const queryString = _.assign({}, ctx.request.query, ctx.params);
-        //const params = _.assign({}, ctx.request.params, ctx.params);
-        var isexpress = false;
-        if (!_.isNil(queryString.is_expressmart) && !_.isEmpty(queryString.is_expressmart && queryString.is_expressmart == 'true')) {
-            isexpress = true;
+
+        // get current checkoutId
+        let ordcheckout = await strapi.query("order-checkout").findOne({
+            user: userId,
+            checkoutstatus: strapi.config.constants.shopping_cart_status.new,
+            _sort: "id:desc"
+        });
+
+
+        if (_.isNil(ordcheckout)) {
+            ctx.send({
+                success: false,
+                message: "Not have any checkout"
+            });
+            return;
         }
 
         // get shopping cart
         let shoppingCart = await strapi.query("shopping-cart").findOne({
-            user: userId,
-            status: strapi.config.constants.shopping_cart_status.new,
-            isexpress: isexpress,
-            _sort: "id:desc"
+            id: ordcheckout.shopping_cart.id
         });
         if (_.isNil(shoppingCart.shopping_cart_products)) {
             ctx.send({
@@ -666,21 +689,8 @@ module.exports = {
 
             return;
         }
-        // get current checkoutId
-        let ordcheckout = await strapi.query("order-checkout").findOne({
-            user: userId,
-            shopping_cart: shoppingCart.id,
-            checkoutstatus: strapi.config.constants.shopping_cart_status.new,
-            _sort: "id:desc"
-        });
-        if (_.isNil(ordcheckout)) {
-            ctx.send({
-                success: false,
-                message: "Not have any checkout"
-            });
 
-            return;
-        }
+
 
         let cartItemsCk = await strapi.services.product.getProductOfShoppingCartOneCheckOut(shoppingCart, ordcheckout.id);
         // get shoppingcart item checked

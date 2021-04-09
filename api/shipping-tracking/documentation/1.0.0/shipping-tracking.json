@@ -620,6 +620,34 @@
               }
             }
           },
+          "shippingdriver": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "drivername": {
+                "type": "string"
+              },
+              "driverphone": {
+                "type": "string"
+              },
+              "platenumber": {
+                "type": "string"
+              },
+              "photo": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -728,6 +756,9 @@
             "type": "string"
           },
           "order_shipping": {
+            "type": "string"
+          },
+          "shippingdriver": {
             "type": "string"
           },
           "created_by": {

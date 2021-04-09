@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/shippingdrivers",
+      "handler": "shippingdriver.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/shippingdrivers/count",
+      "handler": "shippingdriver.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/shippingdrivers/:id",
+      "handler": "shippingdriver.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/shippingdrivers",
+      "handler": "shippingdriver.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/shippingdrivers/:id",
+      "handler": "shippingdriver.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/shippingdrivers/:id",
+      "handler": "shippingdriver.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

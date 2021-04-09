@@ -27,6 +27,9 @@
     "order_shipping": {
       "model": "order-shipping",
       "via": "shipping_trackings"
+    },
+    "shippingdriver": {
+      "model": "shippingdriver"
     }
   }
 }
