@@ -7,7 +7,7 @@ const _ = require('lodash');
  */
 const removeAuthorFields = (entity) => {
     const sanitizedValue = _.omit(entity, ['created_by', 'updated_by', 'created_at', 'updated_at', 'formats', 'user',
-        'dailypromotiondetail', 'status'
+        'dailypromotiondetail'
     ]);
     _.forEach(sanitizedValue, (value, key) => {
         if (_.isArray(value)) {
