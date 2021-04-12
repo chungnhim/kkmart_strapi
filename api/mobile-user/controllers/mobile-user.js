@@ -36,8 +36,9 @@ const removeAuthorFields = (entity) => {
 
 module.exports = {
     //Test
-    test: async ctx => {
-        ctx.send('Hello World!');
+    countUser: async ctx => {
+        const totalUse = await strapi.query('user', 'users-permissions').count();
+        ctx.send(totalUse);
     },
     getnearme: async ctx => {
         /*
