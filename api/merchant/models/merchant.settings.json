@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "merchants",
+  "info": {
+    "name": "Merchant"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "merchantcode": {
+      "type": "string"
+    },
+    "merchantname": {
+      "type": "string"
+    },
+    "merchantkey": {
+      "type": "string"
+    },
+    "merchantemail": {
+      "type": "string"
+    },
+    "merchantcontact": {
+      "type": "string"
+    },
+    "merchantaddress": {
+      "type": "string"
+    },
+    "allowcreditcoin": {
+      "type": "boolean",
+      "default": true
+    },
+    "allowdebitcoin": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

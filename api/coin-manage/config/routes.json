@@ -1,68 +1,75 @@
 {
-  "routes": [
-    {
-      "method": "POST",
-      "path": "/coin-manage/my-coin",
-      "handler": "coin-manage.myCoin",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "POST",
-      "path": "/coin-manage/my-coin-new",
-      "handler": "coin-manage.myCoinNew",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "POST",
-      "path": "/coin-manage/credit-coin-at-shop",
-      "handler": "coin-manage.creditCoinAtShop",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "POST",
-      "path": "/coin-manage/debit-coin",
-      "handler": "coin-manage.debitCoin",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "POST",
-      "path": "/coin-manage/credit-coin",
-      "handler": "coin-manage.creditCoin",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "POST",
-      "path": "/coin-manage/my-coin-history",
-      "handler": "coin-manage.myCoinHistory",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "POST",
-      "path": "/coin-manage/claim-daily-coin",
-      "handler": "coin-manage.claimDailyCoin",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "POST",
-      "path": "/coin-manage/my-daily-coin-schedule",
-      "handler": "coin-manage.myDailyCoinSchedule",
-      "config": {
-        "policies": []
-      }
-    }
-  ]
+    "routes": [{
+            "method": "POST",
+            "path": "/coin-manage/my-coin",
+            "handler": "coin-manage.myCoin",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/coin-manage/my-coin-new",
+            "handler": "coin-manage.myCoinNew",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/coin-manage/credit-coin-at-shop",
+            "handler": "coin-manage.creditCoinAtShop",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/coin-manage/debit-coin",
+            "handler": "coin-manage.debitCoin",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/coin-manage/credit-coin",
+            "handler": "coin-manage.creditCoin",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/coin-manage/my-coin-history",
+            "handler": "coin-manage.myCoinHistory",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/coin-manage/claim-daily-coin",
+            "handler": "coin-manage.claimDailyCoin",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/coin-manage/my-daily-coin-schedule",
+            "handler": "coin-manage.myDailyCoinSchedule",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/coinpayment/paymentrequest",
+            "handler": "coin-manage.coinPaymentRequest",
+            "config": {
+                "policies": []
+            }
+        }
+    ]
 }
