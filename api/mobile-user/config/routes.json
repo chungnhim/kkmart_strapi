@@ -1,16 +1,16 @@
 {
     "routes": [{
             "method": "GET",
-            "path": "/mobile-user",
-            "handler": "mobile-user.test",
+            "path": "/mobile-user/get-near-me/:id",
+            "handler": "mobile-user.getnearme",
             "config": {
                 "policies": []
             }
         },
         {
             "method": "GET",
-            "path": "/mobile-user/get-near-me/:id",
-            "handler": "mobile-user.getnearme",
+            "path": "/mobile-user/count-user",
+            "handler": "mobile-user.countUser",
             "config": {
                 "policies": []
             }
