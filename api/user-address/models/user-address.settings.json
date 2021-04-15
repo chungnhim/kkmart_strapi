@@ -10,9 +10,9 @@
   },
   "attributes": {
     "user": {
+      "via": "user_addresses",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "user_addresses"
+      "model": "user"
     },
     "country": {
       "model": "country",

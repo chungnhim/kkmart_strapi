@@ -10,9 +10,9 @@
   },
   "attributes": {
     "user": {
+      "via": "searchhistories",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "searchhistories"
+      "model": "user"
     },
     "searchkeyword": {
       "type": "string"

@@ -2134,7 +2134,6 @@ module.exports = {
 
     //================>New Function
     coinPayment: async ctx => {
-        const body = _.assign({}, ctx.request.body, ctx.params);
         //input: mobileuserid - this is seller action
         //input: qrcode
         //input: outletid
@@ -2148,12 +2147,14 @@ module.exports = {
         const { taxno } = ctx.request.body;
         const { qrcode } = ctx.request.body;
         const { refno } = ctx.request.body;
+
+        let kcoinamount = 0;
         //check validate transaction amount
         if (!transactionamount || transactionamount < 0) {
 
             ctx.send({
                 success: false,
-                id: 'coin_manage.credit_coin.error.transactionamout.invalidate',
+                id: 'coin_manage.coinpayment.error.transactionamout.invalidate',
                 message: "Please provide transaction amount."
             })
             return;
@@ -2163,7 +2164,7 @@ module.exports = {
 
             return ctx.send({
                 success: false,
-                id: 'coin_manage.credit_coin.error.outlet.invalidate',
+                id: 'coin_manage.coinpayment.error.outlet.invalidate',
                 message: "Please provide transaction outletid."
             })
 
@@ -2172,7 +2173,7 @@ module.exports = {
         if (!refno) {
             return ctx.send({
                 success: false,
-                id: 'coin_manage.credit_coin.error.refno.invalidate',
+                id: 'coin_manage.coinpayment.error.refno.invalidate',
                 message: 'Please provide referenceno.',
             });
         }
@@ -2181,7 +2182,7 @@ module.exports = {
 
             return ctx.send({
                 success: false,
-                id: 'coin_manage.credit_coin.error.qrcode.invalidate',
+                id: 'coin_manage.coinpayment.error.qrcode.invalidate',
                 message: 'Please provide qrcode.'
             });
         }
@@ -2192,7 +2193,7 @@ module.exports = {
                 if (mobileuserid != id) {
                     return ctx.send({
                         success: false,
-                        id: 'coin_manage.my_coin.invalide-token',
+                        id: 'coin_manage.coinpayment.invalide-token',
                         message: 'This login token is not match with Mobile User Id'
                     });
                 }
@@ -2207,7 +2208,7 @@ module.exports = {
         if (checkoutlet == null || (checkoutlet != null && checkoutlet.user.id != mobileuserid)) {
             return ctx.send({
                 success: false,
-                id: 'coin_manage.credit_coin.error.outlet.invalidate_permission',
+                id: 'coin_manage.coinpayment.error.outlet.invalidate_permission',
                 message: 'Invalidate outlet permission.',
             });
         }
@@ -2218,25 +2219,137 @@ module.exports = {
         if (checkuser == null) {
             return ctx.badRequest({
                 success: false,
-                id: 'coin_manage.credit_coin.error.qrcode.invalidate',
+                id: 'coin_manage.coinpayment.error.qrcode.invalidate',
                 message: 'Invalidate qrcode.',
             });
         }
 
-        // check if user is company's staff
+        // calculate kcoinamount
+        var exchangerate = await strapi.query('exchangerate').findOne({
+            currencycode: 'K',
+            basecurrencycode: 'MYR',
+        });
+        if (exchangerate) {
+            kcoinamount = parseFloat(debitamount * exchangerate.rate).toFixed(2);
+        }
 
-        if (checkuser) {
+        //3. check valid balance
+        var mycoinaccount = await strapi.query('mobileusercoinaccount').findOne({
+            mobileuserid: checkuser.id
+        });
+        //3.1 re create mobileusercoinaccount for this
+        if (mycoinaccount == null) {
+            var newmycoinaccount = await strapi.query('mobileusercoinaccount').create({
+                mobileuserid: checkuser.id,
+                balance: 0,
+                totalcredit: 0,
+                totaldebit: 0,
+                totalexpried: 0,
+                modifieddate: new Date(new Date().toUTCString())
+            });
+            mycoinaccount = await strapi.query('mobileusercoinaccount').findOne({
+                mobileuserid: checkuser.id
+            });
+        }
+        if (mycoinaccount.balance < kcoinamount) {
+            return {
+                success: false,
+                id: 'coin_manage.coinpayment.error.balance.invalidate',
+                message: 'Insufficient Kcoin amount.',
+            };
+        }
 
+        // Insert CoinPaymentTransact
+        let trx = {
+            transactno: "",
+            refno: refno,
+            user: mobileuserid,
+            outlet: outletid,
+            customeremail: checkuser.email
+        }
+        var paymenttrx = await strapi.query('coinpaymenttransact').create(trx);
+
+        var creditid = 0;
+        var debitid = 0;
+        var creditcoinamt = 0;
+        var debitcoinamt = 0;
+
+        if (debitamount && (debitamount > 0)) {
+            // call debit coin            
+            let cdb = await strapi.services.cointransactionservice.debitCoinInStore(outletid, transactionamount, taxno, qrcode, debitamount, kcoinamount);
+
+            if (cdb && (cdb.id === "success")) {
+                debitcoinamt = cdb.content_object.debitamount;
+                //create coinpaymentdetail
+                let trxdetail1 = {
+                    transactno: paymenttrx.transactno,
+                    transaction_history: cdb.content_object.id,
+                    status: "C"
+                }
+                var detail2 = await strapi.query('coinpaymentdetail').create(trxdetail1);
+                debitid = detail2.id;
+            } else {
+                return ctx.send({
+                    success: false,
+                    id: cdb.id,
+                    message: cdb.message,
+                });
+            }
         }
 
 
+        // check if user is company's staff      
+        if (checkuser.is_kkstaff) {
+            // call firsttime staff
 
+        } else {
+            // call credit coin            
+            let crd = await strapi.services.cointransactionservice.creditcoinInStore(mobileuserid, outletid, transactionamount, qrcode, taxno);
 
+            if (crd && (crd.id == "success")) {
+                creditcoinamt = crd.content_object.creditamount;
+                //create coinpaymentdetail
+                let trxdetail = {
+                    transactno: paymenttrx.transactno,
+                    transaction_history: crd.content_object.id,
+                    status: "C"
+                }
+                var detail1 = await strapi.query('coinpaymentdetail').create(trxdetail);
+                creditid = detail1.id;
+            } else {
+                return ctx.send({
+                    success: false,
+                    id: crd.id,
+                    message: crd.message
+                });
+            }
+        }
+
+        // update coinpaymenttransact
+        var detailids = [];
+        if (creditid > 0) {
+            detailids = [creditid];
+            if (debitid > 0) {
+                detailids = [creditid, debitid];
+            }
+        }
+
+        paymenttrx.creditamt = transactionamount;
+        paymenttrx.creditcoinamt = creditcoinamt;
+        paymenttrx.debitamt = debitamount;
+        paymenttrx.debitcoinamt = debitcoinamt;
+        paymenttrx.coinpaymentdetails = detailids;
+
+        let ptrx = await strapi.query('coinpaymenttransact').update({ id: paymenttrx.id },
+            paymenttrx
+        );
+
+        let paymentType = await strapi.services.common.normalizationResponse(ptrx, ["created_at", "updated_at", "user", "merchantcode", "outlet", "coinpaymentdetails"]);
 
         ctx.send({
             id: 'success',
             message: 'success',
-            content_object: removeAuthorFields(newlog),
+            content_object: paymentType,
         });
 
     }

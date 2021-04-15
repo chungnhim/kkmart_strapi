@@ -20,9 +20,9 @@
       "type": "text"
     },
     "user": {
+      "via": "product_ratings",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "product_ratings"
+      "model": "user"
     },
     "status": {
       "type": "integer"

@@ -25,9 +25,9 @@
       "type": "string"
     },
     "user": {
+      "via": "deviceinfos",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "deviceinfos"
+      "model": "user"
     },
     "platform": {
       "type": "string"

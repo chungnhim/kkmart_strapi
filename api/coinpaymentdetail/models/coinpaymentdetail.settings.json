@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "coinpaymentdetails",
+  "info": {
+    "name": "coinpaymentdetail"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "transactno": {
+      "type": "string"
+    },
+    "coinpaymenttransact": {
+      "model": "coinpaymenttransact",
+      "via": "coinpaymentdetails"
+    },
+    "transaction_history": {
+      "model": "transaction-history"
+    },
+    "status": {
+      "type": "string"
+    }
+  }
+}

@@ -396,9 +396,6 @@ module.exports = {
 
         let header = getHttpHeader(auth.apiKey, auth.timestamp, auth.signature, "MY_KUL");
 
-        console.log(`${LALAMOVE_API}${path}`)
-        console.log(`=================================`)
-
         var res = await
         axios.get(`${LALAMOVE_API}${path}`, {
             headers: header

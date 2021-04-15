@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "coinpaymenttransacts",
+  "info": {
+    "name": "coinpaymenttransact"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "transactno": {
+      "type": "string"
+    },
+    "refno": {
+      "type": "string"
+    },
+    "merchantcode": {
+      "type": "string"
+    },
+    "user": {
+      "via": "coinpaymenttransacts",
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "outlet": {
+      "model": "outlet",
+      "via": "coinpaymenttransacts"
+    },
+    "creditamt": {
+      "type": "decimal"
+    },
+    "creditcoinamt": {
+      "type": "decimal"
+    },
+    "debitamt": {
+      "type": "decimal"
+    },
+    "debitcoinamt": {
+      "type": "decimal"
+    },
+    "customeremail": {
+      "type": "string"
+    },
+    "coinpaymentdetails": {
+      "via": "coinpaymenttransact",
+      "collection": "coinpaymentdetail"
+    }
+  }
+}

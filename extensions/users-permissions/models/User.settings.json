@@ -110,8 +110,8 @@
       "dominant": true
     },
     "deviceinfos": {
-      "via": "user",
-      "collection": "deviceinfo"
+      "collection": "deviceinfo",
+      "via": "user"
     },
     "firstname": {
       "type": "string"
@@ -171,20 +171,27 @@
       "type": "string"
     },
     "product_ratings": {
-      "via": "user",
-      "collection": "product-rating"
+      "collection": "product-rating",
+      "via": "user"
     },
     "orders": {
-      "via": "user",
-      "collection": "order"
+      "collection": "order",
+      "via": "user"
     },
     "user_addresses": {
-      "via": "user",
-      "collection": "user-address"
+      "collection": "user-address",
+      "via": "user"
     },
     "searchhistories": {
-      "via": "user",
-      "collection": "searchhistory"
+      "collection": "searchhistory",
+      "via": "user"
+    },
+    "coinpaymenttransacts": {
+      "collection": "coinpaymenttransact",
+      "via": "user"
+    },
+    "is_kkstaff": {
+      "type": "boolean"
     }
   }
 }

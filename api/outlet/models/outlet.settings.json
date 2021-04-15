@@ -43,6 +43,10 @@
     },
     "digi": {
       "type": "string"
+    },
+    "coinpaymenttransacts": {
+      "via": "outlet",
+      "collection": "coinpaymenttransact"
     }
   }
 }

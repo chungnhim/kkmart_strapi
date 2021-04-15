@@ -10,21 +10,29 @@ const _ = require("lodash");
 const uuid = require('uuid');
 const moment = require('moment');
 
+const removeAuthorFields = (entity) => {
+    const sanitizedValue = _.omit(entity, ['created_by', 'updated_by', 'created_at', 'updated_at', 'formats', 'deviceinfos', 'transaction_histories', 'outlets', 'role', 'provider', 'confirmed', ]);
+    _.forEach(sanitizedValue, (value, key) => {
+        if (_.isArray(value)) {
+            sanitizedValue[key] = value.map(removeAuthorFields);
+        } else if (_.isObject(value)) {
+            sanitizedValue[key] = removeAuthorFields(value);
+        }
+    });
+
+    return sanitizedValue;
+};
+
 module.exports = {
 
-    creditcoinInStore: async(body) => {
+    creditcoinInStore: async(mobileuserid, outletid, transactionamount, qrcode, taxno) => {
         //input: mobileuserid - this is seller action
         //input: qrcode
         //input: outletid
         //input: transactionamount
         //input: refno
         // input: taxno
-        const { mobileuserid } = body.mobileuserid;
-        const { outletid } = body.outletid;
-        const { transactionamount } = body.transactionamount;
-        const { refno } = body.refno;
-        const { qrcode } = body.qrcode;
-        const { taxno } = body.taxno;
+
         //check validate transaction amount
         if (!transactionamount || transactionamount < 0) {
 
@@ -215,7 +223,7 @@ module.exports = {
                 }
             }
             //5. update expried coin and exprieddate in coin
-            //5.1 find total coin will expried expiredDate
+            //5.1 find total coin will expried expiredDate            
 
             expiredDate = moment.utc(startDate);
             expiredDate = expiredDate.endOf('month');
@@ -346,22 +354,14 @@ module.exports = {
         }
     },
     //================>Debit Coin
-    debitCoinInStore: async(body) => {
+    debitCoinInStore: async(outletid, transactionamount, taxno, qrcode, debitamount, kcoinamount) => {
         //input: mobileuserid - this is seller action
         //input: qrcode - this is client wallet
         //input: outletid
         //input: transactionamount
         //input: debitamount
-        //input: taxno
-        //input: kcoinamount
-        const { mobileuserid } = body.mobileuserid;
-        const { outletid } = body.outletid;
-        const { transactionamount } = body.transactionamount;
-        const { taxno } = body.taxno;
-        const { qrcode } = body.qrcode;
-        const { debitamount } = body.debitamount;
+        //input: taxno               
 
-        let kcoinamount = 0;
         //check validate kcoinamount
         if (!debitamount || debitamount < 0) {
             return {
@@ -382,7 +382,7 @@ module.exports = {
                 message: 'Invalidate qrcode.',
             };
         }
-        //3. check valid balance
+
         var mycoinaccount = await strapi.query('mobileusercoinaccount').findOne({
             mobileuserid: checkuser.id
         });
@@ -400,147 +400,132 @@ module.exports = {
                 mobileuserid: checkuser.id
             });
         }
-        if (mycoinaccount.balance < kcoinamount) {
-            return {
-                success: false,
-                id: 'cointransactionservice.debit_coin.error.balance.invalidate',
-                message: 'Insufficient Kcoin amount.',
-            };
-        } else {
-            //4. get detail from transaction-config
-            var transactionconfig = await strapi.query('transaction-config').findOne({
-                trxconfigid: '014'
+
+        //4. get detail from transaction-config
+        var transactionconfig = await strapi.query('transaction-config').findOne({
+            trxconfigid: '014'
+        });
+        if (transactionconfig) {
+            //3.2 debit balance
+            mycoinaccount.balance = mycoinaccount.balance - kcoinamount;
+            mycoinaccount.totaldebit = mycoinaccount.totaldebit + kcoinamount;
+            await strapi.query('mobileusercoinaccount').update({ mobileuserid: checkuser.id },
+                mycoinaccount
+            );
+            //3.3 insert transaction history with debit and then credit
+            var transactionno = uuid();
+            var moment = require('moment');
+            var startDate = new Date;
+            var startDateUTC = moment.utc(startDate);
+            var endDateUTC = moment.utc(startDate);
+            endDateUTC = endDateUTC.add(transactionconfig.dayeffective, 'days');
+            var expiredDate = moment.utc(startDate);
+            expiredDate = expiredDate.add(transactionconfig.monthexpired, 'months');
+            expiredDate = expiredDate.endOf('month');
+            //credit amount KCoin
+            const creditamount = (transactionamount * transactionconfig.amountpercent) / parseFloat(100);
+
+            var newlogdebit = await strapi.query('transaction-history').create({
+                createddate: startDateUTC.format(),
+                expireddate: expiredDate.format(),
+                availabledate: startDateUTC.format(),
+                creditamount: 0,
+                debitamount: kcoinamount,
+                transactionamount: transactionamount,
+                taxno: taxno,
+                transactionno: transactionno,
+                outletid: outletid,
+                status: 'complete',
+                user: checkuser,
+                mobileuserid: checkuser.id,
+                trxconfigid: transactionconfig.trxconfigid,
+                remark: transactionconfig.trxdescription,
+                isprocessed: true
             });
-            if (transactionconfig) {
-                // calculate kcoinamount
-                var exchangerate = await strapi.query('exchangerate').findOne({
-                    currencycode: 'K',
-                    basecurrencycode: 'MYR',
-                });
-                if (exchangerate) {
-                    kcoinamount = parseFloat(debitamount * exchangerate.rate).toFixed(2);
-                }
 
-                //3.2 debit balance
-                mycoinaccount.balance = mycoinaccount.balance - kcoinamount;
-                mycoinaccount.totaldebit = mycoinaccount.totaldebit + kcoinamount;
-                await strapi.query('mobileusercoinaccount').update({ mobileuserid: checkuser.id },
-                    mycoinaccount
-                );
-                //3.3 insert transaction history with debit and then credit
-                var transactionno = uuid();
-                var moment = require('moment');
-                var startDate = new Date;
-                var startDateUTC = moment.utc(startDate);
-                var endDateUTC = moment.utc(startDate);
-                endDateUTC = endDateUTC.add(transactionconfig.dayeffective, 'days');
-                var expiredDate = moment.utc(startDate);
-                expiredDate = expiredDate.add(transactionconfig.monthexpired, 'months');
-                expiredDate = expiredDate.endOf('month');
-                //credit amount KCoin
-                const creditamount = (transactionamount * transactionconfig.amountpercent) / parseFloat(100);
 
-                var newlogdebit = await strapi.query('transaction-history').create({
-                    createddate: startDateUTC.format(),
-                    expireddate: expiredDate.format(),
-                    availabledate: startDateUTC.format(),
-                    creditamount: 0,
-                    debitamount: kcoinamount,
-                    transactionamount: transactionamount,
-                    taxno: taxno,
-                    transactionno: transactionno,
-                    outletid: outletid,
-                    status: 'complete',
-                    user: checkuser,
-                    mobileuserid: checkuser.id,
-                    trxconfigid: transactionconfig.trxconfigid,
-                    remark: transactionconfig.trxdescription,
-                    isprocessed: true
+            if (transactionconfig.amountpercent > 0) {
+
+                //send notification
+                //select notification type credit 1002
+                var notificationtype = await strapi.query('notificationtypes').findOne({
+                    notificationcode: '1002'
                 });
 
+                if (notificationtype) {
+                    //build message
+                    let notificationContent = notificationtype.template.replace('{AMOUNT}', kcoinamount);
+                    let notificationdata = notificationtype.templatedata.replace('{AMOUNT}', kcoinamount);
+                    let notificationTitle = notificationtype.title;
+                    let notificationType = notificationtype.notificationtype;
 
-                if (transactionconfig.amountpercent > 0) {
+                    // insert to table notificationlog
+                    let dataNotificationlog = {
+                        noticetypeid: notificationtype.id,
+                        noticetypename: notificationtype.typename,
+                        noticetitle: notificationtype.title,
+                        pushstatus: 'Y',
+                        status: 'A',
+                        noticecontent: notificationContent,
+                        notificationcode: notificationtype.notificationcode,
+                        noticedata: notificationdata,
+                        user: checkuser
+                    }
 
-                    //send notification
-                    //select notification type credit 1002
-                    var notificationtype = await strapi.query('notificationtypes').findOne({
-                        notificationcode: '1002'
-                    });
+                    var newNotificationlogs = await strapi.query('notificationlog').create(dataNotificationlog);
 
-                    if (notificationtype) {
-                        //build message
-                        let notificationContent = notificationtype.template.replace('{AMOUNT}', kcoinamount);
-                        let notificationdata = notificationtype.templatedata.replace('{AMOUNT}', kcoinamount);
-                        let notificationTitle = notificationtype.title;
-                        let notificationType = notificationtype.notificationtype;
-
-                        // insert to table notificationlog
-                        let dataNotificationlog = {
-                            noticetypeid: notificationtype.id,
-                            noticetypename: notificationtype.typename,
-                            noticetitle: notificationtype.title,
-                            pushstatus: 'Y',
-                            status: 'A',
-                            noticecontent: notificationContent,
-                            notificationcode: notificationtype.notificationcode,
-                            noticedata: notificationdata,
-                            user: checkuser
+                    //push notification test
+                    //get all deviceid reg of this user
+                    var listdeviceidreg = await strapi.query('deviceinfo').model.query(qb => {
+                        qb.select('devicereg', 'platform')
+                            .where('user', checkuser.id);
+                    }).fetchAll();
+                    listdeviceidreg = listdeviceidreg.toJSON();
+                    let arraydevicereg = [];
+                    let arraydeviceregios = [];
+                    for (var index in listdeviceidreg) {
+                        var deviveregid = listdeviceidreg[index].devicereg;
+                        if (deviveregid != '' && deviveregid.length > 10 && listdeviceidreg[index].platform == 'android') {
+                            arraydevicereg.push(deviveregid);
                         }
 
-                        var newNotificationlogs = await strapi.query('notificationlog').create(dataNotificationlog);
-
-                        //push notification test
-                        //get all deviceid reg of this user
-                        var listdeviceidreg = await strapi.query('deviceinfo').model.query(qb => {
-                            qb.select('devicereg', 'platform')
-                                .where('user', checkuser.id);
-                        }).fetchAll();
-                        listdeviceidreg = listdeviceidreg.toJSON();
-                        let arraydevicereg = [];
-                        let arraydeviceregios = [];
-                        for (var index in listdeviceidreg) {
-                            var deviveregid = listdeviceidreg[index].devicereg;
-                            if (deviveregid != '' && deviveregid.length > 10 && listdeviceidreg[index].platform == 'android') {
-                                arraydevicereg.push(deviveregid);
-                            }
-
-                            if (deviveregid != '' && deviveregid.length > 10 && listdeviceidreg[index].platform == 'ios') {
-                                arraydeviceregios.push(deviveregid);
-                            }
-                        }
-                        if (arraydevicereg.length > 0) {
-                            //android
-                            var newcontentforPushFirebase = removeAuthorFields(newNotificationlogs);
-                            var dataReturn = await strapi.services.firebasecontrol.sendtoarraydeviceandroid(arraydevicereg,
-                                notificationTitle, newcontentforPushFirebase);
-
-                        }
-
-                        if (arraydeviceregios.length > 0) {
-                            //ios
-                            var newcontentforPushFirebase = removeAuthorFields(newNotificationlogs);
-                            var dataReturn = await strapi.services.firebasecontrol.sendtoarraydeviceios(arraydeviceregios, notificationTitle, newcontentforPushFirebase);
-                            ////console.log(dataReturn);
-
+                        if (deviveregid != '' && deviveregid.length > 10 && listdeviceidreg[index].platform == 'ios') {
+                            arraydeviceregios.push(deviveregid);
                         }
                     }
+                    if (arraydevicereg.length > 0) {
+                        //android
+                        var newcontentforPushFirebase = removeAuthorFields(newNotificationlogs);
+                        var dataReturn = await strapi.services.firebasecontrol.sendtoarraydeviceandroid(arraydevicereg,
+                            notificationTitle, newcontentforPushFirebase);
+
+                    }
+
+                    if (arraydeviceregios.length > 0) {
+                        //ios
+                        var newcontentforPushFirebase = removeAuthorFields(newNotificationlogs);
+                        var dataReturn = await strapi.services.firebasecontrol.sendtoarraydeviceios(arraydeviceregios, notificationTitle, newcontentforPushFirebase);
+                        ////console.log(dataReturn);
+
+                    }
                 }
-                if (newlogdebit && newlogdebit.user) {
-                    delete newlogdebit.user;
-                }
-                return {
-                    id: 'success',
-                    message: 'success',
-                    //content_object: Object.values(removeAuthorFields(newlogdebit)),
-                    content_object: removeAuthorFields(newlogdebit),
-                };
-            } else {
-                return {
-                    id: 'coin_manage.debit_coin.transaction-config',
-                    message: 'Can not get next transaction config',
-                };
             }
+            if (newlogdebit && newlogdebit.user) {
+                delete newlogdebit.user;
+            }
+            return {
+                id: 'success',
+                message: 'success',
+                //content_object: Object.values(removeAuthorFields(newlogdebit)),
+                content_object: removeAuthorFields(newlogdebit),
+            };
+        } else {
+            return {
+                id: 'coin_manage.debit_coin.transaction-config',
+                message: 'Can not get next transaction config',
+            };
         }
+
 
 
     },

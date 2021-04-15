@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/coinpaymenttransacts",
+      "handler": "coinpaymenttransact.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/coinpaymenttransacts/count",
+      "handler": "coinpaymenttransact.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/coinpaymenttransacts/:id",
+      "handler": "coinpaymenttransact.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/coinpaymenttransacts",
+      "handler": "coinpaymenttransact.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/coinpaymenttransacts/:id",
+      "handler": "coinpaymenttransact.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/coinpaymenttransacts/:id",
+      "handler": "coinpaymenttransact.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
