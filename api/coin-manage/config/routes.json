@@ -66,7 +66,7 @@
         {
             "method": "POST",
             "path": "/coinpayment/paymentrequest",
-            "handler": "coin-manage.coinPaymentRequest",
+            "handler": "coin-manage.coinPayment",
             "config": {
                 "policies": []
             }

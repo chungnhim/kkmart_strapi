@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/functiontrxconfigs",
+      "handler": "functiontrxconfig.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/functiontrxconfigs/count",
+      "handler": "functiontrxconfig.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/functiontrxconfigs/:id",
+      "handler": "functiontrxconfig.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/functiontrxconfigs",
+      "handler": "functiontrxconfig.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/functiontrxconfigs/:id",
+      "handler": "functiontrxconfig.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/functiontrxconfigs/:id",
+      "handler": "functiontrxconfig.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

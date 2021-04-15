@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "functiontrxconfigs",
+  "info": {
+    "name": "functiontrxconfig"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "functionname": {
+      "type": "string"
+    },
+    "modulename": {
+      "type": "string"
+    },
+    "trxconfigid": {
+      "type": "string"
+    },
+    "starttime": {
+      "type": "datetime"
+    },
+    "endtime": {
+      "type": "datetime"
+    },
+    "description": {
+      "type": "string"
+    }
+  }
+}
