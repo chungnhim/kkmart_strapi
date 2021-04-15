@@ -1094,15 +1094,7 @@ module.exports = {
 
         try {
             // Send an email to the user.
-            sgMail.setApiKey('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');
-            const msg = {
-                to: user.email,
-                from: 'kkmart02@gmail.com',
-                subject: settings.object,
-                text: contentSendEmail,
-                html: contentSendEmail,
-            };
-            sgMail.send(msg);
+            await strapi.services.common.sendEmailSendgrid(user.email, user.email, settings.object, contentSendEmail);
         } catch (err) {
             return ctx.badRequest(
                 null,

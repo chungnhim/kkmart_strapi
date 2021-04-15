@@ -81,5 +81,37 @@ module.exports = {
     },
     getLoggedUserId: async(ctx) => {
         return await getLoggedUserId(ctx);
+    },
+    sendEmailSendgrid: async(toEmail, toName, subject, textBody) => {
+        var qs = require('qs');
+        var contentSendEmail = {
+                'to': toEmail,
+                'toname': toName,
+                'subject': subject,
+                'text': textBody,
+                'from': 'noreply@kkemart.com.my'
+            }
+            //console.log(contentSendEmail);
+        var data = qs.stringify(contentSendEmail);
+
+        //console.log(data);
+        var config = {
+            method: 'post',
+            url: 'https://api.sendgrid.com/api/mail.send.json',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Bearer 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'
+            },
+            data: data
+        };
+
+        await axios(config)
+            .then(function(response) {
+                console.log(JSON.stringify(response.data));
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+
     }
 };
