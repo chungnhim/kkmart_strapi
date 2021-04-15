@@ -89,7 +89,7 @@ module.exports = {
                 'toname': toName,
                 'subject': subject,
                 'text': textBody,
-                'from': 'support@iou-pay.com'
+                'from': 'noreply@kkemart.com.my'
             }
             //console.log(contentSendEmail);
         var data = qs.stringify(contentSendEmail);
@@ -100,7 +100,7 @@ module.exports = {
             url: 'https://api.sendgrid.com/api/mail.send.json',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': 'Bearer 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'
+                'Authorization': 'Bearer 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'
             },
             data: data
         };
@@ -113,5 +113,5 @@ module.exports = {
                 console.log(error);
             });
 
-    },
+    }
 };
