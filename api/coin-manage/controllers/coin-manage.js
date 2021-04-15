@@ -12,6 +12,7 @@ const uuid = require('uuid');
 const _ = require('lodash');
 const grant = require('grant-koa');
 const { sanitizeEntity } = require('strapi-utils');
+const moment = require('moment');
 const emailRegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const formatError = error => [
     { messages: [{ id: error.id, message: error.message, field: error.field }] },
@@ -29,6 +30,15 @@ const removeAuthorFields = (entity) => {
     return sanitizedValue;
 };
 
+const generateTransactNo = (length = 6) => {
+    let text = ''
+    let possible = '0123456789'
+    for (let i = 0; i < length; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length))
+    }
+
+    return moment.utc(new Date).format("YYYYMMDDHHmmss") + text;
+}
 
 
 module.exports = {
@@ -133,8 +143,7 @@ module.exports = {
             trxconfigid: '003'
         });
         if (transactionconfig) {
-            //3.1 insert to coin transaction history
-            var moment = require('moment');
+            //3.1 insert to coin transaction history           
             var startDate = new Date;
             var startDateUTC = moment.utc(startDate);
             var endDateUTC = moment.utc(startDate);
@@ -2261,7 +2270,7 @@ module.exports = {
 
         // Insert CoinPaymentTransact
         let trx = {
-            transactno: "",
+            transactno: generateTransactNo(6),
             refno: refno,
             user: mobileuserid,
             outlet: outletid,
