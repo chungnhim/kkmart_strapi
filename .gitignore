@@ -113,3 +113,4 @@ exports
 .cache
 build
 node_modules
+.strapi-updater.json
