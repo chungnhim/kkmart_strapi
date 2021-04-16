@@ -2163,7 +2163,7 @@ module.exports = {
 
             ctx.send({
                 success: false,
-                id: 'coin_manage.coinpayment.error.transactionamout.invalidate',
+                id: '1',
                 message: "Please provide transaction amount."
             })
             return;
@@ -2173,7 +2173,7 @@ module.exports = {
 
             return ctx.send({
                 success: false,
-                id: 'coin_manage.coinpayment.error.outlet.invalidate',
+                id: '2',
                 message: "Please provide transaction outletid."
             })
 
@@ -2182,7 +2182,7 @@ module.exports = {
         if (!refno) {
             return ctx.send({
                 success: false,
-                id: 'coin_manage.coinpayment.error.refno.invalidate',
+                id: '3',
                 message: 'Please provide referenceno.',
             });
         }
@@ -2191,7 +2191,7 @@ module.exports = {
 
             return ctx.send({
                 success: false,
-                id: 'coin_manage.coinpayment.error.qrcode.invalidate',
+                id: '4',
                 message: 'Please provide qrcode.'
             });
         }
@@ -2202,7 +2202,7 @@ module.exports = {
                 if (mobileuserid != id) {
                     return ctx.send({
                         success: false,
-                        id: 'coin_manage.coinpayment.invalide-token',
+                        id: '5',
                         message: 'This login token is not match with Mobile User Id'
                     });
                 }
@@ -2217,7 +2217,7 @@ module.exports = {
         if (checkoutlet == null || (checkoutlet != null && checkoutlet.user.id != mobileuserid)) {
             return ctx.send({
                 success: false,
-                id: 'coin_manage.coinpayment.error.outlet.invalidate_permission',
+                id: '6',
                 message: 'Invalidate outlet permission.',
             });
         }
@@ -2228,8 +2228,8 @@ module.exports = {
         if (checkuser == null) {
             return ctx.badRequest({
                 success: false,
-                id: 'coin_manage.coinpayment.error.qrcode.invalidate',
-                message: 'Invalidate qrcode.',
+                id: '7',
+                message: 'Wrong qrcode.',
             });
         }
 
@@ -2263,8 +2263,8 @@ module.exports = {
         if (mycoinaccount.balance < kcoinamount) {
             return {
                 success: false,
-                id: 'coin_manage.coinpayment.error.balance.invalidate',
-                message: 'Insufficient Kcoin amount.',
+                id: '8',
+                message: 'Insufficient Kcoin debit amount.',
             };
         }
 
@@ -2287,7 +2287,7 @@ module.exports = {
             // call debit coin            
             let cdb = await strapi.services.cointransactionservice.debitCoinInStore(outletid, transactionamount, taxno, qrcode, debitamount, kcoinamount);
 
-            if (cdb && (cdb.id === "success")) {
+            if (cdb && (cdb.id === "0")) {
                 debitcoinamt = cdb.content_object.debitamount;
                 //create coinpaymentdetail
                 let trxdetail1 = {
@@ -2310,6 +2310,25 @@ module.exports = {
         // check if user is company's staff      
         if (checkuser.is_kkstaff) {
             // call firsttime staff
+            // call credit coin            
+            let fst = await strapi.services.cointransactionservice.staffFirstScan(mobileuserid, outletid, transactionamount, qrcode, taxno);
+            if (fst && (fst.id === "0")) {
+                creditcoinamt = fst.content_object.creditamount;
+                //create coinpaymentdetail
+                let trxdetail = {
+                    transactno: paymenttrx.transactno,
+                    transaction_history: fst.content_object.id,
+                    status: "C"
+                }
+                var detail1 = await strapi.query('coinpaymentdetail').create(trxdetail);
+                creditid = detail1.id;
+            } else {
+                return ctx.send({
+                    success: false,
+                    id: fst.id,
+                    message: fst.message
+                });
+            }
 
         } else {
             // call credit coin            
@@ -2356,7 +2375,7 @@ module.exports = {
         let paymentType = await strapi.services.common.normalizationResponse(ptrx, ["created_at", "updated_at", "user", "merchantcode", "outlet", "coinpaymentdetails"]);
 
         ctx.send({
-            id: 'success',
+            id: '0',
             message: 'success',
             content_object: paymentType,
         });
