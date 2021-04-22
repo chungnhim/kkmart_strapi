@@ -70,6 +70,22 @@
             "config": {
                 "policies": []
             }
+        },
+        {
+            "method": "POST",
+            "path": "/coinpayment/collectCoin",
+            "handler": "coin-manage.collectCoin",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/coinpayment/redeemCoin",
+            "handler": "coin-manage.coinRedeem",
+            "config": {
+                "policies": []
+            }
         }
     ]
 }

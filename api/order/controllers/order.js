@@ -868,5 +868,70 @@ module.exports = {
             totalRows: res.totalRows,
             orders: _.values(models)
         });
+    },
+
+    getOrderShippingTracking: async(ctx) => {
+        let userId = await strapi.services.common.getLoggedUserId(ctx);
+        if (_.isNil(userId) || userId == 0) {
+            ctx.send({
+                success: false,
+                message: "Please login to your account"
+            });
+
+            return;
+        }
+
+        const params = _.assign({}, ctx.request.params, ctx.params);
+        var shippingId = params.orderShippingid;
+
+        var entities = await strapi.query("order-shipping").findOne({
+            id: shippingId
+        });
+
+        if (_.isNil(entities)) {
+            ctx.send({
+                success: false,
+                message: "No data found"
+            });
+            return;
+        }
+        /*
+        // get shipping tracking
+        let shippintracking = await strapi.query("shipping-tracking").find({
+            order_shipping: shippingId
+        });
+
+        if (!_.isNil(shippintracking)) {
+            let modelstrack = await strapi.services.common.normalizationResponse(
+                shippintracking, ["order_shipping"]
+            );
+            entities.tracking = Object.values(modelstrack);
+        }
+        */
+        entities.status_label = getShippingStatusLabel(entities.status);
+
+        var state = await strapi.query("state").findOne({
+            id: entities.state.id
+        })
+        if (!_.isNil(state)) {
+            entities.receiver = {
+                full_name: entities.full_name,
+                address: entities.address,
+                city: entities.city,
+                state: !_.isNil(state) ? state.name : '',
+                country: !_.isNil(state) && !_.isNil(state.country) ? state.country.name : '',
+                phone_number: entities.phone_number,
+                deliver_note: entities.deliver_note,
+                shipping_provider: entities.shipping_provider
+            }
+        }
+
+        let models = await strapi.services.common.normalizationResponse(
+            entities, ["user"]
+        );
+        ctx.send({
+            success: true,
+            orders: models
+        });
     }
 };
