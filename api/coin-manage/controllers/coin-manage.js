@@ -2534,7 +2534,7 @@ module.exports = {
             // call credit coin            
             let crd = await strapi.services.cointransactionservice.creditcoinInStore(mobileuserid, outletid, transactionamount, qrcode, taxno);
 
-            if (crd && (crd.id == "success")) {
+            if (crd && (crd.id === "0")) {
                 creditcoinamt = crd.content_object.creditamount;
                 //create coinpaymentdetail
                 let trxdetail = {
