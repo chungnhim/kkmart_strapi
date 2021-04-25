@@ -46,14 +46,6 @@
             "config": {
                 "policies": []
             }
-        },
-        {
-            "method": "GET",
-            "path": "/systemparams/fullprofileconfig",
-            "handler": "systemparams.getFullProfileCoinValue",
-            "config": {
-                "policies": []
-            }
         }
     ]
 }
