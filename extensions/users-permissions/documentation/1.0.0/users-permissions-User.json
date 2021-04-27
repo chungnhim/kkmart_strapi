@@ -1188,7 +1188,8 @@
         "required": [
           "id",
           "username",
-          "email"
+          "email",
+          "qrcode"
         ],
         "properties": {
           "id": {
@@ -1617,9 +1618,6 @@
                 }
               }
             }
-          },
-          "qrcode": {
-            "type": "uid"
           },
           "outlets": {
             "type": "array",
@@ -2100,6 +2098,10 @@
           "is_kkstaff": {
             "type": "boolean"
           },
+          "qrcode": {
+            "type": "string",
+            "default": "QRCodeDefault"
+          },
           "created_by": {
             "required": [
               "id",
@@ -2193,7 +2195,8 @@
       "NewUsersPermissionsUser": {
         "required": [
           "username",
-          "email"
+          "email",
+          "qrcode"
         ],
         "properties": {
           "username": {
@@ -2306,9 +2309,6 @@
               "type": "string"
             }
           },
-          "qrcode": {
-            "type": "uid"
-          },
           "outlets": {
             "type": "array",
             "items": {
@@ -2374,6 +2374,10 @@
           },
           "is_kkstaff": {
             "type": "boolean"
+          },
+          "qrcode": {
+            "type": "string",
+            "default": "QRCodeDefault"
           },
           "created_by": {
             "type": "string"

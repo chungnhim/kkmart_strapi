@@ -17,6 +17,14 @@
         },
         {
             "method": "GET",
+            "path": "/transaction-configs/genQrCode",
+            "handler": "transaction-config.generateQRCode",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
             "path": "/transaction-configs/count",
             "handler": "transaction-config.count",
             "config": {

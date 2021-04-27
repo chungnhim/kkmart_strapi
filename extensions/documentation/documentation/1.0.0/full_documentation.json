@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "04/26/2021 12:06:42 AM"
+    "x-generation-date": "04/27/2021 12:18:29 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -45189,6 +45189,63 @@
         "parameters": []
       }
     },
+    "/transaction-configs/genQrCode": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Transaction-config"
+        ],
+        "parameters": []
+      }
+    },
     "/transaction-configs/count": {
       "get": {
         "deprecated": false,
@@ -51659,7 +51716,8 @@
             "required": [
               "id",
               "username",
-              "email"
+              "email",
+              "qrcode"
             ],
             "properties": {
               "id": {
@@ -51770,9 +51828,6 @@
                   "type": "string"
                 }
               },
-              "qrcode": {
-                "type": "uid"
-              },
               "outlets": {
                 "type": "array",
                 "items": {
@@ -51844,6 +51899,9 @@
               },
               "is_kkstaff": {
                 "type": "boolean"
+              },
+              "qrcode": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -54177,7 +54235,8 @@
             "required": [
               "id",
               "username",
-              "email"
+              "email",
+              "qrcode"
             ],
             "properties": {
               "id": {
@@ -54288,9 +54347,6 @@
                   "type": "string"
                 }
               },
-              "qrcode": {
-                "type": "uid"
-              },
               "outlets": {
                 "type": "array",
                 "items": {
@@ -54362,6 +54418,9 @@
               },
               "is_kkstaff": {
                 "type": "boolean"
+              },
+              "qrcode": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -55114,7 +55173,8 @@
             "required": [
               "id",
               "username",
-              "email"
+              "email",
+              "qrcode"
             ],
             "properties": {
               "id": {
@@ -55225,9 +55285,6 @@
                   "type": "string"
                 }
               },
-              "qrcode": {
-                "type": "uid"
-              },
               "outlets": {
                 "type": "array",
                 "items": {
@@ -55299,6 +55356,9 @@
               },
               "is_kkstaff": {
                 "type": "boolean"
+              },
+              "qrcode": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -57839,7 +57899,8 @@
             "required": [
               "id",
               "username",
-              "email"
+              "email",
+              "qrcode"
             ],
             "properties": {
               "id": {
@@ -57950,9 +58011,6 @@
                   "type": "string"
                 }
               },
-              "qrcode": {
-                "type": "uid"
-              },
               "outlets": {
                 "type": "array",
                 "items": {
@@ -58024,6 +58082,9 @@
               },
               "is_kkstaff": {
                 "type": "boolean"
+              },
+              "qrcode": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -58251,7 +58312,8 @@
             "required": [
               "id",
               "username",
-              "email"
+              "email",
+              "qrcode"
             ],
             "properties": {
               "id": {
@@ -58362,9 +58424,6 @@
                   "type": "string"
                 }
               },
-              "qrcode": {
-                "type": "uid"
-              },
               "outlets": {
                 "type": "array",
                 "items": {
@@ -58436,6 +58495,9 @@
               },
               "is_kkstaff": {
                 "type": "boolean"
+              },
+              "qrcode": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -59269,7 +59331,8 @@
             "required": [
               "id",
               "username",
-              "email"
+              "email",
+              "qrcode"
             ],
             "properties": {
               "id": {
@@ -59380,9 +59443,6 @@
                   "type": "string"
                 }
               },
-              "qrcode": {
-                "type": "uid"
-              },
               "outlets": {
                 "type": "array",
                 "items": {
@@ -59454,6 +59514,9 @@
               },
               "is_kkstaff": {
                 "type": "boolean"
+              },
+              "qrcode": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -60560,7 +60623,8 @@
             "required": [
               "id",
               "username",
-              "email"
+              "email",
+              "qrcode"
             ],
             "properties": {
               "id": {
@@ -60671,9 +60735,6 @@
                   "type": "string"
                 }
               },
-              "qrcode": {
-                "type": "uid"
-              },
               "outlets": {
                 "type": "array",
                 "items": {
@@ -60745,6 +60806,9 @@
               },
               "is_kkstaff": {
                 "type": "boolean"
+              },
+              "qrcode": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -61118,7 +61182,8 @@
             "required": [
               "id",
               "username",
-              "email"
+              "email",
+              "qrcode"
             ],
             "properties": {
               "id": {
@@ -61229,9 +61294,6 @@
                   "type": "string"
                 }
               },
-              "qrcode": {
-                "type": "uid"
-              },
               "outlets": {
                 "type": "array",
                 "items": {
@@ -61303,6 +61365,9 @@
               },
               "is_kkstaff": {
                 "type": "boolean"
+              },
+              "qrcode": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -61628,7 +61693,8 @@
             "required": [
               "id",
               "username",
-              "email"
+              "email",
+              "qrcode"
             ],
             "properties": {
               "id": {
@@ -61739,9 +61805,6 @@
                   "type": "string"
                 }
               },
-              "qrcode": {
-                "type": "uid"
-              },
               "outlets": {
                 "type": "array",
                 "items": {
@@ -61813,6 +61876,9 @@
               },
               "is_kkstaff": {
                 "type": "boolean"
+              },
+              "qrcode": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -63225,7 +63291,8 @@
               "required": [
                 "id",
                 "username",
-                "email"
+                "email",
+                "qrcode"
               ],
               "properties": {
                 "id": {
@@ -63336,9 +63403,6 @@
                     "type": "string"
                   }
                 },
-                "qrcode": {
-                  "type": "uid"
-                },
                 "outlets": {
                   "type": "array",
                   "items": {
@@ -63410,6 +63474,9 @@
                 },
                 "is_kkstaff": {
                   "type": "boolean"
+                },
+                "qrcode": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -63812,7 +63879,8 @@
             "required": [
               "id",
               "username",
-              "email"
+              "email",
+              "qrcode"
             ],
             "properties": {
               "id": {
@@ -63923,9 +63991,6 @@
                   "type": "string"
                 }
               },
-              "qrcode": {
-                "type": "uid"
-              },
               "outlets": {
                 "type": "array",
                 "items": {
@@ -63997,6 +64062,9 @@
               },
               "is_kkstaff": {
                 "type": "boolean"
+              },
+              "qrcode": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -66253,7 +66321,8 @@
             "required": [
               "id",
               "username",
-              "email"
+              "email",
+              "qrcode"
             ],
             "properties": {
               "id": {
@@ -66364,9 +66433,6 @@
                   "type": "string"
                 }
               },
-              "qrcode": {
-                "type": "uid"
-              },
               "outlets": {
                 "type": "array",
                 "items": {
@@ -66438,6 +66504,9 @@
               },
               "is_kkstaff": {
                 "type": "boolean"
+              },
+              "qrcode": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -67348,7 +67417,8 @@
             "required": [
               "id",
               "username",
-              "email"
+              "email",
+              "qrcode"
             ],
             "properties": {
               "id": {
@@ -67459,9 +67529,6 @@
                   "type": "string"
                 }
               },
-              "qrcode": {
-                "type": "uid"
-              },
               "outlets": {
                 "type": "array",
                 "items": {
@@ -67533,6 +67600,9 @@
               },
               "is_kkstaff": {
                 "type": "boolean"
+              },
+              "qrcode": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -68051,7 +68121,8 @@
             "required": [
               "id",
               "username",
-              "email"
+              "email",
+              "qrcode"
             ],
             "properties": {
               "id": {
@@ -68162,9 +68233,6 @@
                   "type": "string"
                 }
               },
-              "qrcode": {
-                "type": "uid"
-              },
               "outlets": {
                 "type": "array",
                 "items": {
@@ -68236,6 +68304,9 @@
               },
               "is_kkstaff": {
                 "type": "boolean"
+              },
+              "qrcode": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -69948,7 +70019,8 @@
             "required": [
               "id",
               "username",
-              "email"
+              "email",
+              "qrcode"
             ],
             "properties": {
               "id": {
@@ -70059,9 +70131,6 @@
                   "type": "string"
                 }
               },
-              "qrcode": {
-                "type": "uid"
-              },
               "outlets": {
                 "type": "array",
                 "items": {
@@ -70133,6 +70202,9 @@
               },
               "is_kkstaff": {
                 "type": "boolean"
+              },
+              "qrcode": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -70407,7 +70479,8 @@
             "required": [
               "id",
               "username",
-              "email"
+              "email",
+              "qrcode"
             ],
             "properties": {
               "id": {
@@ -70518,9 +70591,6 @@
                   "type": "string"
                 }
               },
-              "qrcode": {
-                "type": "uid"
-              },
               "outlets": {
                 "type": "array",
                 "items": {
@@ -70592,6 +70662,9 @@
               },
               "is_kkstaff": {
                 "type": "boolean"
+              },
+              "qrcode": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -71057,7 +71130,8 @@
             "required": [
               "id",
               "username",
-              "email"
+              "email",
+              "qrcode"
             ],
             "properties": {
               "id": {
@@ -71168,9 +71242,6 @@
                   "type": "string"
                 }
               },
-              "qrcode": {
-                "type": "uid"
-              },
               "outlets": {
                 "type": "array",
                 "items": {
@@ -71242,6 +71313,9 @@
               },
               "is_kkstaff": {
                 "type": "boolean"
+              },
+              "qrcode": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -71559,7 +71633,8 @@
               "required": [
                 "id",
                 "username",
-                "email"
+                "email",
+                "qrcode"
               ],
               "properties": {
                 "id": {
@@ -71670,9 +71745,6 @@
                     "type": "string"
                   }
                 },
-                "qrcode": {
-                  "type": "uid"
-                },
                 "outlets": {
                   "type": "array",
                   "items": {
@@ -71744,6 +71816,9 @@
                 },
                 "is_kkstaff": {
                   "type": "boolean"
+                },
+                "qrcode": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -71883,7 +71958,8 @@
         "required": [
           "id",
           "username",
-          "email"
+          "email",
+          "qrcode"
         ],
         "properties": {
           "id": {
@@ -72312,9 +72388,6 @@
                 }
               }
             }
-          },
-          "qrcode": {
-            "type": "uid"
           },
           "outlets": {
             "type": "array",
@@ -72795,6 +72868,10 @@
           "is_kkstaff": {
             "type": "boolean"
           },
+          "qrcode": {
+            "type": "string",
+            "default": "QRCodeDefault"
+          },
           "created_by": {
             "required": [
               "id",
@@ -72888,7 +72965,8 @@
       "NewUsersPermissionsUser": {
         "required": [
           "username",
-          "email"
+          "email",
+          "qrcode"
         ],
         "properties": {
           "username": {
@@ -73001,9 +73079,6 @@
               "type": "string"
             }
           },
-          "qrcode": {
-            "type": "uid"
-          },
           "outlets": {
             "type": "array",
             "items": {
@@ -73069,6 +73144,10 @@
           },
           "is_kkstaff": {
             "type": "boolean"
+          },
+          "qrcode": {
+            "type": "string",
+            "default": "QRCodeDefault"
           },
           "created_by": {
             "type": "string"

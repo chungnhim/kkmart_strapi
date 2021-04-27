@@ -541,7 +541,8 @@
             "required": [
               "id",
               "username",
-              "email"
+              "email",
+              "qrcode"
             ],
             "properties": {
               "id": {
@@ -652,9 +653,6 @@
                   "type": "string"
                 }
               },
-              "qrcode": {
-                "type": "uid"
-              },
               "outlets": {
                 "type": "array",
                 "items": {
@@ -726,6 +724,9 @@
               },
               "is_kkstaff": {
                 "type": "boolean"
+              },
+              "qrcode": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"

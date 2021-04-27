@@ -127,9 +127,6 @@
       "collection": "socialmediaactivestatu",
       "via": "user"
     },
-    "qrcode": {
-      "type": "uid"
-    },
     "outlets": {
       "collection": "outlet",
       "via": "user"
@@ -192,6 +189,12 @@
     },
     "is_kkstaff": {
       "type": "boolean"
+    },
+    "qrcode": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "default": "QRCodeDefault"
     }
   }
 }

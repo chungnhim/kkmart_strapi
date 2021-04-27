@@ -369,7 +369,8 @@ module.exports = {
             if (!settings.email_confirmation) {
                 params.confirmed = true;
             }
-            params.qrcode = uuid();
+            //params.qrcode = uuid();
+            params.qrcode = await strapi.services.common.generateUserQrCode("04");
 
             //friend code
             var userfriend = null;

@@ -25,5 +25,26 @@ module.exports = {
         }
         paymentType.myramount = myramount;
         ctx.send(paymentType);
+    },
+    generateQRCode: async(ctx) => {
+
+        // select all user
+        let entities = await strapi.query('user', 'users-permissions').find({
+            _sort: "id"
+        });
+
+        entities.forEach(async(usr) => {
+            console.log(usr)
+                // 04 for normal
+            let usrQr = await strapi.services.common.generateUserQrCode("04");
+            usr.qrcode = usrQr;
+            let udp = await strapi.query('user', 'users-permissions').update({ id: usr.id }, usr);
+        });
+
+
+        ctx.send({
+            success: true,
+            value: "Update successfull"
+        });
     }
 };
