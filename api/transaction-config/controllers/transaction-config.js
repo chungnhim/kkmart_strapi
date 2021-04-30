@@ -36,7 +36,7 @@ module.exports = {
         entities.forEach(async(usr) => {
             console.log(usr)
                 // 04 for normal
-            let usrQr = await strapi.services.common.generateUserQrCode("04");
+            let usrQr = await strapi.services.common.generateUserQrCode("04", usr.id);
             usr.qrcode = usrQr;
             let udp = await strapi.query('user', 'users-permissions').update({ id: usr.id }, usr);
         });

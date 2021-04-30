@@ -340,11 +340,11 @@ module.exports = {
         params.role = 3;
         params.password = await strapi.plugins['users-permissions'].services.user.hashPassword(params);
 
-        const user = await strapi.query('user', 'users-permissions').findOne({
+        let ckuser = await strapi.query('user', 'users-permissions').findOne({
             email: params.email,
         });
 
-        if (user && user.provider === params.provider) {
+        if (ckuser && ckuser.provider === params.provider) {
             return ctx.badRequest(
                 null,
                 formatError({
@@ -354,7 +354,7 @@ module.exports = {
             );
         }
 
-        if (user && user.provider !== params.provider && settings.unique_email) {
+        if (ckuser && ckuser.provider !== params.provider && settings.unique_email) {
             return ctx.badRequest(
                 null,
                 formatError({
@@ -370,7 +370,7 @@ module.exports = {
                 params.confirmed = true;
             }
             //params.qrcode = uuid();
-            params.qrcode = await strapi.services.common.generateUserQrCode("04");
+            //params.qrcode = await strapi.services.common.generateUserQrCode("04");
 
             //friend code
             var userfriend = null;
@@ -383,7 +383,14 @@ module.exports = {
                 }
             }
 
-            const user = await strapi.query('user', 'users-permissions').create(params);
+            var user = await strapi.query('user', 'users-permissions').create(params);
+
+            // generate QrCode
+            let qrCode = await strapi.services.common.generateUserQrCode("04", user.id);
+            user.qrcode = qrCode;
+
+            await strapi.query('user', 'users-permissions').update({ id: user.id }, user);
+            // end generate QrCode
 
             //Add coin for friend
             if (userfriend != null) {

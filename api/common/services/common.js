@@ -115,7 +115,29 @@ module.exports = {
             });
 
     },
-    generateUserQrCode: async(identifier) => {
+    generateUserQrCode: async(identifier, userId) => {
+        var runstrtmp = "0000000000";
+        // get prefix
+        var sysparams = await strapi.query('systemparams').findOne({
+            paramname: "qrcodeprefix"
+        });
+        if (sysparams) {
+            var prefix = sysparams.paramvalue;
+        } else {
+            prefix = "160101";
+        }
+
+        /*
+        var sq = await strapi.connections.default.raw(`select nextval('user_qrcode_seq')`);
+        var sqIds = sq.rows; */
+        //console.log(sqIds);
+        var runstr = runstrtmp + userId;
+        runstr = runstr.substring(runstr.length - runstrtmp.length, runstr.length);
+        var userQr = prefix + identifier + moment.utc(new Date).format("DDMMYY") + runstr;
+
+        return userQr;
+    },
+    generatePaymentTransNo: async(identifier) => {
         var runstrtmp = "0000000000";
         // get prefix
         var sysparams = await strapi.query('systemparams').findOne({
@@ -136,4 +158,6 @@ module.exports = {
 
         return userQr;
     }
+
+
 };
