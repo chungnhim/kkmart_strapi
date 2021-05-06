@@ -343,6 +343,7 @@ const processCreateOrder = async(userId,
     };
 
     var shipping = await strapi.query("order-shipping").create(shipping);
+
     if (is_expressmart == true) {
         var quotationRes = await strapi.services.lalamoveshippingservice.placeOrder(
             user_address_id,
@@ -355,15 +356,15 @@ const processCreateOrder = async(userId,
             shipping.shipping_provider = quotationRes.data.shippingProvider;
             shipping.shipping_ref_number = quotationRes.data.orderRef;
 
-            await strapi.query("order-shipping").update({ id: order.id }, {
+            await strapi.query("order-shipping").update({ id: shipping.id }, {
                 shipping_provider: quotationRes.data.shippingProvider,
                 shipping_ref_number: quotationRes.data.orderRef,
                 shipping_fee: quotationRes.data.orderRef,
                 status: strapi.config.constants.shipping_status.inProvider
             });
-            // get order detail
-
+            // get order detail            
             let shipinfo = await strapi.services.lalamoveshippingservice.getOrderDetails(quotationRes.data.orderRef);
+
             if (!_.isNil(shipinfo) && shipinfo.success) {
                 var tracking = {
                     trackingstatus: shipinfo.data.status,
@@ -375,12 +376,6 @@ const processCreateOrder = async(userId,
                 };
                 var shippingtrack = await strapi.query("shipping-tracking").create(tracking);
             }
-            console.log(`==========shipping info`);
-            console.log(strapi.config.constants.order_status.toship);
-
-            console.log(`==========shipping info`);
-            console.log(order);
-            console.log(`==========shipping info=======`);
             // update order status to ToShip
             await strapi.query("order").update({ id: order.id }, {
                 order_status: strapi.config.constants.order_status.toship
