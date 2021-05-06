@@ -872,7 +872,6 @@ module.exports = {
             orders: _.values(models)
         });
     },
-
     getOrderShippingTracking: async(ctx) => {
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
@@ -935,6 +934,98 @@ module.exports = {
         ctx.send({
             success: true,
             orders: models
+        });
+    },
+
+    /// These function using for CMS
+    getOrdersByStatus: async(ctx) => {
+        // body params
+        //{
+        // "orderstatus":[1,2,3,4]
+        //}
+        let userId = await strapi.services.common.getLoggedUserId(ctx);
+        if (_.isNil(userId) || userId == 0) {
+            ctx.send({
+                success: false,
+                message: "Please login to your account"
+            });
+
+            return;
+        }
+
+        const params = _.assign({}, ctx.request.params, ctx.params);
+        const bodyparams = _.assign({}, ctx.request.body, ctx.params);
+        let pageIndex = 1,
+            pageSize = 10;
+
+        if (!_.isNil(params.page_index) && !_.isNil(params.page_size)) {
+            pageIndex = parseInt(params.page_index);
+            pageSize = parseInt(params.page_size);
+        }
+        var orderstatus = bodyparams.orderstatus;
+
+        var res = await strapi.services.order.getOrdersByStatus(pageIndex, pageSize, orderstatus);
+        if (_.isNil(res)) {
+            ctx.send({
+                success: false,
+                message: "No data found"
+            });
+
+            return;
+        }
+
+        for (let i = 0; i < res.entities.length; i++) {
+            const element = res.entities[i];
+            if (!_.isNil(element.order_shipping)) {
+                element.order_shipping.status_label = getShippingStatusLabel(element.order_shipping.status);
+            }
+
+            let shippintracking = await strapi.query("shipping-tracking").find({
+                order_shipping: element.order_shipping.id
+            });
+
+            element.userInfo = {
+                userId: element.user.id,
+                userName: element.user.username,
+                userEmail: element.user.email,
+                userContact: element.user.phone
+            };
+            if (!_.isNil(shippintracking)) {
+                let modelstrack = await strapi.services.common.normalizationResponse(
+                    shippintracking, ["order_shipping"]
+                );
+                element.order_shipping.tracking = Object.values(modelstrack);
+            }
+            var state_id = 0;
+            if (element.order_shipping && element.order_shipping.state && !_.isNil(element.order_shipping.state)) {
+                state_id = element.order_shipping.state;
+            }
+            var state = await strapi.query("state").findOne({
+                id: state_id
+            });
+
+            if (!_.isNil(state)) {
+                element.receiver = {
+                    full_name: element.order_shipping.full_name,
+                    address: element.order_shipping.address,
+                    city: element.order_shipping.city,
+                    state: !_.isNil(state) ? state.name : '',
+                    country: !_.isNil(state) && !_.isNil(state.country) ? state.country.name : '',
+                    phone_number: element.order_shipping.phone_number,
+                    deliver_note: element.order_shipping.deliver_note,
+                    shipping_provider: element.order_shipping.shipping_provider
+                }
+            }
+        }
+
+        let models = await strapi.services.common.normalizationResponse(
+            res.entities, ["user"]
+        );
+
+        ctx.send({
+            success: true,
+            totalRows: res.totalRows,
+            orders: _.values(models)
         });
     }
 };

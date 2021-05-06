@@ -72,6 +72,14 @@
             }
         },
         {
+            "method": "GET",
+            "path": "/v1/orders/get-by-status/:page_index/:page_size",
+            "handler": "order.getOrdersByStatus",
+            "config": {
+                "policies": []
+            }
+        },
+        {
             "method": "POST",
             "path": "/v1/orders/create-order",
             "handler": "order.createOrder",
