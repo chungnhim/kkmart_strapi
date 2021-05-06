@@ -355,7 +355,7 @@ const processCreateOrder = async(userId,
             shipping.shipping_provider = quotationRes.data.shippingProvider;
             shipping.shipping_ref_number = quotationRes.data.orderRef;
 
-            await strapi.query("order-shipping").update({ id: shipping.id }, {
+            await strapi.query("order-shipping").update({ id: order.id }, {
                 shipping_provider: quotationRes.data.shippingProvider,
                 shipping_ref_number: quotationRes.data.orderRef,
                 shipping_fee: quotationRes.data.orderRef,
@@ -375,6 +375,16 @@ const processCreateOrder = async(userId,
                 };
                 var shippingtrack = await strapi.query("shipping-tracking").create(tracking);
             }
+            console.log(`==========shipping info`);
+            console.log(strapi.config.constants.order_status.toship);
+
+            console.log(`==========shipping info`);
+            console.log(order);
+            console.log(`==========shipping info=======`);
+            // update order status to ToShip
+            await strapi.query("order").update({ id: order.id }, {
+                order_status: strapi.config.constants.order_status.toship
+            });
         }
     }
 
@@ -684,8 +694,6 @@ module.exports = {
 
             return;
         }
-
-
 
         let cartItemsCk = await strapi.services.product.getProductOfShoppingCartOneCheckOut(shoppingCart, ordcheckout.id);
         // get shoppingcart item checked
