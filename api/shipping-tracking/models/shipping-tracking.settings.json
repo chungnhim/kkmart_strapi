@@ -25,8 +25,8 @@
       "type": "string"
     },
     "order_shipping": {
-      "model": "order-shipping",
-      "via": "shipping_trackings"
+      "via": "shipping_trackings",
+      "model": "order-shipping"
     },
     "shippingdriver": {
       "model": "shippingdriver"

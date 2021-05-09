@@ -339,7 +339,8 @@ const processCreateOrder = async(userId,
         deliver_note: shipping_note,
         shipping_provider: null,
         postcode: userAddressInf.postcode,
-        shippingfee: shipping_fee
+        shippingfee: shipping_fee,
+        user_address: user_address_id
     };
 
     var shipping = await strapi.query("order-shipping").create(shipping);
@@ -1027,5 +1028,95 @@ module.exports = {
             totalRows: res.totalRows,
             orders: _.values(models)
         });
+    },
+    // =========================>
+    // Confirm Order
+    orderConfirm: async(ctx) => {
+        // body params
+        // scheduleAt UTC time, not local time
+        //{
+        // "providerId":"",
+        // "orderId":1
+        // "scheduleAt":"2020-07-10T07:00:00.000Z"
+        //}
+        const params = _.assign({}, ctx.request.body, ctx.params);
+        // check scheduleAt must greater than current date
+
+        var isafter = moment.utc().isAfter(params.scheduleAt);
+
+        if (isafter) {
+            ctx.send({
+                success: false,
+                message: "Schedule must greater than current date time"
+            });
+            return;
+        }
+
+        // check order status
+        var order = await strapi.query("order").findOne({
+            id: params.orderId
+        });
+        if (_.isNil(order)) {
+            return ctx.send({
+                success: false,
+                message: "Can not find order"
+            });
+        }
+
+        if (order.order_status !== strapi.config.constants.order_status.new) {
+            return ctx.send({
+                success: false,
+                message: "Not allow for this order status"
+            });
+        }
+        // call shipping default Lalamove        
+        var quotationRes = await strapi.services.lalamoveshippingservice.placeOrder(
+            order.order_shipping.user_address,
+            order.order_products,
+            order.order_shipping.note,
+            params.scheduleAt
+        );
+        if (quotationRes.success) {
+            order.order_shipping.shipping_provider = quotationRes.data.shippingProvider;
+            order.order_shipping.shipping_ref_number = quotationRes.data.orderRef;
+
+            await strapi.query("order-shipping").update({ id: order.order_shipping.id }, {
+                shipping_provider: quotationRes.data.shippingProvider,
+                shipping_ref_number: quotationRes.data.orderRef,
+                shipping_fee: quotationRes.data.orderRef,
+                status: strapi.config.constants.shipping_status.inProvider,
+                schedule_at: params.scheduleAt
+            });
+            // get order detail                      
+
+            let shipinfo = await strapi.services.lalamoveshippingservice.getOrderDetails(quotationRes.data.orderRef);
+
+            if (!_.isNil(shipinfo) && shipinfo.success) {
+                var tracking = {
+                    trackingstatus: shipinfo.data.status,
+                    description: shipinfo.data.status,
+                    sharelink: shipinfo.data.shareLink,
+                    amount: shipinfo.data.price.amount,
+                    currency: shipinfo.data.price.currency,
+                    order_shipping: order.order_shipping.id
+                };
+                var shippingtrack = await strapi.query("shipping-tracking").create(tracking);
+            }
+
+            // update order status to ToShip
+            await strapi.query("order").update({ id: order.id }, {
+                order_status: strapi.config.constants.order_status.toship
+            });
+            ctx.send({
+                success: true,
+                message: "order confirmed"
+            });
+        } else {
+            console.log(quotationRes);
+            ctx.send({
+                success: false,
+                message: quotationRes.message
+            });
+        }
     }
 };

@@ -635,6 +635,12 @@
                     "type": "string"
                   }
                 },
+                "schedule_at": {
+                  "type": "string"
+                },
+                "user_address": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },

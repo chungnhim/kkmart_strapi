@@ -1,68 +1,74 @@
 {
-    "kind": "collectionType",
-    "collectionName": "order_shippings",
-    "info": {
-        "name": "OrderShipping"
+  "kind": "collectionType",
+  "collectionName": "order_shippings",
+  "info": {
+    "name": "OrderShipping"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "full_name": {
+      "type": "string"
     },
-    "options": {
-        "increments": true,
-        "timestamps": true
+    "phone_number": {
+      "type": "string"
     },
-    "attributes": {
-        "full_name": {
-            "type": "string"
-        },
-        "phone_number": {
-            "type": "string"
-        },
-        "address": {
-            "type": "text"
-        },
-        "note": {
-            "type": "richtext"
-        },
-        "status": {
-            "type": "integer"
-        },
-        "deliver_date": {
-            "type": "datetime"
-        },
-        "actual_deliver_date": {
-            "type": "datetime"
-        },
-        "deliver_note": {
-            "type": "text"
-        },
-        "shipping_provider": {
-            "type": "string"
-        },
-        "country": {
-            "model": "country",
-            "via": "order_shippings"
-        },
-        "order": {
-            "model": "order",
-            "via": "order_shipping"
-        },
-        "postcode": {
-            "type": "string"
-        },
-        "city": {
-            "type": "string"
-        },
-        "shippingfee": {
-            "type": "decimal"
-        },
-        "shipping_ref_number": {
-            "type": "string"
-        },
-        "state": {
-            "model": "state",
-            "via": "order_shippings"
-        },
-        "shipping_trackings": {
-            "via": "order_shipping",
-            "collection": "shipping-tracking"
-        }
+    "address": {
+      "type": "text"
+    },
+    "note": {
+      "type": "richtext"
+    },
+    "status": {
+      "type": "integer"
+    },
+    "deliver_date": {
+      "type": "datetime"
+    },
+    "actual_deliver_date": {
+      "type": "datetime"
+    },
+    "deliver_note": {
+      "type": "text"
+    },
+    "shipping_provider": {
+      "type": "string"
+    },
+    "country": {
+      "model": "country",
+      "via": "order_shippings"
+    },
+    "order": {
+      "model": "order",
+      "via": "order_shipping"
+    },
+    "postcode": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "shippingfee": {
+      "type": "decimal"
+    },
+    "shipping_ref_number": {
+      "type": "string"
+    },
+    "state": {
+      "model": "state",
+      "via": "order_shippings"
+    },
+    "shipping_trackings": {
+      "collection": "shipping-tracking",
+      "via": "order_shipping"
+    },
+    "schedule_at": {
+      "type": "string"
+    },
+    "user_address": {
+      "model": "user-address"
     }
+  }
 }

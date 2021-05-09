@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "05/06/2021 11:50:01 PM"
+    "x-generation-date": "05/09/2021 10:47:30 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -27057,6 +27057,77 @@
         ]
       }
     },
+    "/v1/orders/schedule-shipping": {
+      "post": {
+        "deprecated": false,
+        "description": "Create a new record",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Order"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "foo": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/outlets": {
       "get": {
         "deprecated": false,
@@ -52461,6 +52532,12 @@
                     "type": "string"
                   }
                 },
+                "schedule_at": {
+                  "type": "string"
+                },
+                "user_address": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -60508,6 +60585,67 @@
               }
             }
           },
+          "schedule_at": {
+            "type": "string"
+          },
+          "user_address": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "user": {
+                "type": "string"
+              },
+              "country": {
+                "type": "string"
+              },
+              "is_default": {
+                "type": "boolean"
+              },
+              "state": {
+                "type": "string"
+              },
+              "address1": {
+                "type": "string"
+              },
+              "address2": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "postcode": {
+                "type": "string"
+              },
+              "phone_number": {
+                "type": "string"
+              },
+              "is_default_billing": {
+                "type": "boolean"
+              },
+              "full_name": {
+                "type": "string"
+              },
+              "home_office": {
+                "type": "string"
+              },
+              "longitude": {
+                "type": "number"
+              },
+              "latitude": {
+                "type": "number"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -60653,6 +60791,12 @@
             "items": {
               "type": "string"
             }
+          },
+          "schedule_at": {
+            "type": "string"
+          },
+          "user_address": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
@@ -61067,6 +61211,12 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "schedule_at": {
+                "type": "string"
+              },
+              "user_address": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -66788,6 +66938,12 @@
                   "type": "string"
                 }
               },
+              "schedule_at": {
+                "type": "string"
+              },
+              "user_address": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -68687,6 +68843,12 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "schedule_at": {
+                  "type": "string"
+                },
+                "user_address": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
