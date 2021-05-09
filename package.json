@@ -12,6 +12,7 @@
   "devDependencies": {},
   "dependencies": {
     "crypto-js": "^4.0.0",
+    "dayjs": "^1.10.4",
     "knex": "<0.20.0",
     "node-geocoder": "^3.27.0",
     "pg": "8.4.1",
