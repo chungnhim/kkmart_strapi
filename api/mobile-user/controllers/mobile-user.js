@@ -10,6 +10,7 @@ const uuid = require('uuid');
 const crypto = require('crypto');
 const _ = require('lodash');
 const grant = require('grant-koa');
+const dayjs = require('dayjs');
 const { sanitizeEntity } = require('strapi-utils');
 const sgMail = require('@sendgrid/mail');
 
@@ -42,8 +43,8 @@ module.exports = {
     },
     getnearme: async ctx => {
         /*
-        const { name } = ctx.request.body; 
-        const { address } = ctx.request.body; 
+        const { name } = ctx.request.body;
+        const { address } = ctx.request.body;
         //console.log(name);
         //console.log(address);
           ctx.send(name);
@@ -55,7 +56,7 @@ module.exports = {
     //Demo Function
     demo: async ctx => {
         //https://stackoverflow.com/questions/62631528/how-to-update-user-in-strapi
-        //query with model containt '-' 
+        //query with model containt '-'
         const entity = await strapi.query('test-display').create(ctx.request.body);
         return sanitizeEntity(entity, { model: strapi.query('test-display').model });
     },
@@ -71,7 +72,7 @@ module.exports = {
             const now = new Date;
             var utc_timestamp_block = Date.parse(checkphoneno[0].endtime);
 
-            //check if in valid in 24h 
+            //check if in valid in 24h
             var utc_timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(),
                 now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
             if (utc_timestamp_block > utc_timestamp) {
@@ -170,7 +171,7 @@ module.exports = {
             const now = new Date;
             var utc_timestamp_block = Date.parse(checkphoneno[0].endtime);
 
-            //check if in valid in 24h 
+            //check if in valid in 24h
             var utc_timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(),
                 now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
             if (utc_timestamp_block > utc_timestamp) {
@@ -1822,5 +1823,31 @@ module.exports = {
         } else {
             return handleErrors(ctx, err, 'unauthorized');
         }
-    }
+    },
+    async getTotalRegistrationUser(ctx) {
+      const { type = 'TODAY' } = ctx.request.query
+      let startTime, endTime
+
+      switch (type) {
+        case 'CURRENT_YEAR':
+          startTime =  dayjs().startOf('year').toISOString();
+          endTime = dayjs().endOf('year').toISOString();
+          break;
+        case 'CURRENT_WEEK':
+          startTime =  dayjs().startOf('week').toISOString();
+          endTime = dayjs().endOf('week').toISOString();
+          break;
+        case 'CURRENT_MONTH':
+          startTime =  dayjs().startOf('month').toISOString();
+          endTime = dayjs().endOf('month').toISOString();
+          break;
+        default:
+          startTime =  dayjs().startOf('day').toISOString();
+          endTime = dayjs().endOf('day').toISOString();
+          break;
+        }
+
+      const totalRegistrationUsers = await strapi.query('user', 'users-permissions').count({ created_at_gte: startTime, created_at_lte: endTime });
+      ctx.send({ totalUser: totalRegistrationUsers });
+    },
 };

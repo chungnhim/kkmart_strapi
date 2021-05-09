@@ -126,6 +126,14 @@
             "config": {
                 "policies": []
             }
+        },
+        {
+            "method": "GET",
+            "path": "/mobile-user/get-total-registration",
+            "handler": "mobile-user.getTotalRegistrationUser",
+            "config": {
+                "policies": []
+            }
         }
     ]
 }
