@@ -683,6 +683,10 @@
           "monthexpired": {
             "type": "integer"
           },
+          "isdisplay": {
+            "type": "boolean",
+            "default": false
+          },
           "created_by": {
             "required": [
               "id",
@@ -810,6 +814,10 @@
           },
           "monthexpired": {
             "type": "integer"
+          },
+          "isdisplay": {
+            "type": "boolean",
+            "default": false
           },
           "created_by": {
             "type": "string"

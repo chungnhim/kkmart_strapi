@@ -43,6 +43,10 @@
     },
     "monthexpired": {
       "type": "integer"
+    },
+    "isdisplay": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

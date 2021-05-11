@@ -10,7 +10,7 @@ const _ = require("lodash");
 module.exports = {
     getOrdersByStatus: async(pageIndex, pageSize, ordstatus) => {
         var dataQuery = {
-            order_status_in: ordstatus,
+            order_status_in: ordstatus.split(","),
             _start: (pageIndex - 1) * pageSize,
             _limit: pageSize,
             _sort: "created_at:desc",
