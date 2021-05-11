@@ -77,8 +77,7 @@ module.exports = {
 
         ctx.send(res);
     },
-    getTrxConfigs: async() => {
-        console.log(`go to here 1`);
+    getTrxConfigs: async(ctx) => {
 
         let entities1 = await strapi.query("transaction-config").find();
         console.log(entities1);
@@ -98,5 +97,6 @@ module.exports = {
         );
 
         ctx.send(_.values(productModels));
+
     }
 };

@@ -9,6 +9,14 @@
         },
         {
             "method": "GET",
+            "path": "/transaction-histories/transactionconfigs",
+            "handler": "transaction-history.getTrxConfigs",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
             "path": "/transaction-histories/count",
             "handler": "transaction-history.count",
             "config": {
@@ -31,14 +39,7 @@
                 "policies": []
             }
         },
-        {
-            "method": "GET",
-            "path": "/transaction-histories/transaction-configs",
-            "handler": "transaction-history.getTrxConfigs",
-            "config": {
-                "policies": []
-            }
-        },
+
         {
             "method": "POST",
             "path": "/transaction-histories",
