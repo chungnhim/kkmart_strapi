@@ -363,7 +363,7 @@ const processCreateOrder = async(userId,
                 shipping_fee: quotationRes.data.orderRef,
                 status: strapi.config.constants.shipping_status.inProvider
             });
-            // get order detail            
+            // get order detail
             let shipinfo = await strapi.services.lalamoveshippingservice.getOrderDetails(quotationRes.data.orderRef);
 
             if (!_.isNil(shipinfo) && shipinfo.success) {
@@ -539,11 +539,11 @@ module.exports = {
         ctx.send(createOrderRes);
     },
     createOrder: async(ctx) => {
-        // {        
+        // {
         //     "user_address_id": "",
         //     "shipping_note": "",
-        //     "checkout_id": 4, 
-        //     "paymentmethod_id": 4,                             
+        //     "checkout_id": 4,
+        //     "paymentmethod_id": 4,
         //     "vouchercode": "",
         //     "is_use_coin": true
         // }
@@ -560,7 +560,7 @@ module.exports = {
             );
         }
 
-        // get order checkedout          
+        // get order checkedout
         let ordcheckout = await strapi.query("order-checkout").findOne({
             id: params.checkout_id,
             checkoutstatus: strapi.config.constants.shopping_cart_status.new
@@ -693,7 +693,7 @@ module.exports = {
 
         let cartItemsCk = await strapi.services.product.getProductOfShoppingCartOneCheckOut(shoppingCart, ordcheckout.id);
         // get shoppingcart item checked
-        //let cartItemsCk = shoppingCart.shopping_cart_products.filter(s => s.checkoutid== ordcheckout.id);        
+        //let cartItemsCk = shoppingCart.shopping_cart_products.filter(s => s.checkoutid== ordcheckout.id);
         if (_.isNil(cartItemsCk) || cartItemsCk.length == 0) {
             ctx.send({
                 success: false,
@@ -703,11 +703,11 @@ module.exports = {
             return;
         }
         /*
-        let cartItems = await strapi.query("shopping-cart-product").find({           
-            shopping_cart: shoppingCart.id,                     
+        let cartItems = await strapi.query("shopping-cart-product").find({
+            shopping_cart: shoppingCart.id,
             _sort: "id:desc"
-        });                
-     
+        });
+
         var cartItemsCk = [];
         for (let index = 0; index < cartItems.length; index++) {
             const element = cartItems[index];
@@ -716,7 +716,7 @@ module.exports = {
                 cartItemsCk.push(cartItems[index]);
             }
         }
-      
+
         if (cartItemsCk.length==0) {
             ctx.send({
                 success: false,
@@ -965,7 +965,8 @@ module.exports = {
         }
         var orderstatus = bodyparams.orderstatus;
 
-        var res = await strapi.services.order.getOrdersByStatus(pageIndex, pageSize, orderstatus);
+        const searchObject = ctx.request.query;
+        var res = await strapi.services.order.getOrdersByStatus(pageIndex, pageSize, orderstatus, searchObject);
         if (_.isNil(res)) {
             ctx.send({
                 success: false,
@@ -1069,7 +1070,7 @@ module.exports = {
                 message: "Not allow for this order status"
             });
         }
-        // call shipping default Lalamove        
+        // call shipping default Lalamove
         var quotationRes = await strapi.services.lalamoveshippingservice.placeOrder(
             order.order_shipping.user_address,
             order.order_products,
@@ -1087,7 +1088,7 @@ module.exports = {
                 status: strapi.config.constants.shipping_status.inProvider,
                 schedule_at: params.scheduleAt
             });
-            // get order detail                      
+            // get order detail
 
             let shipinfo = await strapi.services.lalamoveshippingservice.getOrderDetails(quotationRes.data.orderRef);
 
