@@ -95,8 +95,6 @@ module.exports = {
                 //"flashsaleproduct"
             ]
         );
-
         ctx.send(_.values(productModels));
-
     }
 };
