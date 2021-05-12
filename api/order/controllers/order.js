@@ -940,10 +940,7 @@ module.exports = {
 
     /// These function using for CMS
     getOrdersByStatus: async(ctx) => {
-        // body params
-        //{
-        // "orderstatus":[1,2,3,4]
-        //}
+
         let userId = await strapi.services.common.getLoggedUserId(ctx);
         if (_.isNil(userId) || userId == 0) {
             ctx.send({
@@ -955,7 +952,7 @@ module.exports = {
         }
 
         const params = _.assign({}, ctx.request.params, ctx.params);
-        const bodyparams = _.assign({}, ctx.request.body, ctx.params);
+        const bodyparams = _.assign({}, ctx.request.query, ctx.params);
         let pageIndex = 1,
             pageSize = 10;
 
