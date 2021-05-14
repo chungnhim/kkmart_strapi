@@ -5,6 +5,7 @@
  * to customize this controller
  */
 const _ = require("lodash");
+const dayjs = require('dayjs');
 
 module.exports = {
     // <=========================
@@ -96,5 +97,34 @@ module.exports = {
             ]
         );
         ctx.send(_.values(productModels));
-    }
+    },
+    getTotalCreditAndDebitAmount: async (ctx) => {
+      const { type = 'CURRENT_WEEK' } = ctx.request.query;
+      let startTime, endTime
+
+      switch (type) {
+        case 'CURRENT_YEAR':
+          startTime =  dayjs().startOf('year').toISOString();
+          endTime = dayjs().endOf('year').toISOString();
+          break;
+        case 'CURRENT_MONTH':
+          startTime =  dayjs().startOf('month').toISOString();
+          endTime = dayjs().endOf('month').toISOString();
+          break;
+        default:
+          startTime =  dayjs().startOf('week').toISOString();
+          endTime = dayjs().endOf('week').toISOString();
+          break;
+      }
+      let data = {};
+      const querystring = `SELECT * FROM show_kcoin_dashboard('${startTime}', '${endTime}')`;
+      const result = await strapi.connections.default.raw(querystring);
+      const rows = result.rows;
+      if (rows && rows.length) {
+        rows.forEach((row) => {
+          data[row.days.toLowerCase().trim()] = { creditTotal: row.credittotal, debittotal: row.debittotal };
+        })
+      }
+      ctx.send({ data });
+    },
 };

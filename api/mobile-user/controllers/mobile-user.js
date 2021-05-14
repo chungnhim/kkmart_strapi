@@ -1825,7 +1825,7 @@ module.exports = {
         }
     },
     async getTotalRegistrationUser(ctx) {
-      const { type = 'TODAY' } = ctx.request.query
+      const { type = 'CURRENT_WEEK' } = ctx.request.query;
       let startTime, endTime
 
       switch (type) {
@@ -1833,21 +1833,25 @@ module.exports = {
           startTime =  dayjs().startOf('year').toISOString();
           endTime = dayjs().endOf('year').toISOString();
           break;
-        case 'CURRENT_WEEK':
-          startTime =  dayjs().startOf('week').toISOString();
-          endTime = dayjs().endOf('week').toISOString();
-          break;
         case 'CURRENT_MONTH':
           startTime =  dayjs().startOf('month').toISOString();
           endTime = dayjs().endOf('month').toISOString();
           break;
         default:
-          startTime =  dayjs().startOf('day').toISOString();
-          endTime = dayjs().endOf('day').toISOString();
+          startTime =  dayjs().startOf('week').toISOString();
+          endTime = dayjs().endOf('week').toISOString();
           break;
-        }
+      }
 
-      const totalRegistrationUsers = await strapi.query('user', 'users-permissions').count({ created_at_gte: startTime, created_at_lte: endTime });
-      ctx.send({ totalUser: totalRegistrationUsers });
+      let data = {};
+      const queryString = `SELECT TO_CHAR(created_at, 'Day') AS "days", COUNT(*) FROM "users-permissions_user" WHERE created_at >= '${startTime}' AND created_at <= '${endTime}' GROUP BY "days"`;
+      const result = await strapi.connections.default.raw(queryString);
+      const rows = result.rows;
+      if (rows && rows.length) {
+        rows.forEach((row) => {
+          data[row.days.toLowerCase().trim()] = row.count ? Number(row.count) : 0;
+        })
+      }
+      ctx.send({ data });
     },
 };
