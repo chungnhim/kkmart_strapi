@@ -1,11 +1,20 @@
 {
-    "routes": [{
-            "method": "GET",
-            "path": "/transaction-histories",
-            "handler": "transaction-history.find",
-            "config": {
-                "policies": []
-            }
+    "routes": [
+      {
+        "method": "GET",
+        "path": "/kcoin-report/get-total-credit-and-debit-amount",
+        "handler": "transaction-history.getTotalCreditAndDebitAmount",
+        "config": {
+            "policies": []
+        }
+      },
+      {
+          "method": "GET",
+          "path": "/transaction-histories",
+          "handler": "transaction-history.find",
+          "config": {
+              "policies": []
+          }
         },
         {
             "method": "GET",
@@ -39,7 +48,6 @@
                 "policies": []
             }
         },
-
         {
             "method": "POST",
             "path": "/transaction-histories",
