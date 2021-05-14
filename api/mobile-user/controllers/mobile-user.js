@@ -1843,15 +1843,9 @@ module.exports = {
           break;
       }
 
-      let data = {};
       const queryString = `SELECT TO_CHAR(created_at, 'Day') AS "days", COUNT(*) FROM "users-permissions_user" WHERE created_at >= '${startTime}' AND created_at <= '${endTime}' GROUP BY "days"`;
       const result = await strapi.connections.default.raw(queryString);
       const rows = result.rows;
-      if (rows && rows.length) {
-        rows.forEach((row) => {
-          data[row.days.toLowerCase().trim()] = row.count ? Number(row.count) : 0;
-        })
-      }
-      ctx.send({ data });
+      ctx.send({ data: rows.map((row) => ({ day: row.days.toLowerCase().trim(), total: row.count ? Number(row.count) : 0 })) });
     },
 };

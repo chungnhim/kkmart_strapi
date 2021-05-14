@@ -116,15 +116,15 @@ module.exports = {
           endTime = dayjs().endOf('week').toISOString();
           break;
       }
-      let data = {};
+
       const querystring = `SELECT * FROM show_kcoin_dashboard('${startTime}', '${endTime}')`;
       const result = await strapi.connections.default.raw(querystring);
       const rows = result.rows;
-      if (rows && rows.length) {
-        rows.forEach((row) => {
-          data[row.days.toLowerCase().trim()] = { creditTotal: row.credittotal, debittotal: row.debittotal };
-        })
-      }
-      ctx.send({ data });
+      console.log('debug-rows', rows)
+      ctx.send({ data: rows.map((row) => ({
+        day: row.days.toLowerCase().trim(),
+        creditTotal: row.credittotal ? Number(row.credittotal) : 0,
+        debitTotal: row.debittotal ? Number(row.debittotal) : 0,
+      }))});
     },
 };
