@@ -46,5 +46,15 @@ module.exports = ({ env }) => ({
     flashsale_apply_for_status: {
         total_products: 1,
         total_money: 2,
+    },
+    voucher_type: {
+        discount_fixed_money: 1,
+        discount_percent: 2,
+        same_price: 3,
+        free_ship: 4
+    },
+    voucher_apply_type: {
+
     }
+
 });
