@@ -831,6 +831,9 @@
               }
             }
           },
+          "customerqrcode": {
+            "type": "string"
+          },
           "created_by": {
             "required": [
               "id",
@@ -958,6 +961,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "customerqrcode": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

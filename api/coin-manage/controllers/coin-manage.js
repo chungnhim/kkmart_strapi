@@ -2500,7 +2500,8 @@ module.exports = {
             refno: refno,
             user: mobileuserid,
             outlet: outletid,
-            customeremail: checkuser.email
+            customeremail: checkuser.email,
+            customerqrcode: checkuser.qrcode
         }
         var paymenttrx = await strapi.query('coinpaymenttransact').create(trx);
 

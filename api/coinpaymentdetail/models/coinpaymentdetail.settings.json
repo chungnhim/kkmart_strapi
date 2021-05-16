@@ -13,8 +13,8 @@
       "type": "string"
     },
     "coinpaymenttransact": {
-      "model": "coinpaymenttransact",
-      "via": "coinpaymentdetails"
+      "via": "coinpaymentdetails",
+      "model": "coinpaymenttransact"
     },
     "transaction_history": {
       "model": "transaction-history"

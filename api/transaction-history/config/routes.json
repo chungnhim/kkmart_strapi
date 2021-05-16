@@ -1,20 +1,27 @@
 {
-    "routes": [
-      {
-        "method": "GET",
-        "path": "/kcoin-report/get-total-credit-and-debit-amount",
-        "handler": "transaction-history.getTotalCreditAndDebitAmount",
-        "config": {
-            "policies": []
-        }
-      },
-      {
-          "method": "GET",
-          "path": "/transaction-histories",
-          "handler": "transaction-history.find",
-          "config": {
-              "policies": []
-          }
+    "routes": [{
+            "method": "GET",
+            "path": "/kcoin-report/get-total-credit-and-debit-amount",
+            "handler": "transaction-history.getTotalCreditAndDebitAmount",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/kcoin-report/coin-payment-transact/:page_index/:page_size",
+            "handler": "transaction-history.coinPaymentTransact",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/transaction-histories",
+            "handler": "transaction-history.find",
+            "config": {
+                "policies": []
+            }
         },
         {
             "method": "GET",

@@ -132,8 +132,8 @@
       "via": "user"
     },
     "transaction_histories": {
-      "collection": "transaction-history",
-      "via": "user"
+      "via": "user",
+      "collection": "transaction-history"
     },
     "maritalstatuother": {
       "type": "string"
@@ -184,8 +184,8 @@
       "via": "user"
     },
     "coinpaymenttransacts": {
-      "collection": "coinpaymenttransact",
-      "via": "user"
+      "via": "user",
+      "collection": "coinpaymenttransact"
     },
     "is_kkstaff": {
       "type": "boolean"

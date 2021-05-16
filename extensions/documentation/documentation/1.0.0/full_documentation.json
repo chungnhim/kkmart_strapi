@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "05/13/2021 10:06:55 AM"
+    "x-generation-date": "05/16/2021 9:17:00 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -45774,6 +45774,84 @@
         "parameters": []
       }
     },
+    "/kcoin-report/coin-payment-transact/{page_index}/{page_size}": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Transaction-history"
+        ],
+        "parameters": [
+          {
+            "name": "page_index",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
     "/transaction-histories": {
       "get": {
         "deprecated": false,
@@ -51903,6 +51981,9 @@
                   "type": "string"
                 }
               },
+              "customerqrcode": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -51969,6 +52050,12 @@
               },
               "isprocessed": {
                 "type": "boolean"
+              },
+              "useremail": {
+                "type": "string"
+              },
+              "userqrcode": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -52410,6 +52497,9 @@
               }
             }
           },
+          "customerqrcode": {
+            "type": "string"
+          },
           "created_by": {
             "required": [
               "id",
@@ -52537,6 +52627,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "customerqrcode": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
@@ -62007,6 +62100,9 @@
                     "type": "string"
                   }
                 },
+                "customerqrcode": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -70806,6 +70902,12 @@
             "type": "boolean",
             "default": false
           },
+          "useremail": {
+            "type": "string"
+          },
+          "userqrcode": {
+            "type": "string"
+          },
           "created_by": {
             "required": [
               "id",
@@ -70955,6 +71057,12 @@
           "isprocessed": {
             "type": "boolean",
             "default": false
+          },
+          "useremail": {
+            "type": "string"
+          },
+          "userqrcode": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
@@ -73005,6 +73113,12 @@
                 "isprocessed": {
                   "type": "boolean"
                 },
+                "useremail": {
+                  "type": "string"
+                },
+                "userqrcode": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -73352,6 +73466,9 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "customerqrcode": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"

@@ -19,9 +19,9 @@
       "type": "string"
     },
     "user": {
-      "via": "coinpaymenttransacts",
       "plugin": "users-permissions",
-      "model": "user"
+      "model": "user",
+      "via": "coinpaymenttransacts"
     },
     "outlet": {
       "model": "outlet",
@@ -43,8 +43,11 @@
       "type": "string"
     },
     "coinpaymentdetails": {
-      "via": "coinpaymenttransact",
-      "collection": "coinpaymentdetail"
+      "collection": "coinpaymentdetail",
+      "via": "coinpaymenttransact"
+    },
+    "customerqrcode": {
+      "type": "string"
     }
   }
 }

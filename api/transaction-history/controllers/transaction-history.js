@@ -36,7 +36,7 @@ module.exports = {
             _limit: pageSize,
             _sort: "createddate:desc",
         };
-        console.log(queryString);
+        //console.log(queryString);
         if (!_.isNil(queryString.mobileuserids) && !_.isEmpty(queryString.mobileuserids)) {
             console.log(queryString);
             dataQuery.mobileuserid_in = queryString.mobileuserids.split(",");
@@ -52,7 +52,7 @@ module.exports = {
         if (!_.isNil(queryString.todate) && !_.isEmpty(queryString.todate)) {
             dataQuery.createddate_lte = queryString.todate;
         }
-        console.log('go to here 1');
+        //console.log('go to here 1');
         var totalRows = await strapi.query('transaction-history').count(dataQuery);
         var entities = await strapi.query("transaction-history").find(dataQuery);
 
@@ -98,33 +98,104 @@ module.exports = {
         );
         ctx.send(_.values(productModels));
     },
-    getTotalCreditAndDebitAmount: async (ctx) => {
-      const { type = 'CURRENT_WEEK' } = ctx.request.query;
-      let startTime, endTime
+    getTotalCreditAndDebitAmount: async(ctx) => {
+        const { type = 'CURRENT_WEEK' } = ctx.request.query;
+        let startTime, endTime
 
-      switch (type) {
-        case 'CURRENT_YEAR':
-          startTime =  dayjs().startOf('year').toISOString();
-          endTime = dayjs().endOf('year').toISOString();
-          break;
-        case 'CURRENT_MONTH':
-          startTime =  dayjs().startOf('month').toISOString();
-          endTime = dayjs().endOf('month').toISOString();
-          break;
-        default:
-          startTime =  dayjs().startOf('week').toISOString();
-          endTime = dayjs().endOf('week').toISOString();
-          break;
-      }
+        switch (type) {
+            case 'CURRENT_YEAR':
+                startTime = dayjs().startOf('year').toISOString();
+                endTime = dayjs().endOf('year').toISOString();
+                break;
+            case 'CURRENT_MONTH':
+                startTime = dayjs().startOf('month').toISOString();
+                endTime = dayjs().endOf('month').toISOString();
+                break;
+            default:
+                startTime = dayjs().startOf('week').toISOString();
+                endTime = dayjs().endOf('week').toISOString();
+                break;
+        }
 
-      const querystring = `SELECT * FROM show_kcoin_dashboard('${startTime}', '${endTime}')`;
-      const result = await strapi.connections.default.raw(querystring);
-      const rows = result.rows;
-      console.log('debug-rows', rows)
-      ctx.send({ data: rows.map((row) => ({
-        day: row.days.toLowerCase().trim(),
-        creditTotal: row.credittotal ? Number(row.credittotal) : 0,
-        debitTotal: row.debittotal ? Number(row.debittotal) : 0,
-      }))});
+        const querystring = `SELECT * FROM show_kcoin_dashboard('${startTime}', '${endTime}')`;
+        const result = await strapi.connections.default.raw(querystring);
+        const rows = result.rows;
+        //console.log('debug-rows', rows)
+        ctx.send({
+            data: rows.map((row) => ({
+                day: row.days.toLowerCase().trim(),
+                creditTotal: row.credittotal ? Number(row.credittotal) : 0,
+                debitTotal: row.debittotal ? Number(row.debittotal) : 0,
+            }))
+        });
     },
+    // <=========================
+    // Coin payment transact
+    coinPaymentTransact: async(ctx) => {
+        // body params
+        // scheduleAt UTC time, not local time
+        //{
+        // "mobileuserids":[1,2],
+        // "trxconfigids":["001","013","014"]
+        // "fromdate":"2021-07-10T07:00:00.000Z"
+        // "todate":"2020-07-10T07:00:00.000Z"
+        //}
+
+        const queryString = _.assign({}, ctx.request.query, ctx.params);
+        const params = _.assign({}, ctx.request.params, ctx.params);
+
+        let pageIndex = 1,
+            pageSize = 10;
+
+        if (!_.isNil(params.page_index) && !_.isNil(params.page_size)) {
+            pageIndex = parseInt(params.page_index);
+            pageSize = parseInt(params.page_size);
+        }
+
+        var dataQuery = {
+            _start: (pageIndex - 1) * pageSize,
+            _limit: pageSize,
+            _sort: "created_at:desc",
+        };
+        //console.log(queryString);
+        if (!_.isNil(queryString.transactno) && !_.isEmpty(queryString.transactno)) {
+            //console.log(queryString);
+            dataQuery.transactno = queryString.transactno;
+        }
+
+        if (!_.isNil(queryString.refno) && !_.isEmpty(queryString.refno)) {
+            dataQuery.refno = queryString.refno;
+        }
+        if (!_.isNil(queryString.customeremail) && !_.isEmpty(queryString.customeremail)) {
+            dataQuery.customeremail = queryString.customeremail;
+        }
+        if (!_.isNil(queryString.customerqrcode) && !_.isEmpty(queryString.customerqrcode)) {
+            dataQuery.customerqrcode = queryString.qrcode;
+        }
+
+        if (!_.isNil(queryString.fromdate) && !_.isEmpty(queryString.fromdate)) {
+            dataQuery.created_at_gte = queryString.fromdate;
+        }
+        if (!_.isNil(queryString.todate) && !_.isEmpty(queryString.todate)) {
+            dataQuery.created_at_lte = queryString.todate;
+        }
+        console.log('go to here 1');
+        var totalRows = await strapi.query('coinpaymenttransact').count(dataQuery);
+        var entities = await strapi.query("coinpaymenttransact").find(dataQuery);
+        let productModels = await strapi.services.common.normalizationResponse(
+            entities, [
+                "user",
+                "updated_at",
+                "merchantcode",
+                "coinpaymentdetails"
+            ]
+        );
+
+        var res = {
+            totalRows,
+            source: _.values(productModels)
+        };
+
+        ctx.send(res);
+    }
 };

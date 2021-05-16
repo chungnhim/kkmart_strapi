@@ -118,7 +118,9 @@ module.exports = {
                 mobileuserid: checkuser.id,
                 trxconfigid: transactionconfig.trxconfigid,
                 remark: transactionconfig.trxdescription,
-                isprocessed: isprocessed
+                isprocessed: isprocessed,
+                useremail: checkuser.email,
+                userqrcode: checkuser.qrcode
             });
             if (transactionconfig.dayeffective == 0) {
                 //3.2 check if ransactionconfig.dayeffective == 0
@@ -440,7 +442,9 @@ module.exports = {
                 mobileuserid: checkuser.id,
                 trxconfigid: transactionconfig.trxconfigid,
                 remark: transactionconfig.trxdescription,
-                isprocessed: true
+                isprocessed: true,
+                useremail: checkuser.email,
+                userqrcode: checkuser.qrcode
             });
 
 
@@ -644,7 +648,9 @@ module.exports = {
                 mobileuserid: checkuser.id,
                 trxconfigid: transactionconfig.trxconfigid,
                 remark: transactionconfig.trxdescription,
-                isprocessed: isprocessed
+                isprocessed: isprocessed,
+                useremail: checkuser.email,
+                userqrcode: checkuser.qrcode
             });
             if (transactionconfig.dayeffective == 0) {
                 //3.2 check if ransactionconfig.dayeffective == 0

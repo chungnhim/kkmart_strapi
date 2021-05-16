@@ -1738,6 +1738,12 @@
                 "isprocessed": {
                   "type": "boolean"
                 },
+                "useremail": {
+                  "type": "string"
+                },
+                "userqrcode": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -2085,6 +2091,9 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "customerqrcode": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"

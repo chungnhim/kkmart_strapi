@@ -569,6 +569,9 @@
                   "type": "string"
                 }
               },
+              "customerqrcode": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -635,6 +638,12 @@
               },
               "isprocessed": {
                 "type": "boolean"
+              },
+              "useremail": {
+                "type": "string"
+              },
+              "userqrcode": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"

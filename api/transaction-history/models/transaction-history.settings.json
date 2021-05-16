@@ -22,9 +22,9 @@
       "type": "decimal"
     },
     "user": {
-      "via": "transaction_histories",
       "plugin": "users-permissions",
-      "model": "user"
+      "model": "user",
+      "via": "transaction_histories"
     },
     "status": {
       "type": "enumeration",
@@ -68,6 +68,12 @@
     "isprocessed": {
       "type": "boolean",
       "default": false
+    },
+    "useremail": {
+      "type": "string"
+    },
+    "userqrcode": {
+      "type": "string"
     }
   }
 }
