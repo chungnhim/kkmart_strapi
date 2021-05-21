@@ -141,15 +141,16 @@ module.exports = {
         var runstrtmp = "0000000000";
         // get prefix
         var sysparams = await strapi.query('systemparams').findOne({
-            paramname: "qrcodeprefix"
+            paramname: "paymenttrxprefix"
         });
         if (sysparams) {
             var prefix = sysparams.paramvalue;
         } else {
-            prefix = "160101";
+            // PT : Payment Transaction
+            prefix = "PT";
         }
 
-        var sq = await strapi.connections.default.raw(`select nextval('user_qrcode_seq')`);
+        var sq = await strapi.connections.default.raw(`select nextval('paymenttransact_oder_seq')`);
         var sqIds = sq.rows;
         //console.log(sqIds);
         var runstr = runstrtmp + sqIds[0].nextval;
