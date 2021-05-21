@@ -37,6 +37,10 @@
       ],
       "plugin": "upload",
       "required": false
+    },
+    "status": {
+      "type": "string",
+      "default": "N"
     }
   }
 }
