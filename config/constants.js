@@ -53,6 +53,10 @@ module.exports = ({ env }) => ({
         same_price: 3,
         free_ship: 4
     },
+    voucher_apply_condition: {
+        min_product_qtty: 1,
+        min_totalamount: 2
+    },
     voucher_apply_type: {
 
     }

@@ -36,7 +36,7 @@
     "isenddate": {
       "type": "boolean"
     },
-    "numberapply": {
+    "numberapplied": {
       "type": "integer"
     },
     "numberusevoucher": {
@@ -47,6 +47,24 @@
     },
     "isusewithpromotion": {
       "type": "boolean"
+    },
+    "voucherimg": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "conditionapply": {
+      "type": "integer"
+    },
+    "mintotalamount": {
+      "type": "decimal"
+    },
+    "minproductqtty": {
+      "type": "integer"
     }
   }
 }
