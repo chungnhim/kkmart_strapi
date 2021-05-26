@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/kcoin-report/get-total-credit-and-debit-amount": {
+    "/groupcustomers": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -10,10 +10,9 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Groupcustomer"
                   }
                 }
               }
@@ -52,142 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Transaction-history"
-        ],
-        "parameters": []
-      }
-    },
-    "/kcoin-report/coin-payment-transact/{page_index}/{page_size}": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Transaction-history"
-        ],
-        "parameters": [
-          {
-            "name": "page_index",
-            "in": "path",
-            "description": "",
-            "deprecated": false,
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page_size",
-            "in": "path",
-            "description": "",
-            "deprecated": false,
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/transaction-histories": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Transaction-history"
+          "Groupcustomer"
         ],
         "parameters": [
           {
@@ -337,11 +201,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Groupcustomer"
                 }
               }
             }
@@ -379,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "Transaction-history"
+          "Groupcustomer"
         ],
         "requestBody": {
           "description": "",
@@ -387,14 +247,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewTransaction-history"
+                "$ref": "#/components/schemas/NewGroupcustomer"
               }
             }
           }
         }
       }
     },
-    "/transaction-histories/transactionconfigs": {
+    "/groupcustomers/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -405,8 +265,8 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "foo": {
-                      "type": "string"
+                    "count": {
+                      "type": "integer"
                     }
                   }
                 }
@@ -446,12 +306,12 @@
         },
         "summary": "",
         "tags": [
-          "Transaction-history"
+          "Groupcustomer"
         ],
         "parameters": []
       }
     },
-    "/transaction-histories/count": {
+    "/groupcustomers/{id}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -461,11 +321,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Groupcustomer"
                 }
               }
             }
@@ -503,64 +359,7 @@
         },
         "summary": "",
         "tags": [
-          "Transaction-history"
-        ],
-        "parameters": []
-      }
-    },
-    "/transaction-histories/{id}": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Transaction-history"
+          "Groupcustomer"
         ],
         "parameters": [
           {
@@ -584,11 +383,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Groupcustomer"
                 }
               }
             }
@@ -626,7 +421,7 @@
         },
         "summary": "",
         "tags": [
-          "Transaction-history"
+          "Groupcustomer"
         ],
         "requestBody": {
           "description": "",
@@ -634,7 +429,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewTransaction-history"
+                "$ref": "#/components/schemas/NewGroupcustomer"
               }
             }
           }
@@ -700,7 +495,7 @@
         },
         "summary": "",
         "tags": [
-          "Transaction-history"
+          "Groupcustomer"
         ],
         "parameters": [
           {
@@ -715,89 +510,11 @@
           }
         ]
       }
-    },
-    "/transaction-histories/coin-transactions/{page_index}/{page_size}": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Transaction-history"
-        ],
-        "parameters": [
-          {
-            "name": "page_index",
-            "in": "path",
-            "description": "",
-            "deprecated": false,
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page_size",
-            "in": "path",
-            "description": "",
-            "deprecated": false,
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
     }
   },
   "components": {
     "schemas": {
-      "Transaction-history": {
+      "Groupcustomer": {
         "required": [
           "id"
         ],
@@ -805,311 +522,67 @@
           "id": {
             "type": "string"
           },
-          "createddate": {
-            "type": "datetime"
+          "groupname": {
+            "type": "string"
           },
-          "expireddate": {
-            "type": "datetime"
-          },
-          "creditamount": {
-            "type": "number"
-          },
-          "debitamount": {
-            "type": "number"
-          },
-          "user": {
+          "groupimg": {
             "required": [
               "id",
-              "username",
-              "email",
-              "qrcode"
+              "name",
+              "hash",
+              "mime",
+              "size",
+              "url",
+              "provider"
             ],
             "properties": {
               "id": {
-                "type": "string"
-              },
-              "username": {
-                "type": "string"
-              },
-              "email": {
-                "type": "string"
-              },
-              "provider": {
-                "type": "string"
-              },
-              "password": {
-                "type": "string"
-              },
-              "resetPasswordToken": {
-                "type": "string"
-              },
-              "confirmed": {
-                "type": "boolean"
-              },
-              "blocked": {
-                "type": "boolean"
-              },
-              "role": {
-                "type": "string"
-              },
-              "phone": {
-                "type": "string"
-              },
-              "dateofbirth": {
-                "type": "string"
-              },
-              "gender": {
-                "type": "string"
-              },
-              "kcoin": {
-                "type": "number"
-              },
-              "maritalstatus": {
-                "type": "string"
-              },
-              "referralcode": {
-                "type": "string"
-              },
-              "companyname": {
-                "type": "string"
-              },
-              "promotionrewardpoint": {
-                "type": "number"
-              },
-              "nonpromotionalrewardpoint": {
-                "type": "number"
-              },
-              "membershiptype": {
-                "type": "string"
-              },
-              "address1": {
-                "type": "string"
-              },
-              "address2": {
-                "type": "string"
-              },
-              "country": {
-                "type": "string"
-              },
-              "state": {
-                "type": "string"
-              },
-              "city": {
-                "type": "string"
-              },
-              "postcode": {
-                "type": "string"
-              },
-              "ethnicgroup": {
-                "type": "string"
-              },
-              "personalinterests": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "deviceinfos": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "firstname": {
-                "type": "string"
-              },
-              "lastname": {
-                "type": "string"
-              },
-              "employmentstatus": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "socialmediaactivestatus": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "outlets": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "transaction_histories": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "maritalstatuother": {
-                "type": "string"
-              },
-              "personalinterestother": {
-                "type": "string"
-              },
-              "employmentstatuother": {
-                "type": "string"
-              },
-              "socialmediaactivestatuother": {
-                "type": "string"
-              },
-              "iscompleteinformation": {
-                "type": "boolean"
-              },
-              "photo": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "preferredname": {
-                "type": "string"
-              },
-              "friendcode": {
-                "type": "string"
-              },
-              "product_ratings": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "orders": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "user_addresses": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "searchhistories": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "coinpaymenttransacts": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "is_kkstaff": {
-                "type": "boolean"
-              },
-              "qrcode": {
-                "type": "string"
-              },
-              "groupcustomers": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "voucherproducts": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "complete",
-              "pending",
-              "error",
-              "rollback"
-            ]
-          },
-          "transactionamount": {
-            "type": "number"
-          },
-          "taxno": {
-            "type": "string"
-          },
-          "transactionno": {
-            "type": "string"
-          },
-          "outletid": {
-            "type": "integer"
-          },
-          "availabledate": {
-            "type": "datetime"
-          },
-          "mobileuserid": {
-            "type": "integer"
-          },
-          "invoiceno": {
-            "type": "string"
-          },
-          "remark": {
-            "type": "string"
-          },
-          "trxconfigid": {
-            "type": "string"
-          },
-          "outlet": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "user": {
                 "type": "string"
               },
               "name": {
                 "type": "string"
               },
-              "street1": {
+              "alternativeText": {
                 "type": "string"
               },
-              "street2": {
+              "caption": {
                 "type": "string"
               },
-              "address": {
+              "width": {
+                "type": "integer"
+              },
+              "height": {
+                "type": "integer"
+              },
+              "formats": {
+                "type": "object"
+              },
+              "hash": {
                 "type": "string"
               },
-              "longitude": {
+              "ext": {
+                "type": "string"
+              },
+              "mime": {
+                "type": "string"
+              },
+              "size": {
                 "type": "number"
               },
-              "latitude": {
-                "type": "number"
-              },
-              "country": {
+              "url": {
                 "type": "string"
               },
-              "state": {
+              "previewUrl": {
                 "type": "string"
               },
-              "telephone": {
+              "provider": {
                 "type": "string"
               },
-              "digi": {
-                "type": "string"
+              "provider_metadata": {
+                "type": "object"
               },
-              "coinpaymenttransacts": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
+              "related": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -1119,15 +592,304 @@
               }
             }
           },
-          "isprocessed": {
-            "type": "boolean",
-            "default": false
+          "users": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "username",
+                "email",
+                "qrcode"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "provider": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "resetPasswordToken": {
+                  "type": "string"
+                },
+                "confirmed": {
+                  "type": "boolean"
+                },
+                "blocked": {
+                  "type": "boolean"
+                },
+                "role": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "dateofbirth": {
+                  "type": "string"
+                },
+                "gender": {
+                  "type": "string"
+                },
+                "kcoin": {
+                  "type": "number"
+                },
+                "maritalstatus": {
+                  "type": "string"
+                },
+                "referralcode": {
+                  "type": "string"
+                },
+                "companyname": {
+                  "type": "string"
+                },
+                "promotionrewardpoint": {
+                  "type": "number"
+                },
+                "nonpromotionalrewardpoint": {
+                  "type": "number"
+                },
+                "membershiptype": {
+                  "type": "string"
+                },
+                "address1": {
+                  "type": "string"
+                },
+                "address2": {
+                  "type": "string"
+                },
+                "country": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "postcode": {
+                  "type": "string"
+                },
+                "ethnicgroup": {
+                  "type": "string"
+                },
+                "personalinterests": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "deviceinfos": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "firstname": {
+                  "type": "string"
+                },
+                "lastname": {
+                  "type": "string"
+                },
+                "employmentstatus": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "socialmediaactivestatus": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "outlets": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "transaction_histories": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "maritalstatuother": {
+                  "type": "string"
+                },
+                "personalinterestother": {
+                  "type": "string"
+                },
+                "employmentstatuother": {
+                  "type": "string"
+                },
+                "socialmediaactivestatuother": {
+                  "type": "string"
+                },
+                "iscompleteinformation": {
+                  "type": "boolean"
+                },
+                "photo": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "preferredname": {
+                  "type": "string"
+                },
+                "friendcode": {
+                  "type": "string"
+                },
+                "product_ratings": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "orders": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "user_addresses": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "searchhistories": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "coinpaymenttransacts": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "is_kkstaff": {
+                  "type": "boolean"
+                },
+                "qrcode": {
+                  "type": "string"
+                },
+                "groupcustomers": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "voucherproducts": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
           },
-          "useremail": {
-            "type": "string"
-          },
-          "userqrcode": {
-            "type": "string"
+          "voucherproducts": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "vouchercode": {
+                  "type": "string"
+                },
+                "vouchertype": {
+                  "type": "integer"
+                },
+                "reduction": {
+                  "type": "number"
+                },
+                "activedate": {
+                  "type": "datetime"
+                },
+                "enddate": {
+                  "type": "datetime"
+                },
+                "isenddate": {
+                  "type": "boolean"
+                },
+                "numberapplied": {
+                  "type": "integer"
+                },
+                "numberusevoucher": {
+                  "type": "integer"
+                },
+                "islimitnumberusevoucher": {
+                  "type": "boolean"
+                },
+                "isusewithpromotion": {
+                  "type": "boolean"
+                },
+                "voucherimg": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "mintotalamount": {
+                  "type": "number"
+                },
+                "minproductqtty": {
+                  "type": "integer"
+                },
+                "voucherstatus": {
+                  "type": "integer"
+                },
+                "voucherapplyfor": {
+                  "type": "string"
+                },
+                "objectapplytype": {
+                  "type": "integer"
+                },
+                "groupcustomers": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "users": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
           },
           "created_by": {
             "required": [
@@ -1219,71 +981,22 @@
           }
         }
       },
-      "NewTransaction-history": {
+      "NewGroupcustomer": {
         "properties": {
-          "createddate": {
-            "type": "datetime"
-          },
-          "expireddate": {
-            "type": "datetime"
-          },
-          "creditamount": {
-            "type": "number"
-          },
-          "debitamount": {
-            "type": "number"
-          },
-          "user": {
+          "groupname": {
             "type": "string"
           },
-          "status": {
-            "type": "string",
-            "enum": [
-              "complete",
-              "pending",
-              "error",
-              "rollback"
-            ]
+          "users": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
-          "transactionamount": {
-            "type": "number"
-          },
-          "taxno": {
-            "type": "string"
-          },
-          "transactionno": {
-            "type": "string"
-          },
-          "outletid": {
-            "type": "integer"
-          },
-          "availabledate": {
-            "type": "datetime"
-          },
-          "mobileuserid": {
-            "type": "integer"
-          },
-          "invoiceno": {
-            "type": "string"
-          },
-          "remark": {
-            "type": "string"
-          },
-          "trxconfigid": {
-            "type": "string"
-          },
-          "outlet": {
-            "type": "string"
-          },
-          "isprocessed": {
-            "type": "boolean",
-            "default": false
-          },
-          "useremail": {
-            "type": "string"
-          },
-          "userqrcode": {
-            "type": "string"
+          "voucherproducts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "created_by": {
             "type": "string"
@@ -1295,5 +1008,9 @@
       }
     }
   },
-  "tags": []
+  "tags": [
+    {
+      "name": "Groupcustomer"
+    }
+  ]
 }

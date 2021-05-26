@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "groupcustomers",
+  "info": {
+    "name": "groupcustomer"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "groupname": {
+      "type": "string"
+    },
+    "groupimg": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "users": {
+      "plugin": "users-permissions",
+      "collection": "user",
+      "via": "groupcustomers",
+      "dominant": true
+    },
+    "voucherproducts": {
+      "via": "groupcustomers",
+      "collection": "voucherproduct"
+    }
+  }
+}

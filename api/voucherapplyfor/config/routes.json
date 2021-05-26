@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/voucherapplyfors",
+      "handler": "voucherapplyfor.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/voucherapplyfors/count",
+      "handler": "voucherapplyfor.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/voucherapplyfors/:id",
+      "handler": "voucherapplyfor.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/voucherapplyfors",
+      "handler": "voucherapplyfor.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/voucherapplyfors/:id",
+      "handler": "voucherapplyfor.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/voucherapplyfors/:id",
+      "handler": "voucherapplyfor.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

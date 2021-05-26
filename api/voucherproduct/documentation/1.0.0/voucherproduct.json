@@ -534,12 +534,6 @@
           "reduction": {
             "type": "number"
           },
-          "voucherapplytype": {
-            "type": "integer"
-          },
-          "voucherapplyfor": {
-            "type": "integer"
-          },
           "activedate": {
             "type": "datetime"
           },
@@ -556,7 +550,8 @@
             "type": "integer"
           },
           "islimitnumberusevoucher": {
-            "type": "boolean"
+            "type": "boolean",
+            "default": true
           },
           "isusewithpromotion": {
             "type": "boolean"
@@ -631,14 +626,290 @@
               }
             }
           },
-          "conditionapply": {
-            "type": "integer"
-          },
           "mintotalamount": {
             "type": "number"
           },
           "minproductqtty": {
             "type": "integer"
+          },
+          "voucherstatus": {
+            "type": "integer"
+          },
+          "voucherapplyfor": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "applycode": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "objectapplytype": {
+            "type": "integer"
+          },
+          "groupcustomers": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "groupname": {
+                  "type": "string"
+                },
+                "groupimg": {
+                  "type": "string"
+                },
+                "users": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "voucherproducts": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "users": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "username",
+                "email",
+                "qrcode"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "provider": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "resetPasswordToken": {
+                  "type": "string"
+                },
+                "confirmed": {
+                  "type": "boolean"
+                },
+                "blocked": {
+                  "type": "boolean"
+                },
+                "role": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "dateofbirth": {
+                  "type": "string"
+                },
+                "gender": {
+                  "type": "string"
+                },
+                "kcoin": {
+                  "type": "number"
+                },
+                "maritalstatus": {
+                  "type": "string"
+                },
+                "referralcode": {
+                  "type": "string"
+                },
+                "companyname": {
+                  "type": "string"
+                },
+                "promotionrewardpoint": {
+                  "type": "number"
+                },
+                "nonpromotionalrewardpoint": {
+                  "type": "number"
+                },
+                "membershiptype": {
+                  "type": "string"
+                },
+                "address1": {
+                  "type": "string"
+                },
+                "address2": {
+                  "type": "string"
+                },
+                "country": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "postcode": {
+                  "type": "string"
+                },
+                "ethnicgroup": {
+                  "type": "string"
+                },
+                "personalinterests": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "deviceinfos": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "firstname": {
+                  "type": "string"
+                },
+                "lastname": {
+                  "type": "string"
+                },
+                "employmentstatus": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "socialmediaactivestatus": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "outlets": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "transaction_histories": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "maritalstatuother": {
+                  "type": "string"
+                },
+                "personalinterestother": {
+                  "type": "string"
+                },
+                "employmentstatuother": {
+                  "type": "string"
+                },
+                "socialmediaactivestatuother": {
+                  "type": "string"
+                },
+                "iscompleteinformation": {
+                  "type": "boolean"
+                },
+                "photo": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "preferredname": {
+                  "type": "string"
+                },
+                "friendcode": {
+                  "type": "string"
+                },
+                "product_ratings": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "orders": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "user_addresses": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "searchhistories": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "coinpaymenttransacts": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "is_kkstaff": {
+                  "type": "boolean"
+                },
+                "qrcode": {
+                  "type": "string"
+                },
+                "groupcustomers": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "voucherproducts": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
           },
           "created_by": {
             "required": [
@@ -744,12 +1015,6 @@
           "reduction": {
             "type": "number"
           },
-          "voucherapplytype": {
-            "type": "integer"
-          },
-          "voucherapplyfor": {
-            "type": "integer"
-          },
           "activedate": {
             "type": "datetime"
           },
@@ -766,19 +1031,38 @@
             "type": "integer"
           },
           "islimitnumberusevoucher": {
-            "type": "boolean"
+            "type": "boolean",
+            "default": true
           },
           "isusewithpromotion": {
             "type": "boolean"
-          },
-          "conditionapply": {
-            "type": "integer"
           },
           "mintotalamount": {
             "type": "number"
           },
           "minproductqtty": {
             "type": "integer"
+          },
+          "voucherstatus": {
+            "type": "integer"
+          },
+          "voucherapplyfor": {
+            "type": "string"
+          },
+          "objectapplytype": {
+            "type": "integer"
+          },
+          "groupcustomers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "users": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "created_by": {
             "type": "string"

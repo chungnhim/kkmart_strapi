@@ -57,8 +57,14 @@ module.exports = ({ env }) => ({
         min_product_qtty: 1,
         min_totalamount: 2
     },
-    voucher_apply_type: {
-
+    voucher_object_apply_type: {
+        all_users: 1,
+        group_users: 2,
+        specific_users: 3
+    },
+    voucher_status: {
+        activated: 1,
+        closed: 2
     }
 
 });

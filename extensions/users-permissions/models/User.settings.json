@@ -195,6 +195,14 @@
       "required": true,
       "unique": true,
       "default": "QRCodeDefault"
+    },
+    "groupcustomers": {
+      "via": "users",
+      "collection": "groupcustomer"
+    },
+    "voucherproducts": {
+      "via": "users",
+      "collection": "voucherproduct"
     }
   }
 }

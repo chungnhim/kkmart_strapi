@@ -1,0 +1,19 @@
+{
+  "kind": "collectionType",
+  "collectionName": "voucherapplyfors",
+  "info": {
+    "name": "voucherapplyfor"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "applycode": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    }
+  }
+}

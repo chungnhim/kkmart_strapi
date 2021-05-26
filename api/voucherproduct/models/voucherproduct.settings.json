@@ -21,12 +21,6 @@
     "reduction": {
       "type": "float"
     },
-    "voucherapplytype": {
-      "type": "integer"
-    },
-    "voucherapplyfor": {
-      "type": "integer"
-    },
     "activedate": {
       "type": "datetime"
     },
@@ -43,7 +37,8 @@
       "type": "integer"
     },
     "islimitnumberusevoucher": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": true
     },
     "isusewithpromotion": {
       "type": "boolean"
@@ -57,14 +52,31 @@
       "plugin": "upload",
       "required": false
     },
-    "conditionapply": {
-      "type": "integer"
-    },
     "mintotalamount": {
       "type": "decimal"
     },
     "minproductqtty": {
       "type": "integer"
+    },
+    "voucherstatus": {
+      "type": "integer"
+    },
+    "voucherapplyfor": {
+      "model": "voucherapplyfor"
+    },
+    "objectapplytype": {
+      "type": "integer"
+    },
+    "groupcustomers": {
+      "collection": "groupcustomer",
+      "via": "voucherproducts",
+      "dominant": true
+    },
+    "users": {
+      "plugin": "users-permissions",
+      "collection": "user",
+      "via": "voucherproducts",
+      "dominant": true
     }
   }
 }

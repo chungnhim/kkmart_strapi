@@ -2111,6 +2111,128 @@
             "type": "string",
             "default": "QRCodeDefault"
           },
+          "groupcustomers": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "groupname": {
+                  "type": "string"
+                },
+                "groupimg": {
+                  "type": "string"
+                },
+                "users": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "voucherproducts": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "voucherproducts": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "vouchercode": {
+                  "type": "string"
+                },
+                "vouchertype": {
+                  "type": "integer"
+                },
+                "reduction": {
+                  "type": "number"
+                },
+                "activedate": {
+                  "type": "datetime"
+                },
+                "enddate": {
+                  "type": "datetime"
+                },
+                "isenddate": {
+                  "type": "boolean"
+                },
+                "numberapplied": {
+                  "type": "integer"
+                },
+                "numberusevoucher": {
+                  "type": "integer"
+                },
+                "islimitnumberusevoucher": {
+                  "type": "boolean"
+                },
+                "isusewithpromotion": {
+                  "type": "boolean"
+                },
+                "voucherimg": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "mintotalamount": {
+                  "type": "number"
+                },
+                "minproductqtty": {
+                  "type": "integer"
+                },
+                "voucherstatus": {
+                  "type": "integer"
+                },
+                "voucherapplyfor": {
+                  "type": "string"
+                },
+                "objectapplytype": {
+                  "type": "integer"
+                },
+                "groupcustomers": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "users": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -2387,6 +2509,18 @@
           "qrcode": {
             "type": "string",
             "default": "QRCodeDefault"
+          },
+          "groupcustomers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "voucherproducts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "created_by": {
             "type": "string"

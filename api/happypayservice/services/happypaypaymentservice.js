@@ -223,5 +223,66 @@ module.exports = {
         });
 
         return res;
+    },
+    // Maybank 2U get encryptstring
+    getEncryptionString: async(arrayM2U, envType) => {
+        try {
+            var ITERATIONS = 2;
+            var salt = 'Maybank2u simple encryption';
+            var keyValue = '000102030405060708090a0b0c0d0e0f';
+
+            var amount = arrayM2U.amount;
+            var accountNumber = arrayM2U.accountNumber;
+            var payeeCode = arrayM2U.payeeCode;
+            var refNum = arrayM2U.refNumber;
+            var redirectionurl = arrayM2U.callbackUrl;
+            var m_sReqSendString = "";
+
+            if ((accountNumber == undefined || accountNumber == "") && (refNum != undefined && refNum != ""))
+                m_sReqSendString = 'Login$' + payeeCode + '$1$' + amount + '$1$' + refNum + '$$$' + redirectionurl;
+            else if ((accountNumber != undefined && accountNumber != "") && (refNum == undefined || refNum == ""))
+                m_sReqSendString = 'Login$' + payeeCode + '$1$' + amount + '$$$1$' + accountNumber + '$' + redirectionurl;
+            else
+                m_sReqSendString = 'Login$' + payeeCode + '$1$' + amount + '$1$' + refNum + '$1$' + accountNumber + '$' + redirectionurl;
+
+
+            var key = CryptoJS.enc.Hex.parse(keyValue);
+            var valueToEnc = null;
+            var eValue = m_sReqSendString;
+            for (var i = 0; i < ITERATIONS; i++) {
+                valueToEnc = salt + eValue;
+                var encrypted = CryptoJS.AES.encrypt(valueToEnc, key, {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                });
+                eValue = encrypted;
+            }
+
+            var fullEncryptedString = encodeURIComponent(eValue);
+
+            switch (envType) {
+                case 1:
+                    actionUrl = "https://202.162.18.55:8443/testM2uPayment";
+                    break;
+                case 2:
+                    actionUrl = "https://www.maybank2u.com.my/mbb/m2u/m9006_enc/m2uMerchantLogin.do";
+                    break;
+                default:
+                    actionUrl = "https://api.discotech.io/v1.0/testM2uPayment";
+            }
+
+            var json = {};
+
+            json.encryptedString = fullEncryptedString;
+
+            json.actionUrl = actionUrl;
+
+            return json;
+
+        } catch (err) {
+            console.log("Exception occured encryptionString:" + err)
+            return "FAIL"
+
+        }
     }
 };

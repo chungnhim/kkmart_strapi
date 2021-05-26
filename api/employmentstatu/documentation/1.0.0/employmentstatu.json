@@ -786,6 +786,18 @@
               "qrcode": {
                 "type": "string"
               },
+              "groupcustomers": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "voucherproducts": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "created_by": {
                 "type": "string"
               },

@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/socialmediaactivestatus": {
+    "/voucherapplyfors": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -12,7 +12,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Socialmediaactivestatu"
+                    "$ref": "#/components/schemas/Voucherapplyfor"
                   }
                 }
               }
@@ -51,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Socialmediaactivestatu"
+          "Voucherapplyfor"
         ],
         "parameters": [
           {
@@ -201,7 +201,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Socialmediaactivestatu"
+                  "$ref": "#/components/schemas/Voucherapplyfor"
                 }
               }
             }
@@ -239,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "Socialmediaactivestatu"
+          "Voucherapplyfor"
         ],
         "requestBody": {
           "description": "",
@@ -247,14 +247,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewSocialmediaactivestatu"
+                "$ref": "#/components/schemas/NewVoucherapplyfor"
               }
             }
           }
         }
       }
     },
-    "/socialmediaactivestatus/count": {
+    "/voucherapplyfors/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -306,12 +306,12 @@
         },
         "summary": "",
         "tags": [
-          "Socialmediaactivestatu"
+          "Voucherapplyfor"
         ],
         "parameters": []
       }
     },
-    "/socialmediaactivestatus/{id}": {
+    "/voucherapplyfors/{id}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -321,7 +321,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Socialmediaactivestatu"
+                  "$ref": "#/components/schemas/Voucherapplyfor"
                 }
               }
             }
@@ -359,7 +359,7 @@
         },
         "summary": "",
         "tags": [
-          "Socialmediaactivestatu"
+          "Voucherapplyfor"
         ],
         "parameters": [
           {
@@ -383,7 +383,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Socialmediaactivestatu"
+                  "$ref": "#/components/schemas/Voucherapplyfor"
                 }
               }
             }
@@ -421,7 +421,7 @@
         },
         "summary": "",
         "tags": [
-          "Socialmediaactivestatu"
+          "Voucherapplyfor"
         ],
         "requestBody": {
           "description": "",
@@ -429,7 +429,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewSocialmediaactivestatu"
+                "$ref": "#/components/schemas/NewVoucherapplyfor"
               }
             }
           }
@@ -495,7 +495,7 @@
         },
         "summary": "",
         "tags": [
-          "Socialmediaactivestatu"
+          "Voucherapplyfor"
         ],
         "parameters": [
           {
@@ -514,7 +514,7 @@
   },
   "components": {
     "schemas": {
-      "Socialmediaactivestatu": {
+      "Voucherapplyfor": {
         "required": [
           "id"
         ],
@@ -522,292 +522,11 @@
           "id": {
             "type": "string"
           },
-          "name": {
+          "applycode": {
             "type": "string"
           },
-          "icon": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id",
-                "name",
-                "hash",
-                "mime",
-                "size",
-                "url",
-                "provider"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "alternativeText": {
-                  "type": "string"
-                },
-                "caption": {
-                  "type": "string"
-                },
-                "width": {
-                  "type": "integer"
-                },
-                "height": {
-                  "type": "integer"
-                },
-                "formats": {
-                  "type": "object"
-                },
-                "hash": {
-                  "type": "string"
-                },
-                "ext": {
-                  "type": "string"
-                },
-                "mime": {
-                  "type": "string"
-                },
-                "size": {
-                  "type": "number"
-                },
-                "url": {
-                  "type": "string"
-                },
-                "previewUrl": {
-                  "type": "string"
-                },
-                "provider": {
-                  "type": "string"
-                },
-                "provider_metadata": {
-                  "type": "object"
-                },
-                "related": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "order": {
-            "type": "integer"
-          },
-          "user": {
-            "required": [
-              "id",
-              "username",
-              "email",
-              "qrcode"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "username": {
-                "type": "string"
-              },
-              "email": {
-                "type": "string"
-              },
-              "provider": {
-                "type": "string"
-              },
-              "password": {
-                "type": "string"
-              },
-              "resetPasswordToken": {
-                "type": "string"
-              },
-              "confirmed": {
-                "type": "boolean"
-              },
-              "blocked": {
-                "type": "boolean"
-              },
-              "role": {
-                "type": "string"
-              },
-              "phone": {
-                "type": "string"
-              },
-              "dateofbirth": {
-                "type": "string"
-              },
-              "gender": {
-                "type": "string"
-              },
-              "kcoin": {
-                "type": "number"
-              },
-              "maritalstatus": {
-                "type": "string"
-              },
-              "referralcode": {
-                "type": "string"
-              },
-              "companyname": {
-                "type": "string"
-              },
-              "promotionrewardpoint": {
-                "type": "number"
-              },
-              "nonpromotionalrewardpoint": {
-                "type": "number"
-              },
-              "membershiptype": {
-                "type": "string"
-              },
-              "address1": {
-                "type": "string"
-              },
-              "address2": {
-                "type": "string"
-              },
-              "country": {
-                "type": "string"
-              },
-              "state": {
-                "type": "string"
-              },
-              "city": {
-                "type": "string"
-              },
-              "postcode": {
-                "type": "string"
-              },
-              "ethnicgroup": {
-                "type": "string"
-              },
-              "personalinterests": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "deviceinfos": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "firstname": {
-                "type": "string"
-              },
-              "lastname": {
-                "type": "string"
-              },
-              "employmentstatus": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "socialmediaactivestatus": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "outlets": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "transaction_histories": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "maritalstatuother": {
-                "type": "string"
-              },
-              "personalinterestother": {
-                "type": "string"
-              },
-              "employmentstatuother": {
-                "type": "string"
-              },
-              "socialmediaactivestatuother": {
-                "type": "string"
-              },
-              "iscompleteinformation": {
-                "type": "boolean"
-              },
-              "photo": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "preferredname": {
-                "type": "string"
-              },
-              "friendcode": {
-                "type": "string"
-              },
-              "product_ratings": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "orders": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "user_addresses": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "searchhistories": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "coinpaymenttransacts": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "is_kkstaff": {
-                "type": "boolean"
-              },
-              "qrcode": {
-                "type": "string"
-              },
-              "groupcustomers": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "voucherproducts": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
+          "description": {
+            "type": "string"
           },
           "created_by": {
             "required": [
@@ -899,15 +618,12 @@
           }
         }
       },
-      "NewSocialmediaactivestatu": {
+      "NewVoucherapplyfor": {
         "properties": {
-          "name": {
+          "applycode": {
             "type": "string"
           },
-          "order": {
-            "type": "integer"
-          },
-          "user": {
+          "description": {
             "type": "string"
           },
           "created_by": {
@@ -922,7 +638,7 @@
   },
   "tags": [
     {
-      "name": "Socialmediaactivestatu"
+      "name": "Voucherapplyfor"
     }
   ]
 }
