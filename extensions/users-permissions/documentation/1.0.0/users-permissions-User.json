@@ -1619,64 +1619,6 @@
               }
             }
           },
-          "outlets": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "user": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "street1": {
-                  "type": "string"
-                },
-                "street2": {
-                  "type": "string"
-                },
-                "address": {
-                  "type": "string"
-                },
-                "longitude": {
-                  "type": "number"
-                },
-                "latitude": {
-                  "type": "number"
-                },
-                "country": {
-                  "type": "string"
-                },
-                "state": {
-                  "type": "string"
-                },
-                "telephone": {
-                  "type": "string"
-                },
-                "digi": {
-                  "type": "string"
-                },
-                "coinpaymenttransacts": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
-          },
           "transaction_histories": {
             "type": "array",
             "items": {
@@ -2233,6 +2175,64 @@
               }
             }
           },
+          "outlet": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "users": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "name": {
+                "type": "string"
+              },
+              "street1": {
+                "type": "string"
+              },
+              "street2": {
+                "type": "string"
+              },
+              "address": {
+                "type": "string"
+              },
+              "longitude": {
+                "type": "number"
+              },
+              "latitude": {
+                "type": "number"
+              },
+              "country": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "telephone": {
+                "type": "string"
+              },
+              "digi": {
+                "type": "string"
+              },
+              "coinpaymenttransacts": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -2440,12 +2440,6 @@
               "type": "string"
             }
           },
-          "outlets": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
           "transaction_histories": {
             "type": "array",
             "items": {
@@ -2521,6 +2515,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "outlet": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

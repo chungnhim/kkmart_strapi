@@ -24,8 +24,8 @@
       "via": "coinpaymenttransacts"
     },
     "outlet": {
-      "model": "outlet",
-      "via": "coinpaymenttransacts"
+      "via": "coinpaymenttransacts",
+      "model": "outlet"
     },
     "creditamt": {
       "type": "decimal"

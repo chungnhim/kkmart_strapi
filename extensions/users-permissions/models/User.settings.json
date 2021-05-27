@@ -127,10 +127,6 @@
       "collection": "socialmediaactivestatu",
       "via": "user"
     },
-    "outlets": {
-      "collection": "outlet",
-      "via": "user"
-    },
     "transaction_histories": {
       "via": "user",
       "collection": "transaction-history"
@@ -203,6 +199,10 @@
     "voucherproducts": {
       "via": "users",
       "collection": "voucherproduct"
+    },
+    "outlet": {
+      "via": "users",
+      "model": "outlet"
     }
   }
 }

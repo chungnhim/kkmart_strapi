@@ -653,12 +653,6 @@
                   "type": "string"
                 }
               },
-              "outlets": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "transaction_histories": {
                 "type": "array",
                 "items": {
@@ -739,6 +733,9 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "outlet": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"

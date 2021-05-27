@@ -9,10 +9,10 @@
     "timestamps": true
   },
   "attributes": {
-    "user": {
-      "via": "outlets",
+    "users": {
       "plugin": "users-permissions",
-      "model": "user"
+      "collection": "user",
+      "via": "outlet"
     },
     "name": {
       "type": "string"
@@ -45,8 +45,8 @@
       "type": "string"
     },
     "coinpaymenttransacts": {
-      "via": "outlet",
-      "collection": "coinpaymenttransact"
+      "collection": "coinpaymenttransact",
+      "via": "outlet"
     }
   }
 }
