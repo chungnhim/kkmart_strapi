@@ -724,8 +724,11 @@
                     "type": "string"
                   }
                 },
-                "outlet": {
-                  "type": "string"
+                "outlets": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "created_by": {
                   "type": "string"

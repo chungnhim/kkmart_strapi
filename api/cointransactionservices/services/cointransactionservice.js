@@ -65,11 +65,23 @@ module.exports = {
         const checkoutlet = await strapi.query('outlet').findOne({
             id: outletid,
         });
-        if (checkoutlet == null || (checkoutlet != null && checkoutlet.user.id != mobileuserid)) {
+        if (checkoutlet == null) {
+            //|| (checkoutlet != null && checkoutlet.user.id != mobileuserid)
             return {
                 success: false,
                 id: '6',
                 message: "Invalidate outlet permission."
+            }
+        } else {
+            let checkUserOfOutlet = checkoutlet.users.filter(s => s.id == mobileuserid);
+            if (checkUserOfOutlet == null || (checkUserOfOutlet != null && checkUserOfOutlet.length == 0)) {
+                return ctx.badRequest(
+                    null,
+                    formatError({
+                        id: '6',
+                        message: 'Invalidate outlet permission.',
+                    })
+                );
             }
         }
         //2 get detail user with qrcode
@@ -574,11 +586,23 @@ module.exports = {
         const checkoutlet = await strapi.query('outlet').findOne({
             id: outletid,
         });
-        if (checkoutlet == null || (checkoutlet != null && checkoutlet.user.id != mobileuserid)) {
+        if (checkoutlet == null) {
+            //|| (checkoutlet != null && checkoutlet.user.id != mobileuserid)
             return {
                 success: false,
                 id: '6',
                 message: "Invalidate outlet permission."
+            }
+        } else {
+            let checkUserOfOutlet = checkoutlet.users.filter(s => s.id == mobileuserid);
+            if (checkUserOfOutlet == null || (checkUserOfOutlet != null && checkUserOfOutlet.length == 0)) {
+                return ctx.badRequest(
+                    null,
+                    formatError({
+                        id: '6',
+                        message: 'Invalidate outlet permission.',
+                    })
+                );
             }
         }
         //2 get detail user with qrcode

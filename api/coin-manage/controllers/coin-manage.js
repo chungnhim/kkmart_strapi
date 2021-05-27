@@ -116,7 +116,8 @@ module.exports = {
         const checkoutlet = await strapi.query('outlet').findOne({
             id: outletid,
         });
-        if (checkoutlet == null || (checkoutlet != null && checkoutlet.user.id != mobileuserid)) {
+        if (checkoutlet == null) {
+            //|| (checkoutlet != null && checkoutlet.user.id != mobileuserid)
             return ctx.badRequest(
                 null,
                 formatError({
@@ -124,6 +125,17 @@ module.exports = {
                     message: 'Invalid outlet permission.',
                 })
             );
+        } else {
+            let checkUserOfOutlet = checkoutlet.users.filter(s => s.id == mobileuserid);
+            if (checkUserOfOutlet == null || (checkUserOfOutlet != null && checkUserOfOutlet.length == 0)) {
+                return ctx.badRequest(
+                    null,
+                    formatError({
+                        id: 'coin_manage.credit_coin_at_shop.error.outlet.invalid_permission',
+                        message: 'Invalid outlet permission.',
+                    })
+                );
+            }
         }
         //2 get detail user with qrcode
         var checkuser = await strapi.query('user', 'users-permissions').findOne({
@@ -743,7 +755,8 @@ module.exports = {
         const checkoutlet = await strapi.query('outlet').findOne({
             id: outletid,
         });
-        if (checkoutlet == null || (checkoutlet != null && checkoutlet.user.id != mobileuserid)) {
+        if (checkoutlet == null) {
+            //|| (checkoutlet != null && checkoutlet.user.id != mobileuserid)
             return ctx.badRequest(
                 null,
                 formatError({
@@ -751,6 +764,17 @@ module.exports = {
                     message: 'Invalidate outlet permission.',
                 })
             );
+        } else {
+            let checkUserOfOutlet = checkoutlet.users.filter(s => s.id == mobileuserid);
+            if (checkUserOfOutlet == null || (checkUserOfOutlet != null && checkUserOfOutlet.length == 0)) {
+                return ctx.badRequest(
+                    null,
+                    formatError({
+                        id: 'coin_manage.credit_coin.error.outlet.invalid_permission',
+                        message: 'Invalid outlet permission.',
+                    })
+                );
+            }
         }
         //2 get detail user with qrcode
         var checkuser = await strapi.query('user', 'users-permissions').findOne({
@@ -1122,7 +1146,8 @@ module.exports = {
         const checkoutlet = await strapi.query('outlet').findOne({
             id: outletid,
         });
-        if (checkoutlet == null || (checkoutlet != null && checkoutlet.user.id != mobileuserid)) {
+        if (checkoutlet == null) {
+            // || (checkoutlet != null && checkoutlet.user.id != mobileuserid)
             return ctx.badRequest(
                 null,
                 formatError({
@@ -1130,6 +1155,17 @@ module.exports = {
                     message: 'Invalidate outlet permission.',
                 })
             );
+        } else {
+            let checkUserOfOutlet = checkoutlet.users.filter(s => s.id == mobileuserid);
+            if (checkUserOfOutlet == null || (checkUserOfOutlet != null && checkUserOfOutlet.length == 0)) {
+                return ctx.badRequest(
+                    null,
+                    formatError({
+                        id: 'coin_manage.debit_coin.error.outlet.invalid_permission',
+                        message: 'Invalid outlet permission.',
+                    })
+                );
+            }
         }
         //2 get detail user with qrcode
         var checkuser = await strapi.query('user', 'users-permissions').findOne({
@@ -1829,7 +1865,8 @@ module.exports = {
         const checkoutlet = await strapi.query('outlet').findOne({
             id: outletid,
         });
-        if (checkoutlet == null || (checkoutlet != null && checkoutlet.user.id != mobileuserid)) {
+        if (checkoutlet == null) {
+            //|| (checkoutlet != null && checkoutlet.user.id != mobileuserid)
             return ctx.badRequest(
                 null,
                 formatError({
@@ -1837,6 +1874,17 @@ module.exports = {
                     message: 'Invalidate outlet permission.',
                 })
             );
+        } else {
+            let checkUserOfOutlet = checkoutlet.users.filter(s => s.id == mobileuserid);
+            if (checkUserOfOutlet == null || (checkUserOfOutlet != null && checkUserOfOutlet.length == 0)) {
+                return ctx.badRequest(
+                    null,
+                    formatError({
+                        id: 'coin_manage.credit_coin.error.outlet.invalid_permission',
+                        message: 'Invalid outlet permission.',
+                    })
+                );
+            }
         }
         //2 get detail user with qrcode
         var checkuser = await strapi.query('user', 'users-permissions').findOne({
@@ -2214,12 +2262,24 @@ module.exports = {
         const checkoutlet = await strapi.query('outlet').findOne({
             id: outletid,
         });
-        if (checkoutlet == null || (checkoutlet != null && checkoutlet.user.id != mobileuserid)) {
+        if (checkoutlet == null) {
+            // || (checkoutlet != null && checkoutlet.user.id != mobileuserid)
             return ctx.send({
                 success: false,
                 id: '6',
                 message: 'Invalidate outlet permission.',
             });
+        } else {
+            let checkUserOfOutlet = checkoutlet.users.filter(s => s.id == mobileuserid);
+            if (checkUserOfOutlet == null || (checkUserOfOutlet != null && checkUserOfOutlet.length == 0)) {
+                return ctx.badRequest(
+                    null,
+                    formatError({
+                        id: '6',
+                        message: 'Invalidate outlet permission.',
+                    })
+                );
+            }
         }
         //2 get detail user with qrcode
         var checkuser = await strapi.query('user', 'users-permissions').findOne({
@@ -2455,12 +2515,24 @@ module.exports = {
         const checkoutlet = await strapi.query('outlet').findOne({
             id: outletid,
         });
-        if (checkoutlet == null || (checkoutlet != null && checkoutlet.user.id != mobileuserid)) {
+        if (checkoutlet == null) {
+            //|| (checkoutlet != null && checkoutlet.user.id != mobileuserid)
             return ctx.send({
                 success: false,
                 id: '6',
                 message: 'Invalidate outlet permission.',
             });
+        } else {
+            let checkUserOfOutlet = checkoutlet.users.filter(s => s.id == mobileuserid);
+            if (checkUserOfOutlet == null || (checkUserOfOutlet != null && checkUserOfOutlet.length == 0)) {
+                return ctx.badRequest(
+                    null,
+                    formatError({
+                        id: '6',
+                        message: 'Invalidate outlet permission.',
+                    })
+                );
+            }
         }
         //2 get detail user with qrcode
         var checkuser = await strapi.query('user', 'users-permissions').findOne({
@@ -2651,12 +2723,25 @@ module.exports = {
         const checkoutlet = await strapi.query('outlet').findOne({
             id: outletid,
         });
-        if (checkoutlet == null || (checkoutlet != null && checkoutlet.user.id != mobileuserid)) {
+        if (checkoutlet == null) {
+            //|| (checkoutlet != null && checkoutlet.user.id != mobileuserid)
             return ctx.send({
                 success: false,
                 id: '6',
                 message: 'Invalidate outlet permission.',
             });
+        } else {
+
+            let checkUserOfOutlet = checkoutlet.users.filter(s => s.id == mobileuserid);
+            if (checkUserOfOutlet == null || (checkUserOfOutlet != null && checkUserOfOutlet.length == 0)) {
+                return ctx.badRequest(
+                    null,
+                    formatError({
+                        id: '6',
+                        message: 'Invalidate outlet permission.',
+                    })
+                );
+            }
         }
         //2 get detail user with qrcode
         var checkuser = await strapi.query('user', 'users-permissions').findOne({

@@ -2178,61 +2178,64 @@
               }
             }
           },
-          "outlet": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "users": {
-                "type": "array",
-                "items": {
+          "outlets": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "users": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "name": {
+                  "type": "string"
+                },
+                "street1": {
+                  "type": "string"
+                },
+                "street2": {
+                  "type": "string"
+                },
+                "address": {
+                  "type": "string"
+                },
+                "longitude": {
+                  "type": "number"
+                },
+                "latitude": {
+                  "type": "number"
+                },
+                "country": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "telephone": {
+                  "type": "string"
+                },
+                "digi": {
+                  "type": "string"
+                },
+                "coinpaymenttransacts": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
                   "type": "string"
                 }
-              },
-              "name": {
-                "type": "string"
-              },
-              "street1": {
-                "type": "string"
-              },
-              "street2": {
-                "type": "string"
-              },
-              "address": {
-                "type": "string"
-              },
-              "longitude": {
-                "type": "number"
-              },
-              "latitude": {
-                "type": "number"
-              },
-              "country": {
-                "type": "string"
-              },
-              "state": {
-                "type": "string"
-              },
-              "telephone": {
-                "type": "string"
-              },
-              "digi": {
-                "type": "string"
-              },
-              "coinpaymenttransacts": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
               }
             }
           },
@@ -2519,8 +2522,11 @@
               "type": "string"
             }
           },
-          "outlet": {
-            "type": "string"
+          "outlets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "created_by": {
             "type": "string"

@@ -12,7 +12,8 @@
     "users": {
       "plugin": "users-permissions",
       "collection": "user",
-      "via": "outlet"
+      "via": "outlets",
+      "dominant": true
     },
     "name": {
       "type": "string"

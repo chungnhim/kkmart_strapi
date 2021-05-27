@@ -200,9 +200,9 @@
       "via": "users",
       "collection": "voucherproduct"
     },
-    "outlet": {
+    "outlets": {
       "via": "users",
-      "model": "outlet"
+      "collection": "outlet"
     }
   }
 }
