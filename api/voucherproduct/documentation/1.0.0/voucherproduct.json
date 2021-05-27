@@ -908,6 +908,9 @@
               }
             }
           },
+          "maxdiscountamt": {
+            "type": "number"
+          },
           "created_by": {
             "required": [
               "id",
@@ -1060,6 +1063,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "maxdiscountamt": {
+            "type": "number"
           },
           "created_by": {
             "type": "string"

@@ -2166,6 +2166,9 @@
                     "type": "string"
                   }
                 },
+                "maxdiscountamt": {
+                  "type": "number"
+                },
                 "created_by": {
                   "type": "string"
                 },
