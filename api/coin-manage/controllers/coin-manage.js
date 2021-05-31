@@ -2716,7 +2716,7 @@ module.exports = {
                     });
                 }
             } catch (err) {
-                return handleErrors(ctx, err, 'unauthorized');
+                return strapi.services.common.handleErrors(ctx, err, 'unauthorized');
             }
         }
         //1 check if outletid not belong user
@@ -2854,12 +2854,14 @@ module.exports = {
     },
     //================> Collect Coin      
     collectCoinCMS: async ctx => {
+        //input: mobileuserid
         //input: qrcode
         //input: transactionamount        
         //input: refno
         //input: transactiontime : time under utc +0 format
         //input: tid : terminal id
 
+        const { mobileuserid } = ctx.request.body;
         const { transactionamount } = ctx.request.body;
         //const { taxno } = ctx.request.body;
         const { qrcode } = ctx.request.body;
@@ -2899,7 +2901,7 @@ module.exports = {
         //check jwt token
         if (ctx.request && ctx.request.header && ctx.request.header.authorization) {
             try {
-                const { id, isAdmin = false, role } = await strapi.plugins['users-permissions'].services.jwt.getToken(ctx);
+                const { id, isAdmin = false } = await strapi.plugins['users-permissions'].services.jwt.getToken(ctx);
                 if (mobileuserid != id) {
                     return ctx.send({
                         success: false,
@@ -2907,8 +2909,8 @@ module.exports = {
                         message: 'This login token is not match with Mobile User Id'
                     });
                 }
-
-                if (role.id !== 1) {
+                var usercheck = await strapi.query('user', 'users-permissions').findOne({ id: mobileuserid });
+                if (usercheck.role.id !== 1) {
                     return ctx.badRequest(
                         null,
                         formatError({
@@ -2919,7 +2921,7 @@ module.exports = {
                 }
 
             } catch (err) {
-                return handleErrors(ctx, err, 'unauthorized');
+                return strapi.services.common.handleErrors(ctx, err, 'unauthorized');
             }
         }
 
@@ -2960,7 +2962,6 @@ module.exports = {
             transactno: generateTransactNo(6),
             refno: refno,
             user: mobileuserid,
-            outlet: outletid,
             customeremail: checkuser.email,
             customerqrcode: checkuser.qrcode,
             terminalid: tid,
@@ -2972,9 +2973,10 @@ module.exports = {
         var creditid = 0;
         var creditcoinamt = 0;
 
+        //console.log(`come here 1`);
         // den day
         // call credit coin CMS       
-        let crd = await strapi.services.cointransactionservice.creditcoinCMS(mobileuserid, outletid, transactionamount, qrcode, taxno);
+        let crd = await strapi.services.cointransactionservice.creditcoinCMS(mobileuserid, transactionamount, qrcode, refno);
 
         if (crd && (crd.id === "0")) {
             creditcoinamt = crd.content_object.creditamount;
@@ -3004,6 +3006,7 @@ module.exports = {
         paymenttrx.creditamt = transactionamount;
         paymenttrx.creditcoinamt = creditcoinamt;
         paymenttrx.coinpaymentdetails = detailids;
+        paymenttrx.status = strapi.config.constants.coin_payment_transact_status.completed
 
         let ptrx = await strapi.query('coinpaymenttransact').update({ id: paymenttrx.id },
             paymenttrx

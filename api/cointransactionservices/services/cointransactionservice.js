@@ -910,10 +910,9 @@ module.exports = {
         }
     },
     //================> Creditcoin CMS
-    creditcoinCMS: async(mobileuserid, outletid, transactionamount, qrcode, taxno) => {
+    creditcoinCMS: async(mobileuserid, transactionamount, qrcode, taxno) => {
         //input: mobileuserid - this is seller action
-        //input: qrcode
-        //input: outletid
+        //input: qrcode       
         //input: transactionamount
         //input: refno
         // input: taxno
@@ -927,15 +926,7 @@ module.exports = {
                 message: "Please provide transaction amount."
             }
         }
-        //check validate outletid
-        if (!outletid || outletid < 0) {
 
-            return {
-                success: false,
-                id: '2',
-                message: "Please provide outletid."
-            }
-        }
         //check validate qrcode
         if (!qrcode) {
 
@@ -946,29 +937,7 @@ module.exports = {
             }
         }
 
-        //1 check if outletid not belong user
-        const checkoutlet = await strapi.query('outlet').findOne({
-            id: outletid,
-        });
-        if (checkoutlet == null) {
-            //|| (checkoutlet != null && checkoutlet.user.id != mobileuserid)
-            return {
-                success: false,
-                id: '6',
-                message: "Invalidate outlet permission."
-            }
-        } else {
-            let checkUserOfOutlet = checkoutlet.users.filter(s => s.id == mobileuserid);
-            if (checkUserOfOutlet == null || (checkUserOfOutlet != null && checkUserOfOutlet.length == 0)) {
-                return ctx.badRequest(
-                    null,
-                    formatError({
-                        id: '6',
-                        message: 'Invalidate outlet permission.',
-                    })
-                );
-            }
-        }
+
         //2 get detail user with qrcode
         var checkuser = await strapi.query('user', 'users-permissions').findOne({
             qrcode: qrcode
@@ -982,7 +951,7 @@ module.exports = {
         }
         //3. get detail from transaction-config
         var transactionconfig = await strapi.query('transaction-config').findOne({
-            trxconfigid: '013'
+            trxconfigid: '016'
         });
         if (transactionconfig) {
             //3.1 insert to coin transaction history
@@ -1009,7 +978,6 @@ module.exports = {
                 transactionamount: transactionamount,
                 taxno: taxno,
                 transactionno: uuid(),
-                outletid: outletid,
                 status: 'complete',
                 user: checkuser,
                 mobileuserid: checkuser.id,
@@ -1051,7 +1019,6 @@ module.exports = {
                 await strapi.query('transaction-history').update({
                     mobileuserid: checkuser.id,
                     trxconfigid: transactionconfig.trxconfigid,
-                    outletid: outletid,
                     transactionno: newlog.transactionno
                 }, {
                     isprocessed: true

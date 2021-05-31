@@ -158,6 +158,14 @@ module.exports = {
         var userQr = prefix + identifier + moment.utc(new Date).format("DDMMYY") + runstr;
 
         return userQr;
+    },
+    handleErrors: async(ctx, err, message) => {
+        console.log(err);
+        return ctx.send({
+            success: false,
+            id: '999',
+            message: message
+        });
     }
 
 
