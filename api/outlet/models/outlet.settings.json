@@ -46,8 +46,8 @@
       "type": "string"
     },
     "coinpaymenttransacts": {
-      "collection": "coinpaymenttransact",
-      "via": "outlet"
+      "via": "outlet",
+      "collection": "coinpaymenttransact"
     }
   }
 }

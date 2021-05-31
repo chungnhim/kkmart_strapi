@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "05/27/2021 12:55:41 PM"
+    "x-generation-date": "05/31/2021 9:43:04 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -53167,6 +53167,15 @@
               "customerqrcode": {
                 "type": "string"
               },
+              "terminalid": {
+                "type": "string"
+              },
+              "transactiontime": {
+                "type": "datetime"
+              },
+              "status": {
+                "type": "integer"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -53698,6 +53707,15 @@
           "customerqrcode": {
             "type": "string"
           },
+          "terminalid": {
+            "type": "string"
+          },
+          "transactiontime": {
+            "type": "datetime"
+          },
+          "status": {
+            "type": "integer"
+          },
           "created_by": {
             "required": [
               "id",
@@ -53828,6 +53846,15 @@
           },
           "customerqrcode": {
             "type": "string"
+          },
+          "terminalid": {
+            "type": "string"
+          },
+          "transactiontime": {
+            "type": "datetime"
+          },
+          "status": {
+            "type": "integer"
           },
           "created_by": {
             "type": "string"
@@ -63890,6 +63917,15 @@
                 },
                 "customerqrcode": {
                   "type": "string"
+                },
+                "terminalid": {
+                  "type": "string"
+                },
+                "transactiontime": {
+                  "type": "datetime"
+                },
+                "status": {
+                  "type": "integer"
                 },
                 "created_by": {
                   "type": "string"
@@ -75829,6 +75865,15 @@
                 },
                 "customerqrcode": {
                   "type": "string"
+                },
+                "terminalid": {
+                  "type": "string"
+                },
+                "transactiontime": {
+                  "type": "datetime"
+                },
+                "status": {
+                  "type": "integer"
                 },
                 "created_by": {
                   "type": "string"

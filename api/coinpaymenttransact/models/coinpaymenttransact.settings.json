@@ -24,8 +24,8 @@
       "via": "coinpaymenttransacts"
     },
     "outlet": {
-      "via": "coinpaymenttransacts",
-      "model": "outlet"
+      "model": "outlet",
+      "via": "coinpaymenttransacts"
     },
     "creditamt": {
       "type": "decimal"
@@ -48,6 +48,15 @@
     },
     "customerqrcode": {
       "type": "string"
+    },
+    "terminalid": {
+      "type": "string"
+    },
+    "transactiontime": {
+      "type": "datetime"
+    },
+    "status": {
+      "type": "integer"
     }
   }
 }

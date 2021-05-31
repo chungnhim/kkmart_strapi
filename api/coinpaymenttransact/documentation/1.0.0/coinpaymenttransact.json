@@ -849,6 +849,15 @@
           "customerqrcode": {
             "type": "string"
           },
+          "terminalid": {
+            "type": "string"
+          },
+          "transactiontime": {
+            "type": "datetime"
+          },
+          "status": {
+            "type": "integer"
+          },
           "created_by": {
             "required": [
               "id",
@@ -979,6 +988,15 @@
           },
           "customerqrcode": {
             "type": "string"
+          },
+          "terminalid": {
+            "type": "string"
+          },
+          "transactiontime": {
+            "type": "datetime"
+          },
+          "status": {
+            "type": "integer"
           },
           "created_by": {
             "type": "string"

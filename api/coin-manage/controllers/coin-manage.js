@@ -2851,5 +2851,172 @@ module.exports = {
             content_object: paymentType,
         });
 
+    },
+    //================> Collect Coin      
+    collectCoinCMS: async ctx => {
+        //input: qrcode
+        //input: transactionamount        
+        //input: refno
+        //input: transactiontime : time under utc +0 format
+        //input: tid : terminal id
+
+        const { transactionamount } = ctx.request.body;
+        //const { taxno } = ctx.request.body;
+        const { qrcode } = ctx.request.body;
+        const { refno } = ctx.request.body;
+        const { transactiontime } = ctx.request.body;
+        const { tid } = ctx.request.body;
+
+        let kcoinamount = 0;
+        //check validate transaction amount
+        if (!transactionamount || transactionamount < 0) {
+
+            ctx.send({
+                success: false,
+                id: '1',
+                message: "Please provide transaction amount."
+            })
+            return;
+        }
+
+        //check validate refno
+        if (!refno) {
+            return ctx.send({
+                success: false,
+                id: '3',
+                message: 'Please provide referenceno.',
+            });
+        }
+        //check validate qrcode
+        if (!qrcode) {
+
+            return ctx.send({
+                success: false,
+                id: '4',
+                message: 'Please provide qrcode.'
+            });
+        }
+        //check jwt token
+        if (ctx.request && ctx.request.header && ctx.request.header.authorization) {
+            try {
+                const { id, isAdmin = false, role } = await strapi.plugins['users-permissions'].services.jwt.getToken(ctx);
+                if (mobileuserid != id) {
+                    return ctx.send({
+                        success: false,
+                        id: '5',
+                        message: 'This login token is not match with Mobile User Id'
+                    });
+                }
+
+                if (role.id !== 1) {
+                    return ctx.badRequest(
+                        null,
+                        formatError({
+                            id: '5.1',
+                            message: 'You have not administrator permission.',
+                        })
+                    );
+                }
+
+            } catch (err) {
+                return handleErrors(ctx, err, 'unauthorized');
+            }
+        }
+
+        //2 get detail user with qrcode
+        var checkuser = await strapi.query('user', 'users-permissions').findOne({
+            qrcode: qrcode
+        });
+        if (checkuser == null) {
+            return ctx.badRequest({
+                success: false,
+                id: '7',
+                message: 'Wrong qrcode.',
+            });
+        }
+
+
+        //3. check valid balance
+        var mycoinaccount = await strapi.query('mobileusercoinaccount').findOne({
+            mobileuserid: checkuser.id
+        });
+        //3.1 re create mobileusercoinaccount for this
+        if (mycoinaccount == null) {
+            var newmycoinaccount = await strapi.query('mobileusercoinaccount').create({
+                mobileuserid: checkuser.id,
+                balance: 0,
+                totalcredit: 0,
+                totaldebit: 0,
+                totalexpried: 0,
+                modifieddate: new Date(new Date().toUTCString())
+            });
+            mycoinaccount = await strapi.query('mobileusercoinaccount').findOne({
+                mobileuserid: checkuser.id
+            });
+        }
+
+        // Insert CoinPaymentTransact
+        let trx = {
+            transactno: generateTransactNo(6),
+            refno: refno,
+            user: mobileuserid,
+            outlet: outletid,
+            customeremail: checkuser.email,
+            customerqrcode: checkuser.qrcode,
+            terminalid: tid,
+            transactiontime: transactiontime,
+            status: strapi.config.constants.coin_payment_transact_status.new
+        }
+        var paymenttrx = await strapi.query('coinpaymenttransact').create(trx);
+
+        var creditid = 0;
+        var creditcoinamt = 0;
+
+        // den day
+        // call credit coin CMS       
+        let crd = await strapi.services.cointransactionservice.creditcoinCMS(mobileuserid, outletid, transactionamount, qrcode, taxno);
+
+        if (crd && (crd.id === "0")) {
+            creditcoinamt = crd.content_object.creditamount;
+            //create coinpaymentdetail
+            let trxdetail = {
+                transactno: paymenttrx.transactno,
+                transaction_history: crd.content_object.id,
+                status: "C"
+            }
+            var detail1 = await strapi.query('coinpaymentdetail').create(trxdetail);
+            creditid = detail1.id;
+        } else {
+            return ctx.send({
+                success: false,
+                id: crd.id,
+                message: crd.message
+            });
+        }
+
+
+        // update coinpaymenttransact
+        var detailids = [];
+        if (creditid > 0) {
+            detailids = [creditid];
+        }
+
+        paymenttrx.creditamt = transactionamount;
+        paymenttrx.creditcoinamt = creditcoinamt;
+        paymenttrx.coinpaymentdetails = detailids;
+
+        let ptrx = await strapi.query('coinpaymenttransact').update({ id: paymenttrx.id },
+            paymenttrx
+        );
+
+        let paymentType = await strapi.services.common.normalizationResponse(ptrx, ["created_at", "updated_at", "user", "merchantcode", "outlet", "coinpaymentdetails"]);
+
+        ctx.send({
+            id: '0',
+            message: 'success',
+            content_object: paymentType,
+        });
+
     }
+
 };

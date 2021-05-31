@@ -65,6 +65,11 @@ module.exports = ({ env }) => ({
     voucher_status: {
         activated: 1,
         closed: 2
+    },
+    coin_payment_transact_status: {
+        new: 1,
+        completed: 2,
+        error: 3
     }
 
 });
