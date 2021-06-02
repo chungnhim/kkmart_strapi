@@ -937,18 +937,6 @@ module.exports = {
             }
         }
 
-
-        //2 get detail user with qrcode
-        var checkuser = await strapi.query('user', 'users-permissions').findOne({
-            qrcode: qrcode
-        });
-        if (checkuser == null) {
-            return {
-                success: false,
-                id: '7',
-                message: "Wrong qrcode."
-            }
-        }
         //3. get detail from transaction-config
         var transactionconfig = await strapi.query('transaction-config').findOne({
             trxconfigid: '016'

@@ -370,7 +370,7 @@ module.exports = {
             if (!settings.email_confirmation) {
                 params.confirmed = true;
             }
-            //params.qrcode = uuid();
+            params.qrcode = uuid();
             //params.qrcode = await strapi.services.common.generateUserQrCode("04");
 
             //friend code
@@ -573,6 +573,7 @@ module.exports = {
                 });
             }
         } catch (err) {
+            console.log(err);
             const adminError = _.includes(err.message, 'username') ? {
                 id: 'mobile_user.form.error.username.taken',
                 message: 'Username already taken',
@@ -1825,27 +1826,27 @@ module.exports = {
         }
     },
     async getTotalRegistrationUser(ctx) {
-      const { type = 'CURRENT_WEEK' } = ctx.request.query;
-      let startTime, endTime
+        const { type = 'CURRENT_WEEK' } = ctx.request.query;
+        let startTime, endTime
 
-      switch (type) {
-        case 'CURRENT_YEAR':
-          startTime =  dayjs().startOf('year').toISOString();
-          endTime = dayjs().endOf('year').toISOString();
-          break;
-        case 'CURRENT_MONTH':
-          startTime =  dayjs().startOf('month').toISOString();
-          endTime = dayjs().endOf('month').toISOString();
-          break;
-        default:
-          startTime =  dayjs().startOf('week').toISOString();
-          endTime = dayjs().endOf('week').toISOString();
-          break;
-      }
+        switch (type) {
+            case 'CURRENT_YEAR':
+                startTime = dayjs().startOf('year').toISOString();
+                endTime = dayjs().endOf('year').toISOString();
+                break;
+            case 'CURRENT_MONTH':
+                startTime = dayjs().startOf('month').toISOString();
+                endTime = dayjs().endOf('month').toISOString();
+                break;
+            default:
+                startTime = dayjs().startOf('week').toISOString();
+                endTime = dayjs().endOf('week').toISOString();
+                break;
+        }
 
-      const queryString = `SELECT TO_CHAR(created_at, 'Day') AS "days", COUNT(*) FROM "users-permissions_user" WHERE created_at >= '${startTime}' AND created_at <= '${endTime}' GROUP BY "days"`;
-      const result = await strapi.connections.default.raw(queryString);
-      const rows = result.rows;
-      ctx.send({ data: rows.map((row) => ({ day: row.days.toLowerCase().trim(), total: row.count ? Number(row.count) : 0 })) });
+        const queryString = `SELECT TO_CHAR(created_at, 'Day') AS "days", COUNT(*) FROM "users-permissions_user" WHERE created_at >= '${startTime}' AND created_at <= '${endTime}' GROUP BY "days"`;
+        const result = await strapi.connections.default.raw(queryString);
+        const rows = result.rows;
+        ctx.send({ data: rows.map((row) => ({ day: row.days.toLowerCase().trim(), total: row.count ? Number(row.count) : 0 })) });
     },
 };

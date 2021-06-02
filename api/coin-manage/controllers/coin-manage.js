@@ -40,6 +40,16 @@ const generateTransactNo = (length = 6) => {
     return moment.utc(new Date).format("YYYYMMDDHHmmss") + text;
 }
 
+const pushResult = (arrReturn, refno, qrcode, transactiontime, boolSuccess, message) => {
+    let objrtn = {
+        refno: refno,
+        qrcode: qrcode,
+        transactiontime: transactiontime,
+        success: boolSuccess,
+        message: message
+    };
+    arrReturn.push(objrtn);
+}
 
 module.exports = {
     //================>Credit Coin At Shop
@@ -2854,6 +2864,19 @@ module.exports = {
     },
     //================> Collect Coin      
     collectCoinCMS: async ctx => {
+        //{
+        //    "mobileuserid":49,
+        //    "items":
+        //        [{                              
+        //            "qrcode":"160101042704210000000176",
+        //            "transactionamount":12.3,
+        //            "refno":"2345687",
+        //            "transactiontime":"2021-05-30T07:00:00.000Z",
+        //            "tid":"7654333"
+        //        }
+        //        ]
+        // }
+
         //input: mobileuserid
         //input: qrcode
         //input: transactionamount        
@@ -2861,44 +2884,11 @@ module.exports = {
         //input: transactiontime : time under utc +0 format
         //input: tid : terminal id
 
-        const { mobileuserid } = ctx.request.body;
-        const { transactionamount } = ctx.request.body;
-        //const { taxno } = ctx.request.body;
-        const { qrcode } = ctx.request.body;
-        const { refno } = ctx.request.body;
-        const { transactiontime } = ctx.request.body;
-        const { tid } = ctx.request.body;
-
-        let kcoinamount = 0;
-        //check validate transaction amount
-        if (!transactionamount || transactionamount < 0) {
-
-            ctx.send({
-                success: false,
-                id: '1',
-                message: "Please provide transaction amount."
-            })
-            return;
-        }
-
-        //check validate refno
-        if (!refno) {
-            return ctx.send({
-                success: false,
-                id: '3',
-                message: 'Please provide referenceno.',
-            });
-        }
-        //check validate qrcode
-        if (!qrcode) {
-
-            return ctx.send({
-                success: false,
-                id: '4',
-                message: 'Please provide qrcode.'
-            });
-        }
+        const params = _.assign({}, ctx.request.body, ctx.params);
+        //var objValues = Object.values(params);
+        // check mobile usermobile first
         //check jwt token
+        var mobileuserid = params.mobileuserid;
         if (ctx.request && ctx.request.header && ctx.request.header.authorization) {
             try {
                 const { id, isAdmin = false } = await strapi.plugins['users-permissions'].services.jwt.getToken(ctx);
@@ -2925,101 +2915,135 @@ module.exports = {
             }
         }
 
-        //2 get detail user with qrcode
-        var checkuser = await strapi.query('user', 'users-permissions').findOne({
-            qrcode: qrcode
-        });
-        if (checkuser == null) {
-            return ctx.badRequest({
-                success: false,
-                id: '7',
-                message: 'Wrong qrcode.',
-            });
-        }
+        var arrReturn = [];
+        for (const element of params.items) {
+            console.log(element);
+            console.log(`================================`);
+            var mobileuserid = element.mobileuserid;
+            var transactionamount = element.transactionamount;
+            //const { taxno } = ctx.request.body;
+            var qrcode = element.qrcode;
+            var refno = element.refno;
+            var transactiontime = element.transactiontime;
+            var tid = element.tid;
 
+            //check validate transaction amount
+            if (!transactionamount || transactionamount < 0) {
 
-        //3. check valid balance
-        var mycoinaccount = await strapi.query('mobileusercoinaccount').findOne({
-            mobileuserid: checkuser.id
-        });
-        //3.1 re create mobileusercoinaccount for this
-        if (mycoinaccount == null) {
-            var newmycoinaccount = await strapi.query('mobileusercoinaccount').create({
-                mobileuserid: checkuser.id,
-                balance: 0,
-                totalcredit: 0,
-                totaldebit: 0,
-                totalexpried: 0,
-                modifieddate: new Date(new Date().toUTCString())
+                pushResult(arrReturn, refno, qrcode, transactiontime, false, "Please provide transaction amount.");
+                continue;
+            }
+
+            //check validate refno
+            if (!refno) {
+
+                pushResult(arrReturn, refno, qrcode, transactiontime, false, "Please provide referenceno.");
+                continue;
+            }
+            //check validate qrcode
+            if (!qrcode) {
+                pushResult(arrReturn, refno, qrcode, transactiontime, false, "Please provide qrcode.");
+                continue;
+            }
+
+            //2 get detail user with qrcode
+            var checkuser = await strapi.query('user', 'users-permissions').findOne({
+                qrcode: qrcode
             });
-            mycoinaccount = await strapi.query('mobileusercoinaccount').findOne({
+            if (checkuser == null) {
+                pushResult(arrReturn, refno, qrcode, transactiontime, false, 'Wrong qrcode.');
+                continue;
+            }
+
+            //3. check valid balance
+            var mycoinaccount = await strapi.query('mobileusercoinaccount').findOne({
                 mobileuserid: checkuser.id
             });
-        }
-
-        // Insert CoinPaymentTransact
-        let trx = {
-            transactno: generateTransactNo(6),
-            refno: refno,
-            user: mobileuserid,
-            customeremail: checkuser.email,
-            customerqrcode: checkuser.qrcode,
-            terminalid: tid,
-            transactiontime: transactiontime,
-            status: strapi.config.constants.coin_payment_transact_status.new
-        }
-        var paymenttrx = await strapi.query('coinpaymenttransact').create(trx);
-
-        var creditid = 0;
-        var creditcoinamt = 0;
-
-        //console.log(`come here 1`);
-        // den day
-        // call credit coin CMS       
-        let crd = await strapi.services.cointransactionservice.creditcoinCMS(mobileuserid, transactionamount, qrcode, refno);
-
-        if (crd && (crd.id === "0")) {
-            creditcoinamt = crd.content_object.creditamount;
-            //create coinpaymentdetail
-            let trxdetail = {
-                transactno: paymenttrx.transactno,
-                transaction_history: crd.content_object.id,
-                status: "C"
+            //3.1 re create mobileusercoinaccount for this
+            if (mycoinaccount == null) {
+                var newmycoinaccount = await strapi.query('mobileusercoinaccount').create({
+                    mobileuserid: checkuser.id,
+                    balance: 0,
+                    totalcredit: 0,
+                    totaldebit: 0,
+                    totalexpried: 0,
+                    modifieddate: new Date(new Date().toUTCString())
+                });
+                mycoinaccount = await strapi.query('mobileusercoinaccount').findOne({
+                    mobileuserid: checkuser.id
+                });
             }
-            var detail1 = await strapi.query('coinpaymentdetail').create(trxdetail);
-            creditid = detail1.id;
-        } else {
-            return ctx.send({
-                success: false,
-                id: crd.id,
-                message: crd.message
+
+            // check transact
+            var pmttrx = await strapi.query('coinpaymenttransact').findOne({
+                refno: refno,
+                customerqrcode: qrcode
             });
-        }
+            if (pmttrx) {
+                pushResult(arrReturn, refno, qrcode, transactiontime, false, 'Duplicate Reference No.');
+                continue;
+            }
+            // Insert CoinPaymentTransact
+            let trx = {
+                transactno: strapi.services.common.generatePaymentTransNo("BE"),
+                refno: refno,
+                user: mobileuserid,
+                customeremail: checkuser.email,
+                customerqrcode: checkuser.qrcode,
+                terminalid: tid,
+                transactiontime: transactiontime,
+                status: strapi.config.constants.coin_payment_transact_status.new
+            }
+            var paymenttrx = await strapi.query('coinpaymenttransact').create(trx);
+
+            var creditid = 0;
+            var creditcoinamt = 0;
+
+            // call credit coin CMS       
+            let crd = await strapi.services.cointransactionservice.creditcoinCMS(mobileuserid, transactionamount, qrcode, refno);
+
+            if (crd && (crd.id === "0")) {
+                creditcoinamt = crd.content_object.creditamount;
+                //create coinpaymentdetail
+                let trxdetail = {
+                    transactno: paymenttrx.transactno,
+                    transaction_history: crd.content_object.id,
+                    status: "C"
+                }
+                var detail1 = await strapi.query('coinpaymentdetail').create(trxdetail);
+                creditid = detail1.id;
+            } else {
+                pushResult(arrReturn, refno, qrcode, transactiontime, false, crd.message);
+                continue;
+            }
 
 
-        // update coinpaymenttransact
-        var detailids = [];
-        if (creditid > 0) {
-            detailids = [creditid];
-        }
+            // update coinpaymenttransact
+            var detailids = [];
+            if (creditid > 0) {
+                detailids = [creditid];
+            }
 
-        paymenttrx.creditamt = transactionamount;
-        paymenttrx.creditcoinamt = creditcoinamt;
-        paymenttrx.coinpaymentdetails = detailids;
-        paymenttrx.status = strapi.config.constants.coin_payment_transact_status.completed
+            paymenttrx.creditamt = transactionamount;
+            paymenttrx.creditcoinamt = creditcoinamt;
+            paymenttrx.coinpaymentdetails = detailids;
+            paymenttrx.status = strapi.config.constants.coin_payment_transact_status.completed
 
-        let ptrx = await strapi.query('coinpaymenttransact').update({ id: paymenttrx.id },
-            paymenttrx
-        );
+            let ptrx = await strapi.query('coinpaymenttransact').update({ id: paymenttrx.id },
+                paymenttrx
+            );
 
-        let paymentType = await strapi.services.common.normalizationResponse(ptrx, ["created_at", "updated_at", "user", "merchantcode", "outlet", "coinpaymentdetails"]);
+            //let paymentType = await strapi.services.common.normalizationResponse(ptrx, ["created_at", "updated_at", "user", "merchantcode", "outlet", "coinpaymentdetails"]);
+            //console.log(paymentType);
+            pushResult(arrReturn, refno, qrcode, transactiontime, true, 'success');
+            continue;
 
+        };
+        //console.log(arrReturn);
         ctx.send({
-            id: '0',
+            success: true,
             message: 'success',
-            content_object: paymentType,
+            details: arrReturn
         });
-
     }
-
 };
