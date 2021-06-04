@@ -2984,8 +2984,9 @@ module.exports = {
                 continue;
             }
             // Insert CoinPaymentTransact
+            let trxno = await strapi.services.common.generatePaymentTransNo("BE");
             let trx = {
-                transactno: strapi.services.common.generatePaymentTransNo("BE"),
+                transactno: trxno,
                 refno: refno,
                 user: mobileuserid,
                 customeremail: checkuser.email,
@@ -3040,10 +3041,13 @@ module.exports = {
 
         };
         //console.log(arrReturn);
-        ctx.send({
+        var rtn = {
             success: true,
             message: 'success',
             details: arrReturn
-        });
+        };
+        await strapi.services.common.logObject(rtn);
+
+        ctx.send(rtn);
     }
 };

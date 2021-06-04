@@ -73,7 +73,15 @@ const getLoggedUserId = async(ctx) => {
     }
 
     return userId;
-}
+};
+
+const opts = {
+    errorEventName: 'error',
+    logDirectory: 'C:\mylogfiles', // NOTE: folder must exist and be writable...
+    fileNamePattern: 'roll-<DATE>.log',
+    dateFormat: 'YYYY.MM.DD'
+};
+const log = require('simple-node-logger').createRollingFileLogger(opts);
 
 module.exports = {
     normalizationResponse: async(entity, fields) => {
@@ -149,14 +157,12 @@ module.exports = {
             // PT : Payment Transaction
             prefix = "PT";
         }
-
         var sq = await strapi.connections.default.raw(`select nextval('paymenttransact_oder_seq')`);
         var sqIds = sq.rows;
         //console.log(sqIds);
         var runstr = runstrtmp + sqIds[0].nextval;
         runstr = runstr.substring(runstr.length - runstrtmp.length, runstr.length);
         var userQr = prefix + identifier + moment.utc(new Date).format("DDMMYY") + runstr;
-
         return userQr;
     },
     handleErrors: async(ctx, err, message) => {
@@ -166,6 +172,13 @@ module.exports = {
             id: '999',
             message: message
         });
+    },
+    logInfo: async(message) => {
+        //console.log(message);
+        log.info(message);
+    },
+    logObject: async(objmsg) => {
+        log.info(JSON.stringify(objmsg))
     }
 
 

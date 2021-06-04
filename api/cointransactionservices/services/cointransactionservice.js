@@ -936,6 +936,17 @@ module.exports = {
                 message: "Please provide qrcode."
             }
         }
+        //2 get detail user with qrcode
+        var checkuser = await strapi.query('user', 'users-permissions').findOne({
+            qrcode: qrcode
+        });
+        if (checkuser == null) {
+            return {
+                success: false,
+                id: '7',
+                message: "Invalidate qrcode."
+            }
+        }
 
         //3. get detail from transaction-config
         var transactionconfig = await strapi.query('transaction-config').findOne({
