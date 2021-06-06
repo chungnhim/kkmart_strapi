@@ -70,6 +70,14 @@
             "config": {
                 "policies": []
             }
+        },
+        {
+            "method": "POST",
+            "path": "/outlets/add-new-outlet",
+            "handler": "outlet.addNewOutlet",
+            "config": {
+                "policies": []
+            }
         }
     ]
 }

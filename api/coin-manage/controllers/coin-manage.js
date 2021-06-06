@@ -2917,8 +2917,6 @@ module.exports = {
 
         var arrReturn = [];
         for (const element of params.items) {
-            console.log(element);
-            console.log(`================================`);
             var mobileuserid = element.mobileuserid;
             var transactionamount = element.transactionamount;
             //const { taxno } = ctx.request.body;

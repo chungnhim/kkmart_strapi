@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "06/04/2021 5:47:16 PM"
+    "x-generation-date": "06/04/2021 10:16:36 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -53721,6 +53721,18 @@
                   "type": "string"
                 }
               },
+              "outletno": {
+                "type": "string"
+              },
+              "postcode": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "Status": {
+                "type": "integer"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -64007,6 +64019,18 @@
               }
             }
           },
+          "outletno": {
+            "type": "string"
+          },
+          "postcode": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "Status": {
+            "type": "integer"
+          },
           "created_by": {
             "required": [
               "id",
@@ -64140,6 +64164,18 @@
             "items": {
               "type": "string"
             }
+          },
+          "outletno": {
+            "type": "string"
+          },
+          "postcode": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "Status": {
+            "type": "integer"
           },
           "created_by": {
             "type": "string"
@@ -64421,6 +64457,18 @@
                   "type": "string"
                 }
               },
+              "outletno": {
+                "type": "string"
+              },
+              "postcode": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "Status": {
+                "type": "integer"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -64650,6 +64698,18 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "outletno": {
+                "type": "string"
+              },
+              "postcode": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "Status": {
+                "type": "integer"
               },
               "created_by": {
                 "type": "string"
@@ -72881,6 +72941,18 @@
                   "type": "string"
                 }
               },
+              "outletno": {
+                "type": "string"
+              },
+              "postcode": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "Status": {
+                "type": "integer"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -76138,6 +76210,18 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "outletno": {
+                  "type": "string"
+                },
+                "postcode": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "Status": {
+                  "type": "integer"
                 },
                 "created_by": {
                   "type": "string"

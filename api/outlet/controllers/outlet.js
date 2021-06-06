@@ -1,6 +1,7 @@
 'use strict';
 const { sanitizeEntity } = require('strapi-utils');
 const _ = require('lodash');
+const NodeGeocoder = require('node-geocoder');
 /**
  * Read the documentation (https://strapi.io/documentation/v3.x/concepts/controllers.html#core-controllers)
  * to customize this controller
@@ -17,7 +18,28 @@ const removeAuthorFields = (entity) => {
 
     return sanitizedValue;
 };
+const getLngLat = async(address) => {
+    const options = {
+        provider: 'here',
+        apiKey: process.env.HERE_API_KEY || 'b_tw_a6m371Kris1qsOWLzhA2jerXM2A8BP8eNwiK4o', // for Mapquest, OpenCage, Google Premier, Here
+        formatter: null // 'gpx', 'string', ...
+    };
 
+    const geocoder = NodeGeocoder(options);
+
+    const mapForPickup = await geocoder.geocode(address);
+    if (_.isNil(mapForPickup) || mapForPickup.length == 0) {
+        return {
+            latitude: 0,
+            longitude: 0
+        };
+    }
+
+    return {
+        latitude: mapForPickup[0].latitude,
+        longitude: mapForPickup[0].longitude
+    };
+};
 module.exports = {
     getnearme: async ctx => {
         var res = await strapi.services.outlet.getNearMe(ctx.request.body.longitude,
@@ -39,5 +61,74 @@ module.exports = {
         var dataresult = await strapi.query('outlet').find({ address_contains: ctx.request.body.query });
         let data = Object.values(removeAuthorFields(dataresult));
         ctx.send(data);
+    },
+    addNewOutlet: async(ctx) => {
+
+        const params = _.assign({}, ctx.request.body, ctx.params);
+
+        var mobileuserid = params.mobileuserid;
+        if (ctx.request && ctx.request.header && ctx.request.header.authorization) {
+            try {
+                const { id, isAdmin = false } = await strapi.plugins['users-permissions'].services.jwt.getToken(ctx);
+                if (mobileuserid != id) {
+                    return ctx.send({
+                        success: false,
+                        id: '5',
+                        message: 'This login token is not match with Mobile User Id'
+                    });
+                }
+                var usercheck = await strapi.query('user', 'users-permissions').findOne({ id: mobileuserid });
+                if (usercheck.role.id !== 1) {
+                    return ctx.badRequest(
+                        null,
+                        formatError({
+                            id: '5.1',
+                            message: 'You have not administrator permission.',
+                        })
+                    );
+                }
+
+            } catch (err) {
+                return strapi.services.common.handleErrors(ctx, err, 'unauthorized');
+            }
+        }
+
+        // get long lat
+        let lngLat = await getLngLat(params.address);
+        let lng = lngLat.longitude;
+        let latt = lngLat.latitude;
+
+        // get state
+        let state = await strapi.query("state").findOne({
+            name_contains: params.state
+        });
+        // get country        
+        let country = await strapi.query("country").findOne({
+            name_contains: params.country
+        });
+
+        let entity = {
+            name: params.name,
+            street1: params.address,
+            street2: params.address,
+            address: params.address,
+            longitude: lng,
+            latitude: latt,
+            country: country.id,
+            state: state.id,
+            telephone: params.telephone,
+            digi: params.mobilephone,
+            outletno: params.outletno,
+            postcode: params.postcode,
+            city: params.city,
+            Status: params.status
+        }
+
+        let outlet = await strapi.query("outlet").create(entity);
+
+        ctx.send({
+            success: true,
+            message: outlet
+        });
     }
 };

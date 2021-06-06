@@ -1123,6 +1123,18 @@
               }
             }
           },
+          "outletno": {
+            "type": "string"
+          },
+          "postcode": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "Status": {
+            "type": "integer"
+          },
           "created_by": {
             "required": [
               "id",
@@ -1256,6 +1268,18 @@
             "items": {
               "type": "string"
             }
+          },
+          "outletno": {
+            "type": "string"
+          },
+          "postcode": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "Status": {
+            "type": "integer"
           },
           "created_by": {
             "type": "string"

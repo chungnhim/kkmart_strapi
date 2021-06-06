@@ -46,8 +46,20 @@
       "type": "string"
     },
     "coinpaymenttransacts": {
-      "via": "outlet",
-      "collection": "coinpaymenttransact"
+      "collection": "coinpaymenttransact",
+      "via": "outlet"
+    },
+    "outletno": {
+      "type": "string"
+    },
+    "postcode": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "Status": {
+      "type": "integer"
     }
   }
 }

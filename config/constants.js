@@ -70,6 +70,10 @@ module.exports = ({ env }) => ({
         new: 1,
         completed: 2,
         error: 3
+    },
+    outlet_status: {
+        active: 1,
+        relocated: 2
     }
 
 });
