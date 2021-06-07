@@ -162,6 +162,7 @@ const buildLalamoveReq = async(userAddressId, products, shippingNote, scheduleAt
             message: "User address not found"
         }
     }
+
     var nearMe = await strapi.services.outlet.getNearMe(userAddress.longitude,
         userAddress.latitude,
         10000);
@@ -171,6 +172,19 @@ const buildLalamoveReq = async(userAddressId, products, shippingNote, scheduleAt
             success: false,
             message: "Can not detect pickup address"
         }
+    }
+    console.log(`================outlet ==============`)
+    console.log(nearMe[0]);
+    console.log(`================end outlet ==============`)
+    if (_.isNil(nearMe[0].phone)) {
+
+        let strErr = `lalamoveshippingservices.buildLalamoveReq ${JSON.stringify(nearMe[0])}`;
+        await strapi.services.common.logError(strErr);
+
+        return {
+            success: false,
+            message: "The delivery phone number is required"
+        };
     }
 
     let deliverAddress = `${userAddress.address1}, ${userAddress.city}, ${userAddress.state.name}, ${userAddress.country.name}`;
@@ -298,12 +312,18 @@ module.exports = {
                 message: "Unauthorized"
             }
         }
-
+        console.log(`==========go to lalamove service getQuotations`);
         let header = getHttpHeader(auth.apiKey, auth.timestamp, auth.signature, "MY_KUL");
+        console.log(header);
+        console.log(`===========end header`)
+        console.log(quotationBody.data);
+        console.log(`============`)
+        console.log(`${LALAMOVE_API}${path}`)
         var res = await
         axios.post(`${LALAMOVE_API}${path}`, quotationBody.data, {
             headers: header
         }).then(function(response) {
+            console.log(response);
             let httpCode = response.status;
             return {
                 success: true,
@@ -312,6 +332,8 @@ module.exports = {
                 totalFeeCurrency: response.data.totalFeeCurrency
             }
         }).catch(function(error) {
+            console.log(`=======error==========`)
+            console.log(error);
             let httpCode = error.response.status;
             let message = "";
             if (httpCode == 401) {

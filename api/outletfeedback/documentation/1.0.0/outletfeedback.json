@@ -866,7 +866,7 @@
               "city": {
                 "type": "string"
               },
-              "Status": {
+              "status": {
                 "type": "integer"
               },
               "created_by": {

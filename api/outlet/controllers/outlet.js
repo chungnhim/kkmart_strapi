@@ -93,11 +93,36 @@ module.exports = {
             }
         }
 
+        if (_.isNil(params.name)) {
+            return ctx.send({
+                success: false,
+                id: '100',
+                message: 'Outlet name can not be null'
+            });
+        };
+
+        if (_.isNil(params.telephone) || (params.telephone === "")) {
+            return ctx.send({
+                success: false,
+                id: '101',
+                message: 'Outlet telephone can not be null'
+            });
+        }
+
+        if (_.isNil(params.address)) {
+            return ctx.send({
+                success: false,
+                id: '102',
+                message: 'Outlet address can not be null'
+            });
+        }
+
         // get long lat
         let lngLat = await getLngLat(params.address);
         let lng = lngLat.longitude;
         let latt = lngLat.latitude;
 
+        /*
         // get state
         let state = await strapi.query("state").findOne({
             name_contains: params.state
@@ -106,7 +131,7 @@ module.exports = {
         let country = await strapi.query("country").findOne({
             name_contains: params.country
         });
-
+        */
         let entity = {
             name: params.name,
             street1: params.address,
@@ -114,14 +139,14 @@ module.exports = {
             address: params.address,
             longitude: lng,
             latitude: latt,
-            country: country.id,
-            state: state.id,
+            country: params.country,
+            state: params.state,
             telephone: params.telephone,
             digi: params.mobilephone,
             outletno: params.outletno,
             postcode: params.postcode,
             city: params.city,
-            Status: params.status
+            status: params.status
         }
 
         let outlet = await strapi.query("outlet").create(entity);

@@ -83,6 +83,14 @@ const opts = {
 };
 const log = require('simple-node-logger').createRollingFileLogger(opts);
 
+const optsError = {
+    errorEventName: 'error',
+    logDirectory: 'C:\mylogfiles', // NOTE: folder must exist and be writable...
+    fileNamePattern: 'error-<DATE>.log',
+    dateFormat: 'YYYY.MM.DD'
+};
+const logErr = require('simple-node-logger').createRollingFileLogger(optsError);
+
 module.exports = {
     normalizationResponse: async(entity, fields) => {
         ////console.log(`fields`, fields);
@@ -179,6 +187,10 @@ module.exports = {
     },
     logObject: async(objmsg) => {
         log.info(JSON.stringify(objmsg))
+    },
+    logError: async(message) => {
+        //console.log(message);
+        logErr.error(message);
     }
 
 

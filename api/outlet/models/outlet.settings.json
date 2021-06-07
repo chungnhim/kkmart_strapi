@@ -58,7 +58,7 @@
     "city": {
       "type": "string"
     },
-    "Status": {
+    "status": {
       "type": "integer"
     }
   }

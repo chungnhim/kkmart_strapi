@@ -16,12 +16,10 @@ module.exports = {
         ctx.send(res);
     },
     async shippingProvider(ctx) {
-        var res = [
-            {
-                key: "LALAMOVE",
-                name: "Lalamove shipping provider"
-            }
-        ];
+        var res = [{
+            key: "LALAMOVE",
+            name: "Lalamove shipping provider"
+        }];
 
         ctx.send(res);
     },
@@ -70,6 +68,7 @@ module.exports = {
         }
 
         if (params.provider == "LALAMOVE") {
+            console.log(`go to getQuotations 1`);
             var res = await strapi.services.lalamoveshippingservice.getQuotations(
                 userAddressId, products, shippingNote, null
             );
