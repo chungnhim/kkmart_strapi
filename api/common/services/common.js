@@ -77,7 +77,7 @@ const getLoggedUserId = async(ctx) => {
 
 const opts = {
     errorEventName: 'error',
-    logDirectory: 'C:\mylogfiles', // NOTE: folder must exist and be writable...
+    logDirectory: 'mylogfiles', // NOTE: folder must exist and be writable...
     fileNamePattern: 'roll-<DATE>.log',
     dateFormat: 'YYYY.MM.DD'
 };
@@ -85,7 +85,7 @@ const log = require('simple-node-logger').createRollingFileLogger(opts);
 
 const optsError = {
     errorEventName: 'error',
-    logDirectory: 'C:\mylogfiles', // NOTE: folder must exist and be writable...
+    logDirectory: 'mylogfiles', // NOTE: folder must exist and be writable...
     fileNamePattern: 'error-<DATE>.log',
     dateFormat: 'YYYY.MM.DD'
 };
