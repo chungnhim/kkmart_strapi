@@ -134,6 +134,14 @@
             "config": {
                 "policies": []
             }
+        },
+        {
+            "method": "GET",
+            "path": "/mobile-user/cms-search-users/:page_index/:page_size",
+            "handler": "mobile-user.cmsSearchUser",
+            "config": {
+                "policies": []
+            }
         }
     ]
 }

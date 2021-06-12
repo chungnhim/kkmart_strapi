@@ -21,8 +21,9 @@ const formatError = error => [
 
 const removeAuthorFields = (entity) => {
     const sanitizedValue = _.omit(entity, ['created_by', 'updated_by', 'created_at', 'updated_at', 'formats',
-        'deviceinfos', 'transaction_histories', 'outlets', 'role', 'provider', 'confirmed',
-        'product_ratings', 'user_addresses', 'orders'
+        'deviceinfos', 'transaction_histories', 'outlets', 'role', 'provider', 'confirmed', 'searchhistories',
+        'product_ratings', 'user_addresses', 'orders', 'groupcustomers', 'password', 'is_kkstaff', 'voucherproducts', 'resetPasswordToken', 'promotionrewardpoint',
+        'nonpromotionalrewardpoint', 'outlet', 'coinpaymenttransacts'
     ]);
     _.forEach(sanitizedValue, (value, key) => {
         if (_.isArray(value)) {
@@ -222,8 +223,6 @@ module.exports = {
             content_object: newblockphone,
         });
     },
-
-
     //register new user
     async register(ctx) {
         //input: username
@@ -1849,4 +1848,53 @@ module.exports = {
         const rows = result.rows;
         ctx.send({ data: rows.map((row) => ({ day: row.days.toLowerCase().trim(), total: row.count ? Number(row.count) : 0 })) });
     },
+    async cmsSearchUser(ctx) {
+        const queryString = _.assign({}, ctx.request.query, ctx.params);
+        const params = _.assign({}, ctx.request.params, ctx.params);
+
+        let pageIndex = 1,
+            pageSize = 10;
+
+        if (!_.isNil(params.page_index) && !_.isNil(params.page_size)) {
+            pageIndex = parseInt(params.page_index);
+            pageSize = parseInt(params.page_size);
+        }
+
+        var dataQuery = {
+            _start: (pageIndex - 1) * pageSize,
+            _limit: pageSize,
+            _sort: "username:desc",
+        };
+
+        if (!_.isNil(queryString.username) && !_.isEmpty(queryString.username)) {
+            dataQuery.username_contains = queryString.username;
+        }
+
+        if (!_.isNil(queryString.email) && !_.isEmpty(queryString.email)) {
+            dataQuery.email_contains = queryString.email;
+        }
+
+        if (!_.isNil(queryString.phone) && !_.isEmpty(queryString.phone)) {
+            dataQuery.phone_contains = queryString.phone;
+        }
+
+        if (!_.isNil(queryString.qrcode) && !_.isEmpty(queryString.qrcode)) {
+            dataQuery.qrcode_contains = queryString.qrcode;
+        }
+
+        var totalRows = await strapi.query('user', 'users-permissions').count(dataQuery);
+        var entities = await strapi.query('user', 'users-permissions').find(dataQuery);
+
+        var userModels = await strapi.services.common.normalizationResponse(entities, ['created_by', 'updated_by', 'created_at', 'updated_at', 'formats',
+            'deviceinfos', 'transaction_histories', 'outlets', 'role', 'provider', 'confirmed', 'searchhistories',
+            'product_ratings', 'user_addresses', 'orders', 'groupcustomers', 'password', 'is_kkstaff', 'voucherproducts', 'resetPasswordToken', 'promotionrewardpoint',
+            'nonpromotionalrewardpoint', 'outlet', 'coinpaymenttransacts'
+        ]);
+        var res = {
+            totalRows,
+            source: _.values(userModels)
+        };
+        ctx.send(res);
+
+    }
 };
