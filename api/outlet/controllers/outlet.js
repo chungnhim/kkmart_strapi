@@ -7,7 +7,7 @@ const NodeGeocoder = require('node-geocoder');
  * to customize this controller
  */
 const removeAuthorFields = (entity) => {
-    const sanitizedValue = _.omit(entity, ['created_by', 'updated_by', 'created_at', 'updated_at', 'formats', 'user']);
+    const sanitizedValue = _.omit(entity, ['created_by', 'updated_by', 'created_at', 'updated_at', 'formats', 'user', 'users', 'coinpaymenttransacts']);
     _.forEach(sanitizedValue, (value, key) => {
         if (_.isArray(value)) {
             sanitizedValue[key] = value.map(removeAuthorFields);
@@ -58,9 +58,13 @@ module.exports = {
     searchoutlet: async ctx => {
         //ctx.request.body.query
         //console.log(ctx.request.body.query);
-        var dataresult = await strapi.query('outlet').find({ address_contains: ctx.request.body.query });
-        let data = Object.values(removeAuthorFields(dataresult));
-        ctx.send(data);
+        var querystring = `select * from searchoutlets('${ctx.request.body.query}')`
+        const result = await strapi.connections.default.raw(querystring);
+        const rows = result.rows;
+        //var dataresult = await strapi.query('outlet').find({ address_contains: ctx.request.body.query });
+
+        //let data = Object.values(removeAuthorFields(dataresult));
+        ctx.send(rows);
     },
     addNewOutlet: async(ctx) => {
 
@@ -122,6 +126,19 @@ module.exports = {
         let lng = lngLat.longitude;
         let latt = lngLat.latitude;
 
+        // check duplicate outletno
+        let outlets = await strapi.query("outlet").findOne({
+            name: params.name,
+            address: params.address
+        });
+
+        if (!_.isNil(outlets)) {
+            return ctx.send({
+                success: false,
+                id: '103',
+                message: "Duplicate outlets"
+            });
+        }
         /*
         // get state
         let state = await strapi.query("state").findOne({

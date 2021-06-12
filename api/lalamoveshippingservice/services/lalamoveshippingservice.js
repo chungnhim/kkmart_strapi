@@ -173,10 +173,8 @@ const buildLalamoveReq = async(userAddressId, products, shippingNote, scheduleAt
             message: "Can not detect pickup address"
         }
     }
-    console.log(`================outlet ==============`)
-    console.log(nearMe[0]);
-    console.log(`================end outlet ==============`)
-    if (_.isNil(nearMe[0].phone)) {
+
+    if (_.isNil(nearMe[0].telephone)) {
 
         let strErr = `lalamoveshippingservices.buildLalamoveReq ${JSON.stringify(nearMe[0])}`;
         await strapi.services.common.logError(strErr);
