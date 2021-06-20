@@ -1,0 +1,65 @@
+{
+    "kind": "collectionType",
+    "collectionName": "pushnotificationmanages",
+    "info": {
+        "name": "pushnotificationmanage"
+    },
+    "options": {
+        "increments": true,
+        "timestamps": [
+            "created_at",
+            "updated_at"
+        ]
+    },
+    "attributes": {
+        "titlenotification": {
+            "type": "string"
+        },
+        "notificationcontent": {
+            "type": "string"
+        },
+        "starttime": {
+            "type": "datetime"
+        },
+        "endtime": {
+            "type": "datetime"
+        },
+        "customertype": {
+            "type": "integer"
+        },
+        "contentimage": {
+            "model": "file",
+            "via": "related",
+            "allowedTypes": [
+                "images"
+            ],
+            "plugin": "upload",
+            "required": false
+        },
+        "linkurl": {
+            "type": "string"
+        },
+        "status": {
+            "type": "integer"
+        },
+        "totalpushtimes": {
+            "type": "integer"
+        },
+        "pushedno": {
+            "type": "integer"
+        },
+        "isalwaypush": {
+            "type": "boolean",
+            "default": false
+        },
+        "users": {
+            "plugin": "users-permissions",
+            "collection": "user",
+            "private": true
+        },
+        "groupcustomers": {
+            "collection": "groupcustomer",
+            "private": true
+        }
+    }
+}

@@ -1217,5 +1217,325 @@ module.exports = {
                 message: "Can not get next transaction config"
             }
         }
+    },
+    //================> Birthday Rewards
+    kcoinBirthdayRewards: async() => {
+        // declare values:
+        var startDate = new Date;
+        var startDateUTC = moment.utc(startDate);
+        var endDateUTC = moment.utc(startDate);
+        var expiredDate = moment.utc(startDate);
+        var creditamount = 0.00;
+        var debitamount = 0.00;
+        var transactionamount = 0.00;
+        // get config
+        // get detail from transaction-config
+        // 105 Birthday event
+        var transactionconfig = await strapi.query('transaction-config').findOne({
+            trxconfigid: '105'
+        });
+        if (_.isNil(transactionconfig) && _.isNul(transactionconfig)) {
+            return {
+                success: false,
+                message: "Can not find transaction config"
+            }
+        } else {
+            endDateUTC = endDateUTC.add(transactionconfig.dayeffective, 'days');
+            expiredDate = expiredDate.add(transactionconfig.monthexpired, 'months');
+            expiredDate = expiredDate.endOf('month');
+            let amtKcoin = 0.00;
+            if (transactionconfig.credittype == strapi.config.constants.trxconfig_credit_type.percent) {
+                amtKcoin = (transactionamount * transactionconfig.amountpercent) / parseFloat(100);
+            } else if (transactionconfig.credittype == strapi.config.constants.trxconfig_credit_type.fixed_money) {
+                amtKcoin = transactionconfig.mount;
+            }
+            if (transactionconfig.creditordebit === "C") {
+                creditamount = amtKcoin;
+
+            } else if (transactionconfig.creditordebit === "D") {
+                debitamount = amtKcoin;
+            }
+        }
+
+        // get user have birthday on today
+        var querystring = `select * from today_birth_users()`;
+        const result = await strapi.connections.default.raw(querystring);
+        const rows = result.rows;
+        if (rows && rows.count() > 0) {
+            console.log(rows);
+            rows.forEach(async(checkuser) => {
+                if (_.isNil(checkuser.qrcode)) {
+                    return;
+                }
+
+                // check whether existing transaction 105 or not
+                var thisYear = (new Date()).getFullYear();
+                var start = new Date("1/1/" + thisYear);
+                var defaultStart = moment(start.valueOf());
+                var trxhist = await strapi.query('transaction-history').count({
+                    trxconfigid: "105",
+                    user: checkuser.id,
+                    dateofbirth_gte: defaultStart
+                });
+
+                if (trxhist) {
+                    return;
+                }
+
+                //
+                var isprocessed = false;
+                //expiredDate from transaction-config
+                var newlog = await strapi.query('transaction-history').create({
+                    createddate: startDateUTC.format(),
+                    expireddate: expiredDate.format(),
+                    //availabledate: endDateUTC.toISOString(),
+                    availabledate: endDateUTC.format(),
+                    creditamount: creditamount,
+                    debitamount: 0,
+                    transactionamount: transactionamount,
+                    taxno: taxno,
+                    transactionno: uuid(),
+                    status: 'complete',
+                    mobileuserid: checkuser.id,
+                    trxconfigid: transactionconfig.trxconfigid,
+                    remark: transactionconfig.trxdescription,
+                    isprocessed: isprocessed,
+                    useremail: checkuser.email,
+                    userqrcode: checkuser.qrcode
+                });
+                if (transactionconfig.dayeffective == 0) {
+                    //3.2 check if ransactionconfig.dayeffective == 0
+                    //add to balance now
+                    //4. update mobileusercoinaccount
+                    var mycoinaccount = await strapi.query('mobileusercoinaccount').findOne({
+                        mobileuserid: checkuser.id
+                    });
+                    if (mycoinaccount == null) {
+                        var newmycoinaccount = await strapi.query('mobileusercoinaccount').create({
+                            mobileuserid: checkuser.id,
+                            balance: 0,
+                            totalcredit: 0,
+                            totaldebit: 0,
+                            totalexpried: 0,
+                            modifieddate: new Date(new Date().toUTCString())
+                        });
+                        mycoinaccount = await strapi.query('mobileusercoinaccount').findOne({
+                            mobileuserid: checkuser.id
+                        });
+                    }
+                    if (mycoinaccount) {
+                        mycoinaccount.balance = mycoinaccount.balance + creditamount;
+                        mycoinaccount.totalcredit = mycoinaccount.totalcredit + creditamount;
+                        await strapi.query('mobileusercoinaccount').update({ mobileuserid: checkuser.id },
+                            mycoinaccount
+                        );
+                    }
+                    //update transaction-history
+                    newlog.isprocessed = true;
+                    await strapi.query('transaction-history').update({
+                        mobileuserid: checkuser.id,
+                        trxconfigid: transactionconfig.trxconfigid,
+                        transactionno: newlog.transactionno
+                    }, {
+                        isprocessed: true
+                    });
+                    //send notification here
+                    //select notification type credit 1001
+                    var notificationtype = await strapi.query('notificationtypes').findOne({
+                        notificationcode: '1001'
+                    });
+                    if (notificationtype) {
+
+                        //build message
+                        let notificationContent = notificationtype.template.replace('{AMOUNT}', creditamount);
+                        let notificationdata = notificationtype.templatedata.replace('{AMOUNT}', creditamount);
+                        let notificationTitle = notificationtype.title;
+                        let notificationType = notificationtype.notificationtype;
+                        //insert to table notification logs
+
+                        let dataNotificationlog = {
+                            noticetypeid: notificationtype.id,
+                            noticetypename: notificationtype.typename,
+                            noticetitle: notificationtype.title,
+                            pushstatus: 'Y',
+                            status: 'A',
+                            noticecontent: notificationContent,
+                            notificationcode: notificationtype.notificationcode,
+                            noticedata: notificationdata,
+                            user: checkuser
+                        }
+
+                        var newNotificationlogs = await strapi.query('notificationlog').create(dataNotificationlog);
+
+                        //push notification test
+                        //get all deviceid reg of this user
+                        var listdeviceidreg = await strapi.query('deviceinfo').model.query(qb => {
+                            qb.select('devicereg', 'platform')
+                                .where('user', checkuser.id);
+                        }).fetchAll();
+                        listdeviceidreg = listdeviceidreg.toJSON();
+                        ////console.log(listdeviceidreg);
+                        let arraydevicereg = [];
+                        let arraydeviceregios = [];
+                        for (var index in listdeviceidreg) {
+                            var deviveregid = listdeviceidreg[index].devicereg;
+                            if (deviveregid != '' && deviveregid.length > 10 && listdeviceidreg[index].platform == 'android') {
+                                arraydevicereg.push(deviveregid);
+                            }
+
+                            if (deviveregid != '' && deviveregid.length > 10 && listdeviceidreg[index].platform == 'ios') {
+                                arraydeviceregios.push(deviveregid);
+                            }
+                        }
+
+                        if (arraydevicereg.length > 0) {
+                            //android
+                            var newcontentforPushFirebase = removeAuthorFields(newNotificationlogs);
+                            var dataReturn = await strapi.services.firebasecontrol.sendtoarraydeviceandroid(arraydevicereg, notificationTitle, newcontentforPushFirebase);
+                            ////console.log(dataReturn);
+                        }
+
+                        if (arraydeviceregios.length > 0) {
+                            //ios
+                            var newcontentforPushFirebase = removeAuthorFields(newNotificationlogs);
+                            var dataReturn = await strapi.services.firebasecontrol.sendtoarraydeviceios(arraydeviceregios, notificationTitle, newcontentforPushFirebase);
+                            ////console.log(dataReturn);
+                        }
+
+                    }
+                }
+                //5. update expried coin and exprieddate in coin
+                //5.1 find total coin will expried expiredDate            
+
+                expiredDate = moment.utc(startDate);
+                expiredDate = expiredDate.endOf('month');
+
+
+                var checkCreditAmount = await strapi.query('transaction-history').model.query(qb => {
+                    qb.select('creditamount', 'mobileuserid')
+                        .where('mobileuserid', checkuser.id)
+                        .where('expireddate', '<=', expiredDate.toISOString())
+                }).fetchAll();
+                var checkDebitAmount = await strapi.query('transaction-history').model.query(qb => {
+                    qb.select('debitamount', 'mobileuserid')
+                        .where('mobileuserid', checkuser.id)
+                        .where('expireddate', '<=', expiredDate.toISOString())
+                }).fetchAll();
+                var totalCredit = 0;
+                var totalDebit = 0;
+                checkCreditAmount = checkCreditAmount.toJSON();
+                checkDebitAmount = checkDebitAmount.toJSON();
+                if (checkCreditAmount) {
+                    totalCredit = checkCreditAmount
+                        .map(item => item.creditamount)
+                        .reduce((prev, curr) => prev + curr, 0);
+                }
+                if (checkDebitAmount) {
+                    totalDebit = checkDebitAmount
+                        .map(item => item.debitamount)
+                        .reduce((prev, curr) => prev + curr, 0);
+                }
+                //if in this month or previus month have credit amount
+                if (totalCredit > 0) {
+                    //find in day end of this month
+                    //5.2 update mobileusercoinaccount for nextexpriedamount and nextexprieddate
+                    var mycoinaccount = await strapi.query('mobileusercoinaccount').findOne({
+                        mobileuserid: checkuser.id
+                    });
+
+                    if (mycoinaccount == null) {
+                        var newmycoinaccount = await strapi.query('mobileusercoinaccount').create({
+                            mobileuserid: checkuser.id,
+                            balance: 0,
+                            totalcredit: 0,
+                            totaldebit: 0,
+                            totalexpried: 0,
+                            modifieddate: new Date(new Date().toUTCString())
+                        });
+                        mycoinaccount = await strapi.query('mobileusercoinaccount').findOne({
+                            mobileuserid: checkuser.id
+                        });
+                    }
+
+                    if (mycoinaccount) {
+                        mycoinaccount.nextexpriedamount = totalCredit - totalDebit;
+                        mycoinaccount.nextexprieddate = expiredDate.format();
+                        await strapi.query('mobileusercoinaccount').update({ mobileuserid: checkuser.id },
+                            mycoinaccount
+                        );
+                    }
+                } else {
+                    //find for next end day of month
+                    expiredDate = expiredDate.add(transactionconfig.monthexpired, 'months');
+                    checkCreditAmount = await strapi.query('transaction-history').model.query(qb => {
+                        qb.select('creditamount', 'mobileuserid')
+                            .where('mobileuserid', checkuser.id)
+                            .where('expireddate', '<=', expiredDate.toISOString())
+                    }).fetchAll();
+                    checkDebitAmount = await strapi.query('transaction-history').model.query(qb => {
+                        qb.select('debitamount', 'mobileuserid')
+                            .where('mobileuserid', checkuser.id)
+                            .where('expireddate', '<=', expiredDate.toISOString())
+                    }).fetchAll();
+                    totalCredit = 0;
+                    totalDebit = 0;
+                    checkCreditAmount = checkCreditAmount.toJSON();
+                    checkDebitAmount = checkDebitAmount.toJSON();
+                    if (checkCreditAmount) {
+                        totalCredit = checkCreditAmount
+                            .map(item => item.creditamount)
+                            .reduce((prev, curr) => prev + curr, 0);
+                    }
+                    if (checkDebitAmount) {
+                        totalDebit = checkDebitAmount
+                            .map(item => item.debitamount)
+                            .reduce((prev, curr) => prev + curr, 0);
+                    }
+                    var mycoinaccount = await strapi.query('mobileusercoinaccount').findOne({
+                        mobileuserid: checkuser.id
+                    });
+                    if (mycoinaccount == null) {
+                        var newmycoinaccount = await strapi.query('mobileusercoinaccount').create({
+                            mobileuserid: checkuser.id,
+                            balance: 0,
+                            totalcredit: 0,
+                            totaldebit: 0,
+                            totalexpried: 0,
+                            modifieddate: new Date(new Date().toUTCString())
+                        });
+                        mycoinaccount = await strapi.query('mobileusercoinaccount').findOne({
+                            mobileuserid: checkuser.id
+                        });
+                    }
+                    if (mycoinaccount) {
+                        mycoinaccount.nextexpriedamount = totalCredit - totalDebit;
+                        mycoinaccount.nextexprieddate = expiredDate.format();
+                        await strapi.query('mobileusercoinaccount').update({ mobileuserid: checkuser.id },
+                            mycoinaccount
+                        );
+                    }
+                }
+
+                // if (newlog && newlog.user) {
+                //     delete newlog.user;
+                // }
+
+                // return {
+                //     success: true,
+                //     id: '0',
+                //     message: "success",
+                //     content_object: removeAuthorFields(newlog)
+                // }
+
+
+
+            });
+        }
+
+        return {
+            success: true,
+            message: "Update birthday success."
+        }
+
     }
 }

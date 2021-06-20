@@ -1,52 +1,59 @@
 {
-  "routes": [
-    {
-      "method": "GET",
-      "path": "/groupcustomers",
-      "handler": "groupcustomer.find",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/groupcustomers/count",
-      "handler": "groupcustomer.count",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/groupcustomers/:id",
-      "handler": "groupcustomer.findOne",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "POST",
-      "path": "/groupcustomers",
-      "handler": "groupcustomer.create",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "PUT",
-      "path": "/groupcustomers/:id",
-      "handler": "groupcustomer.update",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "DELETE",
-      "path": "/groupcustomers/:id",
-      "handler": "groupcustomer.delete",
-      "config": {
-        "policies": []
-      }
-    }
-  ]
+    "routes": [{
+            "method": "GET",
+            "path": "/groupcustomers",
+            "handler": "groupcustomer.find",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/groupcustomers/count",
+            "handler": "groupcustomer.count",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/groupcustomers/:id",
+            "handler": "groupcustomer.findOne",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/groupcustomers",
+            "handler": "groupcustomer.create",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "PUT",
+            "path": "/groupcustomers/:id",
+            "handler": "groupcustomer.update",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "DELETE",
+            "path": "/groupcustomers/:id",
+            "handler": "groupcustomer.delete",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/groupusers",
+            "handler": "groupcustomer.cmsGetAllGroup",
+            "config": {
+                "policies": []
+            }
+        }
+    ]
 }

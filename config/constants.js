@@ -74,6 +74,20 @@ module.exports = ({ env }) => ({
     outlet_status: {
         active: 1,
         relocated: 2
+    },
+    pushnotification_status: {
+        new: 0,
+        active: 1,
+        closed: 2
+    },
+    pushnotification_customertype: {
+        personal: 0,
+        groupcustomer: 1,
+        allcustomer: 2
+    },
+    trxconfig_credit_type: {
+        fixed_money: 0,
+        percent: 1
     }
 
 });

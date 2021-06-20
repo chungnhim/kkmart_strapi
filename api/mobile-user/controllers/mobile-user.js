@@ -13,6 +13,7 @@ const grant = require('grant-koa');
 const dayjs = require('dayjs');
 const { sanitizeEntity } = require('strapi-utils');
 const sgMail = require('@sendgrid/mail');
+const moment = require('moment');
 
 const emailRegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const formatError = error => [
@@ -1331,18 +1332,22 @@ module.exports = {
                 if (transactionhistorycheck == null) {
                     //2. insert transaction config
                     var startDate = new Date;
-                    var endDate = new Date(startDate.getTime() + 86400000);
-                    if (transactionconfig.isexpired == true) {
-                        var expiredDate = new Date(startDate.getTime() + transactionconfig.dayeffective * 86400000);
-                    }
-                    var utc_timestamp_end = Date.UTC(endDate.getUTCFullYear(), endDate.getUTCMonth(), endDate.getUTCDate(),
-                        endDate.getUTCHours(), endDate.getUTCMinutes(), endDate.getUTCSeconds(), endDate.getUTCMilliseconds());
+                    var startDateUTC = moment.utc(startDate);
+                    var endDateUTC = moment.utc(startDate);
+                    endDateUTC = endDateUTC.add(transactionconfig.dayeffective, 'days');
+                    //var endDate = new Date(startDate.getTime() + 86400000);
+                    var expiredDate = moment.utc(startDate);
+                    expiredDate = expiredDate.add(transactionconfig.monthexpired, 'months');
+                    expiredDate = expiredDate.endOf('month');
+                    // if (transactionconfig.isexpired == true) {
+                    //     var expiredDate = new Date(startDate.getTime() + transactionconfig.dayeffective * 86400000);
+                    // }
 
                     var newlog = await strapi.query('transaction-history').create({
                         trxconfigid: transactionconfig.trxconfigid,
-                        createddate: startDate,
-                        //expireddate: expiredDate,
-                        availabledate: utc_timestamp_end,
+                        createddate: startDateUTC.format(),
+                        expireddate: expiredDate.format(),
+                        availabledate: endDateUTC.format(),
                         creditamount: transactionconfig.amount,
                         debitamount: 0,
                         user: userfriend,
@@ -1352,7 +1357,10 @@ module.exports = {
                         outletid: 0,
                         status: 'complete',
                         mobileuserid: userfriend.id,
-                        remark: transactionconfig.trxdescription
+                        remark: transactionconfig.trxdescription,
+                        isprocessed: true,
+                        useremail: userfriend.email,
+                        userqrcode: userfriend.qrcode
                     });
                     //3. update mobileusercoinaccount
                     var mycoinaccount = await strapi.query('mobileusercoinaccount').findOne({
@@ -1895,6 +1903,19 @@ module.exports = {
             source: _.values(userModels)
         };
         ctx.send(res);
+
+    },
+    // ==============> This function using for get all user and fill to dropdownlist
+    async cmsGetAllUsers(ctx) {
+        //ctx.request.body.query
+        //console.log(ctx.request.body.query);
+        var querystring = `select id, username from "users-permissions_user"`
+        const result = await strapi.connections.default.raw(querystring);
+        const rows = result.rows;
+        //var dataresult = await strapi.query('outlet').find({ address_contains: ctx.request.body.query });
+
+        //let data = Object.values(removeAuthorFields(dataresult));
+        ctx.send(Object.values(rows));
 
     }
 };

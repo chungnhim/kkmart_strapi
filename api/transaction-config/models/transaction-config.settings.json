@@ -47,6 +47,10 @@
     "isdisplay": {
       "type": "boolean",
       "default": false
+    },
+    "credittype": {
+      "type": "integer",
+      "default": 1
     }
   }
 }
