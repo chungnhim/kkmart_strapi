@@ -1498,6 +1498,20 @@ module.exports = {
             }
         }
 
+        // get detail user with qrcode
+        var checkuser = await strapi.query('user', 'users-permissions').findOne({
+            id: mobileuserid
+        });
+        if (checkuser == null) {
+            return ctx.badRequest(
+                null,
+                formatError({
+                    id: 'coin_manage.claim_daily_coin.invalide-user',
+                    message: 'This Mobile User Id is not exist',
+                })
+            );
+        }
+
         //2. insert dailycointransaction
         var createddatedfull = new Date;
         var newdailycoinhistory = await strapi.query('dailycoinhistory').create({
@@ -3056,6 +3070,11 @@ module.exports = {
         };
         await strapi.services.common.logObject(rtn);
 
+        ctx.send(rtn);
+    },
+    //=================> Birthday Reward
+    callBirthdayReward: async(ctx) => {
+        var rtn = await strapi.services.cointransactionservice.kcoinBirthdayRewards();
         ctx.send(rtn);
     }
 };

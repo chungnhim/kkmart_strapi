@@ -1449,7 +1449,10 @@ module.exports = {
                     outletid: 0,
                     status: 'complete',
                     mobileuserid: user.id,
-                    remark: transactionconfig.trxdescription
+                    remark: transactionconfig.trxdescription,
+                    isprocessed: true,
+                    useremail: user.email,
+                    userqrcode: user.qrcode
                 });
                 //3. update mobileusercoinaccount
                 var mycoinaccount = await strapi.query('mobileusercoinaccount').findOne({
