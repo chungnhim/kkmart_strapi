@@ -1,52 +1,59 @@
 {
-  "routes": [
-    {
-      "method": "GET",
-      "path": "/pushnotificationmanages",
-      "handler": "pushnotificationmanage.find",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/pushnotificationmanages/count",
-      "handler": "pushnotificationmanage.count",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/pushnotificationmanages/:id",
-      "handler": "pushnotificationmanage.findOne",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "POST",
-      "path": "/pushnotificationmanages",
-      "handler": "pushnotificationmanage.create",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "PUT",
-      "path": "/pushnotificationmanages/:id",
-      "handler": "pushnotificationmanage.update",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "DELETE",
-      "path": "/pushnotificationmanages/:id",
-      "handler": "pushnotificationmanage.delete",
-      "config": {
-        "policies": []
-      }
-    }
-  ]
+    "routes": [{
+            "method": "GET",
+            "path": "/pushnotificationmanages",
+            "handler": "pushnotificationmanage.find",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/pushnotificationmanages/count",
+            "handler": "pushnotificationmanage.count",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/pushnotificationmanages/:id",
+            "handler": "pushnotificationmanage.findOne",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/pushnotificationmanages",
+            "handler": "pushnotificationmanage.create",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "PUT",
+            "path": "/pushnotificationmanages/:id",
+            "handler": "pushnotificationmanage.update",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "DELETE",
+            "path": "/pushnotificationmanages/:id",
+            "handler": "pushnotificationmanage.delete",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/pushnotificationmanages/search/:page_index/:page_size",
+            "handler": "pushnotificationmanage.cmsSearchPushNotification",
+            "config": {
+                "policies": []
+            }
+        }
+    ]
 }
