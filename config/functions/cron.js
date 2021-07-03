@@ -83,7 +83,7 @@ module.exports = {
 
         if (checkNotificationActive) {
             checkNotificationActive = checkNotificationActive.toJSON();
-            console.log(checkNotificationActive);
+            //console.log(checkNotificationActive);
             for (let index = 0; index < checkNotificationActive.length; index++) {
                 const element = checkNotificationActive[index];
 
@@ -169,8 +169,8 @@ module.exports = {
                     dataReturn = await strapi.services.firebasecontrol.sendtoarraydeviceandroid(arraydeviceregios, elementNotiLog.notititle, newcontentforPushFirebase);
                 }
 
-                if (dataReturn != '') {
-                    console.log(dataReturn);
+                if (!_.isNil(dataReturn) && dataReturn != '') {
+                    //console.log(dataReturn);
                     var status = 0;
                     if (dataReturn.responsefilebase.success && dataReturn.responsefilebase.success == 1) {
                         status = 5;
