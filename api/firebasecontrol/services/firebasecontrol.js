@@ -56,13 +56,14 @@ module.exports = {
             },
             data: dataFCM
         };
-        var dataReturn = "";
+        var dataReturn = {};
+        dataReturn.data = dataFCM;
         await axios(config)
             .then(function(response) {
-                dataReturn = response.data;
+                dataReturn.responsefilebase = response.data;
             })
             .catch(function(error) {
-                dataReturn = 'Error call server SMS';
+                dataReturn.responsefilebase = 'Error call server SMS';
             });
         return dataReturn;
     },
@@ -94,13 +95,14 @@ module.exports = {
             },
             data: dataFCM
         };
-        var dataReturn = "";
+        var dataReturn = {};
+        dataReturn.data = dataFCM;
         await axios(config)
             .then(function(response) {
-                dataReturn = response.data;
+                dataReturn.responsefilebase = response.data;
             })
             .catch(function(error) {
-                dataReturn = 'Error call server SMS';
+                dataReturn.responsefilebase = 'Error call server SMS';
             });
         return dataReturn;
     },
@@ -131,13 +133,14 @@ module.exports = {
             },
             data: dataFCM
         };
-        var dataReturn = "";
+        var dataReturn = {};
+        dataReturn.data = dataFCM;
         await axios(config)
             .then(function(response) {
-                dataReturn = response.data;
+                dataReturn.responsefilebase = response.data;
             })
             .catch(function(error) {
-                dataReturn = 'Error call server SMS';
+                dataReturn.responsefilebase = 'Error call server SMS';
             });
         return dataReturn;
     },
@@ -168,13 +171,14 @@ module.exports = {
             },
             data: dataFCM
         };
-        var dataReturn = "";
+        var dataReturn = {};
+        dataReturn.data = dataFCM;
         await axios(config)
             .then(function(response) {
-                dataReturn = response.data;
+                dataReturn.responsefilebase = response.data;
             })
             .catch(function(error) {
-                dataReturn = 'Error call server SMS';
+                dataReturn.responsefilebase = 'Error call server SMS';
             });
         return dataReturn;
     },
@@ -202,13 +206,14 @@ module.exports = {
             },
             data: dataFCM
         };
-        var dataReturn = "";
+        var dataReturn = {};
+        dataReturn.data = dataFCM;
         await axios(config)
             .then(function(response) {
-                dataReturn = response.data;
+                dataReturn.responsefilebase = response.data;
             })
             .catch(function(error) {
-                dataReturn = 'Error call server SMS';
+                dataReturn.responsefilebase = 'Error call server SMS';
             });
         return dataReturn;
     },
@@ -238,13 +243,14 @@ module.exports = {
             },
             data: dataFCM
         };
-        var dataReturn = "";
+        var dataReturn = {};
+        dataReturn.data = dataFCM;
         await axios(config)
             .then(function(response) {
-                dataReturn = response.data;
+                dataReturn.responsefilebase = response.data;
             })
             .catch(function(error) {
-                dataReturn = 'Error call server SMS';
+                dataReturn.responsefilebase = 'Error call server SMS';
             });
         return dataReturn;
     },
@@ -274,13 +280,14 @@ module.exports = {
             },
             data: dataFCM
         };
-        var dataReturn = "";
+        var dataReturn = {};
+        dataReturn.data = dataFCM;
         await axios(config)
             .then(function(response) {
-                dataReturn = response.data;
+                dataReturn.responsefilebase = response.data;
             })
             .catch(function(error) {
-                dataReturn = 'Error call server SMS';
+                dataReturn.responsefilebase = 'Error call server SMS';
             });
         return dataReturn;
     },
@@ -308,13 +315,14 @@ module.exports = {
             },
             data: dataFCM
         };
-        var dataReturn = "";
+        var dataReturn = {};
+        dataReturn.data = dataFCM;
         await axios(config)
             .then(function(response) {
-                dataReturn = response.data;
+                dataReturn.responsefilebase = response.data;
             })
             .catch(function(error) {
-                dataReturn = 'Error call server SMS';
+                dataReturn.responsefilebase = 'Error call server SMS';
             });
         return dataReturn;
     },
@@ -335,13 +343,14 @@ module.exports = {
             },
             data: dataFCM
         };
-        var dataReturn = "";
+        var dataReturn = {};
+        dataReturn.data = dataFCM;
         await axios(config)
             .then(function(response) {
-                dataReturn = response.data;
+                dataReturn.responsefilebase = response.data;
             })
             .catch(function(error) {
-                dataReturn = 'Error call server SMS';
+                dataReturn.responsefilebase = 'Error call server SMS';
             });
         return dataReturn;
     }

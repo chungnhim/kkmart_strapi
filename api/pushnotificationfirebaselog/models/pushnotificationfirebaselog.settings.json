@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pushnotificationfirebaselogs",
+  "info": {
+    "name": "Pushnotificationfirebaselog"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "mobileuserid": {
+      "type": "integer"
+    },
+    "statusoffirebase": {
+      "type": "string"
+    },
+    "datasend": {
+      "type": "text"
+    },
+    "resultoffirebase": {
+      "type": "text"
+    },
+    "deviceregid": {
+      "type": "string"
+    },
+    "platform": {
+      "type": "string"
+    },
+    "isrunjob": {
+      "type": "boolean"
+    },
+    "notititle": {
+      "type": "string"
+    },
+    "noticontent": {
+      "type": "string"
+    },
+    "notificationlogid": {
+      "type": "integer"
+    }
+  }
+}
