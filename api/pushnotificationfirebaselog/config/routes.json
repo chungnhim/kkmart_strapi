@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/pushnotificationfirebaselogs",
+      "handler": "pushnotificationfirebaselog.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/pushnotificationfirebaselogs/count",
+      "handler": "pushnotificationfirebaselog.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/pushnotificationfirebaselogs/:id",
+      "handler": "pushnotificationfirebaselog.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/pushnotificationfirebaselogs",
+      "handler": "pushnotificationfirebaselog.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/pushnotificationfirebaselogs/:id",
+      "handler": "pushnotificationfirebaselog.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/pushnotificationfirebaselogs/:id",
+      "handler": "pushnotificationfirebaselog.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
