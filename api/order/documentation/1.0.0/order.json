@@ -1521,6 +1521,52 @@
           "is_express_delivery": {
             "type": "boolean"
           },
+          "paymentmethod": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "methodid": {
+                "type": "string"
+              },
+              "gwcode": {
+                "type": "string"
+              },
+              "methodname": {
+                "type": "string"
+              },
+              "merchantcode": {
+                "type": "string"
+              },
+              "countrycode": {
+                "type": "string"
+              },
+              "currency": {
+                "type": "string"
+              },
+              "paymenttypecode": {
+                "type": "string"
+              },
+              "wallet_provider_id": {
+                "type": "string"
+              },
+              "isactive": {
+                "type": "boolean"
+              },
+              "methodicon": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -1669,6 +1715,9 @@
           },
           "is_express_delivery": {
             "type": "boolean"
+          },
+          "paymentmethod": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

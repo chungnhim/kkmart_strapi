@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "06/27/2021 12:00:34 AM"
+    "x-generation-date": "07/03/2021 3:17:00 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -32248,6 +32248,148 @@
         ]
       }
     },
+    "/payment/ipay-response": {
+      "post": {
+        "deprecated": false,
+        "description": "Create a new record",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Paymenttransact"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "foo": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payment/ipay-backend": {
+      "post": {
+        "deprecated": false,
+        "description": "Create a new record",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Paymenttransact"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "foo": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/paymenttypes": {
       "get": {
         "deprecated": false,
@@ -62130,6 +62272,9 @@
               "is_express_delivery": {
                 "type": "boolean"
               },
+              "paymentmethod": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -62888,6 +63033,9 @@
               "is_express_delivery": {
                 "type": "boolean"
               },
+              "paymentmethod": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -63419,6 +63567,9 @@
               },
               "is_express_delivery": {
                 "type": "boolean"
+              },
+              "paymentmethod": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -64182,6 +64333,52 @@
           "is_express_delivery": {
             "type": "boolean"
           },
+          "paymentmethod": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "methodid": {
+                "type": "string"
+              },
+              "gwcode": {
+                "type": "string"
+              },
+              "methodname": {
+                "type": "string"
+              },
+              "merchantcode": {
+                "type": "string"
+              },
+              "countrycode": {
+                "type": "string"
+              },
+              "currency": {
+                "type": "string"
+              },
+              "paymenttypecode": {
+                "type": "string"
+              },
+              "wallet_provider_id": {
+                "type": "string"
+              },
+              "isactive": {
+                "type": "boolean"
+              },
+              "methodicon": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -64330,6 +64527,9 @@
           },
           "is_express_delivery": {
             "type": "boolean"
+          },
+          "paymentmethod": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
@@ -76831,6 +77031,9 @@
                 },
                 "is_express_delivery": {
                   "type": "boolean"
+                },
+                "paymentmethod": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"

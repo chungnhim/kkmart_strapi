@@ -153,6 +153,7 @@ module.exports = {
 
         return userQr;
     },
+    // using for kcoin paymant transact
     generatePaymentTransNo: async(identifier) => {
         var runstrtmp = "0000000000";
         // get prefix
@@ -171,6 +172,29 @@ module.exports = {
         var runstr = runstrtmp + sqIds[0].nextval;
         runstr = runstr.substring(runstr.length - runstrtmp.length, runstr.length);
         var userQr = prefix + identifier + moment.utc(new Date).format("DDMMYY") + runstr;
+        return userQr;
+    },
+    // using for eMart Payment
+    generatePayOrderNo: async() => {
+        var runstrtmp = "0000000000";
+        // get prefix
+        var sysparams = await strapi.query('systemparams').findOne({
+            paramname: "emartpaymentprefix"
+        });
+        if (sysparams) {
+            var prefix = sysparams.paramvalue;
+        } else {
+            // PT : Payment Transaction
+            prefix = "EM";
+        }
+        var sq = await strapi.connections.default.raw(`select nextval('user_payment_trx_seq')`);
+        var sqIds = sq.rows;
+        console.log(sqIds);
+        var runstr = runstrtmp + sqIds[0].nextval;
+        runstr = runstr.substring(runstr.length - runstrtmp.length, runstr.length);
+        var userQr = prefix + moment.utc(new Date).format("DDMMYY") + runstr;
+        console.log(`===========orderno=========`);
+        console.log(userQr);
         return userQr;
     },
     handleErrors: async(ctx, err, message) => {

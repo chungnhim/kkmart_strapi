@@ -1,76 +1,91 @@
 {
-  "routes": [
-    {
-      "method": "GET",
-      "path": "/paymenttransacts",
-      "handler": "paymenttransact.find",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/paymenttransacts/count",
-      "handler": "paymenttransact.count",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/paymenttransacts/:id",
-      "handler": "paymenttransact.findOne",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "POST",
-      "path": "/paymenttransacts",
-      "handler": "paymenttransact.create",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "PUT",
-      "path": "/paymenttransacts/:id",
-      "handler": "paymenttransact.update",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "DELETE",
-      "path": "/paymenttransacts/:id",
-      "handler": "paymenttransact.delete",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "POST",
-      "path": "/v1/payment/create",
-      "handler": "paymenttransact.createpayment",
-      "config": {
-          "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/v1/payment/paymenttype",
-      "handler": "paymenttransact.getPaymentType",
-      "config": {
-          "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/v1/payment/paymentmethod/:paymenttypecode",
-      "handler": "paymenttransact.getPaymentMethods",
-      "config": {
-          "policies": []
-      }
-    }
-  ]
+    "routes": [{
+            "method": "GET",
+            "path": "/paymenttransacts",
+            "handler": "paymenttransact.find",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/paymenttransacts/count",
+            "handler": "paymenttransact.count",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/paymenttransacts/:id",
+            "handler": "paymenttransact.findOne",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/paymenttransacts",
+            "handler": "paymenttransact.create",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "PUT",
+            "path": "/paymenttransacts/:id",
+            "handler": "paymenttransact.update",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "DELETE",
+            "path": "/paymenttransacts/:id",
+            "handler": "paymenttransact.delete",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/v1/payment/create",
+            "handler": "paymenttransact.createpayment",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/v1/payment/paymenttype",
+            "handler": "paymenttransact.getPaymentType",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/v1/payment/paymentmethod/:paymenttypecode",
+            "handler": "paymenttransact.getPaymentMethods",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/payment/ipay-response",
+            "handler": "paymenttransact.responseurl",
+            "config": {
+                "policies": []
+            }
+        },
+        {
+            "method": "POST",
+            "path": "/payment/ipay-backend",
+            "handler": "paymenttransact.backendurl",
+            "config": {
+                "policies": []
+            }
+        }
+    ]
 }

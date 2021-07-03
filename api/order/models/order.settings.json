@@ -37,21 +37,21 @@
       "type": "richtext"
     },
     "user": {
-      "via": "orders",
       "plugin": "users-permissions",
-      "model": "user"
+      "model": "user",
+      "via": "orders"
     },
     "order_products": {
-      "via": "order",
-      "collection": "order-product"
+      "collection": "order-product",
+      "via": "order"
     },
     "order_billing": {
       "model": "order-billing",
       "via": "order"
     },
     "order_shipping": {
-      "via": "order",
-      "model": "order-shipping"
+      "model": "order-shipping",
+      "via": "order"
     },
     "vouchercode": {
       "type": "string"
@@ -67,6 +67,9 @@
     },
     "is_express_delivery": {
       "type": "boolean"
+    },
+    "paymentmethod": {
+      "model": "paymentmethods"
     }
   }
 }

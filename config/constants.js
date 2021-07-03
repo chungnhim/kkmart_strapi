@@ -14,6 +14,15 @@ module.exports = ({ env }) => ({
         completed: 4,
         cancelled: 5
     },
+    order_payment_status: {
+        new: 1,
+        processing: 2,
+        pendingpayment: 3,
+        paymentsuccess: 4,
+        paymentfail: 5,
+        cancelled: 6,
+        refunded: 7
+    },
     shopping_cart_status: {
         new: 1,
         paid: 2,

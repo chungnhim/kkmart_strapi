@@ -168,8 +168,8 @@
       "via": "user"
     },
     "orders": {
-      "collection": "order",
-      "via": "user"
+      "via": "user",
+      "collection": "order"
     },
     "user_addresses": {
       "collection": "user-address",

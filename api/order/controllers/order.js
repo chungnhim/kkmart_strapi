@@ -200,7 +200,7 @@ const processCreateOrder = async(userId,
     vouchercode,
     is_use_coin,
     shipping_note,
-    currency) => {
+    currency, paymentmethodId) => {
     // [
     //     {
     //         "product_id": 1,
@@ -305,7 +305,8 @@ const processCreateOrder = async(userId,
         coin_earned: kcoin_earned,
         coin_used: kcoin_used,
         vouchercode: vouchercode,
-        is_express_delivery: is_expressmart
+        is_express_delivery: is_expressmart,
+        paymentmethod: paymentmethodId
     };
 
     var order = await strapi.query("order").create(orderEntity);
@@ -635,7 +636,8 @@ module.exports = {
             params.vouchercode,
             params.is_use_coin,
             params.shipping_note,
-            ordcheckout.currency
+            ordcheckout.currency,
+            params.paymentmethod_id
         );
 
         if (createOrderRes.success) {

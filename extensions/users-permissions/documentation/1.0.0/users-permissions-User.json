@@ -1893,6 +1893,9 @@
                 "is_express_delivery": {
                   "type": "boolean"
                 },
+                "paymentmethod": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },
