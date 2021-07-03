@@ -74,7 +74,9 @@ module.exports = {
         let merKey = gatewayInfo.merchantkey;
         let gatewayurl = gatewayInfo.gwurl;
         let refNo = body.TransID;
-        let amount = body.TransAMT.toFixed(2);
+        //let amount = body.TransAMT.toFixed(2);
+        //for test
+        let amount = "0.01";
         let rawSignature = `${merKey}${merID}${refNo}${amount.replace(",","").replace(".","")}${body.TransCurrentcy}`;
 
         console.log(rawSignature);
@@ -121,10 +123,8 @@ module.exports = {
             let httpCode = response.status;
             //console.log(`vao day 1`);
             //console.log(response);
-            return {
-                success: true,
-                data: response.data
-            }
+            return response.data
+
         }).catch(function(error) {
             console.log(`vao day 2`);
             console.log(error);
@@ -137,11 +137,7 @@ module.exports = {
                 message = "Get quotation failed"
             }
 
-            return {
-                success: false,
-                message: message,
-                data: error.response.data
-            }
+            return "Payment Fail"
         });
         // console.log(`============ressponse===========`);
         // console.log(res);
