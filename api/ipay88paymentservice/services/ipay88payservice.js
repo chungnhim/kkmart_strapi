@@ -45,9 +45,9 @@ module.exports = {
         const LangVaule = "UTF-8";
         const SignatureTypeValue = "SHA256";
         const keyMerID = "MerchantCode";
-        const keyTransId = "PaymentId";
-        const keyTransType = "RefNo";
-        const keyTranAMT = "Amount";
+        const keyPaymentId = "PaymentId";
+        const keyRefNo = "RefNo";
+        const keyAmount = "Amount";
         const keyCurrentcy = "Currency";
         const keyDesc = "ProdDesc";
         const keyUserName = "UserName";
@@ -76,7 +76,7 @@ module.exports = {
         let refNo = body.TransID;
         //let amount = body.TransAMT.toFixed(2);
         //for test
-        let amount = "0.01";
+        let amount = "1.00";
         let rawSignature = `${merKey}${merID}${refNo}${amount.replace(",","").replace(".","")}${body.TransCurrentcy}`;
 
         console.log(rawSignature);
@@ -91,54 +91,58 @@ module.exports = {
             }
         }
 
-
-
-        var req = {
-            "MerchantCode": merID, // in UTC timezone
-            "PaymentId": body.PaymentId,
-            "RefNo": refNo,
-            "Amount": body.TransAMT,
-            "Currency": body.TransCurrentcy,
-            "ProdDesc": body.Transdes,
-            "UserName": "abc123",
-            "UserEmail": "abc123@gmail.com",
-            "UserContact": "123456",
-            "Remark": body.Transdes,
-            "Lang": LangVaule,
-            "SignatureType": SignatureTypeValue,
-            "Signature": signature,
-            "ResponseURL": body.ResponseUrl,
-            "BackendURL": body.BackendUrl,
-        }
-
+        var bodyFormData = new FormData();
+        bodyFormData.append(keyMerID, merID);
+        bodyFormData.append(keyPaymentId, body.PaymentId);
+        bodyFormData.append(keyRefNo, refNo);
+        bodyFormData.append(keyAmount, amount);
+        bodyFormData.append(keyCurrentcy, body.TransCurrentcy);
+        bodyFormData.append(keyDesc, body.Transdes);
+        bodyFormData.append(keyUserName, "abc123");
+        bodyFormData.append(keyUserEmail, "abc123@gmail.com");
+        bodyFormData.append(keyUserContact, "123456");
+        bodyFormData.append(keyRemark, body.Transdes);
+        bodyFormData.append(keyLang, LangVaule);
+        bodyFormData.append(keySignatureType, SignatureTypeValue);
+        bodyFormData.append(keySignature, signature);
+        bodyFormData.append(keyResponseURL, body.ResponseUrl);
+        bodyFormData.append(keyBackendUrl, body.BackendUrl);
 
 
         //let header = getHttpHeader(auth.apiKey, auth.timestamp, auth.signature);
         console.log(`=========== request==========`)
-        console.log(req)
+        console.log(bodyFormData)
         console.log(`===========end request==========`)
         console.log(gatewayurl);
-        var res = await
-        axios.post(gatewayurl, req).then(function(response) {
-            let httpCode = response.status;
-            //console.log(`vao day 1`);
-            //console.log(response);
-            return response.data
 
-        }).catch(function(error) {
-            console.log(`vao day 2`);
-            console.log(error);
-            console.log(`========end exception ==========`);
-            let httpCode = error.response.status;
-            let message = "";
-            if (httpCode == 401) {
-                message = "Unauthorized";
-            } else {
-                message = "Get quotation failed"
-            }
+        var res = await axios({
+                method: "post",
+                url: gatewayurl,
+                data: bodyFormData,
+                headers: { "Content-Type": "multipart/form-data" },
+            })
+            .then(function(response) {
+                //handle success
+                console.log(`vao day 1`);
+                console.log(response);
+                return response.data
+            })
+            .catch(function(error) {
+                //handle error
+                console.log(`vao day 2`);
+                console.log(error);
+                console.log(`========end exception ==========`);
+                let httpCode = error.response.status;
+                let message = "";
+                if (httpCode == 401) {
+                    message = "Unauthorized";
+                } else {
+                    message = "Create payment failed"
+                }
 
-            return "Payment Fail"
-        });
+                return "Payment Fail"
+            });
+
         // console.log(`============ressponse===========`);
         // console.log(res);
         // console.log(`============end ressponse===========`)
