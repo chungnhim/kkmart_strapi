@@ -1277,7 +1277,7 @@ module.exports = {
                     var trxhist = await strapi.query('transaction-history').count({
                         trxconfigid: "105",
                         user: checkuser.id,
-                        dateofbirth_gte: defaultStart
+                        created_at_gte: defaultStart
                     });
 
                     if (trxhist) {
