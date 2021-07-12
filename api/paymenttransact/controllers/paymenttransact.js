@@ -12,26 +12,39 @@ const _ = require('lodash');
 
 module.exports = {
     getPaymentType: async ctx => {
+        try {
+            let pmType = await strapi.query("paymenttype").find({
+                isactive: true
+            });
+            let paymentType = await strapi.services.common.normalizationResponse(pmType, ["created_at", "updated_at", "isactive", "gwcode", "merchantcode", "countrycode", "paymenttypecode", "wallet_provider_id"]);
 
-        let pmType = await strapi.query("paymenttype").find({
-            isactive: true
-        });
-        let paymentType = await strapi.services.common.normalizationResponse(pmType, ["created_at", "updated_at", "isactive", "gwcode", "merchantcode", "countrycode", "paymenttypecode", "wallet_provider_id"]);
-
-        return Object.values(paymentType);
+            return Object.values(paymentType);
+        } catch (err) {
+            console.log(err);
+            //let strErr = `paymenttransact.getPaymentType : ${err}`;
+            //await strapi.services.common.logError(strErr);
+            ctx.send({ success: false, message: "Server error when get payment type" });
+        }
 
     },
     getPaymentMethods: async ctx => {
-        const params = _.assign({}, ctx.request.params, ctx.params);
+        try {
+            const params = _.assign({}, ctx.request.params, ctx.params);
 
-        var paymentTypeCode = params.paymenttypecode;
+            var paymentTypeCode = params.paymenttypecode;
 
-        let pmType = await strapi.query("paymentmethods").find({
-            "isactive": true,
-            "paymenttypecode": paymentTypeCode
-        });
-        let paymentType = await strapi.services.common.normalizationResponse(pmType, ["created_at", "updated_at", "isactive", "gwcode", "merchantcode", "countrycode", "paymenttypecode", "wallet_provider_id"]);
-        return Object.values(paymentType);
+            let pmType = await strapi.query("paymentmethods").find({
+                "isactive": true,
+                "paymenttypecode": paymentTypeCode
+            });
+            let paymentType = await strapi.services.common.normalizationResponse(pmType, ["created_at", "updated_at", "isactive", "gwcode", "merchantcode", "countrycode", "paymenttypecode", "wallet_provider_id"]);
+            return Object.values(paymentType);
+        } catch (err) {
+            console.log(err);
+            //let strErr = `paymenttransact.getPaymentType : ${err}`;
+            //await strapi.services.common.logError(strErr);
+            ctx.send({ success: false, message: "Server error when get payment methods" });
+        }
     },
     createpayment: async ctx => {
 

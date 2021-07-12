@@ -73,13 +73,13 @@ module.exports = {
                 userAddressId, products, shippingNote, null
             );
 
-            ctx.send({
+            return ctx.send({
                 success: res.success,
+                message: res.message,
                 totalFee: res.totalFee,
                 totalFeeCurrency: res.totalFeeCurrency
             });
 
-            return;
         }
 
         ctx.send({
