@@ -22,8 +22,21 @@ module.exports = {
             ctx.unauthorized(`You're not logged in!`);
             return;
         }
-
         const body = _.assign({}, ctx.request.body, ctx.params);
+
+        var productCheck = await strapi.query("product").findOne({
+            id: parseFloat(body.product_id),
+        });
+
+        if (_.isNil(productCheck) || _.isNil(productCheck.id)) {
+            ctx.send({
+                message: "Product do not exits.",
+                success: false
+            });
+            return;
+        }
+
+
         var entity = {
             rating_point: parseFloat(body.rating_point),
             comment: body.comment,
@@ -46,6 +59,7 @@ module.exports = {
         var productRatings = await strapi.query('product-rating').find({
             product: parseFloat(body.product_id)
         });
+
 
         var totalRating = _.sumBy(productRatings, "rating_point")
         var avgRating = Number(parseFloat(totalRating / productRatings.length).toFixed(1));
